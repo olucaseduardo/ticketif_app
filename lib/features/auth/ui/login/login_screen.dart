@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_ifma_ticket/features/home/ui/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,9 +22,15 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(30.0),
-                  child: Image.asset('assets/ifma_logo.png'),
+                  child: Image.asset(
+                    'assets/ifma_logo.png',
+                    width: 180,
+                    height: 180,
+                  ),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 Form(
                     child: Column(
                   children: [
@@ -31,18 +38,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         textInputAction: TextInputAction.next,
-                        decoration:InputDecoration(
-                        labelText: "Matrícula",
-                        prefixIcon: Icon(
-                          Icons.person,
-                          color: Colors.teal,
+                        decoration: InputDecoration(
+                          labelText: "Matrícula",
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: Colors.teal,
+                          ),
+                          filled: true,
+                          border: OutlineInputBorder(
+                              gapPadding: 6,
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide.none),
                         ),
-                        filled: true,
-                        border: OutlineInputBorder(
-                          gapPadding: 6,
-                          borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none),
-                      ),),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -72,23 +80,33 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                          onPressed: (){}, child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Text("LOGIN",
-                                style: TextStyle(fontSize: 20, color: Colors.white)),
-                          ),
-                        ],
-                      ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const HomeScreen()));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text("LOGIN",
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.white)),
+                            ),
+                          ],
+                        ),
                         style: ElevatedButton.styleFrom(
-                        primary: Colors.teal,
-                      ),
+                          primary: Colors.teal,
+                        ),
                       ),
                     ),
                   ],
