@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/utils/app_colors.dart';
 
+import '../../../home/ui/home_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -22,7 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(30.0),
-                  child: Image.asset('assets/ifma_logo.png'),
+                  child: Image.asset(
+                    'assets/ifma_logo.png',
+                    width: 180,
+                    height: 180,
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
                 ),
                 SizedBox(
                   height: 30,
@@ -38,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: "Matrícula",
                           prefixIcon: Icon(
                             Icons.person,
-                            color: AppColors.primary,
+                            color: Colors.teal,
                           ),
                           filled: true,
                           border: OutlineInputBorder(
@@ -82,7 +91,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const HomeScreen()));
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
