@@ -1,7 +1,9 @@
 import 'dio_client.dart';
 
-void main(){
-  DioClient dioClient = DioClient('/v1/user/student');
+void main() async {
+  DioClient dioClient = DioClient('https://pokeapi.co/api/v2/pokemon');
 
-  dioClient.get('/listTickets');
+  var response = await dioClient.get('/ditto');
+
+  print(response.toString());
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_ifma_ticket/features/utils/app_colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -23,7 +24,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.all(30.0),
                   child: Image.asset('assets/ifma_logo.png'),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 Form(
                     child: Column(
                   children: [
@@ -31,18 +34,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         textInputAction: TextInputAction.next,
-                        decoration:InputDecoration(
-                        labelText: "Matrícula",
-                        prefixIcon: Icon(
-                          Icons.person,
-                          color: Colors.teal,
+                        decoration: InputDecoration(
+                          labelText: "Matrícula",
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: AppColors.primary,
+                          ),
+                          filled: true,
+                          border: OutlineInputBorder(
+                              gapPadding: 6,
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide.none),
                         ),
-                        filled: true,
-                        border: OutlineInputBorder(
-                          gapPadding: 6,
-                          borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none),
-                      ),),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -63,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           prefixIcon: Icon(
                             Icons.lock,
-                            color: Colors.teal,
+                            color: AppColors.primary,
                           ),
                           filled: true,
                           border: OutlineInputBorder(
@@ -72,23 +76,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                          onPressed: (){}, child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Text("LOGIN",
-                                style: TextStyle(fontSize: 20, color: Colors.white)),
-                          ),
-                        ],
-                      ),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text("LOGIN",
+                                  style: TextStyle(
+                                      fontSize: 20, color: AppColors.white)),
+                            ),
+                          ],
+                        ),
                         style: ElevatedButton.styleFrom(
-                        primary: Colors.teal,
-                      ),
+                          primary: AppColors.primary,
+                        ),
                       ),
                     ),
                   ],
