@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_logo.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/commonTextField.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
 
 
 import '../../../home/ui/home_screen.dart';
@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const AppLogo(),
               Padding(
@@ -45,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(16.h),
                           child: Text("Entrar na conta",
-                              style: TextStyle(fontSize: 14.sp)
+                              style: TextStyle(fontSize: 14.sp, fontWeight:FontWeight.w700)
                         ),),
                       ),
                     ),
