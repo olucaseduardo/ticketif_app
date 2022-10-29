@@ -1,123 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/features/utils/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/app_logo.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/commonTextField.dart';
+
 
 import '../../../home/ui/home_screen.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  bool passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Image.asset(
-                    'assets/ifma_logo.png',
-                    width: 180,
-                    height: 180,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const AppLogo(),
+              Padding(
+                padding: EdgeInsets.all(24.w),
+                child: Text("Entre para continuar", style: TextStyle(fontSize: 16.sp, color: AppColors.gray400),),
+              ),
+              Form(
+                  child: Column(
+                children: [
+                  const CommonTextField(title: 'Matrícula', labelText: 'Digite sua matrícula', textInputAction: TextInputAction.next,),
+                  const CommonTextField(title: 'Senha (SUAP)', labelText: 'Digite sua senha', textInputAction: TextInputAction.done,obscureText: true,),
+                  Padding(
+                    padding: EdgeInsets.all(20.w),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const HomeScreen()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.green500,
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.h),
+                          child: Text("Entrar na conta",
+                              style: TextStyle(fontSize: 14.sp)
+                        ),),
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Form(
-                    child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          labelText: "Matrícula",
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Colors.teal,
-                          ),
-                          filled: true,
-                          border: OutlineInputBorder(
-                              gapPadding: 6,
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        textInputAction: TextInputAction.done,
-                        obscureText: !passwordVisible,
-                        decoration: InputDecoration(
-                          labelText: "Senha",
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                passwordVisible = !passwordVisible;
-                              });
-                            },
-                            icon: !passwordVisible
-                                ? const Icon(Icons.visibility)
-                                : const Icon(Icons.visibility_off),
-                          ),
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: AppColors.primary,
-                          ),
-                          filled: true,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const HomeScreen()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Text("LOGIN",
-                                  style: TextStyle(
-                                      fontSize: 20, color: AppColors.white)),
-                            ),
-                          ],
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: AppColors.primary,
-                        ),
-                      ),
-                    ),
-                  ],
-                ))
-              ],
-            ),
+                ],
+              ))
+            ],
           ),
         ),
       ),
