@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
+import 'package:project_ifma_ticket/features/app/app.dart';
+import 'package:project_ifma_ticket/features/historic/ui/historic_screen.dart';
+import 'package:project_ifma_ticket/features/requestTicket/ui/request_ticket.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
@@ -18,9 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 78.h,
-          elevation: 0,
-          backgroundColor: AppColors.green500,
           automaticallyImplyLeading: false,
           title: Padding(
             padding: EdgeInsets.all(8.w),
@@ -63,7 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.w700,
                           color: AppColors.gray200)),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const RequestTicket()));
+                    },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       backgroundColor: AppColors.green500,
@@ -88,21 +94,27 @@ class _HomeScreenState extends State<HomeScreen> {
               color: AppColors.gray800,
             ),
             Padding(
-              padding: EdgeInsets.all(20.h),
+              padding: EdgeInsets.only(
+                  top: 18.h, left: 20.w, right: 20.w, bottom: 0),
               child: Text('Suas refeições de hoje',
                   style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w700,
                       color: AppColors.gray200)),
             ),
-
             CommomTicketWidget(),
-            // Align(
-            //   alignment: Alignment.center,
-            //     child: Text('Nenhum ticket, faça sua solicitação e aguarde ser aprovado', style: TextStyle(fontSize: 12.sp, color: AppColors.gray700))),
-
+            // Padding(
+            //   padding: EdgeInsets.symmetric(vertical: 20.h),
+            //   child: Align(
+            //       alignment: Alignment.center,
+            //       child: Text(
+            //           'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
+            //           style: TextStyle(
+            //               fontSize: 12.sp, color: AppColors.gray700))),
+            // ),
             Padding(
-              padding: EdgeInsets.all(20.h),
+              padding: EdgeInsets.only(
+                  top: 0, left: 20.w, right: 20.w, bottom: 18.h),
               child: Text('Outras opções',
                   style: TextStyle(
                       fontSize: 18.sp,

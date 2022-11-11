@@ -6,7 +6,7 @@ class DateUtil {
   static String todayDate(DateTime dateTime) =>
       todayWeekDayFormat.format(dateTime);
   static final DateFormat dayMounthDayWeekFormat =
-      DateFormat("'Dia' d 'de' MM (EEEE)", 'pt_BR');
+      DateFormat("'Dia' d 'de' MMM (EEEE)", 'pt_BR');
   static String ticketDay(DateTime dateTime) =>
       dayMounthDayWeekFormat.format(dateTime);
 }

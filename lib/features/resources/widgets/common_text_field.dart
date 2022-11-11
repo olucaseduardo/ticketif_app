@@ -25,19 +25,25 @@ class CommonTextField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 14, color: AppColors.gray400),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.h),
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 14, color: AppColors.gray400),
+            ),
           ),
           TextFormField(
             obscureText: obscureText,
             keyboardType: keybordType,
             textInputAction: textInputAction,
             decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.green500)),
               focusColor: AppColors.green500,
               fillColor: AppColors.green500,
               hoverColor: AppColors.green500,
               labelText: labelText,
+              labelStyle: TextStyle(color: AppColors.gray700),
               border: OutlineInputBorder(),
             ),
           ),
