@@ -10,16 +10,18 @@ class CommonTextField extends StatelessWidget {
   final TextInputType? keybordType;
   final bool obscureText;
   final int? maxline;
+  final TextEditingController? controller;
 
-  const CommonTextField(
-      {Key? key,
-      required this.title,
-      required this.labelText,
-      this.textInputAction,
-      this.keybordType,
-      this.obscureText = false,
-      this.maxline = 1})
-      : super(key: key);
+  const CommonTextField({
+    Key? key,
+    this.controller,
+    required this.title,
+    required this.labelText,
+    this.textInputAction,
+    this.keybordType,
+    this.obscureText = false,
+    this.maxline = 1,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class CommonTextField extends StatelessWidget {
             ),
           ),
           TextFormField(
+            controller: controller,
             obscureText: obscureText,
             keyboardType: keybordType,
             textInputAction: textInputAction,

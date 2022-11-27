@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
 
 import '../../resources/theme/app_colors.dart';
 
-class RequestTicket extends StatelessWidget {
+class RequestTicket extends ConsumerWidget {
   const RequestTicket({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final controller = ref.watch(requestTicketProvider);
+
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -61,7 +65,7 @@ class RequestTicket extends StatelessWidget {
                   ),
                 ),
                 DropdownButtonFormField<String>(
-                    icon: Icon(Icons.keyboard_arrow_down_outlined),
+                    icon: const Icon(Icons.keyboard_arrow_down_outlined),
                     decoration: const InputDecoration(
                       alignLabelWithHint: true,
                       focusedBorder: OutlineInputBorder(
@@ -74,10 +78,15 @@ class RequestTicket extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(4.h),
                     isExpanded: true,
-                    items: [
-                      const DropdownMenuItem(child: Text('teste 1')),
-                    ],
-                    onChanged: (test) {}),
+                    hint: const Text('Selecione uma refeição'),
+                    items: controller.meals
+                        .map<DropdownMenuItem<String>>(
+                            (value) => DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value),
+                                ))
+                        .toList(),
+                    onChanged: (value) => controller.onMealsChanged(value)),
                 Padding(
                   padding: EdgeInsets.only(top: 12.h),
                   child: Text(
@@ -90,7 +99,12 @@ class RequestTicket extends StatelessWidget {
                   children: [
                     Transform.scale(
                         scale: 1.5,
-                        child: Checkbox(value: false, onChanged: (teste) {})),
+                        child: Checkbox(
+                          value: !controller.isPermanent,
+                          onChanged: (value) {
+                            controller.onPermanentChanged(!value!);
+                          },
+                        )),
                     Text(
                       'Apenas para hoje',
                       style: AppTextStyle.normalText,
@@ -101,35 +115,31 @@ class RequestTicket extends StatelessWidget {
                   children: [
                     Transform.scale(
                         scale: 1.5,
-                        child: Checkbox(value: true, onChanged: (teste) {})),
+                        child: Checkbox(
+                          value: controller.isPermanent,
+                          onChanged: (value) {
+                            controller.onPermanentChanged(value);
+                          },
+                        )),
                     Text(
                       'Permanente',
                       style: AppTextStyle.normalText,
                     ),
                   ],
                 ),
-                Wrap(
-                  spacing: 8,
-                  children: [
-                    FilterChip(
-                      label: const Text('Seg'),
-                      selected: true,
-                      onSelected: (teste) {},
-                    ),
-                    FilterChip(
-                        label: const Text('Ter'), onSelected: (teste) {}),
-                    FilterChip(
-                        label: const Text('Qua'), onSelected: (teste) {}),
-                    FilterChip(
-                        label: const Text('Qui'), onSelected: (teste) {}),
-                    FilterChip(
-                        label: const Text('Sex'), onSelected: (teste) {}),
-                    FilterChip(
-                        label: const Text('Sab'), onSelected: (teste) {}),
-                    FilterChip(
-                        label: const Text('Dom'), onSelected: (teste) {}),
-                  ],
-                ),
+                controller.isPermanent
+                    ? Wrap(
+                        spacing: 8,
+                        children: controller.days
+                            .map<FilterChip>((value) => FilterChip(
+                                selected: controller.selectedDays(value),
+                                label: Text(value),
+                                onSelected: (isSelected) => controller
+                                    .onDaysChanged(value, isSelected)))
+                            .toList(),
+                      )
+                    : //TODO: aviso de horario
+                    Container(),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),
                   child: Text(
@@ -138,7 +148,7 @@ class RequestTicket extends StatelessWidget {
                   ),
                 ),
                 DropdownButtonFormField<String>(
-                    icon: Icon(Icons.keyboard_arrow_down_outlined),
+                    icon: const Icon(Icons.keyboard_arrow_down_outlined),
                     decoration: const InputDecoration(
                       alignLabelWithHint: true,
                       focusedBorder: OutlineInputBorder(
@@ -151,11 +161,18 @@ class RequestTicket extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(4.h),
                     isExpanded: true,
-                    items: [
-                      const DropdownMenuItem(child: Text('teste 1')),
-                    ],
-                    onChanged: (test) {}),
-                const CommonTextField(
+                    hint: const Text('Selecione uma justificativa'),
+                    items: controller.justifications
+                        .map<DropdownMenuItem<String>>(
+                            (value) => DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value),
+                                ))
+                        .toList(),
+                    onChanged: (value) =>
+                        controller.onJustificationChanged(value)),
+                CommonTextField(
+                  controller: controller.justificationController,
                   title: 'Justificativa detalhada (opcional)',
                   labelText: 'Digite sua justificativa detalhada',
                   keybordType: TextInputType.multiline,
@@ -170,7 +187,9 @@ class RequestTicket extends StatelessWidget {
         padding: EdgeInsets.all(20.w),
         child: SizedBox(
             height: 50.h,
-            child: CommomButton(label: 'Enviar solicitação', onPressed: () {})),
+            child: CommomButton(
+                label: 'Enviar solicitação',
+                onPressed: () => controller.onTapSendRequest())),
       ),
     );
   }

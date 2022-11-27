@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/historic/ui/historic_screen.dart';
-import 'package:project_ifma_ticket/features/requestTicket/ui/request_ticket.dart';
+import 'package:project_ifma_ticket/features/requestTicket/ui/request_ticket_screen.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
