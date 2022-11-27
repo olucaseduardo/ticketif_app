@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 
 class CommonTextField extends StatelessWidget {
   final String title;
@@ -8,6 +9,7 @@ class CommonTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextInputType? keybordType;
   final bool obscureText;
+  final int? maxline;
 
   const CommonTextField(
       {Key? key,
@@ -15,13 +17,14 @@ class CommonTextField extends StatelessWidget {
       required this.labelText,
       this.textInputAction,
       this.keybordType,
-      this.obscureText = false})
+      this.obscureText = false,
+      this.maxline = 1})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+      padding: EdgeInsets.symmetric(vertical: 5.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,14 +32,16 @@ class CommonTextField extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 4.h),
             child: Text(
               title,
-              style: const TextStyle(fontSize: 14, color: AppColors.gray400),
+              style: AppTextStyle.normalText,
             ),
           ),
           TextFormField(
             obscureText: obscureText,
             keyboardType: keybordType,
             textInputAction: textInputAction,
+            maxLines: maxline,
             decoration: InputDecoration(
+              alignLabelWithHint: true,
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.green500)),
               focusColor: AppColors.green500,

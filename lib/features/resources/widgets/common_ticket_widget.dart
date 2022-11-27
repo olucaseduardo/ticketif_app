@@ -12,7 +12,7 @@ class CommomTicketWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime dateTime = DateTime.now();
     return Padding(
-      padding: EdgeInsets.all(20.h),
+      padding: EdgeInsets.symmetric(vertical: 14.h),
       child: Container(
         decoration: BoxDecoration(
             color: AppColors.gray900, borderRadius: BorderRadius.circular(4)),
@@ -29,6 +29,9 @@ class CommomTicketWidget extends StatelessWidget {
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w700,
                           color: AppColors.gray200)),
+                  SizedBox(
+                    height: 8.h,
+                  ),
                   Row(
                     children: [
                       Column(
@@ -84,7 +87,7 @@ class CommomTicketWidget extends StatelessWidget {
               ),
               Column(
                 children: [
-                  SvgPicture.asset('svg/QrCode.svg',
+                  SvgPicture.asset('assets/svg/QrCode.svg',
                       height: 28.h, width: 28.w, color: AppColors.blue),
                   Text('Pagar',
                       style: TextStyle(

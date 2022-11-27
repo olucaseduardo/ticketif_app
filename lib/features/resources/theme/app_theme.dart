@@ -13,5 +13,24 @@ mixin TicketTheme {
         elevation: 0,
         backgroundColor: AppColors.green500,
         iconTheme: const IconThemeData(color: AppColors.white),
-      ));
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: AppColors.gray900,
+        selectedColor: AppColors.green800,
+        checkmarkColor: AppColors.green300,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(AppColors.green500),
+        elevation: MaterialStateProperty.all<double>(0),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+            const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+        )),
+      )),
+      checkboxTheme: CheckboxThemeData(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          side: const BorderSide(color: AppColors.green800),
+          fillColor: MaterialStateProperty.all(AppColors.green500)));
 }

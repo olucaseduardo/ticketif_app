@@ -5,6 +5,8 @@ import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/historic/ui/historic_screen.dart';
 import 'package:project_ifma_ticket/features/requestTicket/ui/request_ticket.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
 
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.all(20.w),
+              padding: EdgeInsets.all(16.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -62,7 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w700,
                           color: AppColors.gray200)),
-                  ElevatedButton(
+                  CommomButton(
+                    label: 'Solicitar um ticket',
+                    textPadding: 8.h,
+                    textStyle: AppTextStyle.smallButton,
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -70,20 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (BuildContext context) =>
                                   const RequestTicket()));
                     },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: AppColors.green500,
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.h),
-                        child: Text("Solicitar um ticket",
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w700,
-                            )),
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -94,47 +85,74 @@ class _HomeScreenState extends State<HomeScreen> {
               color: AppColors.gray800,
             ),
             Padding(
-              padding: EdgeInsets.only(
-                  top: 18.h, left: 20.w, right: 20.w, bottom: 0),
-              child: Text('Suas refeições de hoje',
-                  style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.gray200)),
-            ),
-            CommomTicketWidget(),
-            // Padding(
-            //   padding: EdgeInsets.symmetric(vertical: 20.h),
-            //   child: Align(
-            //       alignment: Alignment.center,
-            //       child: Text(
-            //           'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
-            //           style: TextStyle(
-            //               fontSize: 12.sp, color: AppColors.gray700))),
-            // ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 0, left: 20.w, right: 20.w, bottom: 18.h),
-              child: Text('Outras opções',
-                  style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.gray200)),
-            ),
-            CommonTileOptions(
-              leading: Icons.menu_rounded,
-              label: 'Seus tickets',
-              onTap: () {},
-            ),
-            CommonTileOptions(
-              leading: Icons.search_rounded,
-              label: 'Tickets em análise',
-              onTap: () {},
-            ),
-            CommonTileOptions(
-              leading: Icons.access_time_rounded,
-              label: 'Histórico',
-              onTap: () {},
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 18.h),
+                    child: Text('Suas refeições de hoje',
+                        style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.gray200)),
+                  ),
+                  const CommomTicketWidget(),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(vertical: 20.h),
+                  //   child: Align(
+                  //       alignment: Alignment.center,
+                  //       child: Text(
+                  //           'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
+                  //           style: TextStyle(
+                  //               fontSize: 12.sp, color: AppColors.gray700))),
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 18.h),
+                    child: Text('Outras opções',
+                        style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.gray200)),
+                  ),
+                  CommonTileOptions(
+                    leading: Icons.menu_rounded,
+                    label: 'Seus tickets',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => HistoricScreen(
+                                    title: 'Seus tickets',
+                                  )));
+                    },
+                  ),
+                  CommonTileOptions(
+                    leading: Icons.search_rounded,
+                    label: 'Tickets em análise',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => HistoricScreen(
+                                    title: 'Tickets em análise',
+                                  )));
+                    },
+                  ),
+                  CommonTileOptions(
+                    leading: Icons.access_time_rounded,
+                    label: 'Histórico',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => HistoricScreen(
+                                    title: 'Histórico',
+                                  )));
+                    },
+                  ),
+                ],
+              ),
             )
           ],
         ));

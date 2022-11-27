@@ -16,51 +16,51 @@ class CommonTileOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap(),
+      onTap: () => onTap(),
       child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
-          child: Container(
-            decoration: BoxDecoration(
-                color: AppColors.gray900,
-                borderRadius: BorderRadius.circular(4)),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.gray800,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Icon(
-                            leading,
-                            color: AppColors.gray400,
-                          ),
+        padding: EdgeInsets.symmetric(vertical: 4.h),
+        child: Container(
+          decoration: BoxDecoration(
+              color: AppColors.gray900, borderRadius: BorderRadius.circular(4)),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.gray800,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Icon(
+                          leading,
+                          color: AppColors.gray400,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 20.h, horizontal: 8.w),
-                        child: Text(label,
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.gray400)),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.arrow_forward_rounded,
-                    color: AppColors.gray400,
-                  ),
-                ],
-              ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 20.h, horizontal: 8.w),
+                      child: Text(label,
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.gray400)),
+                    ),
+                  ],
+                ),
+                Icon(
+                  Icons.arrow_forward_rounded,
+                  color: AppColors.gray400,
+                ),
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
