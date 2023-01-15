@@ -11,7 +11,9 @@ class AppLogo extends StatelessWidget {
       child: Column(
         children: [
           Image.asset('assets/images/LOGO.png'),
-          SizedBox(height: 4.h,),
+          SizedBox(
+            height: 4,
+          ),
           Image.asset('assets/images/TICKETIF.png'),
         ],
       ),

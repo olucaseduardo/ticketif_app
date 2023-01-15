@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/common_dropdown_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
 
 import '../../resources/theme/app_colors.dart';
@@ -64,28 +65,9 @@ class RequestTicket extends ConsumerWidget {
                     style: AppTextStyle.normalText,
                   ),
                 ),
-                DropdownButtonFormField<String>(
-                    icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                    decoration: const InputDecoration(
-                      alignLabelWithHint: true,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: AppColors.green500)),
-                      focusColor: AppColors.green500,
-                      fillColor: AppColors.green500,
-                      hoverColor: AppColors.green500,
-                      labelStyle: TextStyle(color: AppColors.gray700),
-                      border: OutlineInputBorder(),
-                    ),
-                    borderRadius: BorderRadius.circular(4.h),
-                    isExpanded: true,
-                    hint: const Text('Selecione uma refeição'),
-                    items: controller.meals
-                        .map<DropdownMenuItem<String>>(
-                            (value) => DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value),
-                                ))
-                        .toList(),
+                CommonDropDownButton(
+                    hint: 'Selecione uma refeição',
+                    items: controller.meals,
                     onChanged: (value) => controller.onMealsChanged(value)),
                 Padding(
                   padding: EdgeInsets.only(top: 12.h),
@@ -138,7 +120,7 @@ class RequestTicket extends ConsumerWidget {
                                     .onDaysChanged(value, isSelected)))
                             .toList(),
                       )
-                    : //TODO: aviso de horario
+                    : //TODO: notice of time to order
                     Container(),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),
@@ -147,28 +129,9 @@ class RequestTicket extends ConsumerWidget {
                     style: AppTextStyle.normalText,
                   ),
                 ),
-                DropdownButtonFormField<String>(
-                    icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                    decoration: const InputDecoration(
-                      alignLabelWithHint: true,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: AppColors.green500)),
-                      focusColor: AppColors.green500,
-                      fillColor: AppColors.green500,
-                      hoverColor: AppColors.green500,
-                      labelStyle: TextStyle(color: AppColors.gray700),
-                      border: OutlineInputBorder(),
-                    ),
-                    borderRadius: BorderRadius.circular(4.h),
-                    isExpanded: true,
-                    hint: const Text('Selecione uma justificativa'),
-                    items: controller.justifications
-                        .map<DropdownMenuItem<String>>(
-                            (value) => DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value),
-                                ))
-                        .toList(),
+                CommonDropDownButton(
+                    hint: 'Selecione uma justificativa',
+                    items: controller.justifications,
                     onChanged: (value) =>
                         controller.onJustificationChanged(value)),
                 CommonTextField(

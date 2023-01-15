@@ -24,7 +24,7 @@ class CommomButton extends StatelessWidget {
         ),
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(textPadding ?? 16.h),
+            padding: EdgeInsets.all(textPadding ?? 18),
             child:
                 Text(label, style: textStyle ?? AppTextStyle.buttonTextStyle),
           ),

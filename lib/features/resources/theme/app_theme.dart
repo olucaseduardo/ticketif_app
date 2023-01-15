@@ -9,7 +9,7 @@ mixin TicketTheme {
       fontFamily: GoogleFonts.inter().fontFamily,
       scaffoldBackgroundColor: AppColors.white,
       appBarTheme: AppBarTheme(
-        toolbarHeight: 78.h,
+        toolbarHeight: 78,
         elevation: 0,
         backgroundColor: AppColors.green500,
         iconTheme: const IconThemeData(color: AppColors.white),

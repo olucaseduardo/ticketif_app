@@ -18,12 +18,12 @@ class CommonTileOptions extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 4.h),
+        padding: EdgeInsets.symmetric(vertical: 4),
         child: Container(
           decoration: BoxDecoration(
               color: AppColors.gray900, borderRadius: BorderRadius.circular(4)),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
+            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -43,10 +43,10 @@ class CommonTileOptions extends StatelessWidget {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: 20.h, horizontal: 8.w),
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 8),
                       child: Text(label,
                           style: TextStyle(
-                              fontSize: 18.sp,
+                              fontSize: 16,
                               fontWeight: FontWeight.w700,
                               color: AppColors.gray400)),
                     ),

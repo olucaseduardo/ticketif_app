@@ -65,6 +65,7 @@ class RequestTicketController extends ChangeNotifier {
     return false;
   }
 
+  //TODO: most efficient method for the future
   List<String> listOfDays() {
     List<String> order = [];
     for (var day in days) {
