@@ -12,93 +12,81 @@ class CommomTicketWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime dateTime = DateTime.now();
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 14),
-      child: FittedBox(
-        fit: BoxFit.fitWidth,
-        child: Container(
-          decoration: BoxDecoration(
-              color: AppColors.gray900, borderRadius: BorderRadius.circular(4)),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(DateUtil.ticketDay(dateTime),
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.gray200)),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Refeição',
-                              style: TextStyle(
-                                  fontSize: 10, color: AppColors.gray700),
-                            ),
-                            Text('Café da manhã',
-                                style: TextStyle(
-                                    fontSize: 10, color: AppColors.gray200))
-                          ],
-                        ),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Status',
-                                style: TextStyle(
-                                    fontSize: 10, color: AppColors.gray700)),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.check_circle_sharp,
-                                  size: 14,
-                                  color: AppColors.green500,
-                                ),
-                                SizedBox(width: 4),
-                                Text('Utilização autorizada',
-                                    style: TextStyle(
-                                        fontSize: 10, color: AppColors.gray200))
-                              ],
-                            )
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32),
-                  child: const DottedLine(
-                    direction: Axis.vertical,
-                    lineLength: 60,
-                    dashLength: 2,
-                    dashColor: AppColors.blue,
+      padding: EdgeInsets.symmetric(vertical: 8),
+      child: Container(
+        decoration: BoxDecoration(
+            color: AppColors.gray900, borderRadius: BorderRadius.circular(4)),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(DateUtil.ticketDay(dateTime),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.gray200)),
+                  SizedBox(
+                    height: 8,
                   ),
-                ),
-                Column(
-                  children: [
-                    SvgPicture.asset('assets/svg/QrCode.svg',
-                        height: 28, width: 28, color: AppColors.blue),
-                    Text('Pagar',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.blue))
-                  ],
-                )
-              ],
-            ),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Refeição',
+                            style: TextStyle(
+                                fontSize: 10, color: AppColors.gray700),
+                          ),
+                          Text('Café da manhã',
+                              style: TextStyle(
+                                  fontSize: 10, color: AppColors.gray200))
+                        ],
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Status',
+                              style: TextStyle(
+                                  fontSize: 10, color: AppColors.gray700)),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.check_circle_sharp,
+                                size: 14,
+                                color: AppColors.green500,
+                              ),
+                              SizedBox(width: 4),
+                              Text('Utilização autorizada',
+                                  style: TextStyle(
+                                      fontSize: 10, color: AppColors.gray200))
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+              const DottedLine(
+                direction: Axis.vertical,
+                lineLength: 60,
+                dashLength: 2,
+                dashColor: AppColors.blue,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SvgPicture.asset('assets/svg/QrPay.svg',
+                    height: 50, width: 50, color: AppColors.blue),
+              )
+            ],
           ),
         ),
       ),

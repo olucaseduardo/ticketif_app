@@ -4,7 +4,9 @@ import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/routes/arguments.dart';
 
 class HomeController extends ChangeNotifier {
-  onRequestTicketTap() {}
+  onRequestTicketTap() {
+    Navigator.pushNamed(navigatorKey.currentContext!, AppRouter.requestTicketRoute);
+  }
   onLogoutTap() {}
   onTicketsTap() {
     Navigator.pushNamed(navigatorKey.currentContext!, AppRouter.historicRoute,

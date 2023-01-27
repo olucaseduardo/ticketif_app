@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/app/app.dart';
-import 'package:project_ifma_ticket/features/historic/ui/historic_screen.dart';
-import 'package:project_ifma_ticket/features/requestTicket/ui/request_ticket_screen.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
+import 'package:project_ifma_ticket/features/views/historic_screen.dart';
+import 'package:project_ifma_ticket/features/views/request_ticket_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class HomeScreen extends ConsumerWidget {
   DateTime dateTime = DateTime.now();
   @override
   Widget build(BuildContext context, ref) {
+    final controller = ref.watch(homeProvider);
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -41,7 +43,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () => controller.onLogoutTap(),
                 icon: const Icon(
                   Icons.logout,
                 ))
@@ -67,13 +69,7 @@ class HomeScreen extends ConsumerWidget {
                       label: 'Solicitar um ticket',
                       textPadding: 8,
                       textStyle: AppTextStyle.smallButton,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const RequestTicket()));
-                      },
+                      onPressed: () => controller.onRequestTicketTap(),
                     ),
                   ],
                 ),
@@ -96,7 +92,10 @@ class HomeScreen extends ConsumerWidget {
                               fontWeight: FontWeight.w700,
                               color: AppColors.gray200)),
                     ),
-                    const CommomTicketWidget(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      child: const CommomTicketWidget(),
+                    ),
                     // Padding(
                     //   padding: EdgeInsets.symmetric(vertical: 20.h),
                     //   child: Align(
@@ -117,41 +116,17 @@ class HomeScreen extends ConsumerWidget {
                     CommonTileOptions(
                       leading: Icons.menu_rounded,
                       label: 'Seus tickets',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    HistoricScreen(
-                                      title: 'Seus tickets',
-                                    )));
-                      },
+                      onTap: () => controller.onTicketsTap(),
                     ),
                     CommonTileOptions(
                       leading: Icons.search_rounded,
                       label: 'Tickets em análise',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    HistoricScreen(
-                                      title: 'Tickets em análise',
-                                    )));
-                      },
+                      onTap: () => controller.onAnalysisTap(),
                     ),
                     CommonTileOptions(
                       leading: Icons.access_time_rounded,
                       label: 'Histórico',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    HistoricScreen(
-                                      title: 'Histórico',
-                                    )));
-                      },
+                      onTap: () => controller.onHistoricTap(),
                     ),
                   ],
                 ),
