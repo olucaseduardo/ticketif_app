@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 
 class CommonDropDownButton extends StatelessWidget {
-  String? hint;
-  List<String> items;
-  Function onChanged;
+  final String? hint;
+  final List<String> items;
+  final Function onChanged;
 
-  CommonDropDownButton(
+  const CommonDropDownButton(
       {Key? key, this.hint, required this.items, required this.onChanged})
       : super(key: key);
 

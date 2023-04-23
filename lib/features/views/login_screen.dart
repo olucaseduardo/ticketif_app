@@ -49,7 +49,7 @@ class LoginScreen extends ConsumerWidget {
                     ),
                     Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.h),
-                        child: CommomButton(
+                        child: CommonButton(
                             label: "Entrar na conta",
                             onPressed: () => controller.onLoginTap())),
                   ],

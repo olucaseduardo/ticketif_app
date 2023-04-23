@@ -7,9 +7,9 @@ class CommonTextField extends StatelessWidget {
   final String title;
   final String labelText;
   final TextInputAction? textInputAction;
-  final TextInputType? keybordType;
+  final TextInputType? keyboardType;
   final bool obscureText;
-  final int? maxline;
+  final int? maxLine;
   final TextEditingController? controller;
 
   const CommonTextField({
@@ -18,9 +18,9 @@ class CommonTextField extends StatelessWidget {
     required this.title,
     required this.labelText,
     this.textInputAction,
-    this.keybordType,
+    this.keyboardType,
     this.obscureText = false,
-    this.maxline = 1,
+    this.maxLine = 1,
   }) : super(key: key);
 
   @override
@@ -40,9 +40,9 @@ class CommonTextField extends StatelessWidget {
           TextFormField(
             controller: controller,
             obscureText: obscureText,
-            keyboardType: keybordType,
+            keyboardType: keyboardType,
             textInputAction: textInputAction,
-            maxLines: maxline,
+            maxLines: maxLine,
             decoration: InputDecoration(
               alignLabelWithHint: true,
               focusedBorder: OutlineInputBorder(

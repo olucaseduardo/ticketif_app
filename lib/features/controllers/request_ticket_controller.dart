@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 
@@ -26,13 +27,17 @@ class RequestTicketController extends ChangeNotifier {
 
   onMealsChanged(String? value) {
     meal = value as String;
-    print('Meal: $meal');
+    if (kDebugMode) {
+      print('Meal: $meal');
+    }
     notifyListeners();
   }
 
   onJustificationChanged(String? value) {
     justification = value as String;
-    print('Justification: $justification');
+    if (kDebugMode) {
+      print('Justification: $justification');
+    }
     notifyListeners();
   }
 
@@ -80,12 +85,16 @@ class RequestTicketController extends ChangeNotifier {
     if (isSelected!) {
       if (!permanentDays.contains(value)) permanentDays.add(value as String);
       permanentDays = listOfDays();
-      print('Permanent Days: $permanentDays');
+      if (kDebugMode) {
+        print('Permanent Days: $permanentDays');
+      }
       notifyListeners();
     } else {
       if (permanentDays.contains(value)) permanentDays.remove(value);
       permanentDays = listOfDays();
-      print('Permanent Days: $permanentDays');
+      if (kDebugMode) {
+        print('Permanent Days: $permanentDays');
+      }
       notifyListeners();
     }
   }

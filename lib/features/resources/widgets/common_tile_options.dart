@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 
 class CommonTileOptions extends StatelessWidget {
@@ -18,12 +17,12 @@ class CommonTileOptions extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(vertical: 4),
         child: Container(
           decoration: BoxDecoration(
               color: AppColors.gray900, borderRadius: BorderRadius.circular(4)),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -43,16 +42,16 @@ class CommonTileOptions extends StatelessWidget {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 8),
+                          const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
                       child: Text(label,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                               color: AppColors.gray400)),
                     ),
                   ],
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_rounded,
                   color: AppColors.gray400,
                 ),

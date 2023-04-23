@@ -11,7 +11,7 @@ class HistoricController extends ChangeNotifier{
 
      void onRefresh() async{
           // monitor network fetch
-          await Future.delayed(Duration(milliseconds: 1000));
+          await Future.delayed(const Duration(milliseconds: 1000));
           countOne+=1;
           // if failed,use loadFailed(),if no data return,use LoadNodata()
           // items.add((items.length+1).toString());
@@ -26,7 +26,7 @@ class HistoricController extends ChangeNotifier{
 
      void onLoading() async{
           // monitor network fetch
-          await Future.delayed(Duration(milliseconds: 1000));
+          await Future.delayed(const Duration(milliseconds: 1000));
           countOne+=1;
           // if failed,use loadFailed(),if no data return,use LoadNodata()
           // items.add((items.length+1).toString());

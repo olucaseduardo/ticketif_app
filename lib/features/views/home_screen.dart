@@ -3,19 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
-import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
-import 'package:project_ifma_ticket/features/views/historic_screen.dart';
-import 'package:project_ifma_ticket/features/views/request_ticket_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
-  DateTime dateTime = DateTime.now();
   @override
   Widget build(BuildContext context, ref) {
     final controller = ref.watch(homeProvider);
@@ -28,7 +24,7 @@ class HomeScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  DateUtil.todayDate(dateTime),
+                  DateUtil.todayDate(DateUtil.dateTime),
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.w700),
                 ),
@@ -65,7 +61,7 @@ class HomeScreen extends ConsumerWidget {
                               fontWeight: FontWeight.w700,
                               color: AppColors.gray200)),
                     ),
-                    CommomButton(
+                    CommonButton(
                       label: 'Solicitar um ticket',
                       textPadding: 8,
                       textStyle: AppTextStyle.smallButton,
@@ -92,9 +88,9 @@ class HomeScreen extends ConsumerWidget {
                               fontWeight: FontWeight.w700,
                               color: AppColors.gray200)),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: const CommomTicketWidget(),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 6.0),
+                      child: CommonTicketWidget(),
                     ),
                     // Padding(
                     //   padding: EdgeInsets.symmetric(vertical: 20.h),

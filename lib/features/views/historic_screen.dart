@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,15 +8,15 @@ import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_wid
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HistoricScreen extends ConsumerWidget {
-  String title;
-  HistoricScreen({Key? key, required this.title}) : super(key: key);
+  final String title;
+  const HistoricScreen({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
     final controller = ref.watch(historicProvider);
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: Size(double.infinity, 120),
+            preferredSize: const Size(double.infinity, 120),
             child: AppBar(
               titleSpacing: 0,
               backgroundColor: AppColors.white,
@@ -29,11 +28,11 @@ class HistoricScreen extends ConsumerWidget {
                     fontWeight: FontWeight.w700),
               ),
               flexibleSpace: Padding(
-                  padding: EdgeInsets.only(top: 90.h, left: 20.w, right: 20.w),
+                  padding: EdgeInsets.only(top: 80.h, left: 20.w, right: 20.w),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         Expanded(
@@ -54,14 +53,14 @@ class HistoricScreen extends ConsumerWidget {
         body: SmartRefresher(
           enablePullDown: true,
           enablePullUp: false,
-          header: ClassicHeader(),
+          header: const ClassicHeader(),
           controller: controller.refreshController,
           onRefresh: () => controller.onRefresh(),
           onLoading: () => controller.onLoading(),
           child: ListView.builder(
             itemBuilder: (context, _) => Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: const CommomTicketWidget(),
+              child: const CommonTicketWidget(),
             ),
             itemCount: controller.countOne, // controller.countOne,
             physics: const AlwaysScrollableScrollPhysics(),

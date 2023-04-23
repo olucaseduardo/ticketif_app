@@ -46,21 +46,21 @@ class RequestTicket extends ConsumerWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.h),
-                  child: Text(
+                  child: const Text(
                     'Solicitar um novo ticket',
                     style: AppTextStyle.largeText,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),
-                  child: Text(
+                  child: const Text(
                     'Descreva as características de seu ticket para que seja analisada sua solicitação.',
                     style: AppTextStyle.smallText,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),
-                  child: Text(
+                  child: const Text(
                     'Refeição',
                     style: AppTextStyle.normalText,
                   ),
@@ -71,7 +71,7 @@ class RequestTicket extends ConsumerWidget {
                     onChanged: (value) => controller.onMealsChanged(value)),
                 Padding(
                   padding: EdgeInsets.only(top: 12.h),
-                  child: Text(
+                  child: const Text(
                     'Validade',
                     style: AppTextStyle.normalText,
                   ),
@@ -87,7 +87,7 @@ class RequestTicket extends ConsumerWidget {
                             controller.onPermanentChanged(!value!);
                           },
                         )),
-                    Text(
+                    const Text(
                       'Apenas para hoje',
                       style: AppTextStyle.normalText,
                     ),
@@ -103,7 +103,7 @@ class RequestTicket extends ConsumerWidget {
                             controller.onPermanentChanged(value);
                           },
                         )),
-                    Text(
+                    const Text(
                       'Permanente',
                       style: AppTextStyle.normalText,
                     ),
@@ -124,7 +124,7 @@ class RequestTicket extends ConsumerWidget {
                     Container(),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),
-                  child: Text(
+                  child: const Text(
                     'Justificativa',
                     style: AppTextStyle.normalText,
                   ),
@@ -138,8 +138,8 @@ class RequestTicket extends ConsumerWidget {
                   controller: controller.justificationController,
                   title: 'Justificativa detalhada (opcional)',
                   labelText: 'Digite sua justificativa detalhada',
-                  keybordType: TextInputType.multiline,
-                  maxline: 5,
+                  keyboardType: TextInputType.multiline,
+                  maxLine: 5,
                 ),
               ],
             ),
@@ -150,7 +150,7 @@ class RequestTicket extends ConsumerWidget {
         padding: EdgeInsets.all(20.w),
         child: SizedBox(
             height: 50.h,
-            child: CommomButton(
+            child: CommonButton(
                 label: 'Enviar solicitação',
                 onPressed: () => controller.onTapSendRequest())),
       ),
