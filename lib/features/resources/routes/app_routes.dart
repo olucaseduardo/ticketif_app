@@ -18,7 +18,7 @@ class AppRouter {
       case loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case homeRoute:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
       case historicRoute:
         return MaterialPageRoute(
             builder: (_) => HistoricScreen(

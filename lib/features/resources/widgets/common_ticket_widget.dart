@@ -1,10 +1,9 @@
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart' as Qrdialog;
+import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart' as qr_code;
 
 class CommonTicketWidget extends StatelessWidget {
   const CommonTicketWidget({Key? key}) : super(key: key);
@@ -41,11 +40,11 @@ class CommonTicketWidget extends StatelessWidget {
                           Text(
                             'Refeição',
                             style: TextStyle(
-                                fontSize: 10, color: AppColors.gray700),
+                                fontSize: 12, color: AppColors.gray700),
                           ),
                           Text('Café da manhã',
                               style: TextStyle(
-                                  fontSize: 10, color: AppColors.gray200))
+                                  fontSize: 12, color: AppColors.gray200))
                         ],
                       ),
                       const SizedBox(
@@ -56,7 +55,7 @@ class CommonTicketWidget extends StatelessWidget {
                         children: [
                           const Text('Status',
                               style: TextStyle(
-                                  fontSize: 10, color: AppColors.gray700)),
+                                  fontSize: 12, color: AppColors.gray700)),
                           Row(
                             children: const [
                               Icon(
@@ -67,7 +66,7 @@ class CommonTicketWidget extends StatelessWidget {
                               SizedBox(width: 4),
                               Text('Utilização autorizada',
                                   style: TextStyle(
-                                      fontSize: 10, color: AppColors.gray200))
+                                      fontSize: 12, color: AppColors.gray200))
                             ],
                           )
                         ],
@@ -85,11 +84,13 @@ class CommonTicketWidget extends StatelessWidget {
               Material(
                 color: AppColors.gray900,
                 child: InkWell(
-                  onTap: () => Qrdialog.showQrCodeDialog(context),
+                  onTap: () => qr_code.showQrCodeDialog(context),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset('assets/svg/QrPay.svg',
-                        height: 50, width: 50, color: AppColors.blue),
+                    child: Align(
+                      child: SvgPicture.asset('assets/svg/QrPay.svg',
+                          height: 50, width: 50, color: AppColors.blue),
+                    ),
                   ),
                 ),
               )

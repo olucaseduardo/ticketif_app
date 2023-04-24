@@ -14,6 +14,7 @@ class RequestTicketController extends ChangeNotifier {
     'Monitoria',
     'Estudos',
     'Evento',
+    'Estágio',
     'Outro'
   ];
   List<String> days = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
