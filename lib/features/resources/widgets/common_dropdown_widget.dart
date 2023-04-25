@@ -13,24 +13,25 @@ class CommonDropDownButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
-        icon: const Icon(Icons.keyboard_arrow_down_outlined),
-        decoration: const InputDecoration(
-          alignLabelWithHint: true,
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.green500)),
-          focusColor: AppColors.green500,
-          fillColor: AppColors.green500,
-          hoverColor: AppColors.green500,
-          labelStyle: TextStyle(color: AppColors.gray700),
-          border: OutlineInputBorder(),
-        ),
-        borderRadius: BorderRadius.circular(4.0),
-        isExpanded: true,
-        hint: Text(hint!),
-        items: items
-            .map((element) =>
-                DropdownMenuItem(value: element, child: Text(element)))
-            .toList(),
-        onChanged: (value) => onChanged(value));
+      icon: const Icon(Icons.keyboard_arrow_down_outlined),
+      decoration: const InputDecoration(
+        alignLabelWithHint: true,
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.green500)),
+        focusColor: AppColors.green500,
+        fillColor: AppColors.green500,
+        hoverColor: AppColors.green500,
+        labelStyle: TextStyle(color: AppColors.gray700),
+        border: OutlineInputBorder(),
+      ),
+      borderRadius: BorderRadius.circular(4.0),
+      isExpanded: true,
+      hint: Text(hint!),
+      items: items
+          .map((element) =>
+              DropdownMenuItem(value: element, child: Text(element)))
+          .toList(),
+      onChanged: (value) => onChanged(value),
+    );
   }
 }

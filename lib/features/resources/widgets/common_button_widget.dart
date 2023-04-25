@@ -3,21 +3,22 @@ import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 
 class CommonButton extends StatelessWidget {
-  final Function onPressed;
+  final VoidCallback? function;
   final String label;
   final double? textPadding;
   final TextStyle? textStyle;
-  const CommonButton(
-      {Key? key,
-      required this.label,
-      this.textPadding,
-      this.textStyle,
-      required this.onPressed})
-      : super(key: key);
+
+  const CommonButton({
+    Key? key,
+    required this.label,
+    this.textPadding,
+    this.textStyle,
+    this.function,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => ElevatedButton(
-        onPressed: () => onPressed(),
+        onPressed: function,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.green500,
         ),

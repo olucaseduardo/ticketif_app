@@ -48,10 +48,12 @@ class LoginScreen extends ConsumerWidget {
                       obscureText: true,
                     ),
                     Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.h),
-                        child: CommonButton(
-                            label: "Entrar na conta",
-                            onPressed: () => controller.onLoginTap())),
+                      padding: EdgeInsets.symmetric(vertical: 20.h),
+                      child: CommonButton(
+                        label: "Entrar na conta",
+                        function: () => controller.onLoginTap(),
+                      ),
+                    ),
                   ],
                 ))
               ],

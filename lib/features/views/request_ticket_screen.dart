@@ -149,10 +149,12 @@ class RequestTicket extends ConsumerWidget {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(20.w),
         child: SizedBox(
-            height: 50.h,
-            child: CommonButton(
-                label: 'Enviar solicitação',
-                onPressed: () => controller.onTapSendRequest())),
+          height: 50.h,
+          child: CommonButton(
+            label: 'Enviar solicitação',
+            function: () => controller.onTapSendRequest(),
+          ),
+        ),
       ),
     );
   }

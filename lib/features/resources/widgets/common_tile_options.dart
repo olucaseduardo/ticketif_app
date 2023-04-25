@@ -4,23 +4,26 @@ import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 class CommonTileOptions extends StatelessWidget {
   final IconData leading;
   final String label;
-  final Function onTap;
-  const CommonTileOptions(
-      {Key? key,
-      required this.leading,
-      required this.label,
-      required this.onTap})
-      : super(key: key);
+  final VoidCallback? function;
+
+  const CommonTileOptions({
+    Key? key,
+    required this.leading,
+    required this.label,
+    required this.function,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap(),
+      onTap: function,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: Container(
           decoration: BoxDecoration(
-              color: AppColors.gray900, borderRadius: BorderRadius.circular(4)),
+            color: AppColors.gray900,
+            borderRadius: BorderRadius.circular(4),
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
             child: Row(
@@ -30,8 +33,9 @@ class CommonTileOptions extends StatelessWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          color: AppColors.gray800,
-                          borderRadius: BorderRadius.circular(20)),
+                        color: AppColors.gray800,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
                         child: Icon(
@@ -43,11 +47,14 @@ class CommonTileOptions extends StatelessWidget {
                     Padding(
                       padding:
                           const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
-                      child: Text(label,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.gray400)),
+                      child: Text(
+                        label,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.gray400,
+                        ),
+                      ),
                     ),
                   ],
                 ),

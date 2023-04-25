@@ -26,7 +26,9 @@ class HomeScreen extends ConsumerWidget {
                 Text(
                   DateUtil.todayDate(DateUtil.dateTime),
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.w700),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 const Text(
                   '20191BCC.CAX0003',
@@ -39,10 +41,11 @@ class HomeScreen extends ConsumerWidget {
           ),
           actions: [
             IconButton(
-                onPressed: () => controller.onLogoutTap(),
-                icon: const Icon(
-                  Icons.logout,
-                ))
+              onPressed: () => controller.onLogoutTap(),
+              icon: const Icon(
+                Icons.logout,
+              ),
+            ),
           ],
         ),
         body: SingleChildScrollView(
@@ -55,17 +58,20 @@ class HomeScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Flexible(
-                      child: Text('Olá, Fulano de tal',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.gray200)),
+                      child: Text(
+                        'Olá, Fulano de tal',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.gray200,
+                        ),
+                      ),
                     ),
                     CommonButton(
                       label: 'Solicitar um ticket',
                       textPadding: 8,
                       textStyle: AppTextStyle.smallButton,
-                      onPressed: () => controller.onRequestTicketTap(),
+                      function: () => controller.onRequestTicketTap(),
                     ),
                   ],
                 ),
@@ -112,17 +118,17 @@ class HomeScreen extends ConsumerWidget {
                     CommonTileOptions(
                       leading: Icons.menu_rounded,
                       label: 'Seus tickets',
-                      onTap: () => controller.onTicketsTap(),
+                      function: () => controller.onTicketsTap(),
                     ),
                     CommonTileOptions(
                       leading: Icons.search_rounded,
                       label: 'Tickets em análise',
-                      onTap: () => controller.onAnalysisTap(),
+                      function: () => controller.onAnalysisTap(),
                     ),
                     CommonTileOptions(
                       leading: Icons.access_time_rounded,
                       label: 'Histórico',
-                      onTap: () => controller.onHistoricTap(),
+                      function: () => controller.onHistoricTap(),
                     ),
                   ],
                 ),
