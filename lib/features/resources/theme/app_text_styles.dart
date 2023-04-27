@@ -13,3 +13,64 @@ class AppTextStyle {
   static const largeText = TextStyle(
       fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.gray200);
 }
+
+class TextApp {
+  static const smallBody = TextStyle(
+    fontSize: 12,
+    // height: 16,
+    letterSpacing: 0.4,
+  );
+
+  static const bodyMedium = TextStyle(
+    fontSize: 12,
+    // height: 20,
+    letterSpacing: 0.25,
+  );
+
+  static const bodyLarge = TextStyle(
+    fontSize: 16,
+    // height: 24,
+    letterSpacing: 0.5,
+  );
+
+  static const labelSmall = TextStyle(
+    fontSize: 11,
+    // height: 16,
+    letterSpacing: 0.5,
+  );
+
+  static const labelMedium = TextStyle(
+    fontSize: 12,
+    // height: 24,
+    letterSpacing: 0.5,
+  );
+
+  static const labelLarge = TextStyle(
+    fontSize: 14,
+    // height: 20,
+    letterSpacing: 0.1,
+  );
+
+  static const labelBig = TextStyle(
+    fontSize: 18,
+    // height: 20,
+    letterSpacing: 0.1,
+  );
+
+  static const titleSmall = TextStyle(
+    fontSize: 14,
+    // // height: 20,
+    letterSpacing: 0.1,
+  );
+
+  static const titleMedium = TextStyle(
+    fontSize: 16,
+    // // height: 24,
+    letterSpacing: 0.15,
+  );
+
+  static const titleLarge = TextStyle(
+    fontSize: 22,
+    // // height: 28,
+  );
+}

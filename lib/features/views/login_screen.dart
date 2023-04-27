@@ -9,8 +9,6 @@ import 'package:project_ifma_ticket/features/resources/widgets/common_button_wid
 import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
 import 'package:project_ifma_ticket/features/views/home_screen.dart';
 
-
-
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -27,10 +25,10 @@ class LoginScreen extends ConsumerWidget {
               children: [
                 const AppLogo(),
                 Padding(
-                  padding: EdgeInsets.all(24.w),
+                  padding: EdgeInsets.all(24),
                   child: Text(
                     "Entre para continuar",
-                    style: TextStyle(fontSize: 16.sp, color: AppColors.gray400),
+                    style: TextApp.titleMedium,
                   ),
                 ),
                 Form(

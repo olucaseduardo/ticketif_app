@@ -23,19 +23,10 @@ class HomeScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  DateUtil.todayDate(DateUtil.dateTime),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const Text(
-                  '20191BCC.CAX0003',
-                  style: TextStyle(
-                    fontSize: 10,
-                  ),
-                )
+                Text(DateUtil.todayDate(DateUtil.dateTime),
+                    style:
+                        TextApp.labelBig.copyWith(fontWeight: FontWeight.w700)),
+                const Text('20191BCC.CAX0003', style: TextApp.labelMedium)
               ],
             ),
           ),
@@ -57,14 +48,11 @@ class HomeScreen extends ConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Flexible(
+                    Flexible(
                       child: Text(
                         'Olá, Fulano de tal',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.gray200,
-                        ),
+                        style: TextApp.labelBig
+                            .copyWith(fontWeight: FontWeight.w700),
                       ),
                     ),
                     CommonButton(

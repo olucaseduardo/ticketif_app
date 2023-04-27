@@ -34,7 +34,7 @@ class CommonTextField extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 4),
             child: Text(
               title,
-              style: AppTextStyle.normalText,
+              style: TextApp.bodyLarge,
             ),
           ),
           TextFormField(
