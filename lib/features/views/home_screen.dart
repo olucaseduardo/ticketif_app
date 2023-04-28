@@ -74,13 +74,14 @@ class HomeScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 18),
-                      child: Text('Suas refeições de hoje',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.gray200)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 18),
+                      child: Text(
+                        'Suas refeições de hoje',
+                        style: TextApp.labelBig.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.gray200),
+                      ),
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 6.0),
@@ -97,22 +98,19 @@ class HomeScreen extends ConsumerWidget {
                     // ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 18.h),
-                      child: const Text('Outras opções',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.gray200)),
+                      child: Text(
+                        'Outras opções',
+                        style: TextApp.labelBig.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.gray200),
+                      ),
                     ),
                     CommonTileOptions(
                       leading: Icons.menu_rounded,
                       label: 'Seus tickets',
                       function: () => controller.onTicketsTap(),
                     ),
-                    CommonTileOptions(
-                      leading: Icons.search_rounded,
-                      label: 'Tickets em análise',
-                      function: () => controller.onAnalysisTap(),
-                    ),
+                    
                     CommonTileOptions(
                       leading: Icons.access_time_rounded,
                       label: 'Histórico',
