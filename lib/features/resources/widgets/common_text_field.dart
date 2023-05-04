@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 
@@ -26,12 +25,12 @@ class CommonTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             child: Text(
               title,
               style: TextApp.bodyLarge,
@@ -45,14 +44,14 @@ class CommonTextField extends StatelessWidget {
             maxLines: maxLine,
             decoration: InputDecoration(
               alignLabelWithHint: true,
-              focusedBorder: OutlineInputBorder(
+              focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.green500)),
               focusColor: AppColors.green500,
               fillColor: AppColors.green500,
               hoverColor: AppColors.green500,
               labelText: labelText,
-              labelStyle: TextStyle(color: AppColors.gray700),
-              border: OutlineInputBorder(),
+              labelStyle: const TextStyle(color: AppColors.gray700),
+              border: const OutlineInputBorder(),
             ),
           ),
         ],
