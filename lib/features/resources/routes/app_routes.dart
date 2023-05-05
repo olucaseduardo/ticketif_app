@@ -4,6 +4,7 @@ import 'package:project_ifma_ticket/features/resources/routes/arguments.dart';
 import 'package:project_ifma_ticket/features/views/historic_screen.dart';
 import 'package:project_ifma_ticket/features/views/home_screen.dart';
 import 'package:project_ifma_ticket/features/views/login_screen.dart';
+import 'package:project_ifma_ticket/features/views/qr_screen.dart';
 import 'package:project_ifma_ticket/features/views/request_ticket_screen.dart';
 
 class AppRouter {
@@ -11,6 +12,7 @@ class AppRouter {
   static const String homeRoute = '/home';
   static const String historicRoute = '/historic';
   static const String requestTicketRoute = '/requestTicket';
+  static const String qrRoute = '/qrCode';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final ScreenArguments? args = settings.arguments as ScreenArguments?;
@@ -27,6 +29,9 @@ class AppRouter {
       case requestTicketRoute:
         return MaterialPageRoute(
             builder: (_)=> const RequestTicket());
+      case qrRoute:
+        return MaterialPageRoute(
+            builder: (_)=> const QrScreen());
       default:
         return MaterialPageRoute(
             builder: (_) => const RouteErrorScreen(

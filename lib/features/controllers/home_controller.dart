@@ -22,4 +22,7 @@ class HomeController extends ChangeNotifier {
     Navigator.pushNamed(navigatorKey.currentContext!, AppRouter.historicRoute,
         arguments: ScreenArguments('Histórico'));
   }
+  onQrCodeTap() {
+    Navigator.pushNamed(navigatorKey.currentContext!, AppRouter.qrRoute,);
+  }
 }

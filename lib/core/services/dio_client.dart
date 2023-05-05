@@ -1,28 +1,38 @@
 import 'package:dio/dio.dart';
+import 'package:dio/native_imp.dart';
+import 'package:project_ifma_ticket/core/config/env.dart';
+import 'package:project_ifma_ticket/core/services/interceptors/auth_interceptor.dart';
 
-class DioClient {
-  final String baseUrl;
-  late Dio _dio;
+class DioClient extends DioForNative {
+  late AuthInterceptor _authInterceptor;
 
-  DioClient(this.baseUrl) {
-    _dio = Dio()..options.baseUrl = baseUrl;
+  DioClient() : super (
+    BaseOptions(
+      baseUrl: Env.i['backend_base_url'] ??  '',
+      connectTimeout: 5000,
+      receiveTimeout: 60000,
+    ),
+  ) {
+    interceptors.add(
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        requestHeader: true,
+        responseHeader: true,
+      ),
+    );
+
+     _authInterceptor = AuthInterceptor();
   }
 
-  Future<dynamic> get(String uri) async {
-    try {
-      var response = await _dio.get(uri);
-      return response.data;
-    } catch (e) {
-      rethrow;
-    }
+  DioClient auth() {
+    interceptors.add(_authInterceptor);
+    return this;
   }
 
-  Future<dynamic> post(String uri, {data}) async {
-    try {
-      var response = await _dio.post(uri, data: data);
-      return response.data;
-    } catch (e) {
-      rethrow;
-    }
+  DioClient unauth() {
+    interceptors.remove(_authInterceptor);
+    return this;
   }
 }
+

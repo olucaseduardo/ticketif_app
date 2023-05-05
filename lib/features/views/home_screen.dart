@@ -32,7 +32,8 @@ class HomeScreen extends ConsumerWidget {
           ),
           actions: [
             IconButton(
-              onPressed: () => controller.onLogoutTap(),
+              // onPressed: () => controller.onLogoutTap(),
+              onPressed: () => controller.onQrCodeTap(),
               icon: const Icon(
                 Icons.logout,
               ),
