@@ -9,11 +9,22 @@ import 'package:project_ifma_ticket/features/resources/widgets/common_button_wid
 import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    ref.read(homeProvider).loadUser();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final controller = ref.watch(homeProvider);
     return Scaffold(
         appBar: AppBar(
@@ -26,7 +37,7 @@ class HomeScreen extends ConsumerWidget {
                 Text(DateUtil.todayDate(DateUtil.dateTime),
                     style:
                         TextApp.labelBig.copyWith(fontWeight: FontWeight.w700)),
-                const Text('20191BCC.CAX0003', style: TextApp.labelMedium)
+                Text(controller.user?.matricula ?? '', style: TextApp.labelMedium)
               ],
             ),
           ),
@@ -51,7 +62,7 @@ class HomeScreen extends ConsumerWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        'Olá, Fulano de tal',
+                        'Olá, ${controller.user?.name ?? ''}',
                         style: TextApp.labelBig
                             .copyWith(fontWeight: FontWeight.w700),
                       ),
@@ -111,7 +122,7 @@ class HomeScreen extends ConsumerWidget {
                       label: 'Seus tickets',
                       function: () => controller.onTicketsTap(),
                     ),
-                    
+
                     CommonTileOptions(
                       leading: Icons.access_time_rounded,
                       label: 'Histórico',

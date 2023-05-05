@@ -5,9 +5,11 @@ database: database.json
 
 auth:
   jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
-  jwtExpire: 3600
+  jwtExpire: 0
   unauthorizedStatusCode: 403
-#   urlSkip:
+  urlSkip:
+      - /users/{*}:
+         method: get
 #     - /images/:
 #        method: get
 #     - /users:

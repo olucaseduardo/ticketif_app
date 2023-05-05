@@ -13,6 +13,9 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final controller = ref.watch(loginProvider);
+    final matriculaEC = TextEditingController();
+    final passwordEC = TextEditingController();
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -30,28 +33,34 @@ class LoginScreen extends ConsumerWidget {
                   ),
                 ),
                 Form(
-                    child: Column(
-                  children: [
-                    const CommonTextField(
-                      title: 'Matrícula',
-                      labelText: 'Digite sua matrícula',
-                      textInputAction: TextInputAction.next,
-                    ),
-                    const CommonTextField(
-                      title: 'Senha (SUAP)',
-                      labelText: 'Digite sua senha',
-                      textInputAction: TextInputAction.done,
-                      obscureText: true,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20.h),
-                      child: CommonButton(
-                        label: "Entrar na conta",
-                        function: () => controller.onLoginTap('20191BCC.CAX0001', '123123'),
+                  child: Column(
+                    children: [
+                      CommonTextField(
+                        title: 'Matrícula',
+                        labelText: 'Digite sua matrícula',
+                        textInputAction: TextInputAction.next,
+                        controller: matriculaEC,
                       ),
-                    ),
-                  ],
-                ))
+                      CommonTextField(
+                        title: 'Senha (SUAP)',
+                        labelText: 'Digite sua senha',
+                        textInputAction: TextInputAction.done,
+                        obscureText: true,
+                        controller: passwordEC,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20.h),
+                        child: CommonButton(
+                          label: "Entrar na conta",
+                          function: () => controller.onLoginTap(
+                            matriculaEC.text,
+                            passwordEC.text,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

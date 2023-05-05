@@ -1,20 +1,27 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/core/services/dio_client.dart';
+import 'package:project_ifma_ticket/core/exceptions/unauthorized_exception.dart';
 import 'package:project_ifma_ticket/features/app/app.dart';
+import 'package:project_ifma_ticket/features/data/auth/auth_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends ChangeNotifier {
-  Future<void> onLoginTap(String mat, String password) async {
+  Future<void> onLoginTap(String matricula, String password) async {
     try {
-      await DioClient().unauth().post('/auth', data: {
-        'email': mat,
-        'password': password,
-      });
+      final authModel = await AuthApiRepositoryImpl().login(matricula, password);
+
+      final sp = await SharedPreferences.getInstance();
+      sp.setString('accessToken', authModel.accessToken);
+      sp.setString('refreshToken', authModel.refreshToken);
+
       navigatorKey.currentState!.pushNamed(AppRouter.homeRoute);
-    } catch (e) {
-      log('falha', error: e);
+    } on UnauthorizedException catch (e, s) {
+      log('Login ou senha inválidos', error: e, stackTrace: s);
+
+    } catch (e, s) {
+      log('Erro ao realizar login', error: e, stackTrace: s);
     }
   }
 }

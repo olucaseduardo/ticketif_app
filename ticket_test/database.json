@@ -2,7 +2,7 @@
     "users": [
         {
             "id": 0,
-            "name": "Fulano Bezera",
+            "name": "Fulano Bezerra",
             "email": "20191BCC.CAX0001",
             "password": "123123"
         },
@@ -19,7 +19,7 @@
             "id": 0,
             "id_student": 0,
             "date": "2023-02-12 00:00:00.000",
-            "student": "Fulano Bezera",
+            "student": "Fulano Bezerra",
             "meal": "Almoço",
             "status": "Aprovado",
             "reason": "Estágio",
@@ -29,7 +29,7 @@
             "id": 1,
             "id_student": 0,
             "date": "2023-02-14 00:00:00.000",
-            "student": "Fulano Bezera",
+            "student": "Fulano Bezerra",
             "meal": "Almoço",
             "status": "Aprovado",
             "reason": "Estágio",
