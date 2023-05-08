@@ -8,7 +8,6 @@ import 'package:project_ifma_ticket/features/resources/widgets/common_button_wid
 import 'package:project_ifma_ticket/features/resources/widgets/common_dropdown_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
 
-
 class RequestTicket extends ConsumerWidget {
   const RequestTicket({Key? key}) : super(key: key);
 
@@ -147,9 +146,9 @@ class RequestTicket extends ConsumerWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(20.w),
-        child: SizedBox(
-          height: 50.h,
+        padding: EdgeInsets.all(20),
+        child: Container(
+          height: 50,
           child: CommonButton(
             label: 'Enviar solicitação',
             function: () => controller.onTapSendRequest(),
