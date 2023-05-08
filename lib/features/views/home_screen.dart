@@ -19,7 +19,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
-    ref.read(homeProvider).loadUser();
+    ref.read(homeProvider).loadData();
     super.initState();
   }
 
@@ -37,7 +37,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 Text(DateUtil.todayDate(DateUtil.dateTime),
                     style:
                         TextApp.labelBig.copyWith(fontWeight: FontWeight.w700)),
-                Text(controller.user?.matricula ?? '', style: TextApp.labelMedium)
+                Text(controller.user?.matricula ?? '',
+                    style: TextApp.labelMedium)
               ],
             ),
           ),
