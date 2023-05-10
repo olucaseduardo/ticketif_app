@@ -1,9 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
-enum Meal { breakfast, lunch, dinner, supper }
-
-enum Status { analysis, payment, cancelled, refused, approved, used }
+import 'package:project_ifma_ticket/core/utils/enums_util.dart';
 
 class Ticket {
   final int id;
