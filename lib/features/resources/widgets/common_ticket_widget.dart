@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart' as qr_code;
+import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart'
+    as qr_code;
 
 class CommonTicketWidget extends StatelessWidget {
-  const CommonTicketWidget({Key? key}) : super(key: key);
+  final String meal;
+  final String status;
+
+  const CommonTicketWidget({
+    Key? key,
+    required this.meal,
+    required this.status,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +44,14 @@ class CommonTicketWidget extends StatelessWidget {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             'Refeição',
                             style: TextStyle(
                                 fontSize: 12, color: AppColors.gray700),
                           ),
-                          Text('Café da manhã',
-                              style: TextStyle(
+                          Text(meal,
+                              style: const TextStyle(
                                   fontSize: 12, color: AppColors.gray200))
                         ],
                       ),
@@ -57,15 +65,15 @@ class CommonTicketWidget extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 12, color: AppColors.gray700)),
                           Row(
-                            children: const [
-                              Icon(
+                            children: [
+                              const Icon(
                                 Icons.check_circle_sharp,
                                 size: 14,
                                 color: AppColors.green500,
                               ),
-                              SizedBox(width: 4),
-                              Text('Utilização autorizada',
-                                  style: TextStyle(
+                              const SizedBox(width: 4),
+                              Text(status,
+                                  style: const TextStyle(
                                       fontSize: 12, color: AppColors.gray200))
                             ],
                           )
@@ -101,3 +109,5 @@ class CommonTicketWidget extends StatelessWidget {
     );
   }
 }
+// 'Café da manhã',
+// 'Utilização autorizada'
