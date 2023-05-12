@@ -56,7 +56,7 @@ class HomeController extends ChangeNotifier {
 
       for (var i = 0; i < userTickets!.length; i++) {
         if (DateTime.parse(userTickets!.elementAt(i).date).day == DateTime.now().day 
-          && userTickets!.elementAt(i).status == "Aprovado") {
+          && DateTime.parse(userTickets!.elementAt(i).date).month == DateTime.now().month) {
           todayTickets?.add(userTickets!.elementAt(i));
           log(userTickets!.elementAt(i).date);
         }

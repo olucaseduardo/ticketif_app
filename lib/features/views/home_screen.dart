@@ -98,22 +98,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             color: AppColors.gray200),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: controller.todayTickets!.isNotEmpty ? CommonTicketWidget(
-                        meal: controller.todayTickets?.elementAt(0).meal ?? '',
-                        status: controller.todayTickets?.elementAt(0).status ?? '',
-                      ) : const SizedBox.shrink(),
-                    ),
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(vertical: 20.h),
-                    //   child: Align(
-                    //       alignment: Alignment.center,
-                    //       child: Text(
-                    //           'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
-                    //           style: TextStyle(
-                    //               fontSize: 12.sp, color: AppColors.gray700))),
-                    // ),
+                    controller.todayTickets!.isNotEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6.0),
+                            child: CommonTicketWidget(
+                              meal:
+                                  controller.todayTickets?.elementAt(0).meal ??
+                                      '',
+                              status: controller.todayTickets
+                                      ?.elementAt(0)
+                                      .status ??
+                                  '',
+                            ),
+                          )
+                        : Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20.h),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                    'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
+                                    style: TextStyle(
+                                        fontSize: 12.sp,
+                                        color: AppColors.gray400))),
+                          ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 18.h),
                       child: Text(
@@ -126,7 +133,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     CommonTileOptions(
                       leading: Icons.menu_rounded,
                       label: 'Seus tickets',
-                      function: () =>  Navigator.pushNamed(context, AppRouter.historicRoute,
+                      function: () => Navigator.pushNamed(
+                        context,
+                        AppRouter.historicRoute,
                         arguments: ScreenArguments(
                           'Seus tickets',
                           controller.userTickets
@@ -135,7 +144,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                       ),
                     ),
-
                     CommonTileOptions(
                       leading: Icons.access_time_rounded,
                       label: 'Histórico',
