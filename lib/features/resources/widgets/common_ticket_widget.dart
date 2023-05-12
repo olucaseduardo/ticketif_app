@@ -9,20 +9,24 @@ import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.da
 
 import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
 
-
 class CommonTicketWidget extends StatelessWidget {
   final String meal;
   final String status;
+  final String statusImage;
+  final String statusText;
+  final String date;
 
-  const CommonTicketWidget({
-    Key? key,
-    required this.meal,
-    required this.status,
-  }) : super(key: key);
+  const CommonTicketWidget(
+      {Key? key,
+      required this.meal,
+      required this.status,
+      required this.statusImage,
+      required this.statusText,
+      required this.date})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    DateTime dateTime = DateTime.now();
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Container(
@@ -36,7 +40,7 @@ class CommonTicketWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(DateUtil.ticketDay(dateTime),
+                  Text(DateUtil.ticketDay(DateTime.parse(date)),
                       style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w700,
@@ -49,18 +53,14 @@ class CommonTicketWidget extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
-                          const Text(
-
+                          Text(
                             'Refeição',
                             style: TextStyle(
                                 fontSize: 12.sp, color: AppColors.gray700),
                           ),
-
                           Text(meal,
                               style: const TextStyle(
                                   fontSize: 12, color: AppColors.gray200))
-
                         ],
                       ),
                       SizedBox(
@@ -74,23 +74,16 @@ class CommonTicketWidget extends StatelessWidget {
                                   fontSize: 12.sp, color: AppColors.gray700)),
                           Row(
                             children: [
-
                               SvgPicture.asset(
-                                path_image.authorizedUse,
+                                statusImage,
                                 height: 12.h,
                                 width: 12.w,
                               ),
-                              // Icon(
-                              //   Icons.check_circle_sharp,
-                              //   size: 14.r,
-                              //   color: AppColors.green500,
-                              // ),
                               SizedBox(width: 4.w),
-                              Text('Utilização autorizada',
+                              Text(statusText,
                                   style: TextStyle(
                                       fontSize: 12.sp,
                                       color: AppColors.gray200))
-
                             ],
                           )
                         ],

@@ -66,17 +66,24 @@ class HistoricScreen extends ConsumerWidget {
           controller: controller.refreshController,
           onRefresh: () => controller.onRefresh(),
           onLoading: () => controller.onLoading(),
-          child: userTickets.isNotEmpty ? ListView.builder(
-            itemBuilder: (context, i) => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: CommonTicketWidget(
-                meal: userTickets.elementAt(i).meal,
-                status: userTickets.elementAt(i).status,
-              ),
-            ),
-            itemCount: userTickets.length, // controller.countOne,
-            physics: const AlwaysScrollableScrollPhysics(),
-          ) : Center(child: Text('Sem tickets no seu $title'),),
+          child: userTickets.isNotEmpty
+              ? ListView.builder(
+                  itemBuilder: (context, i) => Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: CommonTicketWidget(
+                      meal: userTickets.elementAt(i).meal,
+                      status: userTickets.elementAt(i).status,
+                      statusImage: userTickets.elementAt(i).statusImage(),
+                      statusText: userTickets.elementAt(i).statusText(),
+                      date: userTickets.elementAt(i).date,
+                    ),
+                  ),
+                  itemCount: userTickets.length, // controller.countOne,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                )
+              : Center(
+                  child: Text('Sem tickets no seu $title'),
+                ),
         ));
   }
 }

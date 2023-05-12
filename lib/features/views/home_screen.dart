@@ -100,10 +100,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: controller.todayTickets!.isNotEmpty ? CommonTicketWidget(
-                        meal: controller.todayTickets?.elementAt(0).meal ?? '',
-                        status: controller.todayTickets?.elementAt(0).status ?? '',
-                      ) : const SizedBox.shrink(),
+                      child: controller.todayTickets!.isNotEmpty
+                          ? CommonTicketWidget(
+                              meal:
+                                  controller.todayTickets?.elementAt(0).meal ??
+                                      '',
+                              status: controller.todayTickets
+                                      ?.elementAt(0)
+                                      .status ??
+                                  '',
+                              statusImage: controller.todayTickets
+                                      ?.elementAt(0)
+                                      .statusImage() ??
+                                  '',
+                              statusText: controller.todayTickets
+                                      ?.elementAt(0)
+                                      .statusText() ??
+                                  '',
+                              date:
+                                  controller.todayTickets?.elementAt(0).date ??
+                                      '',
+                            )
+                          : const SizedBox.shrink(),
                     ),
                     // Padding(
                     //   padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -126,7 +144,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     CommonTileOptions(
                       leading: Icons.menu_rounded,
                       label: 'Seus tickets',
-                      function: () =>  Navigator.pushNamed(context, AppRouter.historicRoute,
+                      function: () => Navigator.pushNamed(
+                        context,
+                        AppRouter.historicRoute,
                         arguments: ScreenArguments(
                           'Seus tickets',
                           controller.userTickets
