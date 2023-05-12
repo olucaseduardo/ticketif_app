@@ -81,6 +81,7 @@ flutter:
     - assets/images/LOGOTICKET.png
     - assets/images/TICKETIF.png
     - assets/svg/
+    - assets/svg/status/
     - assets/svg/QrCode.svg
     - .env
 

@@ -1,10 +1,14 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart'
     as qr_code;
+
+import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
+
 
 class CommonTicketWidget extends StatelessWidget {
   final String meal;
@@ -20,12 +24,12 @@ class CommonTicketWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime dateTime = DateTime.now();
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Container(
         decoration: BoxDecoration(
-            color: AppColors.gray900, borderRadius: BorderRadius.circular(4)),
+            color: AppColors.gray900, borderRadius: BorderRadius.circular(4.r)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+          padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -33,48 +37,60 @@ class CommonTicketWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(DateUtil.ticketDay(dateTime),
-                      style: const TextStyle(
-                          fontSize: 18,
+                      style: TextStyle(
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w700,
                           color: AppColors.gray200)),
-                  const SizedBox(
-                    height: 8,
+                  SizedBox(
+                    height: 8.h,
                   ),
                   Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+
                           const Text(
+
                             'Refeição',
                             style: TextStyle(
-                                fontSize: 12, color: AppColors.gray700),
+                                fontSize: 12.sp, color: AppColors.gray700),
                           ),
+
                           Text(meal,
                               style: const TextStyle(
                                   fontSize: 12, color: AppColors.gray200))
+
                         ],
                       ),
-                      const SizedBox(
-                        width: 16,
+                      SizedBox(
+                        width: 16.w,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Status',
+                          Text('Status',
                               style: TextStyle(
-                                  fontSize: 12, color: AppColors.gray700)),
+                                  fontSize: 12.sp, color: AppColors.gray700)),
                           Row(
                             children: [
-                              const Icon(
-                                Icons.check_circle_sharp,
-                                size: 14,
-                                color: AppColors.green500,
+
+                              SvgPicture.asset(
+                                path_image.authorizedUse,
+                                height: 12.h,
+                                width: 12.w,
                               ),
-                              const SizedBox(width: 4),
-                              Text(status,
-                                  style: const TextStyle(
-                                      fontSize: 12, color: AppColors.gray200))
+                              // Icon(
+                              //   Icons.check_circle_sharp,
+                              //   size: 14.r,
+                              //   color: AppColors.green500,
+                              // ),
+                              SizedBox(width: 4.w),
+                              Text('Utilização autorizada',
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: AppColors.gray200))
+
                             ],
                           )
                         ],
