@@ -1,15 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 import 'package:project_ifma_ticket/core/services/providers.dart';
+import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_widget.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HistoricScreen extends ConsumerWidget {
   final String title;
-  const HistoricScreen({Key? key, required this.title}) : super(key: key);
+  final List<Ticket> userTickets;
+
+  const HistoricScreen({
+    super.key,
+    required this.title,
+    required this.userTickets,
+  });
 
   @override
   Widget build(BuildContext context, ref) {
@@ -57,14 +66,17 @@ class HistoricScreen extends ConsumerWidget {
           controller: controller.refreshController,
           onRefresh: () => controller.onRefresh(),
           onLoading: () => controller.onLoading(),
-          child: ListView.builder(
-            itemBuilder: (context, _) => Padding(
+          child: userTickets.isNotEmpty ? ListView.builder(
+            itemBuilder: (context, i) => Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: const CommonTicketWidget(),
+              child: CommonTicketWidget(
+                meal: userTickets.elementAt(i).meal,
+                status: userTickets.elementAt(i).status,
+              ),
             ),
-            itemCount: controller.countOne, // controller.countOne,
+            itemCount: userTickets.length, // controller.countOne,
             physics: const AlwaysScrollableScrollPhysics(),
-          ),
+          ) : Center(child: Text('Sem tickets no seu $title'),),
         ));
   }
 }

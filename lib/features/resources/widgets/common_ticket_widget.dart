@@ -6,10 +6,19 @@ import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart'
     as qr_code;
+
 import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
 
+
 class CommonTicketWidget extends StatelessWidget {
-  const CommonTicketWidget({Key? key}) : super(key: key);
+  final String meal;
+  final String status;
+
+  const CommonTicketWidget({
+    Key? key,
+    required this.meal,
+    required this.status,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +49,18 @@ class CommonTicketWidget extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+
+                          const Text(
+
                             'Refeição',
                             style: TextStyle(
                                 fontSize: 12.sp, color: AppColors.gray700),
                           ),
-                          Text('Café da manhã',
-                              style: TextStyle(
-                                  fontSize: 12.sp, color: AppColors.gray200))
+
+                          Text(meal,
+                              style: const TextStyle(
+                                  fontSize: 12, color: AppColors.gray200))
+
                         ],
                       ),
                       SizedBox(
@@ -61,6 +74,7 @@ class CommonTicketWidget extends StatelessWidget {
                                   fontSize: 12.sp, color: AppColors.gray700)),
                           Row(
                             children: [
+
                               SvgPicture.asset(
                                 path_image.authorizedUse,
                                 height: 12.h,
@@ -76,6 +90,7 @@ class CommonTicketWidget extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 12.sp,
                                       color: AppColors.gray200))
+
                             ],
                           )
                         ],
@@ -110,3 +125,5 @@ class CommonTicketWidget extends StatelessWidget {
     );
   }
 }
+// 'Café da manhã',
+// 'Utilização autorizada'

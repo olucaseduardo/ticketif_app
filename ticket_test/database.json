@@ -4,13 +4,25 @@
             "id": 0,
             "name": "Fulano Bezerra",
             "email": "20191BCC.CAX0001",
-            "password": "123123"
+            "password": "123123",
+            "isPermanent": 0,
+            "days": []
         },
         {
             "id": 1,
             "name": "Siclano dos Santos",
             "email": "20191BCC.CAX0002",
-            "password": "123123"
+            "password": "123123",
+            "isPermanent": 0,
+            "days": []
+        },
+        {
+            "id": 2,
+            "name": "Beltrano Araújo",
+            "email": "20191BCC.CAX0003",
+            "password": "123123",
+            "isPermanent": 1,
+            "days": ["terça", "quinta"]
         }
     ],
 
@@ -51,6 +63,56 @@
             "date": "2023-02-15 00:00:00.000",
             "student": "Siclano dos Santos",
             "meal": "Almoço",
+            "status": "Aprovado",
+            "reason": "Contra-Turno",
+            "text": ""
+        },
+        {
+            "id": 4,
+            "id_student": 2,
+            "date": "2023-05-8 00:00:00.000",
+            "student": "Beltrano Araújo",
+            "meal": "Jantar",
+            "status": "Aprovado",
+            "reason": "Contra-Turno",
+            "text": ""
+        },
+        {
+            "id": 5,
+            "id_student": 1,
+            "date": "2023-02-15 00:00:00.000",
+            "student": "Siclano dos Santos",
+            "meal": "Almoço",
+            "status": "Cancelado",
+            "reason": "Contra-Turno",
+            "text": ""
+        },
+        {
+            "id": 6,
+            "id_student": 0,
+            "date": "2023-05-10 00:00:00.000",
+            "student": "Fulano Bezerra",
+            "meal": "Almoço",
+            "status": "Cancelado",
+            "reason": "Contra-Turno",
+            "text": ""
+        },
+        {
+            "id": 7,
+            "id_student": 2,
+            "date": "2023-05-9 00:00:00.000",
+            "student": "Beltrano Araújo",
+            "meal": "Jantar",
+            "status": "Aguardando Confimação",
+            "reason": "Contra-Turno",
+            "text": ""
+        },
+        {
+            "id": 8,
+            "id_student": 0,
+            "date": "2023-05-10 00:00:00.000",
+            "student": "Fulano Bezerra",
+            "meal": "Jantar",
             "status": "Aprovado",
             "reason": "Contra-Turno",
             "text": ""

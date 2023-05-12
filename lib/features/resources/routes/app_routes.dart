@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_ifma_ticket/features/models/ticket.dart';
 
 import 'package:project_ifma_ticket/features/resources/routes/arguments.dart';
 import 'package:project_ifma_ticket/features/views/historic_screen.dart';
@@ -25,6 +26,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => HistoricScreen(
                   title: args!.title,
+                  userTickets: args.userTickets as List<Ticket>,
                 ));
       case requestTicketRoute:
         return MaterialPageRoute(
