@@ -76,7 +76,15 @@ class HistoricScreen extends ConsumerWidget {
             ),
             itemCount: userTickets.length, // controller.countOne,
             physics: const AlwaysScrollableScrollPhysics(),
-          ) : Center(child: Text('Sem tickets no seu $title'),),
+          ) : Center(
+              child: Text(
+                'Sem tickets no seu $title', 
+                style: TextStyle(
+                  fontSize: 12.sp, 
+                  color: AppColors.gray700,
+                ),
+              ),
+            ),
         ));
   }
 }
