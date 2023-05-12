@@ -1,8 +1,6 @@
-
 import 'dart:convert';
 
 import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
-
 
 class Ticket {
   final int id;
@@ -16,7 +14,6 @@ class Ticket {
 
   Ticket(this.id, this.idStudent, this.date, this.student, this.meal,
       this.status, this.reason, this.text);
-
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -46,21 +43,39 @@ class Ticket {
 
   String toJson() => json.encode(toMap());
 
-  factory Ticket.fromJson(String source) => Ticket.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Ticket.fromJson(String source) =>
+      Ticket.fromMap(json.decode(source) as Map<String, dynamic>);
 
   String statusImage() {
-    if (status == 'analysis') {
+    if (status == 'Análise') {
       return path_image.analysis;
-    } else if (status == 'awaiting_presence') {
+    } else if (status == 'Aguardando Confimação') {
       return path_image.awaitingPresence;
-    } else if (status == 'wait_pay') {
+    } else if (status == 'Aguardando pagamento') {
       return path_image.waitPay;
-    } else if (status == 'authorized_use') {
+    } else if (status == 'Aprovado') {
       return path_image.authorizedUse;
-    } else if (status == 'used') {
+    } else if (status == 'Usado') {
       return path_image.used;
-    } else if (status == 'canceled') {
+    } else if (status == 'Cancelado') {
       return path_image.canceled;
+    }
+    return '';
+  }
+
+  String statusText() {
+    if (status == 'Análise') {
+      return "Em análise";
+    } else if (status == 'Aguardando Confimação') {
+      return "Aguardando confimação de presença";
+    } else if (status == 'Aguardando pagamento') {
+      return "Aguardando pagamento";
+    } else if (status == 'Aprovado') {
+      return "Utilização autorizada";
+    } else if (status == 'Usado') {
+      return "Utilizado";
+    } else if (status == 'Cancelado') {
+      return "Cancelado";
     }
     return '';
   }
@@ -82,5 +97,4 @@ class Ticket {
     }
     return '';
   }
-
 }

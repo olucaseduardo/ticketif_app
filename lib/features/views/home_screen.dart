@@ -98,10 +98,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             color: AppColors.gray200),
                       ),
                     ),
+
                     controller.todayTickets!.isNotEmpty
                         ? Padding(
                             padding: const EdgeInsets.symmetric(vertical: 6.0),
                             child: CommonTicketWidget(
+
                               meal:
                                   controller.todayTickets?.elementAt(0).meal ??
                                       '',
@@ -109,6 +111,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       ?.elementAt(0)
                                       .status ??
                                   '',
+                              statusImage: controller.todayTickets
+                                      ?.elementAt(0)
+                                      .statusImage() ??
+                                  '',
+                              statusText: controller.todayTickets
+                                      ?.elementAt(0)
+                                      .statusText() ??
+                                  '',
+                              date:
+                                  controller.todayTickets?.elementAt(0).date ??
+                                      '',
+
                             ),
                           )
                         : Padding(
@@ -121,6 +135,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         fontSize: 12.sp,
                                         color: AppColors.gray400))),
                           ),
+
                     Padding(
                       padding: EdgeInsets.only(bottom: 18.h),
                       child: Text(
