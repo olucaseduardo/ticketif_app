@@ -1,5 +1,12 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
+import 'package:project_ifma_ticket/core/utils/date_util.dart';
+import 'package:project_ifma_ticket/features/data/tickets/tickets_api_repository_impl.dart';
+import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 
 class RequestTicketController extends ChangeNotifier {
@@ -58,9 +65,15 @@ class RequestTicketController extends ChangeNotifier {
     return true;
   }
 
-  onTapSendRequest() {
+  Future<void> onTapSendRequest() async {
     if (validation()) {
-      AppMessage.showMessage('Requisição enviada com sucesso');
+      try {
+        await TicketsApiRepositoryImpl().requestTicket(Ticket(0, 1, DateUtil.dateTime.toString(), "Fulano Bezerra", meal!, 'Em análise', justification!, ''));
+        AppMessage.showMessage('Requisição enviada com sucesso');
+      } on DioError catch (e, s) {
+        log("Erro ao solicitar ticket", error: e, stackTrace: s);
+        throw RepositoryException(message: 'Erro ao solicitar ticket');
+      }
     }
   }
 
