@@ -20,4 +20,25 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
       throw RepositoryException(message: 'Erro ao buscar tickets do usuário');
     }
   }
+
+  @override
+  Future<void> requestTicket(Ticket ticket) async {
+    try {
+     await DioClient().auth().post(
+        "/tickets/id_student=${ticket.idStudent}",
+        data: {
+          "id_student": ticket.idStudent,
+          "date": ticket.date,
+          "student": ticket.student,
+          "meal": ticket.meal,
+          "status": ticket.status,
+          "reason": ticket.reason,
+          "text": ticket.text,
+        },
+      );
+    } on DioError catch (e, s) {
+      log("Erro ao solicitar ticket", error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao solicitar ticket');
+    }
+  }
 }
