@@ -1,31 +1,48 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
+import 'package:project_ifma_ticket/features/data/request_tables/request_tables_api_impl.dart';
 import 'package:project_ifma_ticket/features/data/tickets/tickets_api_repository_impl.dart';
+import 'package:project_ifma_ticket/features/dto/request_ticket_model.dart';
+import 'package:project_ifma_ticket/features/models/list_tables_model.dart';
+import 'package:project_ifma_ticket/features/models/tables_model.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RequestTicketController extends ChangeNotifier {
   bool isPermanent = false;
-  String? meal;
-  String? justification;
+  TablesModel? meal;
+  TablesModel? justification;
   TextEditingController justificationController = TextEditingController();
 
-  List<String> meals = <String>['Café da manhã', 'Almoço', 'Jantar', 'Ceia'];
-  List<String> justifications = <String>[
-    'Contra-turno',
-    'Monitoria',
-    'Estudos',
-    'Evento',
-    'Estágio',
-    'Outro'
-  ];
+  List<TablesModel> meals = [];
+  List<TablesModel> justifications = [];
   List<String> days = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
   List<String> permanentDays = [];
+
+  RequestTicketController() {
+    requestList();
+  }
+
+  Future<void> requestList() async {
+    try {
+      final tables = await RequestTablesApiImpl().listTables();
+      meals = tables.meals;
+      justifications = tables.justifications;
+
+      notifyListeners();
+    } on DioError catch (e, s) {
+      log('Erro ao buscar dados do usuário', error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao buscar dados do usuário');
+    }
+  }
 
   onPermanentChanged(bool? value) {
     isPermanent = value as bool;
@@ -34,7 +51,7 @@ class RequestTicketController extends ChangeNotifier {
   }
 
   onMealsChanged(String? value) {
-    meal = value as String;
+    meal = meals.singleWhere((element) => element.description == value);
     if (kDebugMode) {
       print('Meal: $meal');
     }
@@ -42,7 +59,7 @@ class RequestTicketController extends ChangeNotifier {
   }
 
   onJustificationChanged(String? value) {
-    justification = value as String;
+    justification = justifications.singleWhere((element) => element.description == value);
     if (kDebugMode) {
       print('Justification: $justification');
     }
@@ -68,7 +85,21 @@ class RequestTicketController extends ChangeNotifier {
   Future<void> onTapSendRequest() async {
     if (validation()) {
       try {
-        await TicketsApiRepositoryImpl().requestTicket(Ticket(0, 1, DateUtil.dateTime.toString(), "Fulano Bezerra", meal!, 'Em análise', justification!, ''));
+        final sp = await SharedPreferences.getInstance();
+        final id = sp.getInt('idStudent');
+
+        await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
+          studentId: id ?? 0,
+          weekId: 1,
+          mealId: meal!.id,
+          statusId: 1,
+          justificationId: justification!.id,
+          isPermanent: isPermanent ? 1 : 0,
+          solicitationDay: DateTime.now().toString(),
+          useDay: 'Terça-Feira',
+          paymentDay: '',
+          text: justificationController.text,
+        ));
         AppMessage.showMessage('Requisição enviada com sucesso');
       } on DioError catch (e, s) {
         log("Erro ao solicitar ticket", error: e, stackTrace: s);

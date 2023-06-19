@@ -66,7 +66,7 @@ class RequestTicket extends ConsumerWidget {
                 ),
                 CommonDropDownButton(
                     hint: 'Selecione uma refeição',
-                    items: controller.meals,
+                    items: controller.meals.map((e) => e.description).toList(),
                     onChanged: (value) => controller.onMealsChanged(value)),
                 Padding(
                   padding: EdgeInsets.only(top: 12.h),
@@ -130,7 +130,7 @@ class RequestTicket extends ConsumerWidget {
                 ),
                 CommonDropDownButton(
                     hint: 'Selecione uma justificativa',
-                    items: controller.justifications,
+                    items: controller.justifications.map((e) => e.description).toList(),
                     onChanged: (value) =>
                         controller.onJustificationChanged(value)),
                 CommonTextField(

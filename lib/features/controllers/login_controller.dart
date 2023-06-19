@@ -13,10 +13,10 @@ class LoginController extends ChangeNotifier {
       final authModel = await AuthApiRepositoryImpl().login(matricula, password);
 
       final sp = await SharedPreferences.getInstance();
-      sp.setString('accessToken', authModel.accessToken);
-      sp.setString('refreshToken', authModel.refreshToken);
+      sp.setString('matricula', authModel.matricula);
 
       navigatorKey.currentState!.pushNamed(AppRouter.homeRoute);
+      log('Sucesso');
     } on UnauthorizedException catch (e, s) {
       log('Login ou senha inválidos', error: e, stackTrace: s);
 

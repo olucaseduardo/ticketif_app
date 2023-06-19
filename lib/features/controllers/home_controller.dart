@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
-import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/data/tickets/tickets_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/data/user/user_api_repository_impl.dart';
@@ -11,6 +10,7 @@ import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/models/user.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/routes/arguments.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends ChangeNotifier {
   User? user;
@@ -50,6 +50,9 @@ class HomeController extends ChangeNotifier {
       final userData = await UserApiRepositoryImpl().loadUser();
       final tickets =
           await TicketsApiRepositoryImpl().findAllTickets(userData.id);
+
+      final sp = await SharedPreferences.getInstance();
+      sp.setInt('idStudent', userData.id);
 
       user = userData;
       userTickets = tickets;

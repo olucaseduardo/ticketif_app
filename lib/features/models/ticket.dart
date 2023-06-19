@@ -9,22 +9,49 @@ class Ticket {
   final String student;
   final String meal;
   final String status;
-  final String reason;
+  final String justification;
   final String text;
+  final int isPermanent;
+  final String solicitationDay;
 
-  Ticket(this.id, this.idStudent, this.date, this.student, this.meal,
-      this.status, this.reason, this.text);
-
+  Ticket(
+    this.id,
+    this.idStudent,
+    this.date,
+    this.student,
+    this.meal,
+    this.status,
+    this.justification,
+    this.text,
+    this.isPermanent,
+    this.solicitationDay,
+  );
+// "id": 1,
+//         "student_id": 1,
+//         "week_id": 1,
+//         "meal_id": 2,
+//         "status_id": 5,
+//         "justification_id": 1,
+//         "solicitation_day": "2023-02-12 00:00:00.000",
+//         "use_day": "Segunda-Feira",
+//         "payment_day": "2023-02-13 00:00:00.000",
+//         "text": "",
+//         "is_permanent": 1,
+//         "status_description": "Utilizado",
+//         "justification_description": "Contra-turno",
+//         "meal_description": "Almoço"
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'idStudent': idStudent,
-      'date': date,
+      'use_day': date,
       'student': student,
-      'meal': meal,
-      'status': status,
-      'reason': reason,
+      'meal_description': meal,
+      'status_description': status,
+      'justification_description': justification,
       'text': text,
+      'is_permanent': isPermanent,
+      'solicitation_day': solicitationDay
     };
   }
 
@@ -32,12 +59,14 @@ class Ticket {
     return Ticket(
       map['id'] ?? 0,
       map['idStudent'] ?? 0,
-      map['date'] ?? '',
+      map['use_day'] ?? '',
       map['student'] ?? '',
-      map['meal'] ?? '',
-      map['status'] ?? '',
-      map['reason'] ?? '',
+      map['meal_description'] ?? '',
+      map['status_description'] ?? '',
+      map['justification_description'] ?? '',
       map['text'] ?? '',
+      map['is_permanent'] ?? 0,
+      map['solicitation_day'] ?? '',
     );
   }
 

@@ -4,27 +4,21 @@ class User {
   final int id;
   final String name;
   final String matricula;
-  final String password;
-  final List<String> days;
-  final int isPermanent;
+  final String type;
 
   User({
     required this.id,
     required this.name,
     required this.matricula,
-    required this.password,
-    required this.days,
-    required this.isPermanent,
+    required this.type,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'email': matricula,
-      'password': password,
-      'days': days,
-      'isPermanent': isPermanent,
+      'matricula': matricula,
+      'type': type,
     };
   }
 
@@ -32,10 +26,8 @@ class User {
     return User(
       id: map['id'] ?? 0,
       name: map['name'] ?? '',
-      matricula: map['email'] ?? '',
-      password: map['password'] ?? '',
-      days: List<String>.from(map['days'] ?? []),
-      isPermanent: map['isPermanent'] ?? 0,
+      matricula: map['matricula'] ?? '',
+      type: map['type'] ?? '',
     );
   }
 

@@ -11,14 +11,18 @@ class AuthApiRepositoryImpl implements AuthApiRepository {
   @override
   Future<AuthModel> login(String matricula, String password) async {
     try {
-      final result = await DioClient().unauth().post('/auth', data: {
-        'email': matricula,
+      final result = await DioClient().post('/login', data: {
+        'matricula': matricula,
         'password': password,
       });
 
+      // log(result.data);
       return AuthModel.fromMap(result.data);
     } on DioError catch (e, s) {
-      if (e.response?.statusCode == 403) {
+      if (e.response?.statusCode == 404) {
+        log('Falha na autenticação!', error: e, stackTrace: s);
+        throw UnauthorizedException();
+      } else if (e.response?.statusCode == 401) {
         log('Permissão negada', error: e, stackTrace: s);
         throw UnauthorizedException();
       }
