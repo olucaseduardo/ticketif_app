@@ -115,12 +115,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       ?.elementAt(0)
                                       .statusImage() ??
                                   '',
-                              statusText: controller.todayTickets
-                                      ?.elementAt(0)
-                                      .statusText() ??
-                                  '',
                               date:
-                                  controller.todayTickets?.elementAt(0).date ??
+                                  controller.todayTickets?.elementAt(0).useDayDate ??
                                       '',
 
                             ),

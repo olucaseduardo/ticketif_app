@@ -9,6 +9,7 @@ class RequestTicketModel {
   final int isPermanent;
   final String solicitationDay;
   final String useDay;
+  final String useDayDate;
   final String paymentDay;
   final String text;
   
@@ -21,8 +22,9 @@ class RequestTicketModel {
     required this.isPermanent,
     required this.solicitationDay,
     required this.useDay,
+    required this.useDayDate,
     required this.paymentDay,
-    required this.text,
+    required this.text, 
   });
 
 // {
@@ -47,6 +49,7 @@ class RequestTicketModel {
       'justification_id': justificationId,
       'solicitation_day': solicitationDay,
       'use_day': useDay,
+      'use_day_date': useDayDate,
       'payment_day': paymentDay,
       'text': text,
       'is_permanent': isPermanent,
@@ -63,6 +66,7 @@ class RequestTicketModel {
       isPermanent: map['isPermanent'] as int,
       solicitationDay: map['solicitationDay'] as String,
       useDay: map['useDay'] as String,
+      useDayDate: map['useDayDate'] as String,
       paymentDay: map['paymentDay'] as String,
       text: map['text'] as String,
     );

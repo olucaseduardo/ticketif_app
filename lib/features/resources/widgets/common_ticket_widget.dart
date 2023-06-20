@@ -13,7 +13,6 @@ class CommonTicketWidget extends StatelessWidget {
   final String meal;
   final String status;
   final String statusImage;
-  final String statusText;
   final String date;
 
   const CommonTicketWidget(
@@ -21,7 +20,6 @@ class CommonTicketWidget extends StatelessWidget {
       required this.meal,
       required this.status,
       required this.statusImage,
-      required this.statusText,
       required this.date})
       : super(key: key);
 
@@ -60,7 +58,7 @@ class CommonTicketWidget extends StatelessWidget {
                           ),
                           Text(meal,
                               style: const TextStyle(
-                                  fontSize: 12, color: AppColors.gray200))
+                                  fontSize: 11, color: AppColors.gray200))
                         ],
                       ),
                       SizedBox(
@@ -76,14 +74,13 @@ class CommonTicketWidget extends StatelessWidget {
                             children: [
                               SvgPicture.asset(
                                 statusImage,
-                                height: 12.h,
-                                width: 12.w,
+                                height: 12,
+                                width: 12,
                               ),
                               SizedBox(width: 4.w),
-                              Text(statusText,
-                                  style: TextStyle(
-                                      fontSize: 12.sp,
-                                      color: AppColors.gray200))
+                              Text(status,
+                                  style: const TextStyle(
+                                      fontSize: 11, color: AppColors.gray200))
                             ],
                           )
                         ],
@@ -105,8 +102,7 @@ class CommonTicketWidget extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Align(
-                      child: SvgPicture.asset('assets/svg/QrPay.svg',
-                          height: 50, width: 50, color: AppColors.blue),
+                      child: actionWidget(status, statusImage),
                     ),
                   ),
                 ),
@@ -117,6 +113,48 @@ class CommonTicketWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget actionWidget(String status, String statusImage) {
+  if (status == 'Em análise') {
+    return TextButton(
+        onPressed: () {},
+        child: const Text(
+          'Cancelar',
+          style: TextStyle(color: AppColors.red, fontWeight: FontWeight.w700),
+        ));
+  } else if (status == 'Confirmar presença') {
+    return TextButton(
+        onPressed: () {},
+        child: const Text('Confirmar\nPresença',
+            style: TextStyle(
+                color: AppColors.green500, fontWeight: FontWeight.w700)));
+  } else if (status == 'Utilização autorizada') {
+    return SvgPicture.asset(statusImage,
+        height: 50, width: 50, color: AppColors.blue);
+  } else if (status == 'Utilizado') {
+    return const Icon(
+      Icons.check_circle_rounded,
+      size: 50,
+      color: AppColors.green500,
+    );
+  } else if (status == 'Cancelado') {
+    return const Icon(
+      Icons.cancel_rounded,
+      size: 50,
+      color: AppColors.red,
+    );
+  } else if (status == 'Não autorizado') {
+    return const Icon(
+      Icons.error,
+      size: 50,
+      color: AppColors.yellow,
+    );
+  }
+  return const SizedBox(
+    height: 50,
+    width: 50,
+  );
 }
 // 'Café da manhã',
 // 'Utilização autorizada'

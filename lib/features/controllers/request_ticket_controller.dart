@@ -6,13 +6,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
-import 'package:project_ifma_ticket/core/utils/date_util.dart';
+import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/data/request_tables/request_tables_api_impl.dart';
 import 'package:project_ifma_ticket/features/data/tickets/tickets_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/dto/request_ticket_model.dart';
-import 'package:project_ifma_ticket/features/models/list_tables_model.dart';
 import 'package:project_ifma_ticket/features/models/tables_model.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
+import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -97,10 +96,16 @@ class RequestTicketController extends ChangeNotifier {
           isPermanent: isPermanent ? 1 : 0,
           solicitationDay: DateTime.now().toString(),
           useDay: 'Terça-Feira',
+          useDayDate: DateTime.now().toString(),
           paymentDay: '',
           text: justificationController.text,
         ));
         AppMessage.showMessage('Requisição enviada com sucesso');
+        Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!,
+          AppRouter.homeRoute,
+          (route) => false,
+        );
       } on DioError catch (e, s) {
         log("Erro ao solicitar ticket", error: e, stackTrace: s);
         throw RepositoryException(message: 'Erro ao solicitar ticket');

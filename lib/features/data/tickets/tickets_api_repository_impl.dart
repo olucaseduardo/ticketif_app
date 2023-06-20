@@ -26,7 +26,7 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
   Future<void> requestTicket(RequestTicketModel ticket) async {
     try {
      await DioClient().post(
-        "/ticket/${ticket.studentId}",
+        "/ticket",
         data: ticket.toMap()
       );
     } on DioError catch (e, s) {

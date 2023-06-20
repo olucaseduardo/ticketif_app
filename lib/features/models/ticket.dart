@@ -5,7 +5,8 @@ import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
 class Ticket {
   final int id;
   final int idStudent;
-  final String date;
+  final String useDayDate;
+  final String useDay;
   final String student;
   final String meal;
   final String status;
@@ -17,7 +18,8 @@ class Ticket {
   Ticket(
     this.id,
     this.idStudent,
-    this.date,
+    this.useDayDate,
+    this.useDay,
     this.student,
     this.meal,
     this.status,
@@ -44,7 +46,8 @@ class Ticket {
     return <String, dynamic>{
       'id': id,
       'idStudent': idStudent,
-      'use_day': date,
+      'use_day': useDay,
+      'use_day_date': useDayDate,
       'student': student,
       'meal_description': meal,
       'status_description': status,
@@ -59,6 +62,7 @@ class Ticket {
     return Ticket(
       map['id'] ?? 0,
       map['idStudent'] ?? 0,
+      map['use_day_date'] ?? '',
       map['use_day'] ?? '',
       map['student'] ?? '',
       map['meal_description'] ?? '',
@@ -76,43 +80,46 @@ class Ticket {
       Ticket.fromMap(json.decode(source) as Map<String, dynamic>);
 
   String statusImage() {
-    if (status == 'Análise') {
+    if (status == 'Em análise') {
       return path_image.analysis;
-    } else if (status == 'Aguardando Confimação') {
+    } else if (status == 'Confirmar presença') {
       return path_image.awaitingPresence;
     } else if (status == 'Aguardando pagamento') {
       return path_image.waitPay;
-    } else if (status == 'Aprovado') {
+    } else if (status == 'Utilização autorizada') {
       return path_image.authorizedUse;
-    } else if (status == 'Usado') {
+    } else if (status == 'Utilizado') {
       return path_image.used;
     } else if (status == 'Cancelado') {
       return path_image.canceled;
+    } else if (status == 'Não autorizado') {
+      return path_image.canceled;
     }
+    
     return '';
   }
 
-  String statusText() {
-    if (status == 'Análise') {
-      return "Em análise";
-    } else if (status == 'Aguardando Confimação') {
-      return "Aguardando confimação de presença";
-    } else if (status == 'Aguardando pagamento') {
-      return "Aguardando pagamento";
-    } else if (status == 'Aprovado') {
-      return "Utilização autorizada";
-    } else if (status == 'Usado') {
-      return "Utilizado";
-    } else if (status == 'Cancelado') {
-      return "Cancelado";
-    }
-    return '';
-  }
+  // String statusText() {
+  //   if (status == 'Em análise') {
+  //     return "Em análise";
+  //   } else if (status == 'Aguardando confimação de presença') {
+  //     return "Aguardando confimação de presença";
+  //   } else if (status == 'Aguardando pagamento') {
+  //     return "Aguardando pagamento";
+  //   } else if (status == 'Aprovado') {
+  //     return "Utilização autorizada";
+  //   } else if (status == 'Usado') {
+  //     return "Utilizado";
+  //   } else if (status == 'Cancelado') {
+  //     return "Cancelado";
+  //   } else if (status == 'Não autorizado') {
+  //     return "Cancelado";
+  //   }
+  //   return '';
+  // }
 
   String actionImage() {
-    if (status == 'wait_pay') {
-      return path_image.qrPay;
-    } else if (status == 'autorized_use') {
+    if (status == 'Utilização autorizada') {
       return path_image.qrUse;
     }
     return '';

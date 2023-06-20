@@ -58,10 +58,10 @@ class HomeController extends ChangeNotifier {
       userTickets = tickets;
 
       for (var i = 0; i < userTickets!.length; i++) {
-        if (DateTime.parse(userTickets!.elementAt(i).date).day == DateTime.now().day 
-          && DateTime.parse(userTickets!.elementAt(i).date).month == DateTime.now().month) {
+        if (DateTime.parse(userTickets!.elementAt(i).useDayDate).day == DateTime.now().day 
+          && DateTime.parse(userTickets!.elementAt(i).useDayDate).month == DateTime.now().month) {
           todayTickets?.add(userTickets!.elementAt(i));
-          log(userTickets!.elementAt(i).date);
+          log(userTickets!.elementAt(i).useDayDate);
         }
       }
 
