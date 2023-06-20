@@ -7,7 +7,6 @@ import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart'
     as qr_code;
 
-import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
 
 class CommonTicketWidget extends StatelessWidget {
   final String meal;

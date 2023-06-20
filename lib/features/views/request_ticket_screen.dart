@@ -113,10 +113,10 @@ class RequestTicket extends ConsumerWidget {
                         spacing: 8,
                         children: controller.days
                             .map<FilterChip>((value) => FilterChip(
-                                selected: controller.selectedDays(value),
-                                label: Text(value),
+                                selected: controller.selectedDays(value.abbreviation),
+                                label: Text(value.abbreviation),
                                 onSelected: (isSelected) => controller
-                                    .onDaysChanged(value, isSelected)))
+                                    .onDaysChanged(value.abbreviation, isSelected)))
                             .toList(),
                       )
                     : //TODO: notice of time to order

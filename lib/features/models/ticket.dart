@@ -87,7 +87,7 @@ class Ticket {
     } else if (status == 'Aguardando pagamento') {
       return path_image.waitPay;
     } else if (status == 'Utilização autorizada') {
-      return path_image.authorizedUse;
+      return path_image.qrUse;
     } else if (status == 'Utilizado') {
       return path_image.used;
     } else if (status == 'Cancelado') {
