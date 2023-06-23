@@ -14,6 +14,7 @@ class Ticket {
   final String text;
   final int isPermanent;
   final String solicitationDay;
+  
 
   Ticket(
     this.id,
@@ -87,7 +88,7 @@ class Ticket {
     } else if (status == 'Aguardando pagamento') {
       return path_image.waitPay;
     } else if (status == 'Utilização autorizada') {
-      return path_image.qrUse;
+      return path_image.authorizedUse;
     } else if (status == 'Utilizado') {
       return path_image.used;
     } else if (status == 'Cancelado') {

@@ -6,6 +6,7 @@ import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart'
     as qr_code;
+import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
 
 
 class CommonTicketWidget extends StatelessWidget {
@@ -33,6 +34,7 @@ class CommonTicketWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,31 +47,37 @@ class CommonTicketWidget extends StatelessWidget {
                   SizedBox(
                     height: 8.h,
                   ),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
                           Text(
-                            'Refeição',
+                            'Refeição:',
                             style: TextStyle(
                                 fontSize: 12.sp, color: AppColors.gray700),
                           ),
+                          SizedBox(
+                            width: 4.w,
+                          ),
                           Text(meal,
                               style: const TextStyle(
-                                  fontSize: 11, color: AppColors.gray200))
+                                  fontSize: 12, color: AppColors.gray200))
                         ],
                       ),
                       SizedBox(
                         width: 16.w,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
-                          Text('Status',
+                          Text('Status:',
                               style: TextStyle(
                                   fontSize: 12.sp, color: AppColors.gray700)),
+                          SizedBox(
+                            width: 4.w,
+                          ),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
                                 statusImage,
@@ -79,7 +87,7 @@ class CommonTicketWidget extends StatelessWidget {
                               SizedBox(width: 4.w),
                               Text(status,
                                   style: const TextStyle(
-                                      fontSize: 11, color: AppColors.gray200))
+                                      fontSize: 12, color: AppColors.gray200))
                             ],
                           )
                         ],
@@ -129,7 +137,7 @@ Widget actionWidget(String status, String statusImage) {
             style: TextStyle(
                 color: AppColors.green500, fontWeight: FontWeight.w700)));
   } else if (status == 'Utilização autorizada') {
-    return SvgPicture.asset(statusImage,
+    return SvgPicture.asset(path_image.qrUse,
         height: 50, width: 50, color: AppColors.blue);
   } else if (status == 'Utilizado') {
     return const Icon(

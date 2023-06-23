@@ -55,13 +55,22 @@ class HomeController extends ChangeNotifier {
       sp.setInt('idStudent', userData.id);
 
       user = userData;
+      tickets.sort((a, b) => a.meal.length.compareTo(b.meal.length));
       userTickets = tickets;
 
       for (var i = 0; i < userTickets!.length; i++) {
-        if (DateTime.parse(userTickets!.elementAt(i).useDayDate).day == DateTime.now().day 
-          && DateTime.parse(userTickets!.elementAt(i).useDayDate).month == DateTime.now().month) {
-          todayTickets?.add(userTickets!.elementAt(i));
-          log(userTickets!.elementAt(i).useDayDate);
+        log(tickets[i].useDayDate);
+        if (userTickets!.elementAt(i).useDayDate != '') {
+          if (DateTime.parse(userTickets!.elementAt(i).useDayDate).day ==
+                  DateTime.now().day &&
+              DateTime.parse(userTickets!.elementAt(i).useDayDate).month ==
+                  DateTime.now().month) {
+            todayTickets?.add(userTickets!.elementAt(i));
+
+            log(userTickets!.elementAt(i).useDayDate);
+          }
+        } else {
+          tickets.removeAt(i);
         }
       }
 

@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
+import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/data/request_tables/request_tables_api_impl.dart';
 import 'package:project_ifma_ticket/features/data/tickets/tickets_api_repository_impl.dart';
@@ -13,6 +14,7 @@ import 'package:project_ifma_ticket/features/dto/days_ticket_dto.dart';
 import 'package:project_ifma_ticket/features/dto/request_ticket_model.dart';
 import 'package:project_ifma_ticket/features/models/tables_model.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_theme.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -63,7 +65,7 @@ class RequestTicketController extends ChangeNotifier {
     meal = meals.singleWhere((element) => element.description == value);
     if (kDebugMode) {
       print('Meal: $meal');
-      print(DateTime.now().weekday);
+      print(DateUtil.todayDateRequest(DateTime.now()).capitalizeRequest());
     }
     notifyListeners();
   }
@@ -90,20 +92,32 @@ class RequestTicketController extends ChangeNotifier {
       AppMessage.showError('Selecione uma justificativa');
       return false;
     }
+    if (!permanentDays
+        .map((day) => day.id)
+        .toList()
+        .contains(DateTime.now().weekday) && isPermanent) {
+      AppMessage.showInfo('O ticket permanente deve conter o dia atual');
+      return false;
+    }
     return true;
   }
 
-  void createTickets(int id) async {
+  void createTickets(
+    int id,
+    int weekId,
+    String useDay,
+    String useDayDate,
+  ) async {
     await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
       studentId: id,
-      weekId: 2,
+      weekId: weekId,
       mealId: meal!.id,
       statusId: 1,
       justificationId: justification!.id,
       isPermanent: isPermanent ? 1 : 0,
       solicitationDay: DateTime.now().toString(),
-      useDay: 'Terça-Feira',
-      useDayDate: DateTime.now().toString(),
+      useDay: useDay,
+      useDayDate: useDayDate,
       paymentDay: '',
       text: justificationController.text,
     ));
@@ -114,8 +128,25 @@ class RequestTicketController extends ChangeNotifier {
       try {
         final sp = await SharedPreferences.getInstance();
         final id = sp.getInt('idStudent');
+   
+        if (permanentDays.isNotEmpty && isPermanent) {
+          for (var day = 0; day < permanentDays.length; day++) {
+            createTickets(
+                id ?? 0,
+                permanentDays[day].id,
+                permanentDays[day].description,
+                permanentDays[day].id == DateTime.now().weekday
+                    ? DateTime.now().toString()
+                    : '');
+          }
+        } else {
+          createTickets(
+              id ?? 0,
+              DateTime.now().weekday,
+              DateUtil.todayDateRequest(DateTime.now()).capitalizeRequest(),
+              DateTime.now().toString());
+        }
 
-        createTickets(id ?? 0);
         AppMessage.showMessage('Requisição enviada com sucesso');
         Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!,

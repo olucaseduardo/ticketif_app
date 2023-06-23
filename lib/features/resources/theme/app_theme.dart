@@ -33,3 +33,20 @@ mixin TicketTheme {
           side: const BorderSide(color: AppColors.green800),
           fillColor: MaterialStateProperty.all(AppColors.green500)));
 }
+
+extension StringExtension on String {
+  String capitalizeRequest() {
+    List<String> words = toLowerCase().split('-');
+    for (int i = 0; i < words.length; i++) {
+      String word = words[i];
+      if (word.isNotEmpty) {
+        words[i] = "${word[0].toUpperCase()}${word.substring(1)}";
+      }
+    }
+    return words.join('-');
+  }
+
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}

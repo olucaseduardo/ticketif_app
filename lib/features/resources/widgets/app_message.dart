@@ -26,4 +26,16 @@ class AppMessage {
       ),
     );
   }
+
+  static void showInfo(String text) {
+    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+      SnackBar(
+        backgroundColor: AppColors.yellow,
+        content: Text(
+          text,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
 }
