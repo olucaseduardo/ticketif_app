@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
+import 'package:project_ifma_ticket/core/utils/loader.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/routes/arguments.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
@@ -10,6 +12,7 @@ import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dar
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,6 +31,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(homeProvider);
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -46,15 +50,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           actions: [
             IconButton(
-              // onPressed: () => controller.onLogoutTap(),
-              onPressed: () => controller.onQrCodeTap(),
               icon: const Icon(
                 Icons.logout,
               ),
+              onPressed: () => Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/login', (route) => false),
             ),
           ],
         ),
-        body: SingleChildScrollView(
+        body:SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -74,7 +78,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       label: 'Solicitar um ticket',
                       textPadding: 8,
                       textStyle: AppTextStyle.smallButton,
-                      function: () => controller.onRequestTicketTap(),
+                      function: () => Navigator.pushNamed(
+                          context, AppRouter.requestTicketRoute),
                     ),
                   ],
                 ),
@@ -98,15 +103,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             color: AppColors.gray200),
                       ),
                     ),
-
                     controller.todayTickets!.isNotEmpty
                         ? Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 6.0),
+                            padding:
+                                const EdgeInsets.symmetric(vertical: 6.0),
                             child: CommonTicketWidget(
-
-                              meal:
-                                  controller.todayTickets?.elementAt(0).meal ??
-                                      '',
+                              meal: controller.todayTickets
+                                      ?.elementAt(0)
+                                      .meal ??
+                                  '',
                               status: controller.todayTickets
                                       ?.elementAt(0)
                                       .status ??
@@ -115,10 +120,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       ?.elementAt(0)
                                       .statusImage() ??
                                   '',
-                              date:
-                                  controller.todayTickets?.elementAt(0).useDayDate ??
-                                      '',
-
+                              date: controller.todayTickets
+                                      ?.elementAt(0)
+                                      .useDayDate ??
+                                  '',
                             ),
                           )
                         : Padding(
@@ -131,7 +136,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         fontSize: 12.sp,
                                         color: AppColors.gray400))),
                           ),
-
                     Padding(
                       padding: EdgeInsets.only(bottom: 18.h),
                       child: Text(
@@ -172,6 +176,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               )
             ],
           ),
-        ));
+        ) );
   }
 }

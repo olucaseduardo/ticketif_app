@@ -25,7 +25,7 @@ class HistoricScreen extends ConsumerWidget {
     final controller = ref.watch(historicProvider);
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: const Size(double.infinity, 120),
+            preferredSize: const Size(double.infinity, 130),
             child: AppBar(
               titleSpacing: 0,
               backgroundColor: AppColors.white,
@@ -37,18 +37,13 @@ class HistoricScreen extends ConsumerWidget {
                     fontWeight: FontWeight.w700),
               ),
               flexibleSpace: Padding(
-                  padding: EdgeInsets.only(top: 80.h, left: 20.w, right: 20.w),
+                  padding: EdgeInsets.only(top: 90.h, left: 20.w, right: 20.w),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Expanded(
-                            child: Container(
-                                alignment: Alignment.centerLeft,
-                                child:
-                                    Text(title, style: AppTextStyle.largeText)))
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(title, style: AppTextStyle.largeText))
                       ])),
               leading: IconButton(
                   onPressed: () {
@@ -59,31 +54,22 @@ class HistoricScreen extends ConsumerWidget {
                     color: AppColors.gray200,
                   )),
             )),
-        body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: const ClassicHeader(),
-          controller: controller.refreshController,
-          onRefresh: () => controller.onRefresh(),
-          onLoading: () => controller.onLoading(),
-
-          child: userTickets.isNotEmpty
-              ? ListView.builder(
-                  itemBuilder: (context, i) => Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: CommonTicketWidget(
-                      meal: userTickets.elementAt(i).meal,
-                      status: userTickets.elementAt(i).status,
-                      statusImage: userTickets.elementAt(i).statusImage(),
-                      date: userTickets.elementAt(i).useDayDate,
-                    ),
+        body: userTickets.isNotEmpty
+            ? ListView.builder(
+                itemBuilder: (context, i) => Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: CommonTicketWidget(
+                    meal: userTickets.elementAt(i).meal,
+                    status: userTickets.elementAt(i).status,
+                    statusImage: userTickets.elementAt(i).statusImage(),
+                    date: userTickets.elementAt(i).useDayDate,
                   ),
-                  itemCount: userTickets.length, // controller.countOne,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                )
-              : Center(
-                  child: Text('Sem tickets no seu $title'),
                 ),
-        ));
+                itemCount: userTickets.length, // controller.countOne,
+                physics: const AlwaysScrollableScrollPhysics(),
+              )
+            : Center(
+                child: Text('Sem tickets no seu $title'),
+              ));
   }
 }

@@ -113,10 +113,12 @@ class RequestTicket extends ConsumerWidget {
                         spacing: 8,
                         children: controller.days
                             .map<FilterChip>((value) => FilterChip(
-                                selected: controller.selectedDays(value.abbreviation),
+                                selected:
+                                    controller.selectedDays(value.abbreviation),
                                 label: Text(value.abbreviation),
-                                onSelected: (isSelected) => controller
-                                    .onDaysChanged(value.abbreviation, isSelected)))
+                                onSelected: (isSelected) =>
+                                    controller.onDaysChanged(
+                                        value.abbreviation, isSelected)))
                             .toList(),
                       )
                     : //TODO: notice of time to order
@@ -130,7 +132,9 @@ class RequestTicket extends ConsumerWidget {
                 ),
                 CommonDropDownButton(
                     hint: 'Selecione uma justificativa',
-                    items: controller.justifications.map((e) => e.description).toList(),
+                    items: controller.justifications
+                        .map((e) => e.description)
+                        .toList(),
                     onChanged: (value) =>
                         controller.onJustificationChanged(value)),
                 CommonTextField(
@@ -146,9 +150,9 @@ class RequestTicket extends ConsumerWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(20),
-        child: Container(
-          height: 50,
+        padding: const EdgeInsets.all(20),
+        child: SizedBox(
+          height: 60,
           child: CommonButton(
             label: 'Enviar solicitação',
             function: () => controller.onTapSendRequest(),

@@ -93,9 +93,10 @@ class RequestTicketController extends ChangeNotifier {
       return false;
     }
     if (!permanentDays
-        .map((day) => day.id)
-        .toList()
-        .contains(DateTime.now().weekday) && isPermanent) {
+            .map((day) => day.id)
+            .toList()
+            .contains(DateTime.now().weekday) &&
+        isPermanent) {
       AppMessage.showInfo('O ticket permanente deve conter o dia atual');
       return false;
     }
@@ -128,7 +129,7 @@ class RequestTicketController extends ChangeNotifier {
       try {
         final sp = await SharedPreferences.getInstance();
         final id = sp.getInt('idStudent');
-   
+        log(id.toString());
         if (permanentDays.isNotEmpty && isPermanent) {
           for (var day = 0; day < permanentDays.length; day++) {
             createTickets(

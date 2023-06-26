@@ -8,7 +8,6 @@ import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.da
     as qr_code;
 import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
 
-
 class CommonTicketWidget extends StatelessWidget {
   final String meal;
   final String status;
@@ -104,13 +103,10 @@ class CommonTicketWidget extends StatelessWidget {
               ),
               Material(
                 color: AppColors.gray900,
-                child: InkWell(
-                  onTap: () => qr_code.showQrCodeDialog(context),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Align(
-                      child: actionWidget(status, statusImage),
-                    ),
+                child: Padding(
+                  padding: EdgeInsets.all(8.h),
+                  child: Align(
+                    child: actionWidget(status, statusImage),
                   ),
                 ),
               )
@@ -124,18 +120,23 @@ class CommonTicketWidget extends StatelessWidget {
 
 Widget actionWidget(String status, String statusImage) {
   if (status == 'Em análise') {
-    return TextButton(
-        onPressed: () {},
-        child: const Text(
-          'Cancelar',
-          style: TextStyle(color: AppColors.red, fontWeight: FontWeight.w700),
-        ));
+    return InkWell(
+      onTap: () {},
+      child: Text(
+        'Cancelar',
+        style: TextStyle(
+            color: AppColors.red, fontWeight: FontWeight.w700, fontSize: 14.sp),
+      ),
+    );
   } else if (status == 'Confirmar presença') {
-    return TextButton(
-        onPressed: () {},
-        child: const Text('Confirmar\nPresença',
-            style: TextStyle(
-                color: AppColors.green500, fontWeight: FontWeight.w700)));
+    return InkWell(
+      onTap: () {},
+      child: Text('Confirmar\nPresença',
+          style: TextStyle(
+              color: AppColors.green500,
+              fontWeight: FontWeight.w700,
+              fontSize: 14.sp)),
+    );
   } else if (status == 'Utilização autorizada') {
     return SvgPicture.asset(path_image.qrUse,
         height: 50, width: 50, color: AppColors.blue);
@@ -146,21 +147,21 @@ Widget actionWidget(String status, String statusImage) {
       color: AppColors.green500,
     );
   } else if (status == 'Cancelado') {
-    return const Icon(
+    return Icon(
       Icons.cancel_rounded,
-      size: 50,
+      size: 50.r,
       color: AppColors.red,
     );
   } else if (status == 'Não autorizado') {
-    return const Icon(
+    return Icon(
       Icons.error,
-      size: 50,
+      size: 50.r,
       color: AppColors.yellow,
     );
   }
-  return const SizedBox(
-    height: 50,
-    width: 50,
+  return SizedBox(
+    height: 50.h,
+    width: 50.w,
   );
 }
 // 'Café da manhã',

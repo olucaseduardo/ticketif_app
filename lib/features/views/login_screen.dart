@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
+import 'package:project_ifma_ticket/core/utils/loader.dart';
+import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_logo.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
@@ -15,6 +19,7 @@ class LoginScreen extends ConsumerWidget {
     final controller = ref.watch(loginProvider);
     final matriculaEC = TextEditingController();
     final passwordEC = TextEditingController();
+    final nav = Navigator.of(context);
 
     return Scaffold(
       body: SafeArea(
@@ -52,10 +57,18 @@ class LoginScreen extends ConsumerWidget {
                         padding: EdgeInsets.symmetric(vertical: 20.h),
                         child: CommonButton(
                           label: "Entrar na conta",
-                          function: () => controller.onLoginTap(
-                            matriculaEC.text,
-                            passwordEC.text,
-                          ),
+                          function: () async {
+                            controller.loading();
+                            controller.isLoading
+                                ? Loader.showLoader()
+                                : const SizedBox.shrink();
+                            await controller.onLoginTap(
+                              matriculaEC.text,
+                              passwordEC.text,
+                            );
+                            nav.pushNamedAndRemoveUntil(
+                                AppRouter.homeRoute, (route) => false);
+                          },
                         ),
                       ),
                     ],
