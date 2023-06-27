@@ -5,11 +5,12 @@ import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dar
 class DialogForm extends StatelessWidget {
   final VoidCallback? action;
   final String message;
+  final String title;
 
   const DialogForm({
     Key? key,
     required this.action,
-    required this.message,
+    required this.message, required this.title,
   }) : super(key: key);
 
   @override
@@ -21,8 +22,8 @@ class DialogForm extends StatelessWidget {
           Radius.circular(20.0),
         ),
       ),
-      title: const Text(
-        'Cancelar Ticket',
+      title: Text(
+        title,
         style: AppTextStyle.largeText,
       ),
       content: Text(

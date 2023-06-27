@@ -14,6 +14,7 @@ class UserApiRepositoryImpl implements UserApiRepository {
     try {
       final sp = await SharedPreferences.getInstance();
       final matricula = sp.getString('matricula');
+      log(matricula.toString());
       final result = await DioClient().get("/me/$matricula");
       return User.fromMap(result.data);
     } on DioError catch (e, s) {

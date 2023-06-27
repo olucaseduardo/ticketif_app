@@ -47,7 +47,8 @@ class RequestTicketController extends ChangeNotifier {
       final tables = await RequestTablesApiImpl().listTables();
       meals = tables.meals;
       justifications = tables.justifications;
-
+      meals.removeLast();
+      meals.removeAt(0);
       notifyListeners();
     } on DioError catch (e, s) {
       log('Erro ao buscar dados do usuário', error: e, stackTrace: s);
@@ -100,6 +101,24 @@ class RequestTicketController extends ChangeNotifier {
       AppMessage.showInfo('O ticket permanente deve conter o dia atual');
       return false;
     }
+
+    var hour = DateTime.now().hour;
+    var minutes = DateTime.now().minute;
+
+    if ((hour >= 8) || (hour <= 10 && minutes <= 30)) {
+      if (meal!.id == 2) {
+        AppMessage.showInfo(
+            'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
+        return false;
+      }
+    } else if ((hour >= 15) || (hour <= 17 && minutes <= 30)) {
+      if (meal!.id == 3) {
+        AppMessage.showInfo(
+            'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
+        return false;
+      }
+    }
+
     return true;
   }
 
@@ -170,7 +189,6 @@ class RequestTicketController extends ChangeNotifier {
     return false;
   }
 
-  //TODO: most efficient method for the future
   List<DaysTicketDto> listOfDays() {
     List<DaysTicketDto> order = [];
     for (var day in days) {

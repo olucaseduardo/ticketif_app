@@ -29,7 +29,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(homeProvider);
-    final todayTickets = controller.todayTickets;
 
     return Scaffold(
         appBar: AppBar(
@@ -111,25 +110,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 6.0),
                                   child: CommonTicketWidget(
-                                    meal: todayTickets
-                                            ?.elementAt(0)
-                                            .meal ??
-                                        '',
-                                    status: todayTickets
-                                            ?.elementAt(0)
-                                            .status ??
-                                        '',
-                                    statusImage: todayTickets
-                                            ?.elementAt(0)
-                                            .statusImage() ??
-                                        '',
-                                    date: todayTickets
-                                            ?.elementAt(0)
-                                            .useDayDate ??
-                                        '',
+                                    ticket: controller.todayTicket!,
                                     function: () => controller.changeTicket(
-                                        todayTickets!.elementAt(0).id,
-                                        todayTickets.elementAt(0).idStatus),
+                                        controller.todayTicket!.id,
+                                        controller.todayTicket!.idStatus),
                                   ),
                                 )
                               : Padding(

@@ -3,7 +3,8 @@ import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-Future<String?> showQrCodeDialog(BuildContext context) => showDialog<String>(
+Future<String?> showQrCodeDialog(BuildContext context, String data) =>
+    showDialog<String>(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) => Dialog(
@@ -30,12 +31,13 @@ Future<String?> showQrCodeDialog(BuildContext context) => showDialog<String>(
                 'Aponte o QR Code para a câmera do(a) vendedor(a) para validar o pagamento.',
                 style: AppTextStyle.smallText,
               ),
-              Center(child: showQrCode())
+              Center(child: showQrCode(data)),
+              
             ],
           ),
         ),
       ),
     );
 
-Widget showQrCode() =>
-    QrImage(data: 'Teste', version: QrVersions.auto, size: 200);
+Widget showQrCode(String data) =>
+    QrImage(data: data, version: QrVersions.auto, size: 200);

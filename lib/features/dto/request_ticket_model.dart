@@ -27,18 +27,6 @@ class RequestTicketModel {
     required this.text, 
   });
 
-// {
-//     "student_id": 1,
-//     "week_id": 1,
-//     "meal_id": 2,
-//     "status_id": 1,
-//     "justification_id": 1,
-//     "solicitation_day": "2023-02-12 00:00:00.000",
-//     "use_day": "Segunda-Feira",
-//     "payment_day": "",
-//     "text": "",
-//     "is_permanent": 0
-// }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

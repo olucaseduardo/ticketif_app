@@ -121,7 +121,7 @@ class RequestTicket extends ConsumerWidget {
                                         value.abbreviation, isSelected)))
                             .toList(),
                       )
-                    : //TODO: notice of time to order
+                    : 
                     Container(),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),

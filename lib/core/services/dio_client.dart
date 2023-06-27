@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
 import 'package:project_ifma_ticket/core/config/env.dart';
-import 'package:project_ifma_ticket/core/services/interceptors/auth_interceptor.dart';
 
 class DioClient extends DioForNative {
   DioClient()

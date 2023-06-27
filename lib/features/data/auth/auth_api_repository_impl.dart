@@ -16,7 +16,6 @@ class AuthApiRepositoryImpl implements AuthApiRepository {
         'password': password,
       });
 
-      // log(result.data);
       return AuthModel.fromMap(result.data);
     } on DioError catch (e, s) {
       if (e.response?.statusCode == 404) {

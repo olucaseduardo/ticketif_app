@@ -59,10 +59,8 @@ class HistoricScreen extends ConsumerWidget {
                 itemBuilder: (context, i) => Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: CommonTicketWidget(
-                    meal: userTickets.elementAt(i).meal,
-                    status: userTickets.elementAt(i).status,
-                    statusImage: userTickets.elementAt(i).statusImage(),
-                    date: userTickets.elementAt(i).useDayDate,
+                    ticket: userTickets.elementAt(i),
+                    
                   ),
                 ),
                 itemCount: userTickets.length, // controller.countOne,
