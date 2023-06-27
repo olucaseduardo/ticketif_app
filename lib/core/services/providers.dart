@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_ifma_ticket/features/controllers/auth_check_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/historic_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/home_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/login_controller.dart';
@@ -16,3 +17,6 @@ final historicProvider = ChangeNotifierProvider.autoDispose<HistoricController>(
 
 final loginProvider = ChangeNotifierProvider.autoDispose<LoginController>(
     (ref) => LoginController());
+
+final authCheckProvider = ChangeNotifierProvider.autoDispose<AuthCheckController>(
+    (ref) => AuthCheckController());

@@ -178,9 +178,6 @@ class RequestTicketController extends ChangeNotifier {
         if (day.id == permanentDay.id) order.add(day);
       }
     }
-    order.forEach((element) {
-      print(element.abbreviation);
-    });
     return order;
   }
 
@@ -191,11 +188,6 @@ class RequestTicketController extends ChangeNotifier {
             .add(days.singleWhere((element) => element.abbreviation == value));
       }
       permanentDays = listOfDays();
-      if (kDebugMode) {
-        permanentDays.forEach((element) {
-          print(element.description);
-        });
-      }
       notifyListeners();
     } else {
       if (selectedDays(value)) {
@@ -203,12 +195,6 @@ class RequestTicketController extends ChangeNotifier {
             days.singleWhere((element) => element.abbreviation == value));
       }
       permanentDays = listOfDays();
-      if (kDebugMode) {
-        permanentDays.forEach((element) {
-          print(element.description);
-        });
-        ;
-      }
       notifyListeners();
     }
   }

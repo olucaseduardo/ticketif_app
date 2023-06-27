@@ -5,6 +5,7 @@ import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
 class Ticket {
   final int id;
   final int idStudent;
+  final int idStatus;
   final String useDayDate;
   final String useDay;
   final String student;
@@ -19,6 +20,7 @@ class Ticket {
   Ticket(
     this.id,
     this.idStudent,
+    this.idStatus,
     this.useDayDate,
     this.useDay,
     this.student,
@@ -46,7 +48,7 @@ class Ticket {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'idStudent': idStudent,
+      'id_student': idStudent,
       'use_day': useDay,
       'use_day_date': useDayDate,
       'student': student,
@@ -62,7 +64,8 @@ class Ticket {
   factory Ticket.fromMap(Map<String, dynamic> map) {
     return Ticket(
       map['id'] ?? 0,
-      map['idStudent'] ?? 0,
+      map['student_id'] ?? 0,
+      map['status_id'] ?? 0,
       map['use_day_date'] ?? '',
       map['use_day'] ?? '',
       map['student'] ?? '',

@@ -34,4 +34,16 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
       throw RepositoryException(message: 'Erro ao solicitar ticket');
     }
   }
+  
+  @override
+  Future<void> changeStatusTicket(int idTicket, int statusId) async {
+    try {
+      await DioClient().patch("/ticket/$idTicket", data: {
+        "status_id": statusId,
+      });
+    } on DioError catch (e, s) {
+      log("Erro ao alterar status do ticket", error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao solicitar ticket');
+    }
+  }
 }

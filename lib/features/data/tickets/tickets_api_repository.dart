@@ -4,4 +4,5 @@ import 'package:project_ifma_ticket/features/models/ticket.dart';
 abstract class TicketsApiRepository {
   Future<List<Ticket>> findAllTickets(int idStudent);
   Future<void> requestTicket(RequestTicketModel ticket);
+  Future<void> changeStatusTicket(int idTicket, int statusId);
 }

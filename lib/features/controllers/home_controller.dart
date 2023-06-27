@@ -25,7 +25,10 @@ class HomeController extends ChangeNotifier {
         navigatorKey.currentContext!, AppRouter.requestTicketRoute);
   }
 
-  onLogoutTap() {}
+  onLogoutTap() async {
+    final sp = await SharedPreferences.getInstance();
+    sp.clear();
+  }
 
   onQrCodeTap() {
     Navigator.pushNamed(
@@ -42,6 +45,11 @@ class HomeController extends ChangeNotifier {
 
   Future<void> loadData() async {
     try {
+      userTickets!.clear();
+      todayTickets!.clear();
+
+      isLoading = true;
+
       final userData = await UserApiRepositoryImpl().loadUser();
       final tickets =
           await TicketsApiRepositoryImpl().findAllTickets(userData.id);
@@ -64,11 +72,31 @@ class HomeController extends ChangeNotifier {
           }
         }
       }
-      notifyListeners();
-      // loading();
+      userTickets!.sort((a, b) => b.useDayDate.compareTo(a.useDayDate));
+      loading();
     } on DioError catch (e, s) {
       log('Erro ao buscar dados do usuário', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar dados do usuário');
+    }
+  }
+
+  Future<void> changeTicket(int idTicket, int status) async {
+    int statusId = 1;
+
+    if (status == 1) {
+      statusId = 6;
+    } else if (status == 2) {
+      statusId = 4;
+    }
+
+    try {
+      await TicketsApiRepositoryImpl().changeStatusTicket(idTicket, statusId);
+      isLoading = true;
+      notifyListeners();
+      await loadData();
+    } on DioError catch (e, s) {
+      log('Erro ao cancelar ticket', error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao cancelar ticket');
     }
   }
 }

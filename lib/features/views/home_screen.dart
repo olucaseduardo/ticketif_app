@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
@@ -12,7 +11,6 @@ import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dar
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -31,6 +29,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(homeProvider);
+    final todayTickets = controller.todayTickets;
 
     return Scaffold(
         appBar: AppBar(
@@ -53,129 +52,137 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               icon: const Icon(
                 Icons.logout,
               ),
-              onPressed: () => Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/login', (route) => false),
+              onPressed: () {
+                controller.onLogoutTap();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/login', (route) => false);
+              },
             ),
           ],
         ),
-        body:SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'Olá, ${controller.user?.name ?? ''}',
-                        style: TextApp.labelBig
-                            .copyWith(fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                    CommonButton(
-                      label: 'Solicitar um ticket',
-                      textPadding: 8,
-                      textStyle: AppTextStyle.smallButton,
-                      function: () => Navigator.pushNamed(
-                          context, AppRouter.requestTicketRoute),
-                    ),
-                  ],
-                ),
-              ),
-              const Divider(
-                height: 1,
-                thickness: 1.5,
-                color: AppColors.gray800,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+        body: !controller.isLoading
+            ? SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 18),
-                      child: Text(
-                        'Suas refeições de hoje',
-                        style: TextApp.labelBig.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.gray200),
-                      ),
-                    ),
-                    controller.todayTickets!.isNotEmpty
-                        ? Padding(
-                            padding:
-                                const EdgeInsets.symmetric(vertical: 6.0),
-                            child: CommonTicketWidget(
-                              meal: controller.todayTickets
-                                      ?.elementAt(0)
-                                      .meal ??
-                                  '',
-                              status: controller.todayTickets
-                                      ?.elementAt(0)
-                                      .status ??
-                                  '',
-                              statusImage: controller.todayTickets
-                                      ?.elementAt(0)
-                                      .statusImage() ??
-                                  '',
-                              date: controller.todayTickets
-                                      ?.elementAt(0)
-                                      .useDayDate ??
-                                  '',
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'Olá, ${controller.user?.name ?? ''}',
+                              style: TextApp.labelBig
+                                  .copyWith(fontWeight: FontWeight.w700),
                             ),
-                          )
-                        : Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.h),
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                    'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        color: AppColors.gray400))),
                           ),
+                          CommonButton(
+                            label: 'Solicitar um ticket',
+                            textPadding: 8,
+                            textStyle: AppTextStyle.smallButton,
+                            function: () => Navigator.pushNamed(
+                                context, AppRouter.requestTicketRoute),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(
+                      height: 1,
+                      thickness: 1.5,
+                      color: AppColors.gray800,
+                    ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 18.h),
-                      child: Text(
-                        'Outras opções',
-                        style: TextApp.labelBig.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.gray200),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 18),
+                            child: Text(
+                              'Suas refeições de hoje',
+                              style: TextApp.labelBig.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.gray200),
+                            ),
+                          ),
+                          controller.todayTickets!.isNotEmpty
+                              ? Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 6.0),
+                                  child: CommonTicketWidget(
+                                    meal: todayTickets
+                                            ?.elementAt(0)
+                                            .meal ??
+                                        '',
+                                    status: todayTickets
+                                            ?.elementAt(0)
+                                            .status ??
+                                        '',
+                                    statusImage: todayTickets
+                                            ?.elementAt(0)
+                                            .statusImage() ??
+                                        '',
+                                    date: todayTickets
+                                            ?.elementAt(0)
+                                            .useDayDate ??
+                                        '',
+                                    function: () => controller.changeTicket(
+                                        todayTickets!.elementAt(0).id,
+                                        todayTickets.elementAt(0).idStatus),
+                                  ),
+                                )
+                              : Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                                  child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                          'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
+                                          style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: AppColors.gray400))),
+                                ),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 18.h),
+                            child: Text(
+                              'Outras opções',
+                              style: TextApp.labelBig.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.gray200),
+                            ),
+                          ),
+                          CommonTileOptions(
+                            leading: Icons.menu_rounded,
+                            label: 'Seus tickets',
+                            function: () => Navigator.pushNamed(
+                              context,
+                              AppRouter.historicRoute,
+                              arguments: ScreenArguments(
+                                'Seus tickets',
+                                controller.userTickets
+                                    ?.where((a) => a.status != 'Cancelado')
+                                    .toList(),
+                              ),
+                            ),
+                          ),
+                          CommonTileOptions(
+                            leading: Icons.access_time_rounded,
+                            label: 'Histórico',
+                            function: () => Navigator.pushNamed(
+                              context,
+                              AppRouter.historicRoute,
+                              arguments: ScreenArguments(
+                                'Histórico',
+                                controller.userTickets,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    CommonTileOptions(
-                      leading: Icons.menu_rounded,
-                      label: 'Seus tickets',
-                      function: () => Navigator.pushNamed(
-                        context,
-                        AppRouter.historicRoute,
-                        arguments: ScreenArguments(
-                          'Seus tickets',
-                          controller.userTickets
-                              ?.where((a) => a.status != 'Cancelado')
-                              .toList(),
-                        ),
-                      ),
-                    ),
-                    CommonTileOptions(
-                      leading: Icons.access_time_rounded,
-                      label: 'Histórico',
-                      function: () => Navigator.pushNamed(
-                        context,
-                        AppRouter.historicRoute,
-                        arguments: ScreenArguments(
-                          'Histórico',
-                          controller.userTickets,
-                        ),
-                      ),
-                    ),
+                    )
                   ],
                 ),
               )
-            ],
-          ),
-        ) );
+            : Loader.loader());
   }
 }

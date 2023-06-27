@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
+import 'package:project_ifma_ticket/core/utils/dialog.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart'
     as qr_code;
 import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
@@ -13,13 +15,15 @@ class CommonTicketWidget extends StatelessWidget {
   final String status;
   final String statusImage;
   final String date;
+  final VoidCallback? function;
 
   const CommonTicketWidget(
       {Key? key,
       required this.meal,
       required this.status,
       required this.statusImage,
-      required this.date})
+      required this.date,
+      this.function})
       : super(key: key);
 
   @override
@@ -106,7 +110,7 @@ class CommonTicketWidget extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(8.h),
                   child: Align(
-                    child: actionWidget(status, statusImage),
+                    child: actionWidget(status, statusImage, function, context),
                   ),
                 ),
               )
@@ -118,14 +122,28 @@ class CommonTicketWidget extends StatelessWidget {
   }
 }
 
-Widget actionWidget(String status, String statusImage) {
+Widget actionWidget(String status, String statusImage, VoidCallback? action,
+    BuildContext context) {
   if (status == 'Em análise') {
     return InkWell(
-      onTap: () {},
-      child: Text(
-        'Cancelar',
-        style: TextStyle(
-            color: AppColors.red, fontWeight: FontWeight.w700, fontSize: 14.sp),
+      onTap: () {
+        // AppMessage.showInfo('Teste de passagem');
+        showDialog(
+            context: context,
+            builder: (_) => DialogForm(
+                action: () => action!(),
+                message:
+                    "Clique sim para cancelar o ticket e não desfazer esta ação"));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          'Cancelar',
+          style: TextStyle(
+              color: AppColors.red,
+              fontWeight: FontWeight.w700,
+              fontSize: 14.sp),
+        ),
       ),
     );
   } else if (status == 'Confirmar presença') {
