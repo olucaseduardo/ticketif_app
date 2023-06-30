@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
-import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/data/tickets/tickets_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/data/user/user_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
@@ -14,7 +13,8 @@ class HomeController extends ChangeNotifier {
   User? user;
   List<Ticket>? userTickets = [];
   List<Ticket>? todayTickets = [];
-    bool isLoading = true;
+  bool isLoading = true;
+  bool error = false;
 
   Ticket? todayTicket;
 
@@ -22,7 +22,6 @@ class HomeController extends ChangeNotifier {
     final sp = await SharedPreferences.getInstance();
     sp.clear();
   }
-
 
   void loading() {
     isLoading = !isLoading;
@@ -71,19 +70,20 @@ class HomeController extends ChangeNotifier {
           if (ticket.idMeal == 2) {
             todayTicket = ticket;
           }
-        }
-        else if(hour >= 13 && hour <= 19){
+        } else if (hour >= 13 && hour <= 19) {
           if (ticket.idMeal == 3) {
             todayTicket = ticket;
           }
         }
-        log(ticket.toString());
       }
+      log(todayTicket.toString());
       userTickets!.sort((a, b) => b.useDayDate.compareTo(a.useDayDate));
       loading();
-    } on DioError catch (e, s) {
+    } catch (e, s) {
       log('Erro ao buscar dados do usuário', error: e, stackTrace: s);
-      throw RepositoryException(message: 'Erro ao buscar dados do usuário');
+      loading();
+      error = true;
+      notifyListeners();
     }
   }
 

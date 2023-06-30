@@ -44,6 +44,7 @@ class CommonTextField extends StatelessWidget {
             maxLines: maxLine,
             decoration: InputDecoration(
               alignLabelWithHint: true,
+              floatingLabelBehavior: FloatingLabelBehavior.never,
               focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.green500)),
               focusColor: AppColors.green500,

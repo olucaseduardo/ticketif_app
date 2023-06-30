@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends ChangeNotifier {
   bool isLoading = false;
+  bool error = false;
   void loading() {
     isLoading = !isLoading;
     log(isLoading.toString());
@@ -14,6 +15,8 @@ class LoginController extends ChangeNotifier {
   }
 
   Future<void> onLoginTap(String matricula, String password) async {
+    error = false;
+    notifyListeners();
     try {
       final authModel =
           await AuthApiRepositoryImpl().login(matricula, password);
@@ -24,11 +27,15 @@ class LoginController extends ChangeNotifier {
       log('Sucesso');
       loading();
     } on UnauthorizedException catch (e, s) {
+      error = true;
+      notifyListeners();
       loading();
       log('Login ou senha inválidos', error: e, stackTrace: s);
     } catch (e, s) {
-      loading();
+      error = true;
+      notifyListeners();
       log('Erro ao realizar login', error: e, stackTrace: s);
+      loading();
     }
   }
 }

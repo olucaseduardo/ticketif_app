@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_theme.dart';
 import 'package:project_ifma_ticket/features/views/auth_check.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -22,7 +21,6 @@ class App extends StatelessWidget {
         theme: TicketTheme.ticketTheme,
         home: const AuthCheck(),
         localizationsDelegates: const [
-          RefreshLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate

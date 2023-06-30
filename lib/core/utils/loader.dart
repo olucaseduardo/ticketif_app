@@ -11,6 +11,10 @@ class Loader {
     );
   }
 
+  static void hideDialog() {
+    Navigator.pop(navigatorKey.currentState!.context);
+  }
+
   static Widget loader() {
     return Center(
       child: LoadingAnimationWidget.twistingDots(

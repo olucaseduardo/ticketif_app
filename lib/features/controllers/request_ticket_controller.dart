@@ -20,13 +20,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class RequestTicketController extends ChangeNotifier {
   bool isPermanent = false;
+  bool error = false;
   TablesModel? meal;
   TablesModel? justification;
   TextEditingController justificationController = TextEditingController();
 
   List<TablesModel> meals = [];
   List<TablesModel> justifications = [];
-  // List<String> days = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
   List<DaysTicketDto> days = [
     DaysTicketDto(id: 1, description: "Segunda-Feira", abbreviation: "Seg"),
     DaysTicketDto(id: 2, description: "Terça-Feira", abbreviation: "Ter"),
@@ -51,8 +51,9 @@ class RequestTicketController extends ChangeNotifier {
       meals.removeAt(0);
       notifyListeners();
     } on DioError catch (e, s) {
-      log('Erro ao buscar dados do usuário', error: e, stackTrace: s);
-      throw RepositoryException(message: 'Erro ao buscar dados do usuário');
+      log('Erro ao carregar dados', error: e, stackTrace: s);
+      AppMessage.showError('Erro ao carregar dados');
+      throw RepositoryException(message: 'Erro ao carregar dados');
     }
   }
 
@@ -104,14 +105,14 @@ class RequestTicketController extends ChangeNotifier {
 
     var hour = DateTime.now().hour;
     var minutes = DateTime.now().minute;
-
-    if ((hour >= 8) || (hour <= 10 && minutes <= 30)) {
+    log('$hour e $minutes');
+    if ((hour >= 8) && (hour <= 10 && minutes >= 30)) {
       if (meal!.id == 2) {
         AppMessage.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
         return false;
       }
-    } else if ((hour >= 15) || (hour <= 17 && minutes <= 30)) {
+    } else if ((hour >= 15) && (hour <= 17 && minutes >= 30)) {
       if (meal!.id == 3) {
         AppMessage.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
@@ -122,36 +123,49 @@ class RequestTicketController extends ChangeNotifier {
     return true;
   }
 
-  void createTickets(
+  Future<void> createTickets(
     int id,
     int weekId,
     String useDay,
     String useDayDate,
   ) async {
-    await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
-      studentId: id,
-      weekId: weekId,
-      mealId: meal!.id,
-      statusId: 1,
-      justificationId: justification!.id,
-      isPermanent: isPermanent ? 1 : 0,
-      solicitationDay: DateTime.now().toString(),
-      useDay: useDay,
-      useDayDate: useDayDate,
-      paymentDay: '',
-      text: justificationController.text,
-    ));
+    try {
+      await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
+        studentId: id,
+        weekId: weekId,
+        mealId: meal!.id,
+        statusId: 1,
+        justificationId: justification!.id,
+        isPermanent: isPermanent ? 1 : 0,
+        solicitationDay: DateTime.now().toString(),
+        useDay: useDay,
+        useDayDate: useDayDate,
+        paymentDay: '',
+        text: justificationController.text,
+      ));
+    } on DioError catch (e, s) {
+      log('Erro ao solicitar Ticket', error: e, stackTrace: s);
+
+      error = true;
+      notifyListeners();
+    } catch (e, s) {
+      error = true;
+      notifyListeners();
+      log('Erro ao solicitar Ticket', error: e, stackTrace: s);
+    }
   }
 
   Future<void> onTapSendRequest() async {
     if (validation()) {
       try {
+        error = false;
+        notifyListeners();
         final sp = await SharedPreferences.getInstance();
         final id = sp.getInt('idStudent');
         log(id.toString());
         if (permanentDays.isNotEmpty && isPermanent) {
           for (var day = 0; day < permanentDays.length; day++) {
-            createTickets(
+            await createTickets(
                 id ?? 0,
                 permanentDays[day].id,
                 permanentDays[day].description,
@@ -160,22 +174,27 @@ class RequestTicketController extends ChangeNotifier {
                     : '');
           }
         } else {
-          createTickets(
+          await createTickets(
               id ?? 0,
               DateTime.now().weekday,
               DateUtil.todayDateRequest(DateTime.now()).capitalizeRequest(),
               DateTime.now().toString());
         }
-
-        AppMessage.showMessage('Requisição enviada com sucesso');
-        Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!,
-          AppRouter.homeRoute,
-          (route) => false,
-        );
+        log('Erro: $error');
+        if (!error) {
+          AppMessage.showMessage('Requisição enviada com sucesso');
+          Navigator.pushNamedAndRemoveUntil(
+            navigatorKey.currentContext!,
+            AppRouter.homeRoute,
+            (route) => false,
+          );
+        } else {
+          AppMessage.showError('Erro ao solicitar Ticket');
+        }
       } on DioError catch (e, s) {
-        log("Erro ao solicitar ticket", error: e, stackTrace: s);
-        throw RepositoryException(message: 'Erro ao solicitar ticket');
+        log('Erro ao solicitar Ticket', error: e, stackTrace: s);
+        AppMessage.showError('Erro ao solicitar Ticket');
+        throw RepositoryException(message: 'Erro ao solicitar Ticket');
       }
     }
   }

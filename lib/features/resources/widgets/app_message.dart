@@ -33,6 +33,7 @@ class AppMessage {
         backgroundColor: AppColors.yellow,
         content: Text(
           text,
+          style: const TextStyle(color: Colors.black87),
           textAlign: TextAlign.center,
         ),
       ),
