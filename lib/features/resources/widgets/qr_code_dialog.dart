@@ -39,5 +39,5 @@ Future<String?> showQrCodeDialog(BuildContext context, String data) =>
       ),
     );
 
-Widget showQrCode(String data) =>
-    QrImage(data: data, version: QrVersions.auto, size: 200);
+QrImageView showQrCode(String data) =>
+    QrImageView(data: data, version: QrVersions.auto, size: 200);

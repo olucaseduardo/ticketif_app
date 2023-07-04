@@ -4,6 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_theme.dart';
 import 'package:project_ifma_ticket/features/views/auth_check.dart';
+import 'package:project_ifma_ticket/features/views/cae/cae_home_screen.dart';
+import 'package:project_ifma_ticket/features/views/cae/daily_report_screen.dart';
+import 'package:project_ifma_ticket/features/views/cae/period_report_screen.dart';
+import 'package:project_ifma_ticket/features/views/cae/ticket_evaluate_screen.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -19,7 +23,7 @@ class App extends StatelessWidget {
         navigatorKey: navigatorKey,
         onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
         theme: TicketTheme.ticketTheme,
-        home: const AuthCheck(),
+        home: PeriodReportScreen(), //const AuthCheck(),
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,

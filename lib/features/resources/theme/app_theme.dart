@@ -7,6 +7,10 @@ mixin TicketTheme {
       primaryColor: AppColors.green500,
       fontFamily: GoogleFonts.inter().fontFamily,
       scaffoldBackgroundColor: AppColors.white,
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.green800, primary: AppColors.green500),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: AppColors.green500,
+      ),
       appBarTheme: const AppBarTheme(
         toolbarHeight: 78,
         elevation: 0,

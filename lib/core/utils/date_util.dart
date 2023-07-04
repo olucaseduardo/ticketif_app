@@ -11,4 +11,6 @@ class DateUtil {
 
   static String ticketDay(DateTime dateTime) =>
       DateFormat("d 'de' MMM (EEEE)", 'pt_BR').format(dateTime);
+
+  static String getDateStr(DateTime date) => DateFormat("dd/MM/yyyy").format(date);
 }
