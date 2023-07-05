@@ -28,7 +28,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                 Text(DateUtil.todayDate(DateUtil.dateTime),
                     style:
                         TextApp.labelBig.copyWith(fontWeight: FontWeight.w700)),
-                Text('Administrador', style: TextApp.labelMedium)
+                const Text('Administrador', style: TextApp.labelMedium)
               ],
             ),
           ),
@@ -49,26 +49,6 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Padding(
-                    //   padding: const EdgeInsets.all(16),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Flexible(
-                    //         child: Text(
-                    //           'CAE IFMA',
-                    //           style: TextApp.labelBig
-                    //               .copyWith(fontWeight: FontWeight.w700),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // const Divider(
-                    //   height: 1,
-                    //   thickness: 1.5,
-                    //   color: AppColors.gray800,
-                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
@@ -79,15 +59,6 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 12.0),
                             child: Image.asset('assets/images/CAE.png'),
                           )),
-                          // Padding(
-                          //   padding: EdgeInsets.only(bottom: 18.h),
-                          //   child: Text(
-                          //     'Outras opções',
-                          //     style: TextApp.labelBig.copyWith(
-                          //         fontWeight: FontWeight.w700,
-                          //         color: AppColors.gray200),
-                          //   ),
-                          // ),
                           CommonTileOptions(
                             leading: Icons.local_restaurant_rounded,
                             label: 'Tickets Diários',
@@ -101,7 +72,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                             label: 'Autorizações Permanentes',
                             function: () => Navigator.pushNamed(
                               context,
-                              AppRouter.historicRoute,
+                              AppRouter.caeClassesRoute,
                             ),
                           ),
                           CommonTileOptions(
@@ -109,7 +80,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                             label: 'Relatório Diário',
                             function: () => Navigator.pushNamed(
                               context,
-                              AppRouter.historicRoute,
+                              AppRouter.caeDailyReportRoute,
                             ),
                           ),
                           CommonTileOptions(
@@ -117,7 +88,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                             label: 'Relatório por periódo',
                             function: () => Navigator.pushNamed(
                               context,
-                              AppRouter.historicRoute,
+                              AppRouter.caePeriodReportRoute,
                             ),
                           ),
                         ],

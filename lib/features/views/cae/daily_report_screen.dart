@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_report.dart';
 
@@ -27,9 +28,33 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-                child: Text(
-                  'Data: ${DateUtil.getDateStr(day)}',
-                  style: TextApp.titleLarge,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Data: ${DateUtil.getDateStr(day)}',
+                      style: TextApp.titleLarge,
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          var pickDate = await showDatePicker(
+                              context: context,
+                              initialDate: day,
+                              firstDate:
+                                  day.subtract(const Duration(days: 365)),
+                              lastDate: day.add(const Duration(days: 365)));
+
+                          if (pickDate != null) {
+                            setState(() {
+                              day = pickDate;
+                            });
+                          }
+                        },
+                        icon: Icon(
+                          Icons.calendar_today_rounded,
+                          color: AppColors.green300,
+                        ))
+                  ],
                 ),
               ),
               const Divider(),
@@ -45,24 +70,6 @@ class _DailyReportScreenState extends State<DailyReportScreen> {
               CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 0'),
             ],
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          var pickDate = await showDatePicker(
-              context: context,
-              initialDate: day,
-              firstDate: day.subtract(const Duration(days: 365)),
-              lastDate: day.add(const Duration(days: 365)));
-
-          if (pickDate != null) {
-            setState(() {
-              day = pickDate;
-            });
-          }
-        },
-        child: const Icon(
-          Icons.calendar_today,
         ),
       ),
     );

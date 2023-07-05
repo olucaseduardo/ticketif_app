@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_report.dart';
 
@@ -17,30 +18,65 @@ class _PeriodReportScreenState extends State<PeriodReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Relatório por Período'),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-            child: Column(
-              children: [
-                Text(
-                  'Início: ${DateUtil.getDateStr(start)}',
-                  style: TextApp.titleLarge,
+        appBar: AppBar(
+          title: const Text('Relatório por Período'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Início: ${DateUtil.getDateStr(start)}',
+                          style: TextApp.titleLarge,
+                        ),
+                        Text(
+                          'Final: ${DateUtil.getDateStr(end)}',
+                          style: TextApp.titleLarge,
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          DateTimeRange? result = await showDateRangePicker(
+                            context: context,
+                            initialEntryMode: DatePickerEntryMode.calendar,
+                            firstDate:
+                                DateTime(2022, 1, 1), // the earliest allowable
+                            lastDate:
+                                DateTime(2025, 12, 31), // the latest allowable
+                            currentDate: DateTime.now(),
+                            saveText: 'Salvar',
+                          );
+                          setState(() {
+                            if (result != null) {
+                              start = result.start;
+                              end = result.end;
+                            }
+                          });
+                        },
+                        icon: Icon(
+                          Icons.calendar_month_rounded,
+                          color: AppColors.green300,
+                        ))
+                  ],
                 ),
-                Text(
-                  'Final: ${DateUtil.getDateStr(end)}',
-                  style: TextApp.titleLarge,
-                ),     
-              ],
-            ),
+              ),
+              const Divider(),
+              CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 200'),
+            ],
           ),
-          const Divider(),
-          CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 200'),
-        ],
-      ),
-    );
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.save_rounded),
+        ));
   }
 }

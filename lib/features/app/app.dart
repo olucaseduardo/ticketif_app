@@ -23,7 +23,7 @@ class App extends StatelessWidget {
         navigatorKey: navigatorKey,
         onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
         theme: TicketTheme.ticketTheme,
-        home: PeriodReportScreen(), //const AuthCheck(),
+        home: const CaeHomeScreen(), //const AuthCheck(),
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
