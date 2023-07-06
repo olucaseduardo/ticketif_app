@@ -153,8 +153,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   context,
                                   AppRouter.historicRoute,
                                   arguments: ScreenArguments(
-                                    'Seus tickets',
-                                    controller.userTickets
+                                    title: 'Seus tickets',
+                                    userTickets: controller.userTickets
                                         ?.where((a) => a.status != 'Cancelado')
                                         .toList(),
                                   ),
@@ -167,8 +167,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   context,
                                   AppRouter.historicRoute,
                                   arguments: ScreenArguments(
-                                    'Histórico',
-                                    controller.userTickets,
+                                    title: 'Histórico',
+                                    userTickets: controller.userTickets,
                                   ),
                                 ),
                               ),
@@ -193,8 +193,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             onPressed: () {
                               AppMessage.showError('Erro ao carregar usuario');
                               controller.onLogoutTap();
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  '/login', (route) => false);
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  AppRouter.loginRoute, (route) => false);
                             },
                             child: Text(
                               'Voltar ao login',

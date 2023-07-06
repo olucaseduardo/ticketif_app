@@ -58,7 +58,6 @@ class HistoricScreen extends ConsumerWidget {
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: CommonTicketWidget(
                     ticket: userTickets.elementAt(i),
-                    
                   ),
                 ),
                 itemCount: userTickets.length, // controller.countOne,

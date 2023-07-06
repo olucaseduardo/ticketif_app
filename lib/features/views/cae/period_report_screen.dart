@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_report.dart';
 
-class PeriodReportScreen extends StatefulWidget {
+class PeriodReportScreen extends ConsumerStatefulWidget {
   const PeriodReportScreen({super.key});
 
   @override
-  State<PeriodReportScreen> createState() => _PeriodReportScreenState();
+  ConsumerState<PeriodReportScreen> createState() => _PeriodReportScreenState();
 }
 
-class _PeriodReportScreenState extends State<PeriodReportScreen> {
+class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
   DateTime now = DateTime.now();
   late DateTime start = DateTime.utc(now.year, now.month, 1);
   late DateTime end = DateTime.now();
@@ -62,7 +63,7 @@ class _PeriodReportScreenState extends State<PeriodReportScreen> {
                             }
                           });
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.calendar_month_rounded,
                           color: AppColors.green300,
                         ))
@@ -70,13 +71,13 @@ class _PeriodReportScreenState extends State<PeriodReportScreen> {
                 ),
               ),
               const Divider(),
-              CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 200'),
+              const CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 200'),
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
-          child: Icon(Icons.save_rounded),
+          child: const Icon(Icons.save_rounded),
         ));
   }
 }

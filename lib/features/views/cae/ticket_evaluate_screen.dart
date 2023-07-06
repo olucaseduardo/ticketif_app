@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/common_tile_class.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_ticket.dart';
 
-class TicketEvaluateScreen extends StatefulWidget {
+class TicketEvaluateScreen extends ConsumerStatefulWidget {
   const TicketEvaluateScreen({super.key});
 
   @override
-  State<TicketEvaluateScreen> createState() => _TicketEvaluateScreenState();
+  ConsumerState<TicketEvaluateScreen> createState() =>
+      _TicketEvaluateScreenState();
 }
 
-class _TicketEvaluateScreenState extends State<TicketEvaluateScreen> {
+class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
   late bool selectAll;
   bool loading = false;
 
@@ -42,11 +43,11 @@ class _TicketEvaluateScreenState extends State<TicketEvaluateScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      body: const Padding(
+        padding: EdgeInsets.all(20),
         child: Column(
           children: [
-            const TextField(
+            TextField(
               decoration: InputDecoration(
                 fillColor: AppColors.gray800,
                 filled: true,
@@ -62,21 +63,16 @@ class _TicketEvaluateScreenState extends State<TicketEvaluateScreen> {
               subtitle: 'Almoço: 04-07-2023',
               justification: 'Estudo',
             ),
-
-            
           ],
         ),
       ),
-
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
         child: Row(
           children: [
             Expanded(
               child: ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () {},
                 child: const Text(
                   'Recusar',
@@ -84,9 +80,9 @@ class _TicketEvaluateScreenState extends State<TicketEvaluateScreen> {
                 ),
               ),
             ),
-      
+
             const SizedBox(
-               width: 10,
+              width: 10,
             ),
             // Style.formSizedBox,
             Expanded(

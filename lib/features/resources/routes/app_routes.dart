@@ -6,6 +6,7 @@ import 'package:project_ifma_ticket/features/views/cae/cae_home_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/classes_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/daily_report_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/period_report_screen.dart';
+import 'package:project_ifma_ticket/features/views/cae/search_student_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/ticket_evaluate_screen.dart';
 import 'package:project_ifma_ticket/features/views/historic_screen.dart';
 import 'package:project_ifma_ticket/features/views/home_screen.dart';
@@ -25,6 +26,7 @@ class AppRouter {
   static const String caeDailyReportRoute = '/dailyReport';
   static const String caePeriodReportRoute = '/periodReport';
   static const String caeTicketEvaluateRoute = '/ticketEvaluate';
+  static const String caeSearchStudentRoute = '/searchStudent';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final ScreenArguments? args = settings.arguments as ScreenArguments?;
@@ -40,7 +42,12 @@ class AppRouter {
                   userTickets: args.userTickets as List<Ticket>,
                 ));
       case requestTicketRoute:
-        return MaterialPageRoute(builder: (_) => const RequestTicket());
+        return MaterialPageRoute(
+            builder: (_) => RequestTicket(
+                  title: args!.title,
+                  caeRequest: args.caeRequest as bool,
+                  idStudent: args.idStudent,
+                ));
 
       // CAE ROUTES
       case caeHomeRoute:
@@ -53,6 +60,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const PeriodReportScreen());
       case caeTicketEvaluateRoute:
         return MaterialPageRoute(builder: (_) => const TicketEvaluateScreen());
+      case caeSearchStudentRoute:
+        return MaterialPageRoute(builder: (_) => const SearchStudentScreen());
       case qrRoute:
         return MaterialPageRoute(builder: (_) => const QrScreen());
       default:
