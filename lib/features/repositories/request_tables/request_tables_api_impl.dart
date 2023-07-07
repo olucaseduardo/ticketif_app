@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
 import 'package:project_ifma_ticket/core/services/dio_client.dart';
-import 'package:project_ifma_ticket/features/data/request_tables/request_tables_api.dart';
+import 'package:project_ifma_ticket/features/repositories/request_tables/request_tables_api.dart';
 import 'package:project_ifma_ticket/features/models/list_tables_model.dart';
 import 'package:project_ifma_ticket/features/models/tables_model.dart';
 

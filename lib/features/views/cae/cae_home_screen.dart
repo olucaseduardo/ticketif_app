@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
@@ -17,6 +18,8 @@ class CaeHomeScreen extends ConsumerStatefulWidget {
 class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final controller = ref.watch(caeProvider);
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -38,6 +41,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                 Icons.logout,
               ),
               onPressed: () {
+                controller.onLogoutTap();
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil('/login', (route) => false);
               },

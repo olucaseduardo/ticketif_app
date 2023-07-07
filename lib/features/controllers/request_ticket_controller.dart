@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/app/app.dart';
-import 'package:project_ifma_ticket/features/data/request_tables/request_tables_api_impl.dart';
-import 'package:project_ifma_ticket/features/data/tickets/tickets_api_repository_impl.dart';
+import 'package:project_ifma_ticket/features/repositories/request_tables/request_tables_api_impl.dart';
+import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/dto/days_ticket_dto.dart';
 import 'package:project_ifma_ticket/features/dto/request_ticket_model.dart';
 import 'package:project_ifma_ticket/features/models/tables_model.dart';
@@ -106,19 +106,13 @@ class RequestTicketController extends ChangeNotifier {
     var hour = DateTime.now().hour;
     var minutes = DateTime.now().minute;
     log('$hour e $minutes');
-    if ((hour >= 8) && (hour <= 10 && minutes >= 30)) {
+    if ((hour >= 8) && (hour <= 11 && minutes <= 30)) {
       if (meal!.id == 2) {
         AppMessage.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
         return false;
       }
-    } else if ((hour >= 15) && (hour <= 17 && minutes >= 30)) {
-      if (meal!.id == 3) {
-        AppMessage.showInfo(
-            'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
-        return false;
-      }
-    }
+    } 
 
     return true;
   }

@@ -46,4 +46,29 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
       throw RepositoryException(message: 'Erro ao solicitar ticket');
     }
   }
+  
+  @override
+  Future<List<Ticket>> findAllDailyTickets(String date) async{
+    try {
+      final result =
+          await DioClient().get("/tickets-daily?daily=$date");
+
+      return result.data.map<Ticket>((t) => Ticket.fromMap(t)).toList();
+    } on DioError catch (e, s) {
+      log('Erro ao buscar tickets do usuário', error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao buscar tickets do usuário');
+    }
+  }
+  
+  @override
+  Future<List<Ticket>> findPeriodTickets(String initialDate, String finalDate)async {
+    try {
+      final result =
+          await DioClient().get("/tickets-period?month_initial=$initialDate&month_final=$finalDate");
+      return result.data.map<Ticket>((t) => Ticket.fromMap(t)).toList();
+    } on DioError catch (e, s) {
+      log('Erro ao buscar tickets do usuário', error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao buscar tickets do usuário');
+    }
+  }
 }

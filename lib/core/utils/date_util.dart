@@ -14,4 +14,7 @@ class DateUtil {
 
   static String getDateStr(DateTime dateTime) =>
       DateFormat("dd/MM/yyyy").format(dateTime);
+
+  static String getDateUSStr(DateTime dateTime) =>
+      DateFormat("yyyy-MM-dd").format(dateTime);
 }

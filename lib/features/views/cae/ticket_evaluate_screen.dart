@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_ifma_ticket/core/services/providers.dart';
+import 'package:project_ifma_ticket/core/utils/date_util.dart';
+import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_ticket.dart';
 
 class TicketEvaluateScreen extends ConsumerStatefulWidget {
-  const TicketEvaluateScreen({super.key});
+  final List<Ticket> tickets;
+  const TicketEvaluateScreen( {super.key,required this.tickets,});
 
   @override
   ConsumerState<TicketEvaluateScreen> createState() =>
@@ -14,6 +18,8 @@ class TicketEvaluateScreen extends ConsumerStatefulWidget {
 class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
   late bool selectAll;
   bool loading = false;
+  List<Ticket> tickets = []; 
+  
 
   @override
   void initState() {
@@ -23,6 +29,8 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = ref.watch(caeProvider);
+    List<Ticket> allTickets = widget.tickets;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Turma 20231A.CAX'),
@@ -43,11 +51,11 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
           )
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(20),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 fillColor: AppColors.gray800,
                 filled: true,
@@ -58,11 +66,20 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
             ),
-            CommonTileTicket(
-              title: '20231A.CAX0012',
-              subtitle: 'Almoço: 04-07-2023',
-              justification: 'Estudo',
+            const SizedBox(
+               height: 20,
             ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: allTickets.length,
+                itemBuilder: (context, index) => CommonTileTicket(
+                    title: allTickets.elementAt(index).student,
+                    subtitle:
+                        "${allTickets.elementAt(index).meal} : ${DateUtil.getDateStr(DateTime.parse(allTickets.elementAt(index).useDayDate))}",
+                    justification: allTickets.elementAt(index).justification),
+              ),
+            ),
+          
           ],
         ),
       ),
@@ -87,7 +104,9 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
             // Style.formSizedBox,
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // controller.changeTicketCAE(, status)
+                },
                 child: const Text(
                   'Aprovar',
                   // style: Style.buttonTextStyle,

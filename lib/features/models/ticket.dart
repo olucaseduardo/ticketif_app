@@ -11,6 +11,7 @@ class Ticket {
   final String useDayDate;
   final String useDay;
   final String student;
+  final String studentName;
   final String meal;
   final String status;
   final String justification;
@@ -26,6 +27,7 @@ class Ticket {
     this.useDayDate,
     this.useDay,
     this.student,
+    this.studentName,
     this.meal,
     this.status,
     this.justification,
@@ -41,6 +43,7 @@ class Ticket {
       'use_day': useDay,
       'use_day_date': useDayDate,
       'student': student,
+      'student_name': studentName,
       'meal_description': meal,
       'status_description': status,
       'justification_description': justification,
@@ -59,6 +62,7 @@ class Ticket {
       map['use_day_date'] ?? '',
       map['use_day'] ?? '',
       map['student'] ?? '',
+      map['student_name'] ?? '',
       map['meal_description'] ?? '',
       map['status_description'] ?? '',
       map['justification_description'] ?? '',
@@ -97,6 +101,7 @@ class Ticket {
     var data = {
       'id': id,
       'student': student,
+      'student_name': studentName,
       'status': status,
       'date': useDayDate,
       'date_str': useDay,
@@ -107,6 +112,6 @@ class Ticket {
 
   @override
   String toString() {
-    return 'Ticket(id: $id, idStudent: $idStudent, idStatus: $idStatus, idMeal: $idMeal, useDayDate: $useDayDate, useDay: $useDay, student: $student, meal: $meal, status: $status, justification: $justification, text: $text, isPermanent: $isPermanent, solicitationDay: $solicitationDay)';
+    return 'Ticket(id: $id, idStudent: $idStudent, idStatus: $idStatus, idMeal: $idMeal, useDayDate: $useDayDate, useDay: $useDay, student: $student, studentName: $studentName, meal: $meal, status: $status, justification: $justification, text: $text, isPermanent: $isPermanent, solicitationDay: $solicitationDay)';
   }
 }

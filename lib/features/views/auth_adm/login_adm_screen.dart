@@ -11,13 +11,13 @@ import 'package:project_ifma_ticket/features/resources/widgets/common_button_wid
 import 'package:project_ifma_ticket/features/resources/widgets/common_dropdown_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
 
-class LoginScreen extends ConsumerWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginAdmScreen extends ConsumerWidget {
+  const LoginAdmScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
     final controller = ref.watch(loginProvider);
-    final matriculaEC = TextEditingController();
+    final usernameEC = TextEditingController();
     final passwordEC = TextEditingController();
     final nav = Navigator.of(context);
 
@@ -29,7 +29,9 @@ class LoginScreen extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const AppLogo(),
+                const AppLogo(
+                  adm: true,
+                ),
                 const Padding(
                   padding: EdgeInsets.all(24),
                   child: Text(
@@ -41,13 +43,13 @@ class LoginScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       CommonTextField(
-                        title: 'Matrícula',
-                        labelText: 'Digite sua matrícula',
+                        title: 'Usuário',
+                        labelText: 'Digite seu usuário',
                         textInputAction: TextInputAction.next,
-                        controller: matriculaEC,
+                        controller: usernameEC,
                       ),
                       CommonTextField(
-                        title: 'Senha (SUAP)',
+                        title: 'Senha',
                         labelText: 'Digite sua senha',
                         textInputAction: TextInputAction.done,
                         obscureText: true,
@@ -60,7 +62,10 @@ class LoginScreen extends ConsumerWidget {
                           children: [
                             const Padding(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
-                              child: Text('Campus', style: TextApp.bodyLarge,),
+                              child: Text(
+                                'Campus',
+                                style: TextApp.bodyLarge,
+                              ),
                             ),
                             CommonDropDownButton(
                               items: const ['Caxias', 'Timon'],
@@ -80,13 +85,13 @@ class LoginScreen extends ConsumerWidget {
                             controller.isLoading
                                 ? Loader.showLoader()
                                 : const SizedBox.shrink();
-                            await controller.onLoginTap(
-                              matriculaEC.text,
+                            await controller.onLoginAdmTap(
+                              usernameEC.text.toUpperCase(),
                               passwordEC.text,
                             );
                             if (!controller.error) {
                               nav.pushNamedAndRemoveUntil(
-                                  AppRouter.homeRoute, (route) => false);
+                                  AppRouter.caeHomeRoute, (route) => false);
                             } else {
                               Loader.hideDialog();
 
@@ -99,9 +104,8 @@ class LoginScreen extends ConsumerWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => nav.pushNamed(
-                                  AppRouter.admLoginRoute),
-                  child: const Text('Login administrativo'),
+                  onPressed: () => nav.pop(),
+                  child: const Text('Login aluno'),
                 ),
               ],
             ),

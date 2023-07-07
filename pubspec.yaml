@@ -84,6 +84,7 @@ flutter:
     - assets/images/LOGO.png
     - assets/images/LOGOTICKET.png
     - assets/images/TICKETIF.png
+    - assets/images/ADMLOGO.png
     - assets/svg/
     - assets/svg/status/
     - assets/svg/QrCode.svg

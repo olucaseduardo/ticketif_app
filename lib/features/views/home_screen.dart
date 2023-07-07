@@ -86,12 +86,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 label: 'Solicitar um ticket',
                                 textPadding: 8,
                                 textStyle: AppTextStyle.smallButton,
-                                function: () => todayTicket?.idStatus == 7 &&
-                                        todayTicket?.idStatus == 6
+                                // function: () => Navigator.pushNamed(
+                                //         context, AppRouter.requestTicketRoute)
+                                function: () => todayTicket?.idStatus == 7 ||
+                                        todayTicket?.idStatus == 6 ||
+                                        todayTicket == null
                                     ? Navigator.pushNamed(
                                         context, AppRouter.requestTicketRoute)
                                     : AppMessage.showInfo(
-                                        'Você já possui um ticket para ${todayTicket?.meal.toLowerCase()}'),
+                                        'Você já possui um ticket para ${todayTicket.meal.toLowerCase()}'),
                               ),
                             ],
                           ),
@@ -154,7 +157,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   AppRouter.historicRoute,
                                   arguments: ScreenArguments(
                                     title: 'Seus tickets',
-                                    userTickets: controller.userTickets
+                                    tickets: controller.userTickets
                                         ?.where((a) => a.status != 'Cancelado')
                                         .toList(),
                                   ),
@@ -168,7 +171,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   AppRouter.historicRoute,
                                   arguments: ScreenArguments(
                                     title: 'Histórico',
-                                    userTickets: controller.userTickets,
+                                    tickets: controller.userTickets,
                                   ),
                                 ),
                               ),

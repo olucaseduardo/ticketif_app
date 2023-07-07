@@ -10,7 +10,7 @@ import 'package:project_ifma_ticket/features/resources/widgets/common_dropdown_w
 import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
 
 class RequestTicket extends ConsumerWidget {
-  final bool caeRequest;
+  final bool? caeRequest;
   final int? idStudent;
   final String? title;
   const RequestTicket({
@@ -28,7 +28,7 @@ class RequestTicket extends ConsumerWidget {
       appBar: AppBar(
         titleSpacing: 0,
         title: Text(
-          caeRequest ? title! : 'Voltar',
+         title ?? 'Voltar',
           style: TextStyle(
               color: AppColors.gray200,
               fontSize: 18.sp,
@@ -163,7 +163,7 @@ class RequestTicket extends ConsumerWidget {
           height: 60,
           child: CommonButton(
             label: 'Enviar solicitação',
-            function: () => caeRequest
+            function: () => caeRequest!
                 ? AppMessage.showMessage('CAE request')
                 : controller.onTapSendRequest(),
           ),
