@@ -30,6 +30,7 @@ class CaeController extends ChangeNotifier {
 
   void loading() {
     isLoading = !isLoading;
+    log(isLoading.toString());
     notifyListeners();
   }
 
@@ -101,6 +102,9 @@ class CaeController extends ChangeNotifier {
 
       selected.removeWhere((t) => t.id == idTicket);
       filtered.removeWhere((t) => t.id == idTicket);
+      dailyTickets?.removeWhere((t) => t.id == idTicket);
+      permanentesTickets?.removeWhere((t) => t.id == idTicket);
+      
 
       notifyListeners();
     } on DioError catch (e, s) {
@@ -170,15 +174,21 @@ class CaeController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void verifySelected(Ticket filteredTickets) {
-    selectAll = !selectAll;
+  void verifySelected(Ticket filteredTickets, int allTicketsLength) {
     if (selected.contains(filteredTickets)) {
-      selected.remove(filteredTickets);
+      selected.removeWhere(
+        (ts) => ts.id == filteredTickets.id,
+      );
     } else {
       selected.add(filteredTickets);
     }
 
-    log(selected.toString());
+    if (allTicketsLength == selected.length) {
+      selectAll = true;
+    } else {
+      selectAll = false;
+    }
+
     notifyListeners();
   }
 

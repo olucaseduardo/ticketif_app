@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
@@ -22,19 +24,24 @@ class TicketEvaluateScreen extends ConsumerStatefulWidget {
 }
 
 class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
-
   @override
   void initState() {
     super.initState();
     ref.read(caeProvider).filtered.clear();
+    ref.read(caeProvider).selected.clear();
     ref.read(caeProvider).filtered.addAll(widget.tickets);
     ref.read(caeProvider).selected.addAll(widget.tickets);
+    ref.read(caeProvider).selectAll = true;
   }
 
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(caeProvider);
     List<Ticket> allTickets = widget.tickets;
+    final lengthTickets = allTickets.length;
+
+    log('Selected ${controller.selected.length.toString()}');
+    log('SelectedAll ${controller.selectAll.toString()}');
 
     bool continueSolicitation() {
       if (controller.selected.isEmpty) {
@@ -60,19 +67,16 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
           )
         ],
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: Visibility(
           visible: !controller.isLoading,
-
           replacement: Loader.loader(),
-
           child: Column(
             children: [
               TextField(
-                onChanged: (value) => controller.filterTickets(value, allTickets),
+                onChanged: (value) =>
+                    controller.filterTickets(value, allTickets),
                 decoration: const InputDecoration(
                   fillColor: AppColors.gray800,
                   filled: true,
@@ -83,11 +87,9 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                 ),
               ),
-        
               const SizedBox(
                 height: 20,
               ),
-        
               Visibility(
                 visible: controller.filtered.isNotEmpty,
                 replacement: const Expanded(
@@ -96,19 +98,22 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                         style: AppTextStyle.normalText),
                   ),
                 ),
-                
                 child: Expanded(
                   child: ListView.builder(
                     itemCount: controller.filtered.length,
                     itemBuilder: (context, index) => CommonTileTicket(
-                        title: controller.filtered.elementAt(index).student,
-                        subtitle:
-                            "${controller.filtered.elementAt(index).meal} : ${DateUtil.getDateStr(DateTime.parse(controller.filtered.elementAt(index).useDayDate))}",
-                        justification:
-                            controller.filtered.elementAt(index).justification,
-                        selected: controller.selectAll,
-                        function: () => controller
-                            .verifySelected(controller.filtered[index])),
+                      title: controller.filtered.elementAt(index).student,
+                      subtitle:
+                          "${controller.filtered.elementAt(index).meal} : ${DateUtil.getDateStr(DateTime.parse(controller.filtered.elementAt(index).useDayDate))}",
+                      justification:
+                          controller.filtered.elementAt(index).justification,
+                      selected: controller.selected
+                              .contains(controller.filtered[index])
+                          ? true
+                          : false,
+                      function: () => controller.verifySelected(
+                          controller.filtered[index], lengthTickets),
+                    ),
                   ),
                 ),
               ),

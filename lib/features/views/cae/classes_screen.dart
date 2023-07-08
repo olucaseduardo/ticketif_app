@@ -32,7 +32,7 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
         title: const Text('Solicitações por turmas'),
       ),
       body: Visibility(
-        visible: !controller.isLoading && !controller.error,
+        visible: !controller.isLoading,
 
         replacement: Loader.loader(),
         
@@ -119,7 +119,7 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
                       itemCount: controller.filteredClasses.length,
                       itemBuilder: (context, index) => CommonTileClass(
                           title:
-                              'Turma: ${controller.filteredClasses[index]}',
+                              'Turma: ${controller.dailyClasses.keys.elementAt(index)}',
                           subtitle:
                               'Total: ${controller.dailyClasses[controller.filteredClasses[index]]!.length}',
                           function: () => Navigator.pushNamed(
