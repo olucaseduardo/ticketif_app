@@ -43,10 +43,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(DateUtil.todayDate(DateUtil.dateTime),
-                      style: TextApp.labelBig
+                      style: AppTextStyle.labelBig
                           .copyWith(fontWeight: FontWeight.w700)),
                   Text(controller.user?.matricula ?? '',
-                      style: TextApp.labelMedium)
+                      style: AppTextStyle.labelMedium)
                 ],
               ),
             ),
@@ -126,7 +126,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       Flexible(
                         child: Text(
                           'Olá, ${controller.user?.name ?? ''}',
-                          style: TextApp.labelBig
+                          style: AppTextStyle.labelBig
                               .copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -166,7 +166,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         
                         child: Text(
                           'Suas refeições de hoje',
-                          style: TextApp.labelBig.copyWith(
+                          style: AppTextStyle.labelBig.copyWith(
                               fontWeight: FontWeight.w700,
                               color: AppColors.gray200),
                         ),
@@ -200,7 +200,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         padding: EdgeInsets.only(bottom: 18.h),
                         child: Text(
                           'Outras opções',
-                          style: TextApp.labelBig.copyWith(
+                          style: AppTextStyle.labelBig.copyWith(
                               fontWeight: FontWeight.w700,
                               color: AppColors.gray200),
                         ),

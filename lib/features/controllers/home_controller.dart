@@ -44,16 +44,16 @@ class HomeController extends ChangeNotifier {
 
       user = userData;
 
-      for (var i = 0; i < tickets.length; i++) {
-        if (tickets.elementAt(i).useDayDate != '') {
-          if (DateTime.parse(tickets.elementAt(i).useDayDate).day ==
+      for (var index = 0; index < tickets.length; index++) {
+        if (tickets.elementAt(index).useDayDate != '') {
+          if (DateTime.parse(tickets.elementAt(index).useDayDate).day ==
                   DateTime.now().day &&
-              DateTime.parse(tickets.elementAt(i).useDayDate).month ==
+              DateTime.parse(tickets.elementAt(index).useDayDate).month ==
                   DateTime.now().month) {
-            todayTickets?.add(tickets.elementAt(i));
-            userTickets?.add(tickets.elementAt(i));
+            todayTickets?.add(tickets.elementAt(index));
+            userTickets?.add(tickets.elementAt(index));
           } else {
-            userTickets?.add(tickets.elementAt(i));
+            userTickets?.add(tickets.elementAt(index));
           }
         }
       }

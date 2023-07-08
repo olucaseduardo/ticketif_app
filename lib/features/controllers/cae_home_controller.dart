@@ -9,13 +9,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CaeController extends ChangeNotifier {
   List<Ticket>? dailyTickets = [];
-  List<Ticket>? permanentesTickets = [];
+  // List<Ticket>? permanentesTickets = [];
   /* Listas de filtros das searchs */
   List<Ticket> filtered = [];
   List<String> filteredClasses = [];
   /* Maps para armazenamento das turmas */
   Map<String, List<Ticket>> dailyClasses = {};
-  Map<String, List<Ticket>> permanentClasses = {};
+  // Map<String, List<Ticket>> permanentClasses = {};
   /* Variáveis responsáveis pela seleção na tela evaluate */
   bool selectAll = true;
   List<Ticket> selected = [];
@@ -34,30 +34,40 @@ class CaeController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadDataTickets(String date) async {
+  Future<void> loadDataTickets(
+      {required String date, required bool isPermanent}) async {
     try {
       dailyTickets!.clear();
-      permanentesTickets!.clear();
+      // permanentesTickets!.clear();
       dailyClasses.clear();
-      permanentClasses.clear();
+      // permanentClasses.clear();
       filteredClasses.clear();
       isLoading = true;
 
       final tickets =
           await TicketsApiRepositoryImpl().findAllDailyTickets(date);
+      log("isPermanent :: $isPermanent");
+      if (!isPermanent) {
+        dailyTickets = tickets
+            .where(
+                (element) => element.isPermanent == 0 && element.idStatus == 1)
+            .toList();
+      } else {
+        dailyTickets = tickets
+            .where(
+                (element) => element.isPermanent == 1 && element.idStatus == 1)
+            .toList();
+      }
 
-      dailyTickets = tickets
-          .where((element) => element.isPermanent == 0 && element.idStatus == 1)
-          .toList();
-      permanentesTickets = tickets
-          .where((element) => element.isPermanent == 1 && element.idStatus == 1)
-          .toList();
+      // permanentesTickets = tickets
+      //     .where((element) => element.isPermanent == 1 && element.idStatus == 1)
+      //     .toList();
       dailyTickets?.forEach(
         (element) => log(element.toString()),
       );
 
       String dailyClassName = '';
-      String permanentClassName = '';
+      // String permanentClassName = '';
 
       dailyTickets?.forEach((element) {
         dailyClassName =
@@ -75,16 +85,16 @@ class CaeController extends ChangeNotifier {
       sortedList.sort();
       filteredClasses.addAll(sortedList);
 
-      permanentesTickets?.forEach((element) {
-        permanentClassName =
-            element.student.substring(0, element.student.length - 4);
-        if (permanentClasses.containsKey(permanentClassName)) {
-          permanentClasses[permanentClassName]!.add(element);
-        } else {
-          permanentClasses[permanentClassName] = [element];
-        }
-        // log(permanentClassName.toString());
-      });
+      // permanentesTickets?.forEach((element) {
+      //   permanentClassName =
+      //       element.student.substring(0, element.student.length - 4);
+      //   if (permanentClasses.containsKey(permanentClassName)) {
+      //     permanentClasses[permanentClassName]!.add(element);
+      //   } else {
+      //     permanentClasses[permanentClassName] = [element];
+      //   }
+      //   // log(permanentClassName.toString());
+      // });
 
       loading();
     } catch (e, s) {
@@ -103,8 +113,7 @@ class CaeController extends ChangeNotifier {
       selected.removeWhere((t) => t.id == idTicket);
       filtered.removeWhere((t) => t.id == idTicket);
       dailyTickets?.removeWhere((t) => t.id == idTicket);
-      permanentesTickets?.removeWhere((t) => t.id == idTicket);
-      
+      // permanentesTickets?.removeWhere((t) => t.id == idTicket);
 
       notifyListeners();
     } on DioError catch (e, s) {
@@ -207,5 +216,17 @@ class CaeController extends ChangeNotifier {
         changeTicketCAE(element.id, status);
       }
     }
+  }
+
+  void updateClasses(List<Ticket> list, int index) {
+    dailyClasses.values.elementAt(index).clear();
+
+    if (list.isNotEmpty) {
+      dailyClasses.values.elementAt(index).addAll(list);
+    } else {
+      filteredClasses.remove(dailyClasses.keys.elementAt(index));
+      dailyClasses.remove(dailyClasses.keys.elementAt(index));
+    }
+    notifyListeners();
   }
 }

@@ -36,11 +36,11 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
                       children: [
                         Text(
                           'Início: ${DateUtil.getDateStr(start)}',
-                          style: TextApp.titleLarge,
+                          style: AppTextStyle.titleLarge,
                         ),
                         Text(
                           'Final: ${DateUtil.getDateStr(end)}',
-                          style: TextApp.titleLarge,
+                          style: AppTextStyle.titleLarge,
                         ),
                       ],
                     ),

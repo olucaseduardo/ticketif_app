@@ -12,6 +12,7 @@ class Ticket {
   final String useDay;
   final String student;
   final String studentName;
+  final String type;
   final String meal;
   final String status;
   final String justification;
@@ -28,6 +29,7 @@ class Ticket {
     this.useDay,
     this.student,
     this.studentName,
+    this.type,
     this.meal,
     this.status,
     this.justification,
@@ -44,6 +46,7 @@ class Ticket {
       'use_day_date': useDayDate,
       'student': student,
       'student_name': studentName,
+      'type': type,
       'meal_description': meal,
       'status_description': status,
       'justification_description': justification,
@@ -63,6 +66,7 @@ class Ticket {
       map['use_day'] ?? '',
       map['student'] ?? '',
       map['student_name'] ?? '',
+      map['type'] ?? '',
       map['meal_description'] ?? '',
       map['status_description'] ?? '',
       map['justification_description'] ?? '',

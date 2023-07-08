@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
+import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
 
@@ -27,9 +28,9 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(DateUtil.todayDate(DateUtil.dateTime),
-                    style:
-                        TextApp.labelBig.copyWith(fontWeight: FontWeight.w700)),
-                const Text('Administrador', style: TextApp.labelMedium)
+                    style: AppTextStyle.labelBig
+                        .copyWith(fontWeight: FontWeight.w700)),
+                const Text('Administrador', style: AppTextStyle.labelMedium)
               ],
             ),
           ),
@@ -66,17 +67,18 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                       leading: Icons.local_restaurant_rounded,
                       label: 'Tickets Diários',
                       function: () => Navigator.pushNamed(
-                        context,
-                        AppRouter.caeClassesRoute,
-                      ),
+                          context, AppRouter.caeClassesRoute,
+                          arguments: ScreenArguments(
+                              isPermanent: false, title: 'Tickets Diários')),
                     ),
                     CommonTileOptions(
                       leading: Icons.menu_rounded,
                       label: 'Autorizações Permanentes',
                       function: () => Navigator.pushNamed(
-                        context,
-                        AppRouter.caeClassesRoute,
-                      ),
+                          context, AppRouter.caeClassesRoute,
+                          arguments: ScreenArguments(
+                              isPermanent: true,
+                              title: 'Autorizações Permanentes')),
                     ),
                     CommonTileOptions(
                       leading: Icons.description_rounded,

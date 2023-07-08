@@ -34,7 +34,7 @@ class LoginScreen extends ConsumerWidget {
                   padding: EdgeInsets.all(24),
                   child: Text(
                     "Entre para continuar",
-                    style: TextApp.titleMedium,
+                    style: AppTextStyle.titleMedium,
                   ),
                 ),
                 Form(
@@ -60,7 +60,7 @@ class LoginScreen extends ConsumerWidget {
                           children: [
                             const Padding(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
-                              child: Text('Campus', style: TextApp.bodyLarge,),
+                              child: Text('Campus', style: AppTextStyle.bodyLarge,),
                             ),
                             CommonDropDownButton(
                               items: const ['Caxias', 'Timon'],

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 
@@ -49,6 +50,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => RequestTicket(
                   title: args?.title,
+                  caeRequest: args?.caeRequest,
                   idStudent: args?.idStudent,
                 ));
 
@@ -56,14 +58,18 @@ class AppRouter {
       case caeHomeRoute:
         return MaterialPageRoute(builder: (_) => const CaeHomeScreen());
       case caeClassesRoute:
-        return MaterialPageRoute(builder: (_) => const ClassesScreen());
+        return MaterialPageRoute(builder: (_) => ClassesScreen(
+          title: args?.title as String,
+          isPermanent: args?.isPermanent as bool,
+        ));
       case caeDailyReportRoute:
         return MaterialPageRoute(builder: (_) => const DailyReportScreen());
       case caePeriodReportRoute:
         return MaterialPageRoute(builder: (_) => const PeriodReportScreen());
       case caeTicketEvaluateRoute:
         return MaterialPageRoute(builder: (_) =>  TicketEvaluateScreen(
-          tickets: args!.tickets as List<Ticket>,
+          title: args!.title as String,
+          tickets: args.tickets as List<Ticket>,
         ));
       case caeSearchStudentRoute:
         return MaterialPageRoute(builder: (_) => const SearchStudentScreen());

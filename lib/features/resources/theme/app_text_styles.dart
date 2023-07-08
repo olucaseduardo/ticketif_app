@@ -12,9 +12,6 @@ class AppTextStyle {
   static const normalText = TextStyle(fontSize: 16, color: AppColors.gray400);
   static const largeText = TextStyle(
       fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.gray200);
-}
-
-class TextApp {
   static const smallBody = TextStyle(
     fontSize: 12,
     // height: 16,

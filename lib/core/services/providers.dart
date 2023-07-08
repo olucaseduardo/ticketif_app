@@ -4,6 +4,7 @@ import 'package:project_ifma_ticket/features/controllers/cae_home_controller.dar
 import 'package:project_ifma_ticket/features/controllers/historic_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/home_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/login_controller.dart';
+import 'package:project_ifma_ticket/features/controllers/report_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/request_ticket_controller.dart';
 
 final requestTicketProvider =
@@ -25,3 +26,6 @@ final loginProvider = ChangeNotifierProvider.autoDispose<LoginController>(
 final authCheckProvider =
     ChangeNotifierProvider.autoDispose<AuthCheckController>(
         (ref) => AuthCheckController());
+
+final reportProvider = ChangeNotifierProvider.autoDispose<ReportController>(
+    (ref) => ReportController());

@@ -13,8 +13,10 @@ import 'package:project_ifma_ticket/features/resources/widgets/common_tile_ticke
 
 class TicketEvaluateScreen extends ConsumerStatefulWidget {
   final List<Ticket> tickets;
+  final String title;
   const TicketEvaluateScreen({
     super.key,
+    required this.title,
     required this.tickets,
   });
 
@@ -54,7 +56,12 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Turma 20231A.CAX'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context, controller.filtered);
+            },
+            icon: const Icon(Icons.arrow_back_rounded)),
+        title: Text(widget.title),
         actions: [
           IconButton(
             onPressed: () {

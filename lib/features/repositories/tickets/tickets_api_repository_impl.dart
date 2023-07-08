@@ -55,7 +55,7 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
 
       return result.data.map<Ticket>((t) => Ticket.fromMap(t)).toList();
     } on DioError catch (e, s) {
-      log('Erro ao buscar tickets do usuário', error: e, stackTrace: s);
+      log('Erro ao buscar tickets', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar tickets do usuário');
     }
   }
@@ -67,7 +67,7 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
           await DioClient().get("/tickets-period?month_initial=$initialDate&month_final=$finalDate");
       return result.data.map<Ticket>((t) => Ticket.fromMap(t)).toList();
     } on DioError catch (e, s) {
-      log('Erro ao buscar tickets do usuário', error: e, stackTrace: s);
+      log('Erro ao buscar tickets', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar tickets do usuário');
     }
   }

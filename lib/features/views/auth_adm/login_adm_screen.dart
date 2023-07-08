@@ -36,7 +36,7 @@ class LoginAdmScreen extends ConsumerWidget {
                   padding: EdgeInsets.all(24),
                   child: Text(
                     "Entre para continuar",
-                    style: TextApp.titleMedium,
+                    style: AppTextStyle.titleMedium,
                   ),
                 ),
                 Form(
@@ -64,7 +64,7 @@ class LoginAdmScreen extends ConsumerWidget {
                               padding: EdgeInsets.symmetric(vertical: 4.0),
                               child: Text(
                                 'Campus',
-                                style: TextApp.bodyLarge,
+                                style: AppTextStyle.bodyLarge,
                               ),
                             ),
                             CommonDropDownButton(

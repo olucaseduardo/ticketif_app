@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
@@ -15,7 +16,16 @@ class DailyReportScreen extends ConsumerStatefulWidget {
 class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
   DateTime day = DateTime.now();
   @override
+  void initState() {
+    ref
+        .read(reportProvider)
+        .loadDailyTickets(date: DateUtil.getDateUSStr(DateUtil.dateTime));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final controller = ref.watch(reportProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Relatório diário'),
@@ -33,7 +43,7 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                   children: [
                     Text(
                       'Data: ${DateUtil.getDateStr(day)}',
-                      style: TextApp.titleLarge,
+                      style: AppTextStyle.titleLarge,
                     ),
                     IconButton(
                         onPressed: () async {
@@ -57,17 +67,23 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                   ],
                 ),
               ),
+              
               const Divider(),
               const Text("Utilizados"),
-              const CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 0'),
-              const CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 0'),
+              const CommonTileReport(
+                  title: 'Almoço - médio', subtitle: 'Total: 0'),
+              const CommonTileReport(
+                  title: 'Almoço - médio', subtitle: 'Total: 0'),
               const Divider(),
               const Text("Aprovados"),
-              const CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 0'),
-              const CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 0'),
+              const CommonTileReport(
+                  title: 'Almoço - médio', subtitle: 'Total: 0'),
+              const CommonTileReport(
+                  title: 'Almoço - médio', subtitle: 'Total: 0'),
               const Divider(),
               const Text("Em Análise"),
-              const CommonTileReport(title: 'Almoço - médio', subtitle: 'Total: 0'),
+              const CommonTileReport(
+                  title: 'Almoço - médio', subtitle: 'Total: 0'),
             ],
           ),
         ),

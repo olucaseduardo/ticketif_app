@@ -22,10 +22,10 @@ class _SearchStudentScreenState extends ConsumerState<SearchStudentScreen> {
         title: const Text('Selecionar Matrícula'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 fillColor: AppColors.gray800,
                 filled: true,
@@ -36,7 +36,7 @@ class _SearchStudentScreenState extends ConsumerState<SearchStudentScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CommonTileStudent(

@@ -32,7 +32,7 @@ class CommonTileStudent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Fulano de Tal",
-                          style: TextApp.titleLarge.copyWith(
+                          style: AppTextStyle.titleLarge.copyWith(
                             fontWeight: FontWeight.w700,
                             color: AppColors.gray400,
                           )),
@@ -41,7 +41,7 @@ class CommonTileStudent extends StatelessWidget {
                       ),
                       Text(
                         "20191BCC.CAX03848",
-                        style: TextApp.labelLarge.copyWith(
+                        style: AppTextStyle.labelLarge.copyWith(
                           fontWeight: FontWeight.normal,
                           color: AppColors.gray400,
                         ),
@@ -50,7 +50,7 @@ class CommonTileStudent extends StatelessWidget {
                         height: 2,
                       ),
                       Text("Superior",
-                          style: TextApp.labelLarge.copyWith(
+                          style: AppTextStyle.labelLarge.copyWith(
                             fontWeight: FontWeight.normal,
                             color: AppColors.gray400,
                           )),
