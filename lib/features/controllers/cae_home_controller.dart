@@ -4,21 +4,24 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
+import 'package:project_ifma_ticket/features/models/user.dart';
 import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
+import 'package:project_ifma_ticket/features/repositories/user/user_api_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CaeController extends ChangeNotifier {
   List<Ticket>? dailyTickets = [];
-  // List<Ticket>? permanentesTickets = [];
   /* Listas de filtros das searchs */
   List<Ticket> filtered = [];
   List<String> filteredClasses = [];
+  List<User> filteredStudents = [];
   /* Maps para armazenamento das turmas */
   Map<String, List<Ticket>> dailyClasses = {};
-  // Map<String, List<Ticket>> permanentClasses = {};
   /* Variáveis responsáveis pela seleção na tela evaluate */
   bool selectAll = true;
   List<Ticket> selected = [];
+  /* Lista de estudantes */
+  List<User> listStudents = [];
 
   bool isLoading = true;
   bool error = false;
@@ -34,13 +37,37 @@ class CaeController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> loadStudents() async {
+    try {
+      listStudents.clear();
+      filteredStudents.clear();
+      isLoading = true;
+
+      final students = await UserApiRepositoryImpl().findAllStudents();
+
+      students.sort(
+        (name1, name2) => name1.name.compareTo(name2.name),
+      );
+
+      listStudents = students;
+      filteredStudents = students;
+
+      loading();
+    } catch (e, s) {
+      log('Erro ao buscar os estudantes', error: e, stackTrace: s);
+      loading();
+      error = true;
+      notifyListeners();
+    }
+  }
+
   Future<void> loadDataTickets(
       {required String date, required bool isPermanent}) async {
     try {
       dailyTickets!.clear();
-      // permanentesTickets!.clear();
+
       dailyClasses.clear();
-      // permanentClasses.clear();
+
       filteredClasses.clear();
       isLoading = true;
 
@@ -59,15 +86,11 @@ class CaeController extends ChangeNotifier {
             .toList();
       }
 
-      // permanentesTickets = tickets
-      //     .where((element) => element.isPermanent == 1 && element.idStatus == 1)
-      //     .toList();
       dailyTickets?.forEach(
         (element) => log(element.toString()),
       );
 
       String dailyClassName = '';
-      // String permanentClassName = '';
 
       dailyTickets?.forEach((element) {
         dailyClassName =
@@ -82,19 +105,9 @@ class CaeController extends ChangeNotifier {
       });
 
       var sortedList = dailyClasses.keys.toList();
+
       sortedList.sort();
       filteredClasses.addAll(sortedList);
-
-      // permanentesTickets?.forEach((element) {
-      //   permanentClassName =
-      //       element.student.substring(0, element.student.length - 4);
-      //   if (permanentClasses.containsKey(permanentClassName)) {
-      //     permanentClasses[permanentClassName]!.add(element);
-      //   } else {
-      //     permanentClasses[permanentClassName] = [element];
-      //   }
-      //   // log(permanentClassName.toString());
-      // });
 
       loading();
     } catch (e, s) {
@@ -113,7 +126,6 @@ class CaeController extends ChangeNotifier {
       selected.removeWhere((t) => t.id == idTicket);
       filtered.removeWhere((t) => t.id == idTicket);
       dailyTickets?.removeWhere((t) => t.id == idTicket);
-      // permanentesTickets?.removeWhere((t) => t.id == idTicket);
 
       notifyListeners();
     } on DioError catch (e, s) {
@@ -145,7 +157,6 @@ class CaeController extends ChangeNotifier {
     }
   }
 
-  /* Função responsavel por filtrar as turmas */
   void filterClasses(String query) {
     filteredClasses.clear();
     notifyListeners();
@@ -227,6 +238,16 @@ class CaeController extends ChangeNotifier {
       filteredClasses.remove(dailyClasses.keys.elementAt(index));
       dailyClasses.remove(dailyClasses.keys.elementAt(index));
     }
+    notifyListeners();
+  }
+
+  /* Filtragem de estudantes */
+  void searchStudent(String searchText) {
+    filteredStudents = listStudents
+        .where((student) =>
+            student.matricula.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+
     notifyListeners();
   }
 }

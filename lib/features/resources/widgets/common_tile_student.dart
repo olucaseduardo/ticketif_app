@@ -31,7 +31,7 @@ class CommonTileStudent extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Fulano de Tal",
+                      Text(student!.name,
                           style: AppTextStyle.titleLarge.copyWith(
                             fontWeight: FontWeight.w700,
                             color: AppColors.gray400,
@@ -40,7 +40,7 @@ class CommonTileStudent extends StatelessWidget {
                         height: 2,
                       ),
                       Text(
-                        "20191BCC.CAX03848",
+                        student!.matricula,
                         style: AppTextStyle.labelLarge.copyWith(
                           fontWeight: FontWeight.normal,
                           color: AppColors.gray400,
@@ -49,7 +49,7 @@ class CommonTileStudent extends StatelessWidget {
                       const SizedBox(
                         height: 2,
                       ),
-                      Text("Superior",
+                      Text(student!.type,
                           style: AppTextStyle.labelLarge.copyWith(
                             fontWeight: FontWeight.normal,
                             color: AppColors.gray400,

@@ -22,4 +22,16 @@ class UserApiRepositoryImpl implements UserApiRepository {
       throw RepositoryException(message: 'Erro ao buscar usuário');
     }
   }
+
+  @override
+  Future<List<User>> findAllStudents() async {
+    try {
+      final result = await DioClient().get("/students");
+      log(result.data.toString());
+      return result.data.map<User>((u) => User.fromMap(u)).toList();
+    } on DioError catch (e, s) {
+      log('Erro ao buscar estudantes', error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao buscar estudantes');
+    }
+  }
 }

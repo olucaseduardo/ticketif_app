@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_dropdown_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
@@ -163,9 +162,7 @@ class RequestTicket extends ConsumerWidget {
           height: 60,
           child: CommonButton(
             label: 'Enviar solicitação',
-            function: () => caeRequest!
-                ? AppMessage.showMessage('CAE request')
-                : controller.onTapSendRequest(),
+            function: () => controller.onTapSendRequest(caeRequest ?? false, idStudent: idStudent),
           ),
         ),
       ),

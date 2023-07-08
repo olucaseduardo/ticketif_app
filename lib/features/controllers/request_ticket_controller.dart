@@ -81,7 +81,7 @@ class RequestTicketController extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool validation() {
+  bool validation(bool isCae) {
     if (meal == null) {
       AppMessage.showError('Selecione uma refeição');
       return false;
@@ -106,13 +106,13 @@ class RequestTicketController extends ChangeNotifier {
     var hour = DateTime.now().hour;
     var minutes = DateTime.now().minute;
     log('$hour e $minutes');
-    if ((hour >= 8) && (hour <= 11 && minutes <= 30)) {
+    if ((hour >= 8) && (hour <= 11 && minutes <= 30) && !isCae) {
       if (meal!.id == 2) {
         AppMessage.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
         return false;
       }
-    } 
+    }
 
     return true;
   }
@@ -122,13 +122,14 @@ class RequestTicketController extends ChangeNotifier {
     int weekId,
     String useDay,
     String useDayDate,
+    bool isCae,
   ) async {
     try {
       await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
         studentId: id,
         weekId: weekId,
         mealId: meal!.id,
-        statusId: 1,
+        statusId: isCae ? 2 : 1,
         justificationId: justification!.id,
         isPermanent: isPermanent ? 1 : 0,
         solicitationDay: DateTime.now().toString(),
@@ -149,8 +150,8 @@ class RequestTicketController extends ChangeNotifier {
     }
   }
 
-  Future<void> onTapSendRequest() async {
-    if (validation()) {
+  Future<void> onTapSendRequest(bool isCae, {int? idStudent}) async {
+    if (validation(isCae)) {
       try {
         error = false;
         notifyListeners();
@@ -160,28 +161,33 @@ class RequestTicketController extends ChangeNotifier {
         if (permanentDays.isNotEmpty && isPermanent) {
           for (var day = 0; day < permanentDays.length; day++) {
             await createTickets(
-                id ?? 0,
-                permanentDays[day].id,
-                permanentDays[day].description,
-                permanentDays[day].id == DateTime.now().weekday
-                    ? DateTime.now().toString()
-                    : '');
+              id ?? idStudent ?? 0,
+              permanentDays[day].id,
+              permanentDays[day].description,
+              permanentDays[day].id == DateTime.now().weekday
+                  ? DateTime.now().toString()
+                  : '',
+              isCae,
+            );
           }
         } else {
           await createTickets(
-              id ?? 0,
+              id ?? idStudent ?? 0,
               DateTime.now().weekday,
               DateUtil.todayDateRequest(DateTime.now()).capitalizeRequest(),
-              DateTime.now().toString());
+              DateTime.now().toString(),
+              isCae);
         }
         log('Erro: $error');
         if (!error) {
           AppMessage.showMessage('Requisição enviada com sucesso');
-          Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!,
-            AppRouter.homeRoute,
-            (route) => false,
-          );
+          !isCae
+              ? Navigator.pushNamedAndRemoveUntil(
+                  navigatorKey.currentContext!,
+                  AppRouter.homeRoute,
+                  (route) => false,
+                )
+              : Navigator.pop(navigatorKey.currentContext!);
         } else {
           AppMessage.showError('Erro ao solicitar Ticket');
         }

@@ -47,9 +47,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
             ),
           ],
         ),
-        body:
-            // true?
-            SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -109,35 +107,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
               )
             ],
           ),
-        )
-        // : Center(
-        //     child: Column(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         Image.asset('assets/images/alert.png'),
-        //         const Text(
-        //           'Erro ao carregar usuario',
-        //           style: AppTextStyle.normalText,
-        //         ),
-        //         Padding(
-        //           padding: const EdgeInsets.all(8.0),
-        //           child: TextButton(
-        //             onPressed: () {
-        //               AppMessage.showError('Erro ao carregar usuario');
-        //               // controller.onLogoutTap();
-        //               Navigator.of(context).pushNamedAndRemoveUntil(
-        //                   '/login', (route) => false);
-        //             },
-        //             child: Text(
-        //               'Voltar ao login',
-        //               style: AppTextStyle.largeText
-        //                   .copyWith(color: AppColors.green500),
-        //             ),
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   )
-        );
+        ),
+    );
   }
 }
