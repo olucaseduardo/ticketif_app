@@ -1,12 +1,15 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
 
 class ReportController extends ChangeNotifier {
   List<Ticket>? dailyTickets = [];
   Map<String, Map<String, List<Ticket>>> dailyStatus = {};
+
+  DateTime day = DateUtil.dateTime;
 
   bool isLoading = true;
   bool error = false;
@@ -55,6 +58,13 @@ class ReportController extends ChangeNotifier {
       loading();
       error = true;
       notifyListeners();
+    }
+  }
+
+  void updateDate(DateTime? pickDate) {
+    if (pickDate != null) {
+      day = pickDate;
+      loadDailyTickets(date: DateUtil.getDateUSStr(day));
     }
   }
 }

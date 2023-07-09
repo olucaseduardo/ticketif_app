@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
@@ -14,7 +16,6 @@ class DailyReportScreen extends ConsumerStatefulWidget {
 }
 
 class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
-  DateTime day = DateTime.now();
   @override
   void initState() {
     ref
@@ -30,62 +31,68 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
       appBar: AppBar(
         title: const Text('Relatório diário'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Data: ${DateUtil.getDateStr(day)}',
-                      style: AppTextStyle.titleLarge,
-                    ),
-                    IconButton(
-                        onPressed: () async {
-                          var pickDate = await showDatePicker(
-                              context: context,
-                              initialDate: day,
-                              firstDate:
-                                  day.subtract(const Duration(days: 365)),
-                              lastDate: day.add(const Duration(days: 365)));
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Data: ${DateUtil.getDateStr(controller.day)}',
+                    style: AppTextStyle.titleLarge,
+                  ),
+                  IconButton(
+                      onPressed: () async {
+                        var pickDate = await showDatePicker(
+                            context: context,
+                            initialDate: controller.day,
+                            firstDate: controller.day
+                                .subtract(const Duration(days: 365)),
+                            lastDate:
+                                controller.day.add(const Duration(days: 365)));
 
-                          if (pickDate != null) {
-                            setState(() {
-                              day = pickDate;
-                            });
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.calendar_today_rounded,
-                          color: AppColors.green300,
-                        ))
-                  ],
-                ),
+                        controller.updateDate(pickDate);
+                      },
+                      icon: const Icon(
+                        Icons.calendar_today_rounded,
+                        color: AppColors.green300,
+                      ))
+                ],
               ),
-              
-              const Divider(),
-              const Text("Utilizados"),
-              const CommonTileReport(
-                  title: 'Almoço - médio', subtitle: 'Total: 0'),
-              const CommonTileReport(
-                  title: 'Almoço - médio', subtitle: 'Total: 0'),
-              const Divider(),
-              const Text("Aprovados"),
-              const CommonTileReport(
-                  title: 'Almoço - médio', subtitle: 'Total: 0'),
-              const CommonTileReport(
-                  title: 'Almoço - médio', subtitle: 'Total: 0'),
-              const Divider(),
-              const Text("Em Análise"),
-              const CommonTileReport(
-                  title: 'Almoço - médio', subtitle: 'Total: 0'),
-            ],
-          ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    var status =
+                        controller.dailyStatus.keys.elementAt(index).toString();
+                    var meal = controller.dailyStatus[status]!.keys;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Divider(),
+                        Text(controller.dailyStatus.keys.elementAt(index)),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: meal.length,
+                            itemBuilder: (context, indexMeal) {
+                              var keyMeal = meal.elementAt(indexMeal);
+                              var valuesMeal =
+                                  controller.dailyStatus[status]![keyMeal];
+                              return CommonTileReport(
+                                  title: keyMeal,
+                                  subtitle: 'Total: ${valuesMeal!.length}');
+                            })
+                      ],
+                    );
+                  },
+                  itemCount: controller.dailyStatus.keys.length),
+            )
+          ],
         ),
       ),
     );

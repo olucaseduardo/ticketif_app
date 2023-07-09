@@ -9,3 +9,5 @@ String waitPay = 'assets/svg/status/wait_pay.svg';
 String qrCode = 'assets/svg/QrCode.svg';
 String qrPay = 'assets/svg/QrPay.svg';
 String qrUse = 'assets/svg/QrUse.svg';
+
+

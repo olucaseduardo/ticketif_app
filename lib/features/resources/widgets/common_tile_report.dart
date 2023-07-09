@@ -30,10 +30,9 @@ class CommonTileReport extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(
-                      authorizedUse,
-                      height: 40,
-                      width: 40,
+                    const Icon(
+                      Icons.access_time_rounded,
+                      weight: 40,
                     ),
                     const SizedBox(
                       width: 10,

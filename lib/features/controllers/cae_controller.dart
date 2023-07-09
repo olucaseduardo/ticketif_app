@@ -112,7 +112,6 @@ class CaeController extends ChangeNotifier {
         ..sort((element1, element2) => element1.key.compareTo(element2.key)));
       filteredClasses.addAll(sortedDailyClasses.keys.toList());
       log("dailyClasses :: ${sortedDailyClasses.toString()}");
-
       loading();
     } catch (e, s) {
       log('Erro ao buscar dados', error: e, stackTrace: s);
