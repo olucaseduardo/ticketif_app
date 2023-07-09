@@ -48,7 +48,6 @@ dependencies:
   custom_refresh_indicator: ^2.2.1
   qr_flutter: ^4.1.0
   qr_code_scanner: ^1.0.1
-  flutter_dotenv: ^5.0.2
   shared_preferences: ^2.1.0
   loading_animation_widget: ^1.2.0+4
 
@@ -88,7 +87,6 @@ flutter:
     - assets/svg/
     - assets/svg/status/
     - assets/svg/QrCode.svg
-    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

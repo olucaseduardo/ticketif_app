@@ -106,7 +106,7 @@ class RequestTicketController extends ChangeNotifier {
     var hour = DateTime.now().hour;
     var minutes = DateTime.now().minute;
     log('$hour e $minutes');
-    if ((hour >= 8) && (hour <= 11 && minutes <= 30) && !isCae) {
+    if ((hour >= 8) && (hour <= 11 && minutes <= 30) && isCae == false) {
       if (meal!.id == 2) {
         AppMessage.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
