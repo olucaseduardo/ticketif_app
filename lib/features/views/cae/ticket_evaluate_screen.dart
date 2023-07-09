@@ -29,10 +29,10 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(caeProvider).filtered.clear();
-    ref.read(caeProvider).selected.clear();
-    ref.read(caeProvider).filtered.addAll(widget.tickets);
-    ref.read(caeProvider).selected.addAll(widget.tickets);
+    ref.read(caeProvider).filteredTickets.clear();
+    ref.read(caeProvider).selectedTickets.clear();
+    ref.read(caeProvider).filteredTickets.addAll(widget.tickets);
+    ref.read(caeProvider).selectedTickets.addAll(widget.tickets);
     ref.read(caeProvider).selectAll = true;
   }
 
@@ -42,11 +42,11 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
     List<Ticket> allTickets = widget.tickets;
     final lengthTickets = allTickets.length;
 
-    log('Selected ${controller.selected.length.toString()}');
+    log('Selected ${controller.selectedTickets.length.toString()}');
     log('SelectedAll ${controller.selectAll.toString()}');
 
     bool continueSolicitation() {
-      if (controller.selected.isEmpty) {
+      if (controller.selectedTickets.isEmpty) {
         AppMessage.showInfo('Não existem tickets selecionados!');
         return false;
       }
@@ -54,117 +54,125 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
       return true;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context, controller.filtered);
-            },
-            icon: const Icon(Icons.arrow_back_rounded)),
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            onPressed: () {
-              if (controller.isLoading) return;
-              controller.isSelected(widget.tickets);
-            },
-            icon: Icon(controller.selectAll
-                ? Icons.check_box
-                : Icons.check_box_outline_blank),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Visibility(
-          visible: !controller.isLoading,
-          replacement: Loader.loader(),
-          child: Column(
-            children: [
-              TextField(
-                onChanged: (value) =>
-                    controller.filterTickets(value, allTickets),
-                decoration: const InputDecoration(
-                  fillColor: AppColors.gray800,
-                  filled: true,
-                  hintText: "Busca",
-                  prefixIcon: Icon(Icons.search, color: AppColors.green500),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Visibility(
-                visible: controller.filtered.isNotEmpty,
-                replacement: const Expanded(
-                  child: Center(
-                    child: Text('Nenhuma solicitação encontrada',
-                        style: AppTextStyle.normalText),
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.pop(context, controller.filteredTickets);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context, controller.filteredTickets);
+              },
+              icon: const Icon(Icons.arrow_back_rounded)),
+          title: Text(widget.title),
+          actions: [
+            IconButton(
+              onPressed: () {
+                if (controller.isLoading) return;
+                controller.isSelected(widget.tickets);
+              },
+              icon: Icon(controller.selectAll
+                  ? Icons.check_box
+                  : Icons.check_box_outline_blank),
+            )
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Visibility(
+            visible: !controller.isLoading,
+            replacement: Loader.loader(),
+            child: Column(
+              children: [
+                TextField(
+                  onChanged: (value) =>
+                      controller.filterTickets(value, allTickets),
+                  decoration: const InputDecoration(
+                    fillColor: AppColors.gray800,
+                    filled: true,
+                    hintText: "Busca",
+                    prefixIcon: Icon(Icons.search, color: AppColors.green500),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                 ),
-                child: Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.filtered.length,
-                    itemBuilder: (context, index) => CommonTileTicket(
-                      title: controller.filtered.elementAt(index).student,
-                      subtitle:
-                          "${controller.filtered.elementAt(index).meal} : ${DateUtil.getDateStr(DateTime.parse(controller.filtered.elementAt(index).useDayDate))}",
-                      justification:
-                          controller.filtered.elementAt(index).justification,
-                      selected: controller.selected
-                              .contains(controller.filtered[index])
-                          ? true
-                          : false,
-                      function: () => controller.verifySelected(
-                          controller.filtered[index], lengthTickets),
+                const SizedBox(
+                  height: 20,
+                ),
+                Visibility(
+                  visible: controller.filteredTickets.isNotEmpty,
+                  replacement: const Expanded(
+                    child: Center(
+                      child: Text('Nenhuma solicitação encontrada',
+                          style: AppTextStyle.normalText),
                     ),
+                  ),
+                  child: Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.filteredTickets.length,
+                      itemBuilder: (context, index) => CommonTileTicket(
+                        title:
+                            controller.filteredTickets.elementAt(index).student,
+                        subtitle:
+                            "${controller.filteredTickets.elementAt(index).meal} : ${DateUtil.getDateStr(DateTime.parse(controller.filteredTickets.elementAt(index).useDayDate))}",
+                        justification: controller.filteredTickets
+                            .elementAt(index)
+                            .justification,
+                        selected: controller.selectedTickets
+                                .contains(controller.filteredTickets[index])
+                            ? true
+                            : false,
+                        function: () => controller.verifySelected(
+                            controller.filteredTickets[index], lengthTickets),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  onPressed: () {
+                    if (continueSolicitation()) {
+                      controller.solicitation(7);
+                    }
+                  },
+                  child: const Text(
+                    'Recusar',
+                    // style: Style.buttonTextStyle,
+                  ),
+                ),
+              ),
+
+              const SizedBox(
+                width: 10,
+              ),
+              // Style.formSizedBox,
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (continueSolicitation()) {
+                      controller.solicitation(2);
+                    }
+                  },
+                  child: const Text(
+                    'Aprovar',
+                    // style: Style.buttonTextStyle,
                   ),
                 ),
               ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                onPressed: () {
-                  if (continueSolicitation()) {
-                    controller.solicitation(7);
-                  }
-                },
-                child: const Text(
-                  'Recusar',
-                  // style: Style.buttonTextStyle,
-                ),
-              ),
-            ),
-
-            const SizedBox(
-              width: 10,
-            ),
-            // Style.formSizedBox,
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {
-                  if (continueSolicitation()) {
-                    controller.solicitation(2);
-                  }
-                },
-                child: const Text(
-                  'Aprovar',
-                  // style: Style.buttonTextStyle,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -111,17 +111,17 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
                       itemCount: controller.filteredClasses.length,
                       itemBuilder: (context, index) => CommonTileClass(
                           title:
-                              'Turma: ${controller.dailyClasses.keys.elementAt(index)}',
+                              'Turma: ${controller.sortedDailyClasses.keys.elementAt(index)}',
                           subtitle:
-                              'Total: ${controller.dailyClasses[controller.filteredClasses[index]]!.length}',
+                              'Total: ${controller.sortedDailyClasses[controller.filteredClasses[index]]!.length}',
                           function: () async {
                             dynamic list = await Navigator.pushNamed(
                               context,
                               AppRouter.caeTicketEvaluateRoute,
                               arguments: ScreenArguments(
-                                  title: controller.dailyClasses.keys
+                                  title: controller.sortedDailyClasses.keys
                                       .elementAt(index),
-                                  tickets: controller.dailyClasses.values
+                                  tickets: controller.sortedDailyClasses.values
                                       .elementAt(index)),
                             );
                             controller.updateClasses(

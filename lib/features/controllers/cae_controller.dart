@@ -12,20 +12,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CaeController extends ChangeNotifier {
   List<Ticket>? dailyTickets = [];
   /* Listas de filtros das searchs */
-  List<Ticket> filtered = [];
+  List<Ticket> filteredTickets = [];
   List<String> filteredClasses = [];
   List<User> filteredStudents = [];
   /* Maps para armazenamento das turmas */
   Map<String, List<Ticket>> dailyClasses = {};
+  Map<String, List<Ticket>> sortedDailyClasses = {};
   /* Variáveis responsáveis pela seleção na tela evaluate */
   bool selectAll = true;
-  List<Ticket> selected = [];
+  List<Ticket> selectedTickets = [];
   /* Lista de estudantes */
   List<User> listStudents = [];
 
   bool isLoading = true;
   bool error = false;
 
+  ///Função para sair da conta
   onLogoutTap() async {
     final sp = await SharedPreferences.getInstance();
     sp.clear();
@@ -37,6 +39,7 @@ class CaeController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Função que carrega os dados dos estudantes
   Future<void> loadStudents() async {
     try {
       listStudents.clear();
@@ -61,12 +64,15 @@ class CaeController extends ChangeNotifier {
     }
   }
 
+  /// Função que retorna os tickets de um determinado dia
   Future<void> loadDataTickets(
       {required String date, required bool isPermanent}) async {
     try {
       dailyTickets!.clear();
 
       dailyClasses.clear();
+
+      sortedDailyClasses.clear();
 
       filteredClasses.clear();
       isLoading = true;
@@ -100,14 +106,12 @@ class CaeController extends ChangeNotifier {
         } else {
           dailyClasses[dailyClassName] = [element];
         }
-
-        log(dailyClasses.toString());
       });
 
-      var sortedList = dailyClasses.keys.toList();
-
-      sortedList.sort();
-      filteredClasses.addAll(sortedList);
+      sortedDailyClasses = Map.fromEntries(dailyClasses.entries.toList()
+        ..sort((element1, element2) => element1.key.compareTo(element2.key)));
+      filteredClasses.addAll(sortedDailyClasses.keys.toList());
+      log("dailyClasses :: ${sortedDailyClasses.toString()}");
 
       loading();
     } catch (e, s) {
@@ -118,13 +122,14 @@ class CaeController extends ChangeNotifier {
     }
   }
 
+  /// Função que atualiza o status do ticket
   Future<void> changeTicketCAE(int idTicket, int status) async {
     try {
       await TicketsApiRepositoryImpl().changeStatusTicket(idTicket, status);
       isLoading = false;
 
-      selected.removeWhere((t) => t.id == idTicket);
-      filtered.removeWhere((t) => t.id == idTicket);
+      selectedTickets.removeWhere((t) => t.id == idTicket);
+      filteredTickets.removeWhere((t) => t.id == idTicket);
       dailyTickets?.removeWhere((t) => t.id == idTicket);
 
       notifyListeners();
@@ -135,9 +140,9 @@ class CaeController extends ChangeNotifier {
     }
   }
 
-  /* Função responsavel por filtrar os tickets na tela de turmas */
+  ///Função responsavel por filtrar os tickets na tela de turmas
   void filterTickets(String query, List<Ticket> tickets) {
-    filtered.clear();
+    filteredTickets.clear();
     notifyListeners();
 
     if (query.isNotEmpty) {
@@ -148,21 +153,21 @@ class CaeController extends ChangeNotifier {
         }
       }
 
-      filtered.addAll(tmpList);
+      filteredTickets.addAll(tmpList);
 
       notifyListeners();
     } else {
-      filtered.addAll(tickets);
+      filteredTickets.addAll(tickets);
       notifyListeners();
     }
   }
 
+  /// Função responsável por filtrar as turmas
   void filterClasses(String query) {
     filteredClasses.clear();
     notifyListeners();
 
-    var sortedList = dailyClasses.keys.toList();
-    sortedList.sort();
+    var sortedList = sortedDailyClasses.keys.toList();
 
     if (query.isNotEmpty) {
       List<String> tmpList = [];
@@ -183,27 +188,27 @@ class CaeController extends ChangeNotifier {
 
   /* Funções responsaveis por controlar as seleções */
   void isSelected(List<Ticket> tickets) {
-    selected.clear();
+    selectedTickets.clear();
     selectAll = !selectAll;
 
     if (selectAll) {
-      selected.addAll(tickets);
+      selectedTickets.addAll(tickets);
     }
 
-    log(selected.toString());
+    log(selectedTickets.toString());
     notifyListeners();
   }
 
   void verifySelected(Ticket filteredTickets, int allTicketsLength) {
-    if (selected.contains(filteredTickets)) {
-      selected.removeWhere(
+    if (selectedTickets.contains(filteredTickets)) {
+      selectedTickets.removeWhere(
         (ts) => ts.id == filteredTickets.id,
       );
     } else {
-      selected.add(filteredTickets);
+      selectedTickets.add(filteredTickets);
     }
 
-    if (allTicketsLength == selected.length) {
+    if (allTicketsLength == selectedTickets.length) {
       selectAll = true;
     } else {
       selectAll = false;
@@ -212,36 +217,43 @@ class CaeController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /* Realização de solicitações */
+  /// Realização de solicitações
   void solicitation(int status) {
     isLoading = true;
     notifyListeners();
 
     if (status == 4) {
-      log('sel ${selected.toString()}');
-      for (var element in selected) {
+      log('sel ${selectedTickets.toString()}');
+      for (var element in selectedTickets) {
         changeTicketCAE(element.id, status);
       }
     } else {
-      for (var element in selected) {
+      for (var element in selectedTickets) {
         changeTicketCAE(element.id, status);
       }
     }
   }
 
+  ///Atualização de listas de tickets pós mudança de status
   void updateClasses(List<Ticket> list, int index) {
-    dailyClasses.values.elementAt(index).clear();
+    sortedDailyClasses.values.elementAt(index).clear();
 
+    log("sortedDailyClasses :: ${sortedDailyClasses.toString()}");
     if (list.isNotEmpty) {
-      dailyClasses.values.elementAt(index).addAll(list);
+      sortedDailyClasses.values.elementAt(index).addAll(list);
     } else {
-      filteredClasses.remove(dailyClasses.keys.elementAt(index));
-      dailyClasses.remove(dailyClasses.keys.elementAt(index));
+      filteredClasses.remove(sortedDailyClasses.keys.elementAt(index));
+      sortedDailyClasses.remove(sortedDailyClasses.keys.elementAt(index));
     }
+    for (var element in filteredClasses) {
+      log(element.toString());
+    }
+
+    log("sortedDailyClasses :: ${sortedDailyClasses.toString()}");
     notifyListeners();
   }
 
-  /* Filtragem de estudantes */
+  /// Filtragem de estudantes
   void searchStudent(String searchText) {
     filteredStudents = listStudents
         .where((student) =>
