@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:project_ifma_ticket/core/utils/path_image.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 
 class CommonTileReport extends StatelessWidget {

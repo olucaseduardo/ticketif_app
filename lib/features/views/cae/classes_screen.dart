@@ -7,8 +7,10 @@ import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_class.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/error_results.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/without_results.dart';
 
 class ClassesScreen extends ConsumerStatefulWidget {
   final String title;
@@ -35,6 +37,13 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(caeProvider);
+
+    if (controller.error && !controller.isLoading) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        AppMessage.showError('Erro ao carregar as solicitações por turmas');
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -46,31 +55,9 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
           padding: const EdgeInsets.all(20),
           child: Visibility(
             visible: !controller.error,
-            replacement: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/images/alert.png'),
-                  const Text(
-                    'Erro ao carregar as solicitações por turmas',
-                    style: AppTextStyle.normalText,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextButton(
-                      onPressed: () {
-                        controller.onLogoutTap();
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        'Voltar a tela inicial',
-                        style: AppTextStyle.largeText
-                            .copyWith(color: AppColors.green500),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            replacement: const ErrorResults(
+              msg: 'Voltar para a tela de início',
+              msgError: 'Erro ao carregar as solicitações por turmas',
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,14 +85,8 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
                 ),
                 Visibility(
                   visible: controller.filteredClasses.isNotEmpty,
-                  replacement: const Expanded(
-                    child: Center(
-                      child: Text(
-                        'Nenhuma solicitação encontrada',
-                        style: AppTextStyle.normalText,
-                      ),
-                    ),
-                  ),
+                  replacement: const WithoutResults(
+                      msg: 'Nenhuma solicitação encontrada'),
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredClasses.length,

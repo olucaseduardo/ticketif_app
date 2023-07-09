@@ -7,9 +7,9 @@ import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_ticket.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/without_results.dart';
 
 class TicketEvaluateScreen extends ConsumerStatefulWidget {
   final List<Ticket> tickets;
@@ -104,12 +104,7 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                 ),
                 Visibility(
                   visible: controller.filteredTickets.isNotEmpty,
-                  replacement: const Expanded(
-                    child: Center(
-                      child: Text('Nenhuma solicitação encontrada',
-                          style: AppTextStyle.normalText),
-                    ),
-                  ),
+                  replacement: const WithoutResults(msg: 'Nenhuma solicitação encontrada'),
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredTickets.length,

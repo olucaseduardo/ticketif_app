@@ -12,6 +12,7 @@ import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart'
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_ticket_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/error_results.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -75,40 +76,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         replacement: Loader.loader(),
 
         child: Visibility(
-          visible: !controller.error,
+          visible: false,
 
-          replacement: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-
-              children: [
-                Image.asset('assets/images/alert.png'),
-
-                const Text(
-                  'Erro ao carregar usuario',
-                  style: AppTextStyle.normalText,
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-
-                  child: TextButton(
-                    onPressed: () {
-                      AppMessage.showError('Erro ao carregar usuario');
-                      controller.onLogoutTap();
-                      Navigator.pushNamedAndRemoveUntil(context,
-                          AppRouter.loginRoute, (route) => false);
-                    },
-
-                    child: Text(
-                      'Voltar ao login',
-                      style: AppTextStyle.largeText
-                          .copyWith(color: AppColors.green500),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          replacement: ErrorResults(
+            msg: 'Voltar ao login',
+            msgError: 'Erro ao carregar usuario',
+            function: () => controller.onLogoutTap(),
+            homeStudent: true,
           ),
 
           child: SingleChildScrollView(
