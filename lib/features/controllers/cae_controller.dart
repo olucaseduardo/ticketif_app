@@ -27,7 +27,7 @@ class CaeController extends ChangeNotifier {
   bool isLoading = true;
   bool error = false;
 
-  ///Função para sair da conta
+  /// Função para sair da conta
   onLogoutTap() async {
     final sp = await SharedPreferences.getInstance();
     sp.clear();
@@ -140,7 +140,7 @@ class CaeController extends ChangeNotifier {
     }
   }
 
-  ///Função responsavel por filtrar os tickets na tela de turmas
+  /// Função responsavel por filtrar os tickets na tela de turmas
   void filterTickets(String query, List<Ticket> tickets) {
     filteredTickets.clear();
     notifyListeners();
@@ -186,7 +186,7 @@ class CaeController extends ChangeNotifier {
     }
   }
 
-  /* Funções responsaveis por controlar as seleções */
+  /// Função responsavel por controlar as seleções de todos
   void isSelected(List<Ticket> tickets) {
     selectedTickets.clear();
     selectAll = !selectAll;
@@ -199,6 +199,7 @@ class CaeController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Função responsavel por controlar as seleções individuais
   void verifySelected(Ticket filteredTickets, int allTicketsLength) {
     if (selectedTickets.contains(filteredTickets)) {
       selectedTickets.removeWhere(
@@ -234,7 +235,7 @@ class CaeController extends ChangeNotifier {
     }
   }
 
-  ///Atualização de listas de tickets pós mudança de status
+  /// Atualização de listas de tickets pós mudança de status
   void updateClasses(List<Ticket> list, int index) {
     sortedDailyClasses.values.elementAt(index).clear();
 

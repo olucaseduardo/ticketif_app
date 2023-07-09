@@ -67,7 +67,6 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                   ],
                 ),
               ),
-              
               const Divider(),
               const Text("Utilizados"),
               const CommonTileReport(

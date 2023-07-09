@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
@@ -20,7 +19,6 @@ class HistoricScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final controller = ref.watch(historicProvider);
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: const Size(double.infinity, 130),
