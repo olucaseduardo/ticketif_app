@@ -30,7 +30,7 @@ class AuthApiRepositoryImpl implements AuthApiRepository {
       throw RepositoryException(message: 'Erro ao realizar login');
     }
   }
-  
+
   @override
   Future<AuthModel> loginADM(String username, String password) async {
     try {

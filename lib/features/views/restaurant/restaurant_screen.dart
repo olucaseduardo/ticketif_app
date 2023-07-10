@@ -7,16 +7,11 @@ import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.d
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
 
-class CaeHomeScreen extends ConsumerStatefulWidget {
-  const CaeHomeScreen({Key? key}) : super(key: key);
+class RestaurantScreen extends ConsumerWidget {
+  const RestaurantScreen({super.key});
 
   @override
-  ConsumerState<CaeHomeScreen> createState() => _CaeHomeScreenState();
-}
-
-class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final controller = ref.watch(caeProvider);
 
     return Scaffold(
@@ -30,7 +25,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
               Text(DateUtil.todayDate(DateUtil.dateTime),
                   style: AppTextStyle.labelBig
                       .copyWith(fontWeight: FontWeight.w700)),
-              const Text('Administrador', style: AppTextStyle.labelMedium)
+              const Text('Restaurante', style: AppTextStyle.labelMedium)
             ],
           ),
         ),
@@ -60,50 +55,28 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                       child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     child: Image.asset(
-                      'assets/images/CAE.png',
-                      width: 207,
+                      'assets/images/Restaurant.png',
                     ),
                   )),
                   CommonTileOptions(
-                    leading: Icons.local_restaurant_rounded,
-                    label: 'Tickets Diários',
-                    function: () => Navigator.pushNamed(
-                        context, AppRouter.caeClassesRoute,
-                        arguments: ScreenArguments(
-                            isPermanent: false, title: 'Tickets Diários')),
+                    leading: Icons.numbers_rounded,
+                    label: 'Validar por Número',
+                    function: () => (),
                   ),
                   CommonTileOptions(
-                    leading: Icons.menu_rounded,
-                    label: 'Autorizações Permanentes',
+                    leading: Icons.qr_code_scanner_rounded,
+                    label: 'Validar por QR Code',
                     function: () => Navigator.pushNamed(
-                        context, AppRouter.caeClassesRoute,
-                        arguments: ScreenArguments(
-                            isPermanent: true,
-                            title: 'Autorizações Permanentes')),
+                      context,
+                      AppRouter.qrRoute,
+                    ),
                   ),
                   CommonTileOptions(
                     leading: Icons.description_rounded,
-                    label: 'Relatório Diário',
+                    label: 'Relatórios',
                     function: () => Navigator.pushNamed(
-                      context,
-                      AppRouter.dailyReportRoute,
-                    ),
-                  ),
-                  CommonTileOptions(
-                    leading: Icons.calendar_month_rounded,
-                    label: 'Relatório por Periódo',
-                    function: () => Navigator.pushNamed(
-                      context,
-                      AppRouter.caePeriodReportRoute,
-                    ),
-                  ),
-                  CommonTileOptions(
-                    leading: Icons.confirmation_number_rounded,
-                    label: 'Solicitar Ticket',
-                    function: () => Navigator.pushNamed(
-                      context,
-                      AppRouter.caeSearchStudentRoute,
-                    ),
+                        context, AppRouter.dailyReportRoute,
+                        arguments: ScreenArguments(cae: false)),
                   ),
                 ],
               ),

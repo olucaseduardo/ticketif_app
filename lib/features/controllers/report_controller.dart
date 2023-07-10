@@ -20,16 +20,20 @@ class ReportController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadDailyTickets({required String date}) async {
+  Future<void> loadDailyTickets({required String date, bool cae = true}) async {
     try {
       dailyTickets!.clear();
       dailyStatus.clear();
       isLoading = true;
-
+      log(cae.toString());
       final tickets =
           await TicketsApiRepositoryImpl().findAllDailyTickets(date);
       for (var index = 0; index < tickets.length; index++) {
-        dailyTickets?.add(tickets.elementAt(index));
+        if (tickets.elementAt(index).idStatus == 4 && cae == false) {
+          dailyTickets?.add(tickets.elementAt(index));
+        } else if (cae) {
+          dailyTickets?.add(tickets.elementAt(index));
+        }
       }
       dailyTickets?.forEach(
         (element) => log(element.toString()),

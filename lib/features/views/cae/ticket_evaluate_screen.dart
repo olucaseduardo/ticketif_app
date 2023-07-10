@@ -122,6 +122,7 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                             : false,
                         function: () => controller.verifySelected(
                             controller.filteredTickets[index], lengthTickets),
+                        check: true,
                       ),
                     ),
                   ),

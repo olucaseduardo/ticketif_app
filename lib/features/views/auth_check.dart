@@ -5,6 +5,7 @@ import 'package:project_ifma_ticket/core/utils/loader.dart';
 import 'package:project_ifma_ticket/features/views/cae/cae_home_screen.dart';
 import 'package:project_ifma_ticket/features/views/home_screen.dart';
 import 'package:project_ifma_ticket/features/views/login_screen.dart';
+import 'package:project_ifma_ticket/features/views/restaurant/restaurant_screen.dart';
 
 class AuthCheck extends ConsumerStatefulWidget {
   const AuthCheck({super.key});
@@ -25,10 +26,12 @@ class _AuthCheckState extends ConsumerState<AuthCheck> {
 
     if (controller.isLoading) {
       return Scaffold(body: Loader.loader());
-    } else if (controller.check && !controller.admin) {
+    } else if (controller.check && !controller.admin && !controller.restaurant) {
       return const HomeScreen();
     } else if (controller.check && controller.admin) {
       return const CaeHomeScreen();
+    } else if (controller.check && controller.restaurant) {
+      return const RestaurantScreen();
     } else {
       return const LoginScreen();
     }

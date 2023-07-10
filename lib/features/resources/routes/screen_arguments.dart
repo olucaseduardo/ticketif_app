@@ -2,16 +2,20 @@ import 'package:project_ifma_ticket/features/models/ticket.dart';
 
 class ScreenArguments {
   final String? title;
+  final String? subtitle;
+  final String? description;
   final List<Ticket>? tickets;
-  final bool? caeRequest;
+  final bool? cae;
   final int? idStudent;
   final bool? isPermanent;
 
   ScreenArguments({
     this.title,
     this.tickets,
-    this.caeRequest,
+    this.cae,
     this.idStudent,
     this.isPermanent,
+    this.subtitle,
+    this.description,
   });
 }

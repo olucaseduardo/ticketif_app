@@ -91,7 +91,7 @@ class LoginAdmScreen extends ConsumerWidget {
                             );
                             if (!controller.error) {
                               nav.pushNamedAndRemoveUntil(
-                                  AppRouter.caeHomeRoute, (route) => false);
+                                  AppRouter.authCheck, (route) => false);
                             } else {
                               Loader.hideDialog();
 
@@ -104,7 +104,8 @@ class LoginAdmScreen extends ConsumerWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => nav.pop(),
+                  onPressed: () => nav.pushNamedAndRemoveUntil(
+                      AppRouter.loginRoute, (route) => false),
                   child: const Text('Login aluno'),
                 ),
               ],

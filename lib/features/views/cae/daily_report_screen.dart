@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
+import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
+import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
@@ -11,7 +14,8 @@ import 'package:project_ifma_ticket/features/resources/widgets/error_results.dar
 import 'package:project_ifma_ticket/features/resources/widgets/without_results.dart';
 
 class DailyReportScreen extends ConsumerStatefulWidget {
-  const DailyReportScreen({super.key});
+  final bool cae;
+  const DailyReportScreen({super.key, this.cae = true});
 
   @override
   ConsumerState<DailyReportScreen> createState() => _DailyReportScreenState();
@@ -21,7 +25,7 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
   @override
   void initState() {
     ref.read(reportProvider)
-        .loadDailyTickets(date: DateUtil.getDateUSStr(DateUtil.dateTime));
+        .loadDailyTickets(date: DateUtil.getDateUSStr(DateUtil.dateTime), cae: widget.cae);
     super.initState();
   }
 
@@ -65,7 +69,7 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                     children: [
                       Text(
                         'Data: ${DateUtil.getDateStr(controller.day)}',
-                        style: AppTextStyle.titleLarge,
+                        style: AppTextStyle.titleMedium.copyWith(color: AppColors.green300, fontSize: 16.sp),
                       ),
                       IconButton(
                           onPressed: () async {
@@ -103,7 +107,11 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Divider(),
-                              Text(controller.dailyStatus.keys.elementAt(index)),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(controller.dailyStatus.keys.elementAt(index), style: AppTextStyle.normalText,),
+                              ),
+
                               ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: meal.length,
@@ -112,8 +120,19 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                                     var valuesMeal =
                                         controller.dailyStatus[status]![keyMeal];
                                     return CommonTileReport(
-                                        title: keyMeal,
-                                        subtitle: 'Total: ${valuesMeal!.length}');
+                                      function: () =>
+                                        Navigator.of(context).pushNamed(
+                                          AppRouter.listTickets,
+                                          arguments: ScreenArguments(
+                                            title: keyMeal,
+                                            subtitle: DateUtil.getDateStr(DateTime.parse(valuesMeal.reversed.elementAt(0).useDayDate)),
+                                            description: valuesMeal.reversed.elementAt(0).status,
+                                            tickets: valuesMeal.reversed.toList(),
+                                          ),
+                                        ),
+                                      status: status,
+                                      title: keyMeal,
+                                      subtitle: 'Total: ${valuesMeal!.length}');
                                   })
                             ],
                           );

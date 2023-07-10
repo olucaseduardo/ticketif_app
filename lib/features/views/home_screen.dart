@@ -76,7 +76,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         replacement: Loader.loader(),
 
         child: Visibility(
-          visible: false,
+          visible: !controller.error,
 
           replacement: ErrorResults(
             msg: 'Voltar ao login',

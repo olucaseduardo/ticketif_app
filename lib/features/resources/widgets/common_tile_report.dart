@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_status.dart';
 
 class CommonTileReport extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback? function;
+  final String status;
 
   const CommonTileReport(
-      {super.key, required this.title, required this.subtitle, this.function});
+      {
+    super.key,
+    required this.title,
+    required this.subtitle,
+    this.function,
+    required this.status,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +36,19 @@ class CommonTileReport extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(
-                      Icons.access_time_rounded,
-                      weight: 40,
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: AppStatus.statusImage(status).$2,
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      
+                      child: Icon(
+                        AppStatus.statusImage(status).$1,
+                        weight: 40,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(
                       width: 10,

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
+import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
+import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
@@ -64,19 +67,11 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Início: ${DateUtil.getDateStr(start)}',
-                              style: AppTextStyle.titleLarge,
-                            ),
-                            Text(
-                              'Final: ${DateUtil.getDateStr(end)}',
-                              style: AppTextStyle.titleLarge,
-                            ),
-                          ],
+                        Text(
+                          'De: ${DateUtil.getDateStr(start)} até: ${DateUtil.getDateStr(end)}',
+                          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green300, fontSize: 16.sp),
                         ),
+                        
                         IconButton(
                           onPressed: () async {
                             DateTimeRange? result = await showDateRangePicker(
@@ -130,6 +125,17 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
                                       var valuesMeal =
                                           controller.dailyStatus[status]![keyMeal];
                                       return CommonTileReport(
+                                        function: () =>
+                                            Navigator.of(context).pushNamed(
+                                              AppRouter.listTickets,
+                                              arguments: ScreenArguments(
+                                                title: keyMeal,
+                                                subtitle: DateUtil.getDateStr(DateTime.parse(valuesMeal.reversed.elementAt(0).useDayDate)),
+                                                description: valuesMeal.reversed.elementAt(0).status,
+                                                tickets: valuesMeal.reversed.toList(),
+                                              ),
+                                            ),
+                                          status: status,
                                           title: keyMeal,
                                           subtitle: 'Total: ${valuesMeal!.length}');
                                     })

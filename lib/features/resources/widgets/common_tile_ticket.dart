@@ -7,6 +7,7 @@ class CommonTileTicket extends StatelessWidget {
   final VoidCallback? function;
   final String justification;
   final bool selected;
+  final bool? check;
 
   const CommonTileTicket({
     super.key,
@@ -14,7 +15,8 @@ class CommonTileTicket extends StatelessWidget {
     required this.subtitle,
     this.function,
     required this.justification,
-    this.selected = true,
+    this.selected = true, 
+    this.check = false,
   });
 
   @override
@@ -73,10 +75,14 @@ class CommonTileTicket extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(
-                  selected ? Icons.check_box : Icons.check_box_outline_blank,
-                  color: AppColors.green500,
-                  size: 32,
+                Visibility(
+                  visible: check == true,
+                  replacement: const SizedBox.shrink(),
+                  child: Icon(
+                    selected ? Icons.check_box : Icons.check_box_outline_blank,
+                    color: AppColors.green500,
+                    size: 32,
+                  ),
                 )
               ],
             ),

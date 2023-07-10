@@ -5,6 +5,7 @@ class AuthCheckController extends ChangeNotifier {
   bool check = false;
   bool isLoading = true;
   bool admin = false;
+  bool restaurant = false;
 
   void loading() {
     isLoading = !isLoading;
@@ -21,8 +22,13 @@ class AuthCheckController extends ChangeNotifier {
     }
 
     if (user != null) {
-      check = true;
-      admin = true;
+      if (user == 'CAE') {
+        check = true;
+        admin = true;
+      } else {
+        check = true;
+        restaurant = true;
+      }
     }
 
     loading();

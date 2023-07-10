@@ -1,12 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 
 import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.dart';
 import 'package:project_ifma_ticket/features/views/auth_adm/login_adm_screen.dart';
+import 'package:project_ifma_ticket/features/views/auth_check.dart';
 import 'package:project_ifma_ticket/features/views/cae/cae_home_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/classes_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/daily_report_screen.dart';
+import 'package:project_ifma_ticket/features/views/cae/list_tickets_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/period_report_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/search_student_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/ticket_evaluate_screen.dart';
@@ -15,6 +16,7 @@ import 'package:project_ifma_ticket/features/views/home_screen.dart';
 import 'package:project_ifma_ticket/features/views/login_screen.dart';
 import 'package:project_ifma_ticket/features/views/qr_screen.dart';
 import 'package:project_ifma_ticket/features/views/request_ticket_screen.dart';
+import 'package:project_ifma_ticket/features/views/restaurant/restaurant_screen.dart';
 
 class AppRouter {
   static const String loginRoute = '/login';
@@ -23,13 +25,16 @@ class AppRouter {
   static const String requestTicketRoute = '/requestTicket';
   static const String qrRoute = '/qrCode';
   static const String admLoginRoute = '/admLogin';
+  static const String dailyReportRoute = '/dailyReport';
+  static const String restaurantHomeRoute = '/restaurantHome';
+  static const String authCheck = '/authCheck';
   // CAE ROUTES
   static const String caeHomeRoute = '/caeHome';
   static const String caeClassesRoute = "/classes";
-  static const String caeDailyReportRoute = '/dailyReport';
   static const String caePeriodReportRoute = '/periodReport';
   static const String caeTicketEvaluateRoute = '/ticketEvaluate';
   static const String caeSearchStudentRoute = '/searchStudent';
+  static const String listTickets = '/listTickets';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final ScreenArguments? args = settings.arguments as ScreenArguments?;
@@ -50,7 +55,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => RequestTicket(
                   title: args?.title,
-                  caeRequest: args?.caeRequest,
+                  caeRequest: args?.cae,
                   idStudent: args?.idStudent,
                 ));
 
@@ -58,23 +63,40 @@ class AppRouter {
       case caeHomeRoute:
         return MaterialPageRoute(builder: (_) => const CaeHomeScreen());
       case caeClassesRoute:
-        return MaterialPageRoute(builder: (_) => ClassesScreen(
-          title: args?.title as String,
-          isPermanent: args?.isPermanent as bool,
-        ));
-      case caeDailyReportRoute:
-        return MaterialPageRoute(builder: (_) => const DailyReportScreen());
+        return MaterialPageRoute(
+            builder: (_) => ClassesScreen(
+                  title: args?.title as String,
+                  isPermanent: args?.isPermanent as bool,
+                ));
+      case dailyReportRoute:
+        return MaterialPageRoute(
+            builder: (_) => DailyReportScreen(
+                  cae: args!.cae as bool,
+                ));
       case caePeriodReportRoute:
         return MaterialPageRoute(builder: (_) => const PeriodReportScreen());
       case caeTicketEvaluateRoute:
-        return MaterialPageRoute(builder: (_) =>  TicketEvaluateScreen(
-          title: args!.title as String,
-          tickets: args.tickets as List<Ticket>,
-        ));
+        return MaterialPageRoute(
+            builder: (_) => TicketEvaluateScreen(
+                  title: args!.title as String,
+                  tickets: args.tickets as List<Ticket>,
+                ));
+      case listTickets:
+        return MaterialPageRoute(
+            builder: (_) => ListTicketsScreen(
+                  title: args!.title as String,
+                  tickets: args.tickets as List<Ticket>,
+                  description: args.description as String,
+                  subtitle: args.subtitle as String,
+                ));
       case caeSearchStudentRoute:
         return MaterialPageRoute(builder: (_) => const SearchStudentScreen());
       case qrRoute:
         return MaterialPageRoute(builder: (_) => const QrScreen());
+      case restaurantHomeRoute:
+        return MaterialPageRoute(builder: (_) => const RestaurantScreen());
+      case authCheck:
+        return MaterialPageRoute(builder: (_) => const AuthCheck());
       default:
         return MaterialPageRoute(
             builder: (_) => const RouteErrorScreen(

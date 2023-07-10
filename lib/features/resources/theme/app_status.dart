@@ -2,23 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 
 class AppStatus {
-//TODO: Ajustar icones e cores
-  List statusImage(String status) {
+  static (IconData, Color) statusImage(String status) {
     if (status == 'Em análise') {
-      return [Icons.access_time, AppColors.yellow];
+      return (Icons.access_time, AppColors.yellow);
     } else if (status == 'Confirmar presença') {
-      return [Icons.access_time, AppColors.yellow];
+      return (Icons.info, AppColors.yellow);
     } else if (status == 'Aguardando pagamento') {
-      return [Icons.access_time, AppColors.yellow];
+      return (Icons.access_time, AppColors.yellow);
     } else if (status == 'Utilização autorizada') {
-      return [Icons.access_time, AppColors.yellow];
+      return (Icons.check, AppColors.green500);
     } else if (status == 'Utilizado') {
-      return [Icons.access_time, AppColors.yellow];
+      return (Icons.food_bank, AppColors.green500);
     } else if (status == 'Cancelado') {
-      return [Icons.access_time, AppColors.yellow];
+      return (Icons.close, AppColors.yellow);
     } else if (status == 'Não autorizado') {
-      return [Icons.access_time, AppColors.yellow];
+      return (Icons.error, AppColors.red);
     }
-    return [Icons.access_time, AppColors.yellow];
+    return (Icons.access_time, AppColors.yellow);
   }
 }
