@@ -29,7 +29,7 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
   @override
   void initState() {
     ref.read(caeProvider).loadDataTickets(
-        date: DateUtil.getDateUSStr(DateUtil.dateTime),
+        date: DateUtil.getDateUSStr(DateUtil.dateTimeNow),
         isPermanent: widget.isPermanent);
     super.initState();
   }

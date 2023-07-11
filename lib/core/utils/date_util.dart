@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 class DateUtil {
-  static final DateTime dateTime = DateTime.now();
+  static final DateTime dateTimeNow = DateTime.now();
 
   static String todayDateRequest(DateTime dateTime) =>
       DateFormat("EEEE", 'pt_BR').format(dateTime);
@@ -17,4 +17,9 @@ class DateUtil {
 
   static String getDateUSStr(DateTime dateTime) =>
       DateFormat("yyyy-MM-dd").format(dateTime);
+
+  static bool checkTodayDate(DateTime dateTime) =>
+      (dateTime.day == dateTimeNow.day) &&
+      (dateTime.month == dateTimeNow.month) &&
+      (dateTime.year == dateTimeNow.year);
 }
