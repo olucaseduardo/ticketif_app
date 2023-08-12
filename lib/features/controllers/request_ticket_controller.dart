@@ -5,15 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
+import 'package:project_ifma_ticket/core/navigation/special_navigation.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
-import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/dto/request_permanent.dart';
 import 'package:project_ifma_ticket/features/repositories/request_tables/request_tables_api_impl.dart';
 import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/dto/days_ticket_dto.dart';
 import 'package:project_ifma_ticket/features/dto/request_ticket_model.dart';
 import 'package:project_ifma_ticket/features/models/tables_model.dart';
-import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_theme.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,7 +51,7 @@ class RequestTicketController extends ChangeNotifier {
       notifyListeners();
     } on DioError catch (e, s) {
       log('Erro ao carregar dados', error: e, stackTrace: s);
-      AppMessage.showError('Erro ao carregar dados');
+      AppMessage.i.showError('Erro ao carregar dados');
       throw RepositoryException(message: 'Erro ao carregar dados');
     }
   }
@@ -83,23 +82,15 @@ class RequestTicketController extends ChangeNotifier {
 
   bool validation(bool isCae) {
     if (meal == null) {
-      AppMessage.showError('Selecione uma refeição');
+      AppMessage.i.showError('Selecione uma refeição');
       return false;
     }
     if (isPermanent && permanentDays.isEmpty) {
-      AppMessage.showError('Selecione pelo menos um dia na semana');
+      AppMessage.i.showError('Selecione pelo menos um dia na semana');
       return false;
     }
     if (justification == null) {
-      AppMessage.showError('Selecione uma justificativa');
-      return false;
-    }
-    if (!permanentDays
-            .map((day) => day.id)
-            .toList()
-            .contains(DateTime.now().weekday) &&
-        isPermanent) {
-      AppMessage.showInfo('O ticket permanente deve conter o dia atual');
+      AppMessage.i.showError('Selecione uma justificativa');
       return false;
     }
 
@@ -108,7 +99,7 @@ class RequestTicketController extends ChangeNotifier {
     log('$hour e $minutes');
     if (!((hour >= 8) && (hour <= 11 && minutes <= 30)) && isCae == false) {
       if (meal!.id == 2) {
-        AppMessage.showInfo(
+        AppMessage.i.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
         return false;
       }
@@ -209,20 +200,16 @@ class RequestTicketController extends ChangeNotifier {
         }
         log('Erro: $error');
         if (!error) {
-          AppMessage.showMessage('Requisição enviada com sucesso');
+          AppMessage.i.showMessage('Requisição enviada com sucesso');
           !isCae
-              ? Navigator.pushNamedAndRemoveUntil(
-                  navigatorKey.currentContext!,
-                  AppRouter.homeRoute,
-                  (route) => false,
-                )
-              : Navigator.pop(navigatorKey.currentContext!);
+              ? SpecialNavigation.i.isNotCae()
+              : SpecialNavigation.i.isCae();
         } else {
-          AppMessage.showError('Erro ao solicitar Ticket');
+          AppMessage.i.showError('Erro ao solicitar Ticket');
         }
       } on DioError catch (e, s) {
         log('Erro ao solicitar Ticket', error: e, stackTrace: s);
-        AppMessage.showError('Erro ao solicitar Ticket');
+        AppMessage.i.showError('Erro ao solicitar Ticket');
         throw RepositoryException(message: 'Erro ao solicitar Ticket');
       }
     }

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/features/controllers/auth_check_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/cae_controller.dart';
+import 'package:project_ifma_ticket/features/controllers/cae_permanent_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/historic_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/home_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/login_controller.dart';
@@ -31,5 +32,10 @@ final authCheckProvider =
 final reportProvider = ChangeNotifierProvider.autoDispose<ReportController>(
     (ref) => ReportController());
 
-final restaurantProvider = ChangeNotifierProvider.autoDispose<RestaurantController>(
-    (ref) => RestaurantController());
+final restaurantProvider =
+    ChangeNotifierProvider.autoDispose<RestaurantController>(
+        (ref) => RestaurantController());
+
+final caePermanentProvider =
+    ChangeNotifierProvider.autoDispose<CaePermanentController>(
+        (ref) => CaePermanentController());

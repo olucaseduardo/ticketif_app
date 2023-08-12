@@ -103,7 +103,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   todayTicket == null
                               ? Navigator.pushNamed(
                                   context, AppRouter.requestTicketRoute)
-                              : AppMessage.showInfo(
+                              : AppMessage.i.showInfo(
                                   'Você já possui um ticket para ${todayTicket.meal.toLowerCase()}'),
                         ),
                       ],

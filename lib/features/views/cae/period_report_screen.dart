@@ -37,7 +37,7 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
 
     if (controller.error && !controller.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        AppMessage.showError('Erro ao carregar relatório por período');
+        AppMessage.i.showError('Erro ao carregar relatório por período');
       });
     }
     

@@ -6,6 +6,7 @@ import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
 import 'package:project_ifma_ticket/core/services/dio_client.dart';
 import 'package:project_ifma_ticket/features/dto/request_permanent.dart';
 import 'package:project_ifma_ticket/features/dto/request_ticket_model.dart';
+import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 
 import './tickets_api_repository.dart';
@@ -92,11 +93,11 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
   }
   
   @override
-  Future<void> findAllNotAuthorized() async {
+  Future<List<Authorization>> findAllNotAuthorized() async {
     try {
       final result = await DioClient().get("/not-authorized");
 
-      return result.data.map<Ticket>((t) => Ticket.fromMap(t)).toList();
+      return result.data.map<Authorization>((t) => Authorization.fromMap(t)).toList();
     } on DioError catch (e, s) {
       log('Erro ao buscar autorizações não tratadas', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar autorizações não tratadas');

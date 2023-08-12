@@ -78,7 +78,7 @@ class LoginScreen extends ConsumerWidget {
                             controller.loading();
 
                             controller.isLoading
-                                ? Loader.showLoader()
+                                ? Loader.i.showLoader()
                                 : const SizedBox.shrink();
                             await controller.onLoginTap(
                               matriculaEC.text,
@@ -88,9 +88,9 @@ class LoginScreen extends ConsumerWidget {
                               nav.pushNamedAndRemoveUntil(
                                   AppRouter.homeRoute, (route) => false);
                             } else {
-                              Loader.hideDialog();
+                              Loader.i.hideDialog();
 
-                              AppMessage.showError('Erro ao realizar login');
+                              AppMessage.i.showError('Erro ao realizar login');
                             }
                           },
                         ),

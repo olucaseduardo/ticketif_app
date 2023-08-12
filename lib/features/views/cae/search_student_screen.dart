@@ -32,7 +32,7 @@ class _SearchStudentScreenState extends ConsumerState<SearchStudentScreen> {
 
     if (controller.error && !controller.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        AppMessage.showError('Erro ao carregar os estudantes');
+        AppMessage.i.showError('Erro ao carregar os estudantes');
       });
     }
 

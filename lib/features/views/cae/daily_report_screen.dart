@@ -35,7 +35,7 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
 
     if (controller.error && !controller.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        AppMessage.showError('Erro ao carregar relatório diário');
+        AppMessage.i.showError('Erro ao carregar relatório diário');
       });
     }
 

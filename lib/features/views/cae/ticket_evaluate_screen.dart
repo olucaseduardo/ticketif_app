@@ -47,7 +47,7 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
 
     bool continueSolicitation() {
       if (controller.selectedTickets.isEmpty) {
-        AppMessage.showInfo('Não existem tickets selecionados!');
+        AppMessage.i.showInfo('Não existem tickets selecionados!');
         return false;
       }
 

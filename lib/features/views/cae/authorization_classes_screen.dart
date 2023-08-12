@@ -12,23 +12,23 @@ import 'package:project_ifma_ticket/features/resources/widgets/common_tile_class
 import 'package:project_ifma_ticket/features/resources/widgets/error_results.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/without_results.dart';
 
-class ClassesScreen extends ConsumerStatefulWidget {
+class AuthorizationClassesScreen extends ConsumerStatefulWidget {
   final String title;
   final bool isPermanent;
-  const ClassesScreen({
+  const AuthorizationClassesScreen({
     super.key,
     required this.title,
     this.isPermanent = false,
   });
 
   @override
-  ConsumerState<ClassesScreen> createState() => _ClassesScreenState();
+  ConsumerState<AuthorizationClassesScreen> createState() => _ClassesScreenState();
 }
 
-class _ClassesScreenState extends ConsumerState<ClassesScreen> {
+class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
   @override
   void initState() {
-    ref.read(caeProvider).loadDataTickets(
+    ref.read(caePermanentProvider).loadDataTickets(
         date: DateUtil.getDateUSStr(DateUtil.dateTimeNow),
         isPermanent: widget.isPermanent);
     super.initState();
@@ -36,11 +36,11 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(caeProvider);
+    final controller = ref.watch(caePermanentProvider);
 
     if (controller.error && !controller.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        AppMessage.showError('Erro ao carregar as solicitações por turmas');
+        AppMessage.i.showError('Erro ao carregar as solicitações por turmas');
       });
     }
 
@@ -92,22 +92,23 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
                       itemCount: controller.filteredClasses.length,
                       itemBuilder: (context, index) => CommonTileClass(
                           title:
-                              'Turma: ${controller.sortedDailyClasses.keys.elementAt(index)}',
+                              'Turma: ${controller.sortedAuthorizationClasses.keys.elementAt(index)}',
                           subtitle:
-                              'Total: ${controller.sortedDailyClasses[controller.filteredClasses[index]]!.length}',
-                          function: () async {
-                            dynamic list = await Navigator.pushNamed(
-                              context,
-                              AppRouter.caeTicketEvaluateRoute,
-                              arguments: ScreenArguments(
-                                  title: controller.sortedDailyClasses.keys
-                                      .elementAt(index),
-                                  tickets: controller.sortedDailyClasses.values
-                                      .elementAt(index)),
-                            );
-                            controller.updateClasses(
-                                list as List<Ticket>, index);
-                          }),
+                              'Total: ${controller.sortedAuthorizationClasses[controller.filteredClasses[index]]!.length}',
+                          function: (){}, )
+                          //function: () async {
+                          //   dynamic list = await Navigator.pushNamed(
+                          //     context,
+                          //     AppRouter.caeTicketEvaluateRoute,
+                          //     arguments: ScreenArguments(
+                          //         title: controller.sortedDailyClasses.keys
+                          //             .elementAt(index),
+                          //         tickets: controller.sortedDailyClasses.values
+                          //             .elementAt(index)),
+                          //   );
+                          //   controller.updateClasses(
+                          //       list as List<Ticket>, index);
+                          // }),
                     ),
                   ),
                 ),

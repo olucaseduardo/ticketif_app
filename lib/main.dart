@@ -4,5 +4,5 @@ import 'package:project_ifma_ticket/features/app/app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: App()));
+  runApp(ProviderScope(child: App()));
 }

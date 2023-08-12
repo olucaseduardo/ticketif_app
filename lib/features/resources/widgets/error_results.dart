@@ -34,7 +34,7 @@ class ErrorResults extends StatelessWidget {
             child: TextButton(
               onPressed: () {
                 function?.call();
-                homeStudent == true ? AppMessage.showError('Erro ao carregar usuario') : null;
+                homeStudent == true ? AppMessage.i.showError('Erro ao carregar usuario') : null;
                      
                 homeStudent == true ? Navigator.pushNamedAndRemoveUntil(context,
                           AppRouter.loginRoute, (route) => false) :

@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 
 class AppMessage {
-  static void showMessage(String text) {
-    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+  late final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey;
+
+  AppMessage._();
+
+  static AppMessage? _instance;
+
+  static AppMessage get i {
+    _instance ??= AppMessage._();
+    return _instance!;
+  }
+
+  set scaffoldMessagerKey(GlobalKey<ScaffoldMessengerState> key) =>
+      _scaffoldMessengerKey = key;
+
+
+  void showMessage(String text) {
+    _scaffoldMessengerKey.currentState!.showSnackBar(
       SnackBar(
         backgroundColor: AppColors.green500,
         content: Text(
@@ -15,8 +29,8 @@ class AppMessage {
     );
   }
 
-  static void showError(String text) {
-    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+  void showError(String text) {
+    _scaffoldMessengerKey.currentState!.showSnackBar(
       SnackBar(
         backgroundColor: AppColors.red,
         content: Text(
@@ -27,8 +41,8 @@ class AppMessage {
     );
   }
 
-  static void showInfo(String text) {
-    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+  void showInfo(String text) {
+    _scaffoldMessengerKey.currentState!.showSnackBar(
       SnackBar(
         backgroundColor: AppColors.yellow,
         content: Text(
@@ -39,26 +53,4 @@ class AppMessage {
       ),
     );
   }
-
-  // static void showMessage(String message) {
-  //   showTopSnackBar(
-      
-  //     Overlay.of(navigatorKey.currentContext!),
-  //     CustomSnackBar.success(message: message, backgroundColor: AppColors.green500,),
-  //   );
-  // }
-
-  // static void showInfo(String message) {
-  //   showTopSnackBar(
-  //     Overlay.of(navigatorKey.currentContext!),
-  //     CustomSnackBar.info(message: message, backgroundColor: AppColors.yellow),
-  //   );
-  // }
-
-  // static void showError(String message) {
-  //   showTopSnackBar(
-  //     Overlay.of(navigatorKey.currentContext!),
-  //     CustomSnackBar.error(message: message, backgroundColor: AppColors.red),
-  //   );
-  // }
 }

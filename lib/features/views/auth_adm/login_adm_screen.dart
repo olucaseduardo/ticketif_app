@@ -83,7 +83,7 @@ class LoginAdmScreen extends ConsumerWidget {
                             controller.loading();
 
                             controller.isLoading
-                                ? Loader.showLoader()
+                                ? Loader.i.showLoader()
                                 : const SizedBox.shrink();
                             await controller.onLoginAdmTap(
                               usernameEC.text.toUpperCase(),
@@ -93,9 +93,9 @@ class LoginAdmScreen extends ConsumerWidget {
                               nav.pushNamedAndRemoveUntil(
                                   AppRouter.authCheck, (route) => false);
                             } else {
-                              Loader.hideDialog();
+                              Loader.i.hideDialog();
 
-                              AppMessage.showError('Erro ao realizar login');
+                              AppMessage.i.showError('Erro ao realizar login');
                             }
                           },
                         ),

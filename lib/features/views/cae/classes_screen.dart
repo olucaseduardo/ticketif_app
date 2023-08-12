@@ -40,7 +40,7 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
 
     if (controller.error && !controller.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        AppMessage.showError('Erro ao carregar as solicitações por turmas');
+        AppMessage.i.showError('Erro ao carregar as solicitações por turmas');
       });
     }
 

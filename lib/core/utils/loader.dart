@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 
 class Loader {
-  static void showLoader() {
+  late final GlobalKey<NavigatorState> _navigatorKey;
+
+  Loader._();
+
+  static Loader? _instance;
+
+  static Loader get i {
+    _instance ??= Loader._();
+    return _instance!;
+  }
+
+  set navigatorKey(GlobalKey<NavigatorState> key) => _navigatorKey = key;
+
+  
+  void showLoader() {
     showDialog(
-      context: navigatorKey.currentState!.context,
+      context: _navigatorKey.currentState!.context,
       builder: (context) => loader(),
     );
   }
 
-  static void hideDialog() {
-    Navigator.pop(navigatorKey.currentState!.context);
+  void hideDialog() {
+    Navigator.pop(_navigatorKey.currentState!.context);
   }
 
   static Widget loader() {

@@ -76,7 +76,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                     leading: Icons.menu_rounded,
                     label: 'Autorizações Permanentes',
                     function: () => Navigator.pushNamed(
-                        context, AppRouter.caeClassesRoute,
+                        context, AppRouter.authorizationClassesRoute,
                         arguments: ScreenArguments(
                             isPermanent: true,
                             title: 'Autorizações Permanentes')),
