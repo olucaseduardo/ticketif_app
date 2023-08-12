@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 
-class AppStatus {
+class TicketStatus {
   static (IconData, Color) statusImage(String status) {
     if (status == 'Em análise') {
       return (Icons.access_time, AppColors.yellow);

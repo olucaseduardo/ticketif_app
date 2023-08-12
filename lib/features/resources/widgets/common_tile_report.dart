@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_status.dart';
+import 'package:project_ifma_ticket/features/resources/theme/ticket_status.dart';
 
 class CommonTileReport extends StatelessWidget {
   final String title;
@@ -8,8 +8,7 @@ class CommonTileReport extends StatelessWidget {
   final VoidCallback? function;
   final String status;
 
-  const CommonTileReport(
-      {
+  const CommonTileReport({
     super.key,
     required this.title,
     required this.subtitle,
@@ -40,12 +39,11 @@ class CommonTileReport extends StatelessWidget {
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                        color: AppStatus.statusImage(status).$2,
+                        color: TicketStatus.statusImage(status).$2,
                         borderRadius: BorderRadius.circular(40),
                       ),
-                      
                       child: Icon(
-                        AppStatus.statusImage(status).$1,
+                        TicketStatus.statusImage(status).$1,
                         weight: 40,
                         color: Colors.white,
                       ),
