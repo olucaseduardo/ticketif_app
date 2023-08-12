@@ -9,7 +9,7 @@ class ReportController extends ChangeNotifier {
   List<Ticket>? dailyTickets = [];
   Map<String, Map<String, List<Ticket>>> dailyStatus = {};
 
-  DateTime day = DateUtil.dateTime;
+  DateTime day = DateUtil.dateTimeNow;
 
   bool isLoading = true;
   bool error = false;
@@ -25,11 +25,13 @@ class ReportController extends ChangeNotifier {
       dailyTickets!.clear();
       dailyStatus.clear();
       isLoading = true;
-      log(cae.toString());
+      log('cae :: ${cae.toString()}');
       final tickets =
           await TicketsApiRepositoryImpl().findAllDailyTickets(date);
       for (var index = 0; index < tickets.length; index++) {
-        if (tickets.elementAt(index).idStatus == 4 && cae == false) {
+        if ((tickets.elementAt(index).idStatus == 4 ||
+                tickets.elementAt(index).idStatus == 5) &&
+            cae == false) {
           dailyTickets?.add(tickets.elementAt(index));
         } else if (cae) {
           dailyTickets?.add(tickets.elementAt(index));
@@ -113,18 +115,18 @@ class ReportController extends ChangeNotifier {
     }
   }
 
-  void updateDate(DateTime? pickDate) {
+  void updateDate({DateTime? pickDate, bool cae = true}) {
     if (pickDate != null) {
       loading();
       day = pickDate;
-      loadDailyTickets(date: DateUtil.getDateUSStr(day));
+      loadDailyTickets(date: DateUtil.getDateUSStr(day), cae: cae);
     }
   }
 
   void updatePeriodDate(DateTime? pickDateInitial, DateTime? pickDateFinal) {
     if (pickDateInitial != null && pickDateFinal != null) {
       loading();
-      
+
       loadPeriodTickets(
         initialDate: DateUtil.getDateUSStr(pickDateInitial),
         finalDate: DateUtil.getDateUSStr(pickDateFinal),

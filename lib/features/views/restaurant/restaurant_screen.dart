@@ -22,7 +22,7 @@ class RestaurantScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(DateUtil.todayDate(DateUtil.dateTime),
+              Text(DateUtil.todayDate(DateUtil.dateTimeNow),
                   style: AppTextStyle.labelBig
                       .copyWith(fontWeight: FontWeight.w700)),
               const Text('Restaurante', style: AppTextStyle.labelMedium)
@@ -59,13 +59,8 @@ class RestaurantScreen extends ConsumerWidget {
                     ),
                   )),
                   CommonTileOptions(
-                    leading: Icons.numbers_rounded,
-                    label: 'Validar por Número',
-                    function: () => (),
-                  ),
-                  CommonTileOptions(
                     leading: Icons.qr_code_scanner_rounded,
-                    label: 'Validar por QR Code',
+                    label: 'Validar Ticket',
                     function: () => Navigator.pushNamed(
                       context,
                       AppRouter.qrRoute,

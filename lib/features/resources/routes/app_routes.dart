@@ -14,7 +14,7 @@ import 'package:project_ifma_ticket/features/views/cae/ticket_evaluate_screen.da
 import 'package:project_ifma_ticket/features/views/historic_screen.dart';
 import 'package:project_ifma_ticket/features/views/home_screen.dart';
 import 'package:project_ifma_ticket/features/views/login_screen.dart';
-import 'package:project_ifma_ticket/features/views/qr_screen.dart';
+import 'package:project_ifma_ticket/features/views/restaurant/qr_screen.dart';
 import 'package:project_ifma_ticket/features/views/request_ticket_screen.dart';
 import 'package:project_ifma_ticket/features/views/restaurant/restaurant_screen.dart';
 

@@ -39,4 +39,26 @@ class AppMessage {
       ),
     );
   }
+
+  // static void showMessage(String message) {
+  //   showTopSnackBar(
+      
+  //     Overlay.of(navigatorKey.currentContext!),
+  //     CustomSnackBar.success(message: message, backgroundColor: AppColors.green500,),
+  //   );
+  // }
+
+  // static void showInfo(String message) {
+  //   showTopSnackBar(
+  //     Overlay.of(navigatorKey.currentContext!),
+  //     CustomSnackBar.info(message: message, backgroundColor: AppColors.yellow),
+  //   );
+  // }
+
+  // static void showError(String message) {
+  //   showTopSnackBar(
+  //     Overlay.of(navigatorKey.currentContext!),
+  //     CustomSnackBar.error(message: message, backgroundColor: AppColors.red),
+  //   );
+  // }
 }

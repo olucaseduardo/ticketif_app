@@ -27,7 +27,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(DateUtil.todayDate(DateUtil.dateTime),
+              Text(DateUtil.todayDate(DateUtil.dateTimeNow),
                   style: AppTextStyle.labelBig
                       .copyWith(fontWeight: FontWeight.w700)),
               const Text('Administrador', style: AppTextStyle.labelMedium)
@@ -85,9 +85,9 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                     leading: Icons.description_rounded,
                     label: 'Relatório Diário',
                     function: () => Navigator.pushNamed(
-                      context,
-                      AppRouter.dailyReportRoute,
-                    ),
+                        context, AppRouter.dailyReportRoute,
+                        arguments: ScreenArguments(cae: true)
+                        ),
                   ),
                   CommonTileOptions(
                     leading: Icons.calendar_month_rounded,

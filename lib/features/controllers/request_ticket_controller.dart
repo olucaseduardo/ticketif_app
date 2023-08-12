@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/app/app.dart';
+import 'package:project_ifma_ticket/features/dto/request_permanent.dart';
 import 'package:project_ifma_ticket/features/repositories/request_tables/request_tables_api_impl.dart';
 import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/dto/days_ticket_dto.dart';
@@ -106,7 +106,7 @@ class RequestTicketController extends ChangeNotifier {
     var hour = DateTime.now().hour;
     var minutes = DateTime.now().minute;
     log('$hour e $minutes');
-    if ((hour >= 8) && (hour <= 11 && minutes <= 30) && isCae == false) {
+    if (!((hour >= 8) && (hour <= 11 && minutes <= 30)) && isCae == false) {
       if (meal!.id == 2) {
         AppMessage.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
@@ -131,7 +131,7 @@ class RequestTicketController extends ChangeNotifier {
         mealId: meal!.id,
         statusId: isCae ? 2 : 1,
         justificationId: justification!.id,
-        isPermanent: isPermanent ? 1 : 0,
+        isPermanent: 0,
         solicitationDay: DateTime.now().toString(),
         useDay: useDay,
         useDayDate: useDayDate,
@@ -140,6 +140,41 @@ class RequestTicketController extends ChangeNotifier {
       ));
     } on DioError catch (e, s) {
       log('Erro ao solicitar Ticket', error: e, stackTrace: s);
+
+      error = true;
+      notifyListeners();
+    } catch (e, s) {
+      error = true;
+      notifyListeners();
+      log('Erro ao solicitar Ticket', error: e, stackTrace: s);
+    }
+  }
+
+  Future<void> createPermanents(
+    int id,
+    bool isCae,
+    List<DaysTicketDto> days,
+  ) async {
+    try {
+      List<RequestPermanent> permanents = [];
+      for (var day in days) {
+        permanents.add(RequestPermanent(
+          studentId: id,
+          weekId: day.id,
+          mealId: meal?.id ?? 0,
+          justificationId: justification?.id ?? 0,
+          text: justificationController.text,
+          useDay: day.description,
+          useDayDate: day.id == DateTime.now().weekday 
+            ? DateTime.now().toString() : "",
+          authorized: isCae ? 1 : 0,
+          statusId: isCae ? 2 : 1,
+        ));
+      }
+
+      await TicketsApiRepositoryImpl().requestPermanent(permanents);
+    } on DioError catch (e, s) {
+      log('Erro ao solicitar autorização permanente', error: e, stackTrace: s);
 
       error = true;
       notifyListeners();
@@ -159,17 +194,11 @@ class RequestTicketController extends ChangeNotifier {
         final id = sp.getInt('idStudent');
         log(id.toString());
         if (permanentDays.isNotEmpty && isPermanent) {
-          for (var day = 0; day < permanentDays.length; day++) {
-            await createTickets(
-              id ?? idStudent ?? 0,
-              permanentDays[day].id,
-              permanentDays[day].description,
-              permanentDays[day].id == DateTime.now().weekday
-                  ? DateTime.now().toString()
-                  : '',
-              isCae,
-            );
-          }
+          await createPermanents(
+            id ?? idStudent ?? 0,
+            isCae,
+            permanentDays,
+          );
         } else {
           await createTickets(
               id ?? idStudent ?? 0,

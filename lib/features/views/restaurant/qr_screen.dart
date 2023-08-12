@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/qr_code_result.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -13,6 +15,11 @@ class QrScreen extends ConsumerStatefulWidget {
 }
 
 class _QrScreenState extends ConsumerState<QrScreen> {
+  @override
+  void initState() {
+    ref.read(restaurantProvider).initPackages();
+    super.initState();
+  }
 
   @override
   void reassemble() {
@@ -57,11 +64,19 @@ class _QrScreenState extends ConsumerState<QrScreen> {
             Expanded(
               flex: 1,
               child: Visibility(
-                visible: controller.qrResult != null,
-                replacement: const Center(
-                  child: Text('Sem dados no momento, escaneie um QR Code!'),
-                ),
-                child: QrCodeResult(qrResult: controller.qrResult)
+                  visible: controller.isValid,
+                  replacement: Center(
+                    child: Text(controller.result, style: AppTextStyle.titleMedium.copyWith(
+                    color: AppColors.green300,
+                          ),
+                        ),
+                  ),
+                  child: QrCodeResult(qrResult: controller.qrResult)),
+            ),
+            Text(
+              'Total Validados: ${controller.totalValid.toString()}',
+              style: AppTextStyle.titleLarge.copyWith(
+                color: AppColors.green300,
               ),
             ),
           ],
