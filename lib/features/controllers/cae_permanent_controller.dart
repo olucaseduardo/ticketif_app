@@ -109,6 +109,79 @@ class CaePermanentController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+   /// Função responsavel por controlar as seleções de todos
+  void isSelected(List<Authorization> tickets) {
+    selectedAuthorizatons.clear();
+    selectAll = !selectAll;
+
+    if (selectAll) {
+      selectedAuthorizatons.addAll(tickets);
+    }
+
+    log(selectedAuthorizatons.toString());
+    notifyListeners();
+  }
+
+   /// Função responsavel por filtrar os tickets na tela de turmas
+  void filterAuthorizations(String query, List<Authorization> tickets) {
+    filteredAuthorizations.clear();
+    notifyListeners();
+
+    if (query.isNotEmpty) {
+      List<Authorization> tmpList = [];
+      for (var item in tickets) {
+        if (item.student.contains(query.toUpperCase())) {
+          tmpList.add(item);
+        }
+      }
+
+      filteredAuthorizations.addAll(tmpList);
+
+      notifyListeners();
+    } else {
+      filteredAuthorizations.addAll(tickets);
+      notifyListeners();
+    }
+  }
+
+  /// Função responsavel por controlar as seleções individuais
+  void verifySelected(Authorization filteredAuthorizations, int allTicketsLength) {
+    if (selectedAuthorizatons.contains(filteredAuthorizations)) {
+      selectedAuthorizatons.removeWhere(
+        (ts) => ts.id == filteredAuthorizations.id,
+      );
+    } else {
+      selectedAuthorizatons.add(filteredAuthorizations);
+    }
+
+    if (allTicketsLength == selectedAuthorizatons.length) {
+      selectAll = true;
+    } else {
+      selectAll = false;
+    }
+
+    notifyListeners();
+  }
+
+    /// Atualização de listas de tickets pós mudança de status
+  void updateClasses(List<Authorization> list, int index) {
+    sortedAuthorizationClasses.values.elementAt(index).clear();
+
+    log("sortedDailyClasses :: ${sortedAuthorizationClasses.toString()}");
+    if (list.isNotEmpty) {
+      sortedAuthorizationClasses[filteredClasses[index]]!.values.elementAt(index).addAll(list);
+    } else {
+      filteredClasses.remove(sortedAuthorizationClasses.keys.elementAt(index));
+      sortedAuthorizationClasses[filteredClasses[index]]!.remove(sortedAuthorizationClasses.keys.elementAt(index));
+    }
+    for (var element in filteredClasses) {
+      log(element.toString());
+    }
+
+    log("sortedAuthorizationClasses :: ${sortedAuthorizationClasses.toString()}");
+    notifyListeners();
+  }
 }
 // {
 //         "id": 6,

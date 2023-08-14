@@ -95,20 +95,20 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
                               'Turma: ${controller.sortedAuthorizationClasses.keys.elementAt(index)}',
                           subtitle:
                               'Total: ${controller.sortedAuthorizationClasses[controller.filteredClasses[index]]!.length}',
-                          function: (){}, )
-                          //function: () async {
-                          //   dynamic list = await Navigator.pushNamed(
-                          //     context,
-                          //     AppRouter.caeTicketEvaluateRoute,
-                          //     arguments: ScreenArguments(
-                          //         title: controller.sortedDailyClasses.keys
-                          //             .elementAt(index),
-                          //         tickets: controller.sortedDailyClasses.values
-                          //             .elementAt(index)),
-                          //   );
-                          //   controller.updateClasses(
-                          //       list as List<Ticket>, index);
-                          // }),
+                          // function: (){}, )
+                          function: () async {
+                            dynamic list = await Navigator.pushNamed(
+                              context,
+                              AppRouter.caeTicketEvaluateRoute,
+                              arguments: ScreenArguments(
+                                  title: controller.sortedAuthorizationClasses.keys
+                                      .elementAt(index),
+                                  tickets: controller.sortedAuthorizationClasses.values
+                                      .elementAt(index)),
+                            );
+                            // controller.updateClasses(
+                            //     list as List<Ticket>, index);
+                          }),
                     ),
                   ),
                 ),
