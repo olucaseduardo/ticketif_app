@@ -42,7 +42,8 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
             onPressed: () {
               controller.onLogoutTap();
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/admLogin', (route) => false);
+                  .pushNamedAndRemoveUntil(AppRouter.admLoginRoute
+                  , (route) => false);
             },
           ),
         ],

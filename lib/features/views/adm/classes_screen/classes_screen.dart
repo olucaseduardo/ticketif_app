@@ -28,7 +28,7 @@ class ClassesScreen extends ConsumerStatefulWidget {
 class _ClassesScreenState extends ConsumerState<ClassesScreen> {
   @override
   void initState() {
-    ref.read(caeProvider).loadDataTickets(
+    ref.read(classesProvider).loadDataTickets(
         date: DateUtil.getDateUSStr(DateUtil.dateTimeNow),
         isPermanent: widget.isPermanent);
     super.initState();
@@ -36,7 +36,7 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(caeProvider);
+    final controller = ref.watch(classesProvider);
 
     if (controller.error && !controller.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -58,11 +58,15 @@ class _AuthorizationEvaluateScreenState
     }
 
     String getDays(List<Authorization> list) {
-      String days = '';
-      for (var element in list) {
-        days = '$days ${element.day()}';
+      String days = '(';
+      for (int i = 0; i < list.length; i++) {
+        if (i == 0) {
+          days = '$days${list[0].day()}';
+        } else {
+          days = '$days, ${list[i].day()}';
+        }
       }
-      return '';
+      return '$days)';
     }
 
     return WillPopScope(
@@ -124,9 +128,11 @@ class _AuthorizationEvaluateScreenState
                       itemCount: allAuthorizations.keys.length,
                       itemBuilder: (context, index) => CommonTileTicket(
                         title: allAuthorizations.keys.elementAt(index),
-                        subtitle: "",
+                        subtitle: "${allAuthorizations[
+                            allAuthorizations.keys.elementAt(index)]!.first.meal} - ${getDays(allAuthorizations[
+                            allAuthorizations.keys.elementAt(index)]!)}",
                         justification:
-                            allAuthorizations.values.first.first.justification,
+                          allAuthorizations.values.first.first.justification,
                         // selected: controller.selectedAuthorizatons.contains(
                         //         controller.filteredAuthorizations[index])
                         //     ? true

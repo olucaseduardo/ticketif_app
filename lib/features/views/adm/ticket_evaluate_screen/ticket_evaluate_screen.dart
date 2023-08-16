@@ -29,16 +29,16 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(caeProvider).filteredTickets.clear();
-    ref.read(caeProvider).selectedTickets.clear();
-    ref.read(caeProvider).filteredTickets.addAll(widget.tickets);
-    ref.read(caeProvider).selectedTickets.addAll(widget.tickets);
-    ref.read(caeProvider).selectAll = true;
+    log(widget.tickets.toString());
+    ref.read(ticketEvaluateProvider).filteredTickets.addAll(widget.tickets);
+    ref.read(ticketEvaluateProvider).selectedTickets.addAll(widget.tickets);
+    ref.read(ticketEvaluateProvider).selectAll = true;
+    ref.read(ticketEvaluateProvider).isLoading = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(caeProvider);
+    final controller = ref.watch(ticketEvaluateProvider);
     List<Ticket> allTickets = widget.tickets;
     final lengthTickets = allTickets.length;
 
@@ -104,7 +104,8 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                 ),
                 Visibility(
                   visible: controller.filteredTickets.isNotEmpty,
-                  replacement: const WithoutResults(msg: 'Nenhuma solicitação encontrada'),
+                  replacement: const WithoutResults(
+                      msg: 'Nenhuma solicitação encontrada'),
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredTickets.length,

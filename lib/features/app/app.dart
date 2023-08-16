@@ -6,7 +6,7 @@ import 'package:project_ifma_ticket/core/utils/loader.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_theme.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
-import 'package:project_ifma_ticket/features/views/auth_check.dart';
+import 'package:project_ifma_ticket/features/views/auth_screens/auth_check/auth_check.dart';
 
 class App extends StatelessWidget {
   final _navigatorKey = GlobalKey<NavigatorState>();
