@@ -1,16 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/features/views/adm/classes_screen/classes_controller.dart';
 import 'package:project_ifma_ticket/features/views/adm/period_report_screen/period_report_controller.dart';
+import 'package:project_ifma_ticket/features/views/adm/qr_screen/qr_controller.dart';
+import 'package:project_ifma_ticket/features/views/adm/search_student_screen/search_student_controller.dart';
 import 'package:project_ifma_ticket/features/views/adm/ticket_evaluate_screen/ticket_evaluate_controller.dart';
 import 'package:project_ifma_ticket/features/views/auth_screens/auth_check/auth_check_controller.dart';
-import 'package:project_ifma_ticket/features/controllers/cae_controller.dart';
-import 'package:project_ifma_ticket/features/controllers/cae_permanent_controller.dart';
-import 'package:project_ifma_ticket/features/controllers/historic_controller.dart';
+import 'package:project_ifma_ticket/features/views/adm/cae_home_screen/cae_controller.dart';
+import 'package:project_ifma_ticket/features/views/adm/authorizations_screens/cae_authorization_controller.dart';
 import 'package:project_ifma_ticket/features/views/home_screen/home_controller.dart';
 import 'package:project_ifma_ticket/features/views/auth_screens/login_controller.dart';
 import 'package:project_ifma_ticket/features/views/adm/daily_report_screen/report_controller.dart';
 import 'package:project_ifma_ticket/features/views/request_ticket_screen/request_ticket_controller.dart';
-import 'package:project_ifma_ticket/features/controllers/restaurant_controller.dart';
+import 'package:project_ifma_ticket/features/views/adm/restaurant_home/restaurant_controller.dart';
 
 final requestTicketProvider =
     ChangeNotifierProvider.autoDispose<RequestTicketController>(
@@ -27,9 +28,6 @@ final classesProvider =
 
 final ticketEvaluateProvider =
     ChangeNotifierProvider.autoDispose<TicketEvaluateController>((ref) => TicketEvaluateController());
-
-final historicProvider = ChangeNotifierProvider.autoDispose<HistoricController>(
-    (ref) => HistoricController());
 
 final loginProvider = ChangeNotifierProvider.autoDispose<LoginController>(
     (ref) => LoginController());
@@ -49,5 +47,13 @@ final restaurantProvider =
         (ref) => RestaurantController());
 
 final caePermanentProvider =
-    ChangeNotifierProvider.autoDispose<CaePermanentController>(
-        (ref) => CaePermanentController());
+    ChangeNotifierProvider.autoDispose<CaeAuthorizationController>(
+        (ref) => CaeAuthorizationController());
+
+final searchStudentProvider =
+    ChangeNotifierProvider.autoDispose<SearchStudentController>(
+        (ref) => SearchStudentController());
+
+final qrProvider =
+    ChangeNotifierProvider.autoDispose<QrController>(
+        (ref) => QrController());

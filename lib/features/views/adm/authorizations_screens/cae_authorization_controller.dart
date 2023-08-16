@@ -5,7 +5,7 @@ import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/models/user.dart';
 import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
 
-class CaePermanentController extends ChangeNotifier {
+class CaeAuthorizationController extends ChangeNotifier {
   List<Authorization>? authorizations = [];
   /* Listas de filtros das searchs */
   List<Authorization> filteredAuthorizations = [];
@@ -190,42 +190,3 @@ class CaePermanentController extends ChangeNotifier {
     notifyListeners();
   }
 }
-// {
-//         "id": 6,
-//         "student_id": 1,
-//         "meal_id": 2,
-//         "week_id": 2,
-//         "justification_id": 1,
-//         "authorized": 0,
-//         "student": "20191BCC.CAX0001",
-//         "student_name": "Fulano Bezerra",
-//         "justification_description": "Contra-turno",
-//         "meal_description": "Almoço",
-//         "type": "Superior"
-//     },
-    // {
-    //     "id": 8,
-    //     "student_id": 6,
-    //     "meal_id": 2,
-    //     "week_id": 1,
-    //     "justification_id": 2,
-    //     "authorized": 0,
-    //     "student": "20191BCC.CAX0005",
-    //     "student_name": "Luis",
-    //     "justification_description": "Monitoria",
-    //     "meal_description": "Almoço",
-    //     "type": "Superior"
-    // },
-    // {
-    //     "id": 9,
-    //     "student_id": 6,
-    //     "meal_id": 2,
-    //     "week_id": 2,
-    //     "justification_id": 2,
-    //     "authorized": 0,
-    //     "student": "20191BCC.CAX0005",
-    //     "student_name": "Luis",
-    //     "justification_description": "Monitoria",
-    //     "meal_description": "Almoço",
-    //     "type": "Superior"
-    // }

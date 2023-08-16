@@ -12,7 +12,7 @@ class RestaurantScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final controller = ref.watch(caeProvider);
+    final controller = ref.watch(restaurantProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +37,7 @@ class RestaurantScreen extends ConsumerWidget {
             onPressed: () {
               controller.onLogoutTap();
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/admLogin', (route) => false);
+                  .pushNamedAndRemoveUntil(AppRouter.admLoginRoute, (route) => false);
             },
           ),
         ],

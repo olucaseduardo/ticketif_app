@@ -100,6 +100,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           //         context, AppRouter.requestTicketRoute)
                           function: () => todayTicket?.idStatus == 7 ||
                                   todayTicket?.idStatus == 6 ||
+                                  todayTicket?.idStatus == 5 ||
                                   todayTicket == null
                               ? Navigator.pushNamed(
                                   context, AppRouter.requestTicketRoute)

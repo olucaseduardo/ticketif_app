@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/dto/qr_result.dart';
@@ -10,7 +9,8 @@ import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_re
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class RestaurantController extends ChangeNotifier {
+class QrController extends ChangeNotifier {
+  QRViewController? qrCodeController;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   int totalValid = 0;
   final int timeBetweenReadsInSeconds = 3;
@@ -18,20 +18,9 @@ class RestaurantController extends ChangeNotifier {
   bool isValid = false;
   String result = 'Sem dados no momento, escaneie um QR Code';
   QrResult? qrResult;
-  QRViewController? qrCodeController;
   List<String> validatedTickets = [];
   List<String> uploadedTickets = [];
   late SharedPreferences prefs;
-
-  ticketIsValid() {
-    log('ISVALID BEFORE :: $isValid');
-
-    isValid = !isValid;
-
-    log('ISVALID AFTER :: $isValid');
-
-    notifyListeners();
-  }
 
   void initPackages() {
     SharedPreferences.getInstance().then((value) {
@@ -42,26 +31,6 @@ class RestaurantController extends ChangeNotifier {
       totalValid = validatedTickets.length + uploadedTickets.length;
       notifyListeners();
     });
-
-    _getCameraPermission().then((status) {
-      if (status.isGranted) {
-        ready = true;
-
-        notifyListeners();
-      }
-      log('StatusCamera :: ${status.toString()}');
-    });
-  }
-
-  Future<PermissionStatus> _getCameraPermission() async {
-    var status = await Permission.camera.status;
-
-    if (!status.isGranted) {
-      final result = await Permission.camera.request();
-      return result;
-    } else {
-      return status;
-    }
   }
 
   void onQRViewCreated(QRViewController controller) {

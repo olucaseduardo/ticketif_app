@@ -22,12 +22,12 @@ class _SearchStudentScreenState extends ConsumerState<SearchStudentScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(caeProvider).loadStudents();
+    ref.read(searchStudentProvider).loadStudents();
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(caeProvider);
+    final controller = ref.watch(searchStudentProvider);
     final allStudents = controller.filteredStudents;
 
     if (controller.error && !controller.isLoading) {
@@ -58,7 +58,7 @@ class _SearchStudentScreenState extends ConsumerState<SearchStudentScreen> {
                   decoration: const InputDecoration(
                     fillColor: AppColors.gray800,
                     filled: true,
-                    hintText: "Busca",
+                    hintText: "Busca por matrícula",
                     prefixIcon: Icon(Icons.search, color: AppColors.green500),
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,

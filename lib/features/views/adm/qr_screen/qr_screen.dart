@@ -17,7 +17,7 @@ class QrScreen extends ConsumerStatefulWidget {
 class _QrScreenState extends ConsumerState<QrScreen> {
   @override
   void initState() {
-    ref.read(restaurantProvider).initPackages();
+    ref.read(qrProvider).initPackages();
     super.initState();
   }
 
@@ -25,16 +25,16 @@ class _QrScreenState extends ConsumerState<QrScreen> {
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
-      ref.read(restaurantProvider).qrCodeController!.pauseCamera();
+      ref.read(qrProvider).qrCodeController!.pauseCamera();
     } else if (Platform.isIOS) {
-      ref.read(restaurantProvider).qrCodeController!.resumeCamera();
+      ref.read(qrProvider).qrCodeController!.resumeCamera();
     }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    ref.read(restaurantProvider).qrCodeController?.dispose();
+    ref.read(qrProvider).qrCodeController?.dispose();
   }
 
   @override
@@ -44,7 +44,7 @@ class _QrScreenState extends ConsumerState<QrScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(restaurantProvider);
+    final controller = ref.watch(qrProvider);
 
     return Scaffold(
       appBar: AppBar(
