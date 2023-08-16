@@ -27,13 +27,13 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
 
    @override
   void initState() {
-    ref.read(reportProvider).loadPeriodTickets(initialDate: DateUtil.getDateUSStr(start), finalDate: DateUtil.getDateUSStr(end));
+    ref.read(periodReportProvider).loadPeriodTickets(initialDate: DateUtil.getDateUSStr(start), finalDate: DateUtil.getDateUSStr(end));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(reportProvider);
+    final controller = ref.watch(periodReportProvider);
 
     if (controller.error && !controller.isLoading) {
       WidgetsBinding.instance.addPostFrameCallback((_) {

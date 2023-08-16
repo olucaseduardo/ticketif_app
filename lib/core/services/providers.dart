@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/features/views/adm/classes_screen/classes_controller.dart';
+import 'package:project_ifma_ticket/features/views/adm/period_report_screen/period_report_controller.dart';
 import 'package:project_ifma_ticket/features/views/adm/ticket_evaluate_screen/ticket_evaluate_controller.dart';
 import 'package:project_ifma_ticket/features/views/auth_screens/auth_check/auth_check_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/cae_controller.dart';
@@ -7,7 +8,7 @@ import 'package:project_ifma_ticket/features/controllers/cae_permanent_controlle
 import 'package:project_ifma_ticket/features/controllers/historic_controller.dart';
 import 'package:project_ifma_ticket/features/views/home_screen/home_controller.dart';
 import 'package:project_ifma_ticket/features/views/auth_screens/login_controller.dart';
-import 'package:project_ifma_ticket/features/controllers/report_controller.dart';
+import 'package:project_ifma_ticket/features/views/adm/daily_report_screen/report_controller.dart';
 import 'package:project_ifma_ticket/features/views/request_ticket_screen/request_ticket_controller.dart';
 import 'package:project_ifma_ticket/features/controllers/restaurant_controller.dart';
 
@@ -39,6 +40,9 @@ final authCheckProvider =
 
 final reportProvider = ChangeNotifierProvider.autoDispose<ReportController>(
     (ref) => ReportController());
+
+final periodReportProvider = ChangeNotifierProvider.autoDispose<PeriodReportController>(
+    (ref) => PeriodReportController());
 
 final restaurantProvider =
     ChangeNotifierProvider.autoDispose<RestaurantController>(

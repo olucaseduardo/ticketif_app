@@ -113,7 +113,7 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                         title:
                             controller.filteredTickets.elementAt(index).student,
                         subtitle:
-                            "${controller.filteredTickets.elementAt(index).meal} : ${DateUtil.getDateStr(DateTime.parse(controller.filteredTickets.elementAt(index).useDayDate))}",
+                            "${controller.filteredTickets.elementAt(index).meal}: ${DateUtil.getDateStr(DateTime.parse(controller.filteredTickets.elementAt(index).useDayDate))}",
                         justification: controller.filteredTickets
                             .elementAt(index)
                             .justification,
