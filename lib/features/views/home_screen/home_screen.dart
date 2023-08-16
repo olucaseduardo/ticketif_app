@@ -96,8 +96,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           label: 'Solicitar um ticket',
                           textPadding: 8,
                           textStyle: AppTextStyle.smallButton,
-                          // function: () => Navigator.pushNamed(
-                          //         context, AppRouter.requestTicketRoute)
                           function: () => todayTicket?.idStatus == 7 ||
                                   todayTicket?.idStatus == 6 ||
                                   todayTicket?.idStatus == 5 ||

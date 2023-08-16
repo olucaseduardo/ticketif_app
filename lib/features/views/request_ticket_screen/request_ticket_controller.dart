@@ -41,6 +41,7 @@ class RequestTicketController extends ChangeNotifier {
     requestList();
   }
 
+  /// Buscando as informações das tabelas de meals e justifications no banco
   Future<void> requestList() async {
     try {
       final tables = await RequestTablesApiImpl().listTables();
@@ -56,30 +57,29 @@ class RequestTicketController extends ChangeNotifier {
     }
   }
 
+  /// Responsável pela exibição dos dias caso seja refeição permanente
   onPermanentChanged(bool? value) {
     isPermanent = value as bool;
     permanentDays = [];
     notifyListeners();
   }
 
+  /// Responsável por listar os tipos de refeições para seleção
   onMealsChanged(String? value) {
     meal = meals.singleWhere((element) => element.description == value);
-    if (kDebugMode) {
-      print('Meal: $meal');
-      print(DateUtil.todayDateRequest(DateTime.now()).capitalizeRequest());
-    }
+
     notifyListeners();
   }
 
+  /// Responsável por listar as justificativas para seleção
   onJustificationChanged(String? value) {
     justification =
         justifications.singleWhere((element) => element.description == value);
-    if (kDebugMode) {
-      print('Justification: $justification');
-    }
+
     notifyListeners();
   }
 
+  /// Realiza as validações para que não haja erros nas requisições
   bool validation(bool isCae) {
     if (meal == null) {
       AppMessage.i.showError('Selecione uma refeição');
@@ -96,8 +96,9 @@ class RequestTicketController extends ChangeNotifier {
 
     var hour = DateTime.now().hour;
     var minutes = DateTime.now().minute;
-    log('$hour e $minutes');
-    if (!((hour >= 8) && (hour <= 11 && minutes <= 30)) && isCae == false) {
+
+    /// Verifica se o pedido de almoço ocorre dentro do horário estipulado
+    if (!((hour >= 8) && (hour <= 10 && minutes <= 30)) && isCae == false) {
       if (meal!.id == 2) {
         AppMessage.i.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
@@ -108,6 +109,7 @@ class RequestTicketController extends ChangeNotifier {
     return true;
   }
 
+  /// Responsável por solicitar a refeição do tipo diária do aluno
   Future<void> createTickets(
     int id,
     int weekId,
@@ -141,6 +143,7 @@ class RequestTicketController extends ChangeNotifier {
     }
   }
 
+  /// Responsável por solicitar a autorização para refeição permanente nos dias selecionados
   Future<void> createPermanents(
     int id,
     bool isCae,
@@ -148,6 +151,7 @@ class RequestTicketController extends ChangeNotifier {
   ) async {
     try {
       List<RequestPermanent> permanents = [];
+
       for (var day in days) {
         permanents.add(RequestPermanent(
           studentId: id,
@@ -176,14 +180,16 @@ class RequestTicketController extends ChangeNotifier {
     }
   }
 
+  /// Verifica se a solicitação de refeição vem por parte da CAE ou do aluno
   Future<void> onTapSendRequest(bool isCae, {int? idStudent}) async {
     if (validation(isCae)) {
       try {
         error = false;
         notifyListeners();
+
         final sp = await SharedPreferences.getInstance();
         final id = sp.getInt('idStudent');
-        log(id.toString());
+
         if (permanentDays.isNotEmpty && isPermanent) {
           await createPermanents(
             id ?? idStudent ?? 0,
@@ -198,7 +204,7 @@ class RequestTicketController extends ChangeNotifier {
               DateTime.now().toString(),
               isCae);
         }
-        log('Erro: $error');
+
         if (!error) {
           AppMessage.i.showMessage('Requisição enviada com sucesso');
           !isCae
@@ -215,6 +221,7 @@ class RequestTicketController extends ChangeNotifier {
     }
   }
 
+  /// Exibe os dias abreviados para marcação
   bool selectedDays(String? value) {
     for (var element in permanentDays) {
       if (element.abbreviation == value) {
@@ -223,7 +230,7 @@ class RequestTicketController extends ChangeNotifier {
     }
     return false;
   }
-
+ 
   List<DaysTicketDto> listOfDays() {
     List<DaysTicketDto> order = [];
     for (var day in days) {

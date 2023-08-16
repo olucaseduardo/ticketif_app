@@ -28,6 +28,7 @@ class HomeController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Realiza a leitura dos dados do aluno no banco de dados
   Future<void> loadData() async {
     try {
       userTickets!.clear();
@@ -44,6 +45,7 @@ class HomeController extends ChangeNotifier {
 
       user = userData;
 
+      // verificando quais os tickets do aluno para o dia
       for (var index = 0; index < tickets.length; index++) {
         if (tickets.elementAt(index).useDayDate != '') {
           if (DateTime.parse(tickets.elementAt(index).useDayDate).day ==
@@ -60,10 +62,12 @@ class HomeController extends ChangeNotifier {
 
       todayTickets!.sort((a, b) => a.idMeal.compareTo(b.idMeal));
 
+      // Caso exista apenas um ticket ele vai para exibição
       if (todayTickets!.length == 1) {
         todayTicket = todayTickets!.first;
       }
 
+      // verificando qual o ticket deve ser exibido na homescreen
       var hour = DateTime.now().hour;
       for (var ticket in todayTickets!) {
         if (hour >= 8 && hour <= 12) {
@@ -76,7 +80,7 @@ class HomeController extends ChangeNotifier {
           }
         }
       }
-      log(todayTicket.toString());
+
       userTickets!.sort((a, b) => b.useDayDate.compareTo(a.useDayDate));
       loading();
     } catch (e, s) {
@@ -87,6 +91,7 @@ class HomeController extends ChangeNotifier {
     }
   }
 
+  /// Realza a confimação do aluno de que irá almoçar
   Future<void> changeTicket(int idTicket, int status) async {
     int statusId = 1;
 
