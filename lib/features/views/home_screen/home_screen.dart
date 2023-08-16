@@ -127,12 +127,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 color: AppColors.gray200),
                           ),
                         ),
-                        controller.todayTickets!.isNotEmpty
+                        controller.todayTickets!.isNotEmpty 
+                          && todayTicket != null
                             ? Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 6.0),
                                 child: CommonTicketWidget(
-                                  ticket: todayTicket!,
+                                  ticket: todayTicket,
                                   function: () => controller.changeTicket(
                                       todayTicket.id, todayTicket.idStatus),
                                 ),
