@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 
 import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.dart';
 import 'package:project_ifma_ticket/features/views/auth_adm/login_adm_screen.dart';
 import 'package:project_ifma_ticket/features/views/auth_check.dart';
 import 'package:project_ifma_ticket/features/views/cae/authorization_classes_screen.dart';
+import 'package:project_ifma_ticket/features/views/cae/authorization_evaluate_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/cae_home_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/classes_screen.dart';
 import 'package:project_ifma_ticket/features/views/cae/daily_report_screen.dart';
@@ -32,7 +34,8 @@ class AppRouter {
   // CAE ROUTES
   static const String caeHomeRoute = '/caeHome';
   static const String caeClassesRoute = "/classes";
-  static const String authorizationClassesRoute = "/authorizationsClasses";
+  static const String authorizationClassesRoute = "/authorizationClasses";
+  static const String authorizationEvaluateRoute = "/authorizationEvaluate";
   static const String caePeriodReportRoute = '/periodReport';
   static const String caeTicketEvaluateRoute = '/ticketEvaluate';
   static const String caeSearchStudentRoute = '/searchStudent';
@@ -74,7 +77,14 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => AuthorizationClassesScreen(
                   title: args?.title as String,
-                  isPermanent: args?.isPermanent as bool,
+                ));
+
+      case authorizationEvaluateRoute:
+        return MaterialPageRoute(
+            builder: (_) => AuthorizationEvaluateScreen(
+                  title: args?.title as String,
+                  authorizations:
+                      args!.authorizations as Map<String, List<Authorization>>,
                 ));
       case dailyReportRoute:
         return MaterialPageRoute(

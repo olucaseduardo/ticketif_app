@@ -14,23 +14,20 @@ import 'package:project_ifma_ticket/features/resources/widgets/without_results.d
 
 class AuthorizationClassesScreen extends ConsumerStatefulWidget {
   final String title;
-  final bool isPermanent;
   const AuthorizationClassesScreen({
     super.key,
     required this.title,
-    this.isPermanent = false,
   });
 
   @override
-  ConsumerState<AuthorizationClassesScreen> createState() => _ClassesScreenState();
+  ConsumerState<AuthorizationClassesScreen> createState() =>
+      _ClassesScreenState();
 }
 
 class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
   @override
   void initState() {
-    ref.read(caePermanentProvider).loadDataTickets(
-        date: DateUtil.getDateUSStr(DateUtil.dateTimeNow),
-        isPermanent: widget.isPermanent);
+    ref.read(caePermanentProvider).loadDataAuthorizations();
     super.initState();
   }
 
@@ -97,14 +94,15 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
                               'Total: ${controller.sortedAuthorizationClasses[controller.filteredClasses[index]]!.length}',
                           // function: (){}, )
                           function: () async {
-                            dynamic list = await Navigator.pushNamed(
+                            Navigator.pushNamed(
                               context,
-                              AppRouter.caeTicketEvaluateRoute,
+                              AppRouter.authorizationEvaluateRoute,
                               arguments: ScreenArguments(
-                                  title: controller.sortedAuthorizationClasses.keys
+                                  title: controller
+                                      .sortedAuthorizationClasses.keys
                                       .elementAt(index),
-                                  tickets: controller.sortedAuthorizationClasses.values
-                                      .elementAt(index)),
+                                  authorizations: controller
+                                      .sortedAuthorizationClasses.values.elementAt(index)),
                             );
                             // controller.updateClasses(
                             //     list as List<Ticket>, index);

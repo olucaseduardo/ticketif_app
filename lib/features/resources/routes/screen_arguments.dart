@@ -1,3 +1,4 @@
+import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 
 class ScreenArguments {
@@ -5,6 +6,7 @@ class ScreenArguments {
   final String? subtitle;
   final String? description;
   final List<Ticket>? tickets;
+  final Map<String, List<Authorization>>? authorizations;
   final bool? cae;
   final int? idStudent;
   final bool? isPermanent;
@@ -17,5 +19,6 @@ class ScreenArguments {
     this.isPermanent,
     this.subtitle,
     this.description,
+    this.authorizations,
   });
 }

@@ -29,8 +29,7 @@ class CaePermanentController extends ChangeNotifier {
   }
 
   /// Função que retorna os tickets permanente
-  Future<void> loadDataTickets(
-      {required String date, required bool isPermanent}) async {
+  Future<void> loadDataAuthorizations() async {
     try {
       authorizations!.clear();
 
@@ -64,11 +63,14 @@ class CaePermanentController extends ChangeNotifier {
             authorizationClasses[authorizationClassName]![studentName]!
                 .add(element);
           } else {
-            authorizationClasses[authorizationClassName]!
-                [studentName] = [element];
+            authorizationClasses[authorizationClassName]![studentName] = [
+              element
+            ];
           }
         } else {
-          authorizationClasses[authorizationClassName] = {studentName: [element]};
+          authorizationClasses[authorizationClassName] = {
+            studentName: [element]
+          };
         }
       });
 
@@ -110,7 +112,7 @@ class CaePermanentController extends ChangeNotifier {
     }
   }
 
-   /// Função responsavel por controlar as seleções de todos
+  /// Função responsavel por controlar as seleções de todos
   void isSelected(List<Authorization> tickets) {
     selectedAuthorizatons.clear();
     selectAll = !selectAll;
@@ -123,7 +125,7 @@ class CaePermanentController extends ChangeNotifier {
     notifyListeners();
   }
 
-   /// Função responsavel por filtrar os tickets na tela de turmas
+  /// Função responsavel por filtrar os tickets na tela de turmas
   void filterAuthorizations(String query, List<Authorization> tickets) {
     filteredAuthorizations.clear();
     notifyListeners();
@@ -146,7 +148,8 @@ class CaePermanentController extends ChangeNotifier {
   }
 
   /// Função responsavel por controlar as seleções individuais
-  void verifySelected(Authorization filteredAuthorizations, int allTicketsLength) {
+  void verifySelected(
+      Authorization filteredAuthorizations, int allTicketsLength) {
     if (selectedAuthorizatons.contains(filteredAuthorizations)) {
       selectedAuthorizatons.removeWhere(
         (ts) => ts.id == filteredAuthorizations.id,
@@ -164,16 +167,20 @@ class CaePermanentController extends ChangeNotifier {
     notifyListeners();
   }
 
-    /// Atualização de listas de tickets pós mudança de status
+  /// Atualização de listas de tickets pós mudança de status
   void updateClasses(List<Authorization> list, int index) {
     sortedAuthorizationClasses.values.elementAt(index).clear();
 
     log("sortedDailyClasses :: ${sortedAuthorizationClasses.toString()}");
     if (list.isNotEmpty) {
-      sortedAuthorizationClasses[filteredClasses[index]]!.values.elementAt(index).addAll(list);
+      sortedAuthorizationClasses[filteredClasses[index]]!
+          .values
+          .elementAt(index)
+          .addAll(list);
     } else {
       filteredClasses.remove(sortedAuthorizationClasses.keys.elementAt(index));
-      sortedAuthorizationClasses[filteredClasses[index]]!.remove(sortedAuthorizationClasses.keys.elementAt(index));
+      sortedAuthorizationClasses[filteredClasses[index]]!
+          .remove(sortedAuthorizationClasses.keys.elementAt(index));
     }
     for (var element in filteredClasses) {
       log(element.toString());

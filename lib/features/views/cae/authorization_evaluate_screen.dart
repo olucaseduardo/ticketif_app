@@ -12,7 +12,7 @@ import 'package:project_ifma_ticket/features/resources/widgets/common_tile_ticke
 import 'package:project_ifma_ticket/features/resources/widgets/without_results.dart';
 
 class AuthorizationEvaluateScreen extends ConsumerStatefulWidget {
-  final List<Authorization> authorizations;
+  final Map<String, List<Authorization>> authorizations;
   final String title;
 
   const AuthorizationEvaluateScreen({
@@ -26,54 +26,64 @@ class AuthorizationEvaluateScreen extends ConsumerStatefulWidget {
       _AuthorizationEvaluateScreenState();
 }
 
-class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvaluateScreen> {
+class _AuthorizationEvaluateScreenState
+    extends ConsumerState<AuthorizationEvaluateScreen> {
   @override
   void initState() {
     super.initState();
     ref.read(caePermanentProvider).filteredAuthorizations.clear();
     ref.read(caePermanentProvider).selectedAuthorizatons.clear();
-    ref.read(caePermanentProvider).filteredAuthorizations.addAll(widget.authorizations);
-    ref.read(caePermanentProvider).selectedAuthorizatons.addAll(widget.authorizations);
+    // ref.read(caePermanentProvider).filteredAuthorizations.addAll(widget.authorizations);
+    // ref.read(caePermanentProvider).selectedAuthorizatons.addAll(widget.authorizations);
     ref.read(caePermanentProvider).selectAll = true;
   }
 
   @override
   Widget build(BuildContext context) {
-      final controller = ref.watch(caePermanentProvider);
-        List<Authorization> allAuthorizations = widget.authorizations;
-        final lengthTickets = allAuthorizations.length;
+    final controller = ref.watch(caePermanentProvider);
+    Map<String, List<Authorization>> allAuthorizations = widget.authorizations;
+    final lengthTickets = allAuthorizations.keys.length;
 
-        log('Selected ${controller.selectedAuthorizatons.length.toString()}');
-        log('SelectedAll ${controller.selectAll.toString()}');
+    log('Selected ${controller.selectedAuthorizatons.length.toString()}');
+    log('SelectedAll ${controller.selectAll.toString()}');
+    log('SelectedAll ${widget.authorizations.toString()}');
 
-        bool continueSolicitation() {
-          if (controller.selectedAuthorizatons.isEmpty) {
-            AppMessage.i.showInfo('Não existem tickets selecionados!');
-            return false;
-          }
-
-          return true;
+    bool continueSolicitation() {
+      if (controller.selectedAuthorizatons.isEmpty) {
+        AppMessage.i.showInfo('Não existem tickets selecionados!');
+        return false;
       }
 
-      return WillPopScope(
-        onWillPop: () {
-          Navigator.pop(context, controller.filteredAuthorizations);
-          return Future.value(false);
+      return true;
+    }
+
+    String getDays(List<Authorization> list) {
+      String days = '';
+      for (var element in list) {
+        days = '$days ${element.day()}';
+      }
+      return '';
+    }
+
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.pop(context);
+        // Navigator.pop(context, controller.filteredAuthorizations);
+        return Future.value(false);
       },
-      
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                Navigator.pop(context, controller.filteredAuthorizations);
+                // Navigator.pop(context, controller.filteredAuthorizations);
               },
               icon: const Icon(Icons.arrow_back_rounded)),
           title: Text(widget.title),
           actions: [
             IconButton(
               onPressed: () {
-                if (controller.isLoading) return;
-                controller.isSelected(widget.authorizations);
+                // if (controller.isLoading) return;
+                // controller.isSelected(widget.authorizations);
               },
               icon: Icon(controller.selectAll
                   ? Icons.check_box
@@ -88,42 +98,42 @@ class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvalu
             replacement: Loader.loader(),
             child: Column(
               children: [
-                TextField(
-                  onChanged: (value) =>
-                      controller.filterAuthorizations(value, allAuthorizations),
-                  decoration: const InputDecoration(
-                    fillColor: AppColors.gray800,
-                    filled: true,
-                    hintText: "Busca",
-                    prefixIcon: Icon(Icons.search, color: AppColors.green500),
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                  ),
-                ),
+                // TextField(
+                //   onChanged: (value) =>
+                //       controller.filterAuthorizations(value, allAuthorizations),
+                //   decoration: const InputDecoration(
+                //     fillColor: AppColors.gray800,
+                //     filled: true,
+                //     hintText: "Busca",
+                //     prefixIcon: Icon(Icons.search, color: AppColors.green500),
+                //     border: OutlineInputBorder(
+                //         borderSide: BorderSide.none,
+                //         borderRadius: BorderRadius.all(Radius.circular(10))),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 20,
                 ),
                 Visibility(
-                  visible: controller.filteredAuthorizations.isNotEmpty,
-                  replacement: const WithoutResults(msg: 'Nenhuma solicitação encontrada'),
+                  visible: allAuthorizations.isNotEmpty,
+                  // visible: controller.filteredAuthorizations.isNotEmpty,
+                  replacement: const WithoutResults(
+                      msg: 'Nenhuma solicitação encontrada'),
                   child: Expanded(
                     child: ListView.builder(
-                      itemCount: controller.filteredAuthorizations.length,
+                      itemCount: allAuthorizations.keys.length,
                       itemBuilder: (context, index) => CommonTileTicket(
-                        title:
-                            controller.filteredAuthorizations.elementAt(index).student,
-                        subtitle:
-                            "${controller.filteredAuthorizations.elementAt(index).meal}",
-                        justification: controller.filteredAuthorizations
-                            .elementAt(index)
-                            .justification,
-                        selected: controller.selectedAuthorizatons
-                                .contains(controller.filteredAuthorizations[index])
-                            ? true
-                            : false,
-                        function: () => controller.verifySelected(
-                            controller.filteredAuthorizations[index], lengthTickets),
+                        title: allAuthorizations.keys.elementAt(index),
+                        subtitle: "",
+                        justification:
+                            allAuthorizations.values.first.first.justification,
+                        // selected: controller.selectedAuthorizatons.contains(
+                        //         controller.filteredAuthorizations[index])
+                        //     ? true
+                        //     : false,
+                        // function: () => controller.verifySelected(
+                        //     controller.filteredAuthorizations[index],
+                        //     lengthTickets),
                         check: true,
                       ),
                     ),

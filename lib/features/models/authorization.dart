@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-
 class Authorization {
   final int id;
   final int studentId;
@@ -14,7 +13,7 @@ class Authorization {
   final String justification;
   final String meal;
   final String type;
-  
+
   Authorization({
     required this.id,
     required this.studentId,
@@ -63,5 +62,30 @@ class Authorization {
 
   String toJson() => json.encode(toMap());
 
-  factory Authorization.fromJson(String source) => Authorization.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Authorization.fromJson(String source) =>
+      Authorization.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Authorization(id: $id, studentId: $studentId, mealId: $mealId, weekId: $weekId, justificationId: $justificationId, authorized: $authorized, student: $student, studentName: $studentName, justification: $justification, meal: $meal, type: $type)';
+  }
+
+  String day() {
+    if (weekId == 1) {
+      return 'Seg';
+    } else if (weekId == 2) {
+      return 'Ter';
+    } else if (weekId == 3) {
+      return 'Qua';
+    } else if (weekId == 4) {
+      return 'Qui';
+    } else if (weekId == 5) {
+      return 'Sex';
+    } else if (weekId == 6) {
+      return 'Sab';
+    } else if (weekId == 7) {
+      return 'Dom';
+    }
+    return '';
+  }
 }
