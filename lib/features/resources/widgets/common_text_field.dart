@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
+import 'package:validatorless/validatorless.dart';
 
 class CommonTextField extends StatelessWidget {
   final String title;
@@ -10,6 +11,7 @@ class CommonTextField extends StatelessWidget {
   final bool obscureText;
   final int? maxLine;
   final TextEditingController? controller;
+  final bool? validator;
 
   const CommonTextField({
     Key? key,
@@ -20,6 +22,7 @@ class CommonTextField extends StatelessWidget {
     this.keyboardType,
     this.obscureText = false,
     this.maxLine = 1,
+    this.validator = false,
   }) : super(key: key);
 
   @override
@@ -54,6 +57,7 @@ class CommonTextField extends StatelessWidget {
               labelStyle: const TextStyle(color: AppColors.gray700),
               border: const OutlineInputBorder(),
             ),
+            validator: validator! ? Validatorless.required('Obrigatório!') : null,
           ),
         ],
       ),

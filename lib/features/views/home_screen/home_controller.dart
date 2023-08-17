@@ -62,11 +62,6 @@ class HomeController extends ChangeNotifier {
 
       todayTickets!.sort((a, b) => a.idMeal.compareTo(b.idMeal));
 
-      // // Caso exista apenas um ticket ele vai para exibição
-      // if (todayTickets!.length == 1) {
-      //   todayTicket = todayTickets!.first;
-      // }
-
       // verificando qual o ticket deve ser exibido na homescreen
       var hour = DateTime.now().hour;
       for (var ticket in todayTickets!) {

@@ -2,12 +2,29 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/core/exceptions/unauthorized_exception.dart';
+import 'package:project_ifma_ticket/core/utils/links.dart';
 import 'package:project_ifma_ticket/features/repositories/auth/auth_api_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class LoginController extends ChangeNotifier {
   bool isLoading = false;
   bool error = false;
+  List<String> campus = ["Caxias", "Timon",];
+  String campusSelect = "";
+  PackageInfo? packageInfo;
+
+  /// Função responsável por selecionar o link de acesso com base no respectivo campus
+  Future<void> selectCampus(String campus) async {
+    campusSelect = campus;
+    await Links.i.selectLink(campusSelect);
+  }
+
+  Future<void> loadPackageInfo() async {
+    packageInfo = await PackageInfo.fromPlatform();
+    notifyListeners();
+  }
+
   void loading() {
     isLoading = !isLoading;
     log(isLoading.toString());
@@ -25,14 +42,17 @@ class LoginController extends ChangeNotifier {
       sp.setString('matricula', authModel.matricula);
 
       log('Sucesso');
+      campusSelect = "";
       loading();
     } on UnauthorizedException catch (e, s) {
       error = true;
+      campusSelect = "";
       notifyListeners();
       loading();
       log('Login ou senha inválidos', error: e, stackTrace: s);
     } catch (e, s) {
       error = true;
+      campusSelect = "";
       notifyListeners();
       log('Erro ao realizar login', error: e, stackTrace: s);
       loading();
@@ -42,6 +62,7 @@ class LoginController extends ChangeNotifier {
   Future<void> onLoginAdmTap(String username, String password) async {
     error = false;
     notifyListeners();
+
     try {
       final authModel =
           await AuthApiRepositoryImpl().loginADM(username, password);
@@ -50,14 +71,17 @@ class LoginController extends ChangeNotifier {
       sp.setString('username', authModel.user);
 
       log('Sucesso');
+      campusSelect = "";
       loading();
     } on UnauthorizedException catch (e, s) {
       error = true;
+      campusSelect = "";
       notifyListeners();
       loading();
       log('Login ou senha inválidos', error: e, stackTrace: s);
     } catch (e, s) {
       error = true;
+      campusSelect = "";
       notifyListeners();
       log('Erro ao realizar login', error: e, stackTrace: s);
       loading();

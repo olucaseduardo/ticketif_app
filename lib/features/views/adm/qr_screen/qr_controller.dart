@@ -1,13 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/features/dto/qr_result.dart';
 import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vibration/vibration.dart';
 
 class QrController extends ChangeNotifier {
   QRViewController? qrCodeController;
@@ -54,10 +54,12 @@ class QrController extends ChangeNotifier {
           if (validatedTickets.contains(qrResult!.id.toString()) ||
               uploadedTickets.contains(qrResult!.id.toString())) {
             result = 'Ticket ${qrResult!.id} já validado';
-            HapticFeedback.heavyImpact();
+            // HapticFeedback.heavyImpact();
+            Vibration.vibrate(duration: 1000);
             notifyListeners();
           } else {
-            HapticFeedback.heavyImpact();
+            // HapticFeedback.heavyImpact();
+            Vibration.vibrate(duration: 1000);
             validatedTickets.add(qrResult!.id.toString());
             prefs.setStringList('validatedTickets', validatedTickets);
             isValid = true;

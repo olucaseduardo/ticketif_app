@@ -10,16 +10,31 @@ import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart'
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_dropdown_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
+import 'package:vibration/vibration.dart';
 
-class LoginScreen extends ConsumerWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  
+  @override
+  void initState() {
+    super.initState();
+    ref.read(loginProvider).campusSelect = "";
+    ref.read(loginProvider).loadPackageInfo();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final controller = ref.watch(loginProvider);
     final matriculaEC = TextEditingController();
     final passwordEC = TextEditingController();
     final nav = Navigator.of(context);
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: SafeArea(
@@ -38,6 +53,7 @@ class LoginScreen extends ConsumerWidget {
                   ),
                 ),
                 Form(
+                  key: formKey,
                   child: Column(
                     children: [
                       CommonTextField(
@@ -45,6 +61,7 @@ class LoginScreen extends ConsumerWidget {
                         labelText: 'Digite sua matrícula',
                         textInputAction: TextInputAction.next,
                         controller: matriculaEC,
+                        validator: true,
                       ),
                       CommonTextField(
                         title: 'Senha (SUAP)',
@@ -52,6 +69,7 @@ class LoginScreen extends ConsumerWidget {
                         textInputAction: TextInputAction.done,
                         obscureText: true,
                         controller: passwordEC,
+                        validator: true,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -60,11 +78,14 @@ class LoginScreen extends ConsumerWidget {
                           children: [
                             const Padding(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
-                              child: Text('Campus', style: AppTextStyle.bodyLarge,),
+                              child: Text(
+                                'Campus',
+                                style: AppTextStyle.bodyLarge,
+                              ),
                             ),
                             CommonDropDownButton(
-                              items: const ['Caxias', 'Timon'],
-                              onChanged: () {},
+                              items: controller.campus,
+                              onChanged: (value) => controller.selectCampus(value),
                               hint: 'Selecione seu campus',
                             ),
                           ],
@@ -75,33 +96,43 @@ class LoginScreen extends ConsumerWidget {
                         child: CommonButton(
                           label: "Entrar na conta",
                           function: () async {
-                            controller.loading();
+                            final valid = formKey.currentState?.validate() ?? false;
 
-                            controller.isLoading
-                                ? Loader.i.showLoader()
-                                : const SizedBox.shrink();
-                            await controller.onLoginTap(
-                              matriculaEC.text,
-                              passwordEC.text,
-                            );
-                            if (!controller.error) {
-                              nav.pushNamedAndRemoveUntil(
-                                  AppRouter.homeRoute, (route) => false);
-                            } else {
-                              Loader.i.hideDialog();
+                            if (valid && controller.campusSelect != "") {
+                              controller.loading();
 
-                              AppMessage.i.showError('Erro ao realizar login');
-                            }
+                              controller.isLoading
+                                  ? Loader.i.showLoader()
+                                  : const SizedBox.shrink();
+                              await controller.onLoginTap(
+                                matriculaEC.text,
+                                passwordEC.text,
+                              );
+                              if (!controller.error) {
+                                nav.pushNamedAndRemoveUntil(
+                                    AppRouter.homeRoute, (route) => false);
+                              } else {
+                                Loader.i.hideDialog();
+                                AppMessage.i.showError('Erro ao realizar login');
+                              }
+                            } else if (valid && controller.campusSelect == "") {
+                              AppMessage.i.showInfo("Selecione o seu campus!");
+                              Vibration.vibrate(duration: 1000);
+                            } 
                           },
                         ),
                       ),
                     ],
                   ),
                 ),
+
                 TextButton(
-                  onPressed: () => nav.pushNamed(
-                                  AppRouter.admLoginRoute),
+                  onPressed: () => nav.pushNamed(AppRouter.admLoginRoute),
                   child: const Text('Login administrativo'),
+                ),
+
+                Text(
+                  "Versão: ${controller.packageInfo?.version.toString() ?? ''}",
                 ),
               ],
             ),

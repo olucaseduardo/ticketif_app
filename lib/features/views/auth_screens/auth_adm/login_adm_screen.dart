@@ -10,16 +10,30 @@ import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart'
 import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_dropdown_widget.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_text_field.dart';
+import 'package:vibration/vibration.dart';
 
-class LoginAdmScreen extends ConsumerWidget {
+class LoginAdmScreen extends ConsumerStatefulWidget {
   const LoginAdmScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<LoginAdmScreen> createState() => _LoginAdmScreenState();
+}
+
+class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(loginProvider).campusSelect = "";
+    ref.read(loginProvider).loadPackageInfo();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final controller = ref.watch(loginProvider);
     final usernameEC = TextEditingController();
     final passwordEC = TextEditingController();
     final nav = Navigator.of(context);
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: SafeArea(
@@ -40,6 +54,7 @@ class LoginAdmScreen extends ConsumerWidget {
                   ),
                 ),
                 Form(
+                  key: formKey,
                   child: Column(
                     children: [
                       CommonTextField(
@@ -47,6 +62,7 @@ class LoginAdmScreen extends ConsumerWidget {
                         labelText: 'Digite seu usuário',
                         textInputAction: TextInputAction.next,
                         controller: usernameEC,
+                        validator: true,
                       ),
                       CommonTextField(
                         title: 'Senha',
@@ -54,6 +70,7 @@ class LoginAdmScreen extends ConsumerWidget {
                         textInputAction: TextInputAction.done,
                         obscureText: true,
                         controller: passwordEC,
+                        validator: true,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -68,8 +85,8 @@ class LoginAdmScreen extends ConsumerWidget {
                               ),
                             ),
                             CommonDropDownButton(
-                              items: const ['Caxias', 'Timon'],
-                              onChanged: () {},
+                              items: controller.campus,
+                              onChanged: (value) => controller.selectCampus(value),
                               hint: 'Selecione seu campus',
                             ),
                           ],
@@ -80,33 +97,47 @@ class LoginAdmScreen extends ConsumerWidget {
                         child: CommonButton(
                           label: "Entrar na conta",
                           function: () async {
-                            controller.loading();
 
-                            controller.isLoading
-                                ? Loader.i.showLoader()
-                                : const SizedBox.shrink();
-                            await controller.onLoginAdmTap(
-                              usernameEC.text.toUpperCase(),
-                              passwordEC.text,
-                            );
-                            if (!controller.error) {
-                              nav.pushNamedAndRemoveUntil(
-                                  AppRouter.authCheck, (route) => false);
-                            } else {
-                              Loader.i.hideDialog();
+                            final valid = formKey.currentState?.validate() ?? false;
 
-                              AppMessage.i.showError('Erro ao realizar login');
-                            }
+                            if (valid && controller.campusSelect != "") {
+                              controller.loading();
+
+                              controller.isLoading
+                                  ? Loader.i.showLoader()
+                                  : const SizedBox.shrink();
+
+                              await controller.onLoginAdmTap(
+                                usernameEC.text.toUpperCase(),
+                                passwordEC.text,
+                              );
+
+                              if (!controller.error) {
+                                nav.pushNamedAndRemoveUntil(
+                                    AppRouter.authCheck, (route) => false);
+                              } else {
+                                AppMessage.i.showError('Erro ao realizar login');
+                                Loader.i.hideDialog();
+                              }
+                            } else if (valid && controller.campusSelect == "") {
+                              AppMessage.i.showInfo("Selecione o seu campus!");
+                              Vibration.vibrate(duration: 1000);
+                            } 
                           },
                         ),
                       ),
                     ],
                   ),
                 ),
+
                 TextButton(
                   onPressed: () => nav.pushNamedAndRemoveUntil(
                       AppRouter.loginRoute, (route) => false),
                   child: const Text('Login aluno'),
+                ),
+
+                Text(
+                  "Versão: ${controller.packageInfo?.version.toString() ?? ''}",
                 ),
               ],
             ),
