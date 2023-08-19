@@ -36,33 +36,41 @@ class QrController extends ChangeNotifier {
   void onQRViewCreated(QRViewController controller) {
     qrCodeController = controller;
     controller.scannedDataStream.listen((scanData) async {
-      if (!ready) return;
+      if (ready) {
+        log(ready.toString());
+        ready = false;
+        return;
+      }
 
       if (scanData.code != null) {
         ready = false;
-        Future.delayed(Duration(seconds: timeBetweenReadsInSeconds), () {
+
+        await Future.delayed(Duration(seconds: timeBetweenReadsInSeconds), () {
           ready = true;
           isValid = false;
           result = 'Sem dados no momento, escaneie um QR Code';
           notifyListeners();
           log(':::::: DELAY:::::::');
         });
+
         qrResult = QrResult.fromJson(scanData.code!);
+
         bool checkDate =
             DateUtil.checkTodayDate(DateTime.parse(qrResult!.date));
+
         if (qrResult!.status == "Utilização autorizada" && checkDate) {
           if (validatedTickets.contains(qrResult!.id.toString()) ||
               uploadedTickets.contains(qrResult!.id.toString())) {
             result = 'Ticket ${qrResult!.id} já validado';
-            // HapticFeedback.heavyImpact();
-            Vibration.vibrate(duration: 1000);
+            Vibration.vibrate(duration: 300);
             notifyListeners();
           } else {
-            // HapticFeedback.heavyImpact();
-            Vibration.vibrate(duration: 1000);
+            Vibration.vibrate(duration: 300);
             validatedTickets.add(qrResult!.id.toString());
+
             prefs.setStringList('validatedTickets', validatedTickets);
             isValid = true;
+
             if (validatedTickets.length > 5) {
               result = "Atualizando lista de tickets validados...";
               notifyListeners();
@@ -80,6 +88,7 @@ class QrController extends ChangeNotifier {
               } catch (e, s) {
                 log('Erro ao atualizar lista de validados',
                     error: e, stackTrace: s);
+
                 throw RepositoryException(
                     message: 'Erro ao alterar status do ticket');
               }

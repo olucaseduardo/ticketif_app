@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Links extends ChangeNotifier {
   // Links de acesso
   final Map<String, String> _campusLinks = {
-    "Caxias": 'https://77a7-45-231-15-191.ngrok-free.app',
+    "Caxias": 'https://2007-45-231-15-191.ngrok-free.app',
     "Timon": 'https://0c3f-45-231-15-191.ngrok-free.app',
   };
 
@@ -17,9 +18,16 @@ class Links extends ChangeNotifier {
     _instance ??= Links._();
     return _instance!;
   }
+
+  Future<void> loadLink() async {
+    final sp = await SharedPreferences.getInstance();
+    _campusLink = sp.getString('link') ?? '';
+  }
   
   Future<void> selectLink(String campus) async {
     _campusLink = _campusLinks[campus] as String;
+    final sp = await SharedPreferences.getInstance();
+      sp.setString('link', _campusLink);
     notifyListeners();
   }
 

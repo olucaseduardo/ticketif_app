@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
+import 'package:project_ifma_ticket/core/utils/links.dart';
 import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/repositories/user/user_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
@@ -36,6 +37,7 @@ class HomeController extends ChangeNotifier {
 
       isLoading = true;
 
+      await Links.i.loadLink();
       final userData = await UserApiRepositoryImpl().loadUser();
       final tickets =
           await TicketsApiRepositoryImpl().findAllTickets(userData.id);
