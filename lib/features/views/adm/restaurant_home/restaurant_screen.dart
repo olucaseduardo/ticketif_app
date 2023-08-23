@@ -7,11 +7,22 @@ import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.d
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_options.dart';
 
-class RestaurantScreen extends ConsumerWidget {
-  const RestaurantScreen({super.key});
+class RestaurantScreen extends ConsumerStatefulWidget {
+  const RestaurantScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<RestaurantScreen> createState() => _RestaurantScreenState();
+}
+
+class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
+  @override
+  void initState() {
+    ref.read(restaurantProvider).loadLink();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final controller = ref.watch(restaurantProvider);
 
     return Scaffold(

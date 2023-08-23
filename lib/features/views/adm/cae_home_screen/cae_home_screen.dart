@@ -16,6 +16,12 @@ class CaeHomeScreen extends ConsumerStatefulWidget {
 
 class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
   @override
+  void initState() {
+    ref.read(caeProvider).loadLink();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final controller = ref.watch(caeProvider);
 
@@ -41,9 +47,8 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
             ),
             onPressed: () {
               controller.onLogoutTap();
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(AppRouter.admLoginRoute
-                  , (route) => false);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRouter.admLoginRoute, (route) => false);
             },
           ),
         ],
@@ -78,16 +83,15 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                     label: 'Autorizações Permanentes',
                     function: () => Navigator.pushNamed(
                         context, AppRouter.authorizationClassesRoute,
-                        arguments: ScreenArguments(
-                            title: 'Autorizações Permanentes')),
+                        arguments:
+                            ScreenArguments(title: 'Autorizações Permanentes')),
                   ),
                   CommonTileOptions(
                     leading: Icons.description_rounded,
                     label: 'Relatório Diário',
                     function: () => Navigator.pushNamed(
                         context, AppRouter.dailyReportRoute,
-                        arguments: ScreenArguments(cae: true)
-                        ),
+                        arguments: ScreenArguments(cae: true)),
                   ),
                   CommonTileOptions(
                     leading: Icons.calendar_month_rounded,

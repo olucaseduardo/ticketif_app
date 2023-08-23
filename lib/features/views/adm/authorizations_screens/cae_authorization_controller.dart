@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:project_ifma_ticket/features/dto/student_authorization.dart';
 import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/models/user.dart';
 import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
@@ -8,7 +9,7 @@ import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_re
 class CaeAuthorizationController extends ChangeNotifier {
   List<Authorization>? authorizations = [];
   /* Listas de filtros das searchs */
-  List<Authorization> filteredAuthorizations = [];
+  List<StudentAuthorization> filteredAuthorizations = [];
   List<String> filteredClasses = [];
   List<User> filteredStudents = [];
   /* Maps para armazenamento das turmas */
@@ -16,7 +17,7 @@ class CaeAuthorizationController extends ChangeNotifier {
   Map<String, Map<String, List<Authorization>>> sortedAuthorizationClasses = {};
   /* Variáveis responsáveis pela seleção na tela evaluate */
   bool selectAll = true;
-  List<Authorization> selectedAuthorizatons = [];
+  List<StudentAuthorization> selectedAuthorizatons = [];
   /* Lista de estudantes */
   List<User> listStudents = [];
   bool isLoading = true;
@@ -113,12 +114,12 @@ class CaeAuthorizationController extends ChangeNotifier {
   }
 
   /// Função responsavel por controlar as seleções de todos
-  void isSelected(List<Authorization> tickets) {
+  void isSelected(List<StudentAuthorization> students) {
     selectedAuthorizatons.clear();
     selectAll = !selectAll;
 
     if (selectAll) {
-      selectedAuthorizatons.addAll(tickets);
+      selectedAuthorizatons.addAll(students);
     }
 
     log(selectedAuthorizatons.toString());
@@ -126,14 +127,15 @@ class CaeAuthorizationController extends ChangeNotifier {
   }
 
   /// Função responsavel por filtrar os tickets na tela de turmas
-  void filterAuthorizations(String query, List<Authorization> tickets) {
+  void filterAuthorizations(String query, List<StudentAuthorization> students) {
     filteredAuthorizations.clear();
     notifyListeners();
 
     if (query.isNotEmpty) {
-      List<Authorization> tmpList = [];
-      for (var item in tickets) {
-        if (item.student.contains(query.toUpperCase())) {
+      List<StudentAuthorization> tmpList = [];
+      for (var item in students) {
+        if (item.matricula.contains(query.toUpperCase())) {
+          log(query);
           tmpList.add(item);
         }
       }
@@ -142,17 +144,17 @@ class CaeAuthorizationController extends ChangeNotifier {
 
       notifyListeners();
     } else {
-      filteredAuthorizations.addAll(tickets);
+      filteredAuthorizations.addAll(students);
       notifyListeners();
     }
   }
 
   /// Função responsavel por controlar as seleções individuais
   void verifySelected(
-      Authorization filteredAuthorizations, int allTicketsLength) {
+      StudentAuthorization filteredAuthorizations, int allTicketsLength) {
     if (selectedAuthorizatons.contains(filteredAuthorizations)) {
       selectedAuthorizatons.removeWhere(
-        (ts) => ts.id == filteredAuthorizations.id,
+        (ts) => ts.matricula == filteredAuthorizations.matricula,
       );
     } else {
       selectedAuthorizatons.add(filteredAuthorizations);

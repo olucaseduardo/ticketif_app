@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
+import 'package:project_ifma_ticket/features/dto/student_authorization.dart';
 import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
+import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/common_tile_ticket.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/without_results.dart';
@@ -28,13 +30,59 @@ class AuthorizationEvaluateScreen extends ConsumerStatefulWidget {
 
 class _AuthorizationEvaluateScreenState
     extends ConsumerState<AuthorizationEvaluateScreen> {
+  String getDays(List<Authorization> list) {
+    String days = '(';
+    for (int i = 0; i < list.length; i++) {
+      if (i == 0) {
+        days = '$days${list[0].day()}';
+      } else {
+        days = '$days, ${list[i].day()}';
+      }
+    }
+    return '$days)';
+  }
+
+  List<StudentAuthorization> authorizationsList() {
+    List<StudentAuthorization> list = [];
+
+    for (int index = 0; index < widget.authorizations.keys.length; index++) {
+      StudentAuthorization student = StudentAuthorization(
+          matricula: widget.authorizations.keys.elementAt(index),
+          idStudent: widget
+              .authorizations[widget.authorizations.keys.elementAt(index)]!
+              .first
+              .id,
+          justification: widget
+              .authorizations[widget.authorizations.keys.elementAt(index)]!
+              .first
+              .justification,
+          meal: widget
+              .authorizations[widget.authorizations.keys.elementAt(index)]!
+              .first
+              .meal,
+          days: getDays(widget
+              .authorizations[widget.authorizations.keys.elementAt(index)]!));
+      list.add(student);
+      log("Student :: ${student.toString()}");
+    }
+    log("List Authorizations :: $list");
+    return list;
+  }
+
   @override
   void initState() {
     super.initState();
+    log("List Authorizations Init State:: $authorizationsList()");
     ref.read(caePermanentProvider).filteredAuthorizations.clear();
     ref.read(caePermanentProvider).selectedAuthorizatons.clear();
-    // ref.read(caePermanentProvider).filteredAuthorizations.addAll(widget.authorizations);
-    // ref.read(caePermanentProvider).selectedAuthorizatons.addAll(widget.authorizations);
+    ref
+        .read(caePermanentProvider)
+        .filteredAuthorizations
+        .addAll(authorizationsList());
+    ref
+        .read(caePermanentProvider)
+        .selectedAuthorizatons
+        .addAll(authorizationsList());
     ref.read(caePermanentProvider).selectAll = true;
   }
 
@@ -57,18 +105,6 @@ class _AuthorizationEvaluateScreenState
       return true;
     }
 
-    String getDays(List<Authorization> list) {
-      String days = '(';
-      for (int i = 0; i < list.length; i++) {
-        if (i == 0) {
-          days = '$days${list[0].day()}';
-        } else {
-          days = '$days, ${list[i].day()}';
-        }
-      }
-      return '$days)';
-    }
-
     return WillPopScope(
       onWillPop: () {
         Navigator.pop(context);
@@ -86,8 +122,8 @@ class _AuthorizationEvaluateScreenState
           actions: [
             IconButton(
               onPressed: () {
-                // if (controller.isLoading) return;
-                // controller.isSelected(widget.authorizations);
+                if (controller.isLoading) return;
+                controller.isSelected(controller.filteredAuthorizations);
               },
               icon: Icon(controller.selectAll
                   ? Icons.check_box
@@ -102,44 +138,45 @@ class _AuthorizationEvaluateScreenState
             replacement: Loader.loader(),
             child: Column(
               children: [
-                // TextField(
-                //   onChanged: (value) =>
-                //       controller.filterAuthorizations(value, allAuthorizations),
-                //   decoration: const InputDecoration(
-                //     fillColor: AppColors.gray800,
-                //     filled: true,
-                //     hintText: "Busca",
-                //     prefixIcon: Icon(Icons.search, color: AppColors.green500),
-                //     border: OutlineInputBorder(
-                //         borderSide: BorderSide.none,
-                //         borderRadius: BorderRadius.all(Radius.circular(10))),
-                //   ),
-                // ),
+                TextField(
+                  onChanged: (value) => controller.filterAuthorizations(
+                      value, controller.filteredAuthorizations),
+                  decoration: const InputDecoration(
+                    fillColor: AppColors.gray800,
+                    filled: true,
+                    hintText: "Busca",
+                    prefixIcon: Icon(Icons.search, color: AppColors.green500),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                  ),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
                 Visibility(
-                  visible: allAuthorizations.isNotEmpty,
-                  // visible: controller.filteredAuthorizations.isNotEmpty,
+                  // visible: allAuthorizations.isNotEmpty,
+                  visible: controller.filteredAuthorizations.isNotEmpty,
                   replacement: const WithoutResults(
                       msg: 'Nenhuma solicitação encontrada'),
+
                   child: Expanded(
                     child: ListView.builder(
-                      itemCount: allAuthorizations.keys.length,
+                      itemCount: controller.filteredAuthorizations.length,
                       itemBuilder: (context, index) => CommonTileTicket(
-                        title: allAuthorizations.keys.elementAt(index),
-                        subtitle: "${allAuthorizations[
-                            allAuthorizations.keys.elementAt(index)]!.first.meal} - ${getDays(allAuthorizations[
-                            allAuthorizations.keys.elementAt(index)]!)}",
-                        justification:
-                          allAuthorizations.values.first.first.justification,
-                        // selected: controller.selectedAuthorizatons.contains(
-                        //         controller.filteredAuthorizations[index])
-                        //     ? true
-                        //     : false,
-                        // function: () => controller.verifySelected(
-                        //     controller.filteredAuthorizations[index],
-                        //     lengthTickets),
+                        title:
+                            controller.filteredAuthorizations[index].matricula,
+                        subtitle:
+                            "${controller.filteredAuthorizations[index].meal} - ${controller.filteredAuthorizations[index].days}",
+                        justification: controller
+                            .filteredAuthorizations[index].justification,
+                        selected: controller.selectedAuthorizatons.contains(
+                                controller.filteredAuthorizations[index])
+                            ? true
+                            : false,
+                        function: () => controller.verifySelected(
+                            controller.filteredAuthorizations[index],
+                            lengthTickets),
                         check: true,
                       ),
                     ),
@@ -163,7 +200,7 @@ class _AuthorizationEvaluateScreenState
                   },
                   child: const Text(
                     'Recusar',
-                    // style: Style.buttonTextStyle,
+                    style: AppTextStyle.buttonTextStyle,
                   ),
                 ),
               ),
@@ -181,7 +218,7 @@ class _AuthorizationEvaluateScreenState
                   },
                   child: const Text(
                     'Aprovar',
-                    // style: Style.buttonTextStyle,
+                    style: AppTextStyle.buttonTextStyle,
                   ),
                 ),
               ),

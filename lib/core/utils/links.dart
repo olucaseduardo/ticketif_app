@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Links extends ChangeNotifier {
   // Links de acesso
   final Map<String, String> _campusLinks = {
-    "Caxias": 'https://2007-45-231-15-191.ngrok-free.app',
+    "Caxias": 'https://77d5-200-137-143-67.ngrok-free.app',
     "Timon": 'https://0c3f-45-231-15-191.ngrok-free.app',
   };
 
@@ -27,7 +27,7 @@ class Links extends ChangeNotifier {
   Future<void> selectLink(String campus) async {
     _campusLink = _campusLinks[campus] as String;
     final sp = await SharedPreferences.getInstance();
-      sp.setString('link', _campusLink);
+    sp.setString('link', _campusLink);
     notifyListeners();
   }
 
