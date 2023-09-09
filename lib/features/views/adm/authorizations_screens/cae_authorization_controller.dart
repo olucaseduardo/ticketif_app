@@ -32,61 +32,78 @@ class CaeAuthorizationController extends ChangeNotifier {
   /// Função que retorna os tickets permanente
   Future<void> loadDataAuthorizations() async {
     try {
-      authorizations!.clear();
+      _clearData();
 
-      authorizationClasses.clear();
-
-      sortedAuthorizationClasses.clear();
-
-      filteredClasses.clear();
       isLoading = true;
 
       final tickets = await TicketsApiRepositoryImpl().findAllNotAuthorized();
 
       authorizations = tickets;
 
-      authorizations?.forEach(
-        (element) => log(element.toString()),
-      );
+      _processAuthorizations();
 
-      String authorizationClassName = '';
-      String studentName = '';
-
-      authorizations?.forEach((element) {
-        authorizationClassName =
-            element.student.substring(0, element.student.length - 4);
-
-        studentName = element.student;
-
-        if (authorizationClasses.containsKey(authorizationClassName)) {
-          if (authorizationClasses[authorizationClassName]!
-              .containsKey(studentName)) {
-            authorizationClasses[authorizationClassName]![studentName]!
-                .add(element);
-          } else {
-            authorizationClasses[authorizationClassName]![studentName] = [
-              element
-            ];
-          }
-        } else {
-          authorizationClasses[authorizationClassName] = {
-            studentName: [element]
-          };
-        }
-      });
-
-      sortedAuthorizationClasses = Map.fromEntries(authorizationClasses.entries
-          .toList()
-        ..sort((element1, element2) => element1.key.compareTo(element2.key)));
-      filteredClasses.addAll(sortedAuthorizationClasses.keys.toList());
-      log("dailyClasses :: ${sortedAuthorizationClasses.toString()}");
       loading();
     } catch (e, s) {
-      log('Erro ao buscar dados', error: e, stackTrace: s);
-      loading();
-      error = true;
-      notifyListeners();
+      _handleError(e, s);
     }
+  }
+
+  ///função para limpar as listas
+  void _clearData() {
+    authorizations!.clear();
+
+    authorizationClasses.clear();
+
+    sortedAuthorizationClasses.clear();
+
+    filteredClasses.clear();
+  }
+
+  ///função de processamento de dados
+  _processAuthorizations() {
+    authorizations?.forEach(
+      (element) => log(element.toString()),
+    );
+
+    String authorizationClassName = '';
+    String studentName = '';
+
+    authorizations?.forEach((element) {
+      authorizationClassName =
+          element.student.substring(0, element.student.length - 4);
+
+      studentName = element.student;
+
+      if (authorizationClasses.containsKey(authorizationClassName)) {
+        if (authorizationClasses[authorizationClassName]!
+            .containsKey(studentName)) {
+          authorizationClasses[authorizationClassName]![studentName]!
+              .add(element);
+        } else {
+          authorizationClasses[authorizationClassName]![studentName] = [
+            element
+          ];
+        }
+      } else {
+        authorizationClasses[authorizationClassName] = {
+          studentName: [element]
+        };
+      }
+    });
+
+    sortedAuthorizationClasses = Map.fromEntries(
+        authorizationClasses.entries.toList()
+          ..sort((element1, element2) => element1.key.compareTo(element2.key)));
+    filteredClasses.addAll(sortedAuthorizationClasses.keys.toList());
+    log("dailyClasses :: ${sortedAuthorizationClasses.toString()}");
+  }
+
+  ///Função de error
+  void _handleError(dynamic error, StackTrace stackTrace) {
+    log('Erro ao buscar dados', error: error, stackTrace: stackTrace);
+    loading();
+    error = true;
+    notifyListeners();
   }
 
   /// Função responsável por filtrar as turmas
