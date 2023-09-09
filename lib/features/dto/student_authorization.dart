@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class StudentAuthorization {
-  final String matricula;
+  late final String matricula;
   final int idStudent;
   final String justification;
   final String meal;

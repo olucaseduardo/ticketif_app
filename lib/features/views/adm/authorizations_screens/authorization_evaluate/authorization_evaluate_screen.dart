@@ -30,59 +30,12 @@ class AuthorizationEvaluateScreen extends ConsumerStatefulWidget {
 
 class _AuthorizationEvaluateScreenState
     extends ConsumerState<AuthorizationEvaluateScreen> {
-  String getDays(List<Authorization> list) {
-    String days = '(';
-    for (int i = 0; i < list.length; i++) {
-      if (i == 0) {
-        days = '$days${list[0].day()}';
-      } else {
-        days = '$days, ${list[i].day()}';
-      }
-    }
-    return '$days)';
-  }
-
-  List<StudentAuthorization> authorizationsList() {
-    List<StudentAuthorization> list = [];
-
-    for (int index = 0; index < widget.authorizations.keys.length; index++) {
-      StudentAuthorization student = StudentAuthorization(
-          matricula: widget.authorizations.keys.elementAt(index),
-          idStudent: widget
-              .authorizations[widget.authorizations.keys.elementAt(index)]!
-              .first
-              .id,
-          justification: widget
-              .authorizations[widget.authorizations.keys.elementAt(index)]!
-              .first
-              .justification,
-          meal: widget
-              .authorizations[widget.authorizations.keys.elementAt(index)]!
-              .first
-              .meal,
-          days: getDays(widget
-              .authorizations[widget.authorizations.keys.elementAt(index)]!));
-      list.add(student);
-      log("Student :: ${student.toString()}");
-    }
-    log("List Authorizations :: $list");
-    return list;
-  }
-
   @override
   void initState() {
     super.initState();
-    log("List Authorizations Init State:: $authorizationsList()");
     ref.read(caePermanentProvider).filteredAuthorizations.clear();
-    ref.read(caePermanentProvider).selectedAuthorizatons.clear();
-    ref
-        .read(caePermanentProvider)
-        .filteredAuthorizations
-        .addAll(authorizationsList());
-    ref
-        .read(caePermanentProvider)
-        .selectedAuthorizatons
-        .addAll(authorizationsList());
+    ref.read(caePermanentProvider).selectedAuthorizations.clear();
+    ref.read(caePermanentProvider).authorizationsList(widget.authorizations);
     ref.read(caePermanentProvider).selectAll = true;
   }
 
@@ -91,13 +44,15 @@ class _AuthorizationEvaluateScreenState
     final controller = ref.watch(caePermanentProvider);
     Map<String, List<Authorization>> allAuthorizations = widget.authorizations;
     final lengthTickets = allAuthorizations.keys.length;
+    List<String> selectedStudents = [];
 
-    log('Selected ${controller.selectedAuthorizatons.length.toString()}');
+    log('Selected ${controller.selectedAuthorizations.length.toString()}');
     log('SelectedAll ${controller.selectAll.toString()}');
-    log('SelectedAll ${widget.authorizations.toString()}');
+    log('SelectedAll ${controller.selectedAuthorizations.toString()}');
+    log('Filtered ${controller.filteredAuthorizations.toString()}');
 
     bool continueSolicitation() {
-      if (controller.selectedAuthorizatons.isEmpty) {
+      if (controller.selectedAuthorizations.isEmpty) {
         AppMessage.i.showInfo('Não existem tickets selecionados!');
         return false;
       }
@@ -105,17 +60,24 @@ class _AuthorizationEvaluateScreenState
       return true;
     }
 
+    eraserStudents() {
+      for (var element in controller.selectedAuthorizations) {
+        selectedStudents.add(element.matricula);
+      }
+      log('EraserList :: $selectedStudents');
+    }
+
     return WillPopScope(
       onWillPop: () {
-        Navigator.pop(context);
-        // Navigator.pop(context, controller.filteredAuthorizations);
+        // Navigator.pop(context);
+        Navigator.pop(context, selectedStudents);
         return Future.value(false);
       },
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                // Navigator.pop(context, controller.filteredAuthorizations);
+                Navigator.pop(context, selectedStudents);
               },
               icon: const Icon(Icons.arrow_back_rounded)),
           title: Text(widget.title),
@@ -170,7 +132,7 @@ class _AuthorizationEvaluateScreenState
                             "${controller.filteredAuthorizations[index].meal} - ${controller.filteredAuthorizations[index].days}",
                         justification: controller
                             .filteredAuthorizations[index].justification,
-                        selected: controller.selectedAuthorizatons.contains(
+                        selected: controller.selectedAuthorizations.contains(
                                 controller.filteredAuthorizations[index])
                             ? true
                             : false,
@@ -197,6 +159,7 @@ class _AuthorizationEvaluateScreenState
                     // if (continueSolicitation()) {
                     //   controller.solicitation(7);
                     // }
+                    eraserStudents();
                   },
                   child: const Text(
                     'Recusar',
@@ -215,6 +178,7 @@ class _AuthorizationEvaluateScreenState
                     // if (continueSolicitation()) {
                     //   controller.solicitation(2);
                     // }
+                    eraserStudents();
                   },
                   child: const Text(
                     'Aprovar',

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
+import 'package:project_ifma_ticket/features/dto/student_authorization.dart';
+import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.dart';
@@ -94,7 +96,7 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
                               'Total: ${controller.sortedAuthorizationClasses[controller.filteredClasses[index]]!.length}',
                           // function: (){}, )
                           function: () async {
-                            Navigator.pushNamed(
+                            dynamic list = await Navigator.pushNamed(
                               context,
                               AppRouter.authorizationEvaluateRoute,
                               arguments: ScreenArguments(
@@ -102,10 +104,11 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
                                       .sortedAuthorizationClasses.keys
                                       .elementAt(index),
                                   authorizations: controller
-                                      .sortedAuthorizationClasses.values.elementAt(index)),
+                                      .sortedAuthorizationClasses.values
+                                      .elementAt(index)),
                             );
-                            // controller.updateClasses(
-                            //     list as List<Ticket>, index);
+                            controller.updateClasses(
+                                list as List<String>, index);
                           }),
                     ),
                   ),

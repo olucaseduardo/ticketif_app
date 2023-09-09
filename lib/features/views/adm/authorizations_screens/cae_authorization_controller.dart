@@ -17,7 +17,7 @@ class CaeAuthorizationController extends ChangeNotifier {
   Map<String, Map<String, List<Authorization>>> sortedAuthorizationClasses = {};
   /* Variáveis responsáveis pela seleção na tela evaluate */
   bool selectAll = true;
-  List<StudentAuthorization> selectedAuthorizatons = [];
+  List<StudentAuthorization> selectedAuthorizations = [];
   /* Lista de estudantes */
   List<User> listStudents = [];
   bool isLoading = true;
@@ -115,14 +115,14 @@ class CaeAuthorizationController extends ChangeNotifier {
 
   /// Função responsavel por controlar as seleções de todos
   void isSelected(List<StudentAuthorization> students) {
-    selectedAuthorizatons.clear();
+    selectedAuthorizations.clear();
     selectAll = !selectAll;
 
     if (selectAll) {
-      selectedAuthorizatons.addAll(students);
+      selectedAuthorizations.addAll(students);
     }
 
-    log(selectedAuthorizatons.toString());
+    log(selectedAuthorizations.toString());
     notifyListeners();
   }
 
@@ -152,15 +152,15 @@ class CaeAuthorizationController extends ChangeNotifier {
   /// Função responsavel por controlar as seleções individuais
   void verifySelected(
       StudentAuthorization filteredAuthorizations, int allTicketsLength) {
-    if (selectedAuthorizatons.contains(filteredAuthorizations)) {
-      selectedAuthorizatons.removeWhere(
+    if (selectedAuthorizations.contains(filteredAuthorizations)) {
+      selectedAuthorizations.removeWhere(
         (ts) => ts.matricula == filteredAuthorizations.matricula,
       );
     } else {
-      selectedAuthorizatons.add(filteredAuthorizations);
+      selectedAuthorizations.add(filteredAuthorizations);
     }
 
-    if (allTicketsLength == selectedAuthorizatons.length) {
+    if (allTicketsLength == selectedAuthorizations.length) {
       selectAll = true;
     } else {
       selectAll = false;
@@ -169,26 +169,73 @@ class CaeAuthorizationController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Atualização de listas de tickets pós mudança de status
-  void updateClasses(List<Authorization> list, int index) {
-    sortedAuthorizationClasses.values.elementAt(index).clear();
+  /// Atualização de listas de autorizações pós mudança de status
+  void updateClasses(List<String> list, int index) {
+    // sortedAuthorizationClasses.values.elementAt(index).clear();
 
     log("sortedDailyClasses :: ${sortedAuthorizationClasses.toString()}");
+
     if (list.isNotEmpty) {
-      sortedAuthorizationClasses[filteredClasses[index]]!
-          .values
-          .elementAt(index)
-          .addAll(list);
-    } else {
-      filteredClasses.remove(sortedAuthorizationClasses.keys.elementAt(index));
-      sortedAuthorizationClasses[filteredClasses[index]]!
-          .remove(sortedAuthorizationClasses.keys.elementAt(index));
+      for (String student in list) {
+        bool hasKey = sortedAuthorizationClasses.values
+            .elementAt(index)
+            .containsKey(student);
+        if (hasKey) {
+          sortedAuthorizationClasses.values.elementAt(index).remove(student);
+          filteredAuthorizations
+              .removeWhere((element) => element.matricula == student);
+        }
+        log("RemoveClasses :: ${sortedAuthorizationClasses.toString()}");
+        // sortedAuthorizationClasses[index]![student.matricula];
+      }
     }
-    for (var element in filteredClasses) {
-      log(element.toString());
-    }
+
+    // if (list.isNotEmpty) {
+    //   sortedAuthorizationClasses[filteredClasses[index]]!
+    //       .values
+    //       .elementAt(index)
+    //       .addAll(list);
+    // } else {
+    //   filteredClasses.remove(sortedAuthorizationClasses.keys.elementAt(index));
+    //   sortedAuthorizationClasses[filteredClasses[index]]!
+    //       .remove(sortedAuthorizationClasses.keys.elementAt(index));
+    // }
+    // for (var element in filteredClasses) {
+    //   log(element.toString());
+    // }
 
     log("sortedAuthorizationClasses :: ${sortedAuthorizationClasses.toString()}");
     notifyListeners();
+  }
+
+  /// Concatena dias
+  String getDays(List<Authorization> list) {
+    String days = '(';
+    for (int i = 0; i < list.length; i++) {
+      if (i == 0) {
+        days = '$days${list[0].day()}';
+      } else {
+        days = '$days, ${list[i].day()}';
+      }
+    }
+    return '$days)';
+  }
+
+  /// Atualiza as listas
+  void authorizationsList(Map<String, List<Authorization>> authorizations) {
+    for (int index = 0; index < authorizations.keys.length; index++) {
+      StudentAuthorization studentAuthorization = StudentAuthorization(
+          matricula: authorizations.keys.elementAt(index),
+          idStudent:
+              authorizations[authorizations.keys.elementAt(index)]!.first.id,
+          justification: authorizations[authorizations.keys.elementAt(index)]!
+              .first
+              .justification,
+          meal:
+              authorizations[authorizations.keys.elementAt(index)]!.first.meal,
+          days: getDays(authorizations[authorizations.keys.elementAt(index)]!));
+      filteredAuthorizations.add(studentAuthorization);
+      selectedAuthorizations.add(studentAuthorization);
+    }
   }
 }
