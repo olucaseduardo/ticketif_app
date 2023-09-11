@@ -21,7 +21,6 @@ class QrController extends ChangeNotifier {
   List<String> validatedTickets = [];
   List<String> uploadedTickets = [];
   late SharedPreferences prefs;
-  final String message = 'Sem dados no momento, escaneie um QR Code';
 
   void initPackages() {
     SharedPreferences.getInstance().then((value) {
@@ -34,85 +33,85 @@ class QrController extends ChangeNotifier {
     });
   }
 
- void onQRViewCreated(QRViewController controller) {
-  qrCodeController = controller;
-  controller.scannedDataStream.listen((scanData) {
-    handleScanData(scanData);
-  });
-}
-
-Future<void> handleScanData(Barcode scanData) async {
-  if (ready) {
-    log('lendo ${ready.toString()}');
-    await delayBetweenReads();
-    return;
+  void onQRViewCreated(QRViewController controller) {
+    qrCodeController = controller;
+    controller.scannedDataStream.listen((scanData) {
+      handleScanData(scanData);
+    });
   }
 
-  if (scanData.code != null) {
-    ready = false;
-    // await delayBetweenReads();
-
-    qrResult = QrResult.fromJson(scanData.code!);
-    bool checkDate = DateUtil.checkTodayDate(DateTime.parse(qrResult!.date));
-
-    if (qrResult!.status == "Utilização autorizada" && checkDate) {
-      handleValidQRCode();
-    } else {
-      result = 'Ticket inválido';
+  Future<void> handleScanData(Barcode scanData) async {
+    if (ready) {
+      await delayBetweenReads();
     }
-  }
-}
 
-Future<void> delayBetweenReads() async {
-  await Future.delayed(Duration(seconds: timeBetweenReadsInSeconds));
-  ready = true;
-  isValid = false;
-  result = 'Sem dados no momento, escaneie um QR Code';
-  notifyListeners();
-  log(':::::: DELAY:::::::');
-}
+    if (scanData.code != null) {
+      ready = false;
 
-void handleValidQRCode() async {
-  if (isTicketAlreadyValidated(qrResult!.id.toString())) {
-    result = 'Ticket ${qrResult!.id} já validado';
-    Vibration.vibrate(duration: 300);
-    notifyListeners();
-  } else {
-    Vibration.vibrate(duration: 300);
-    markTicketAsValidated(qrResult!.id.toString());
-    result = 'Ticket validado: ${qrResult!.student}';
-    notifyListeners();
-  }
-}
+      qrResult = QrResult.fromJson(scanData.code!);
+      bool checkDate = DateUtil.checkTodayDate(DateTime.parse(qrResult!.date));
 
-bool isTicketAlreadyValidated(String ticketId) {
-  return validatedTickets.contains(ticketId) || uploadedTickets.contains(ticketId);
-}
-
-void markTicketAsValidated(String ticketId) async {
-  validatedTickets.add(ticketId);
-  prefs.setStringList('validatedTickets', validatedTickets);
-
-  if (validatedTickets.length > 5) {
-    result = "Atualizando lista de tickets validados...";
-    notifyListeners();
-
-    try {
-      for (var element in validatedTickets) {
-        await TicketsApiRepositoryImpl().changeStatusTicket(int.parse(element), 5);
+      if (qrResult!.status == "Utilização autorizada" && checkDate) {
+        handleValidQRCode();
+      } else {
+        result = 'Ticket inválido';
       }
 
-      uploadedTickets.addAll(validatedTickets);
-      prefs.setStringList('uploadedTickets', uploadedTickets);
-      validatedTickets.clear();
-      prefs.setStringList('validatedTickets', validatedTickets);
-    } catch (e, s) {
-      log('Erro ao atualizar lista de validados', error: e, stackTrace: s);
-      throw RepositoryException(message: 'Erro ao alterar status do ticket');
+      await delayBetweenReads();
     }
   }
 
-   totalValid = validatedTickets.length + uploadedTickets.length;
-}
+  Future<void> delayBetweenReads() async {
+    await Future.delayed(Duration(seconds: timeBetweenReadsInSeconds));
+    ready = true;
+    isValid = false;
+    result = 'Sem dados no momento, escaneie um QR Code';
+    notifyListeners();
+    log(':::::: DELAY:::::::');
+  }
 
+  void handleValidQRCode() async {
+    if (isTicketAlreadyValidated(qrResult!.id.toString())) {
+      result = 'Ticket ${qrResult!.id} já validado';
+      Vibration.vibrate(duration: 300);
+      notifyListeners();
+    } else {
+      markTicketAsValidated(qrResult!.id.toString());
+      result = 'Ticket validado: ${qrResult!.student}';
+      isValid = true;
+      Vibration.vibrate(duration: 300);
+      notifyListeners();
+    }
+  }
+
+  bool isTicketAlreadyValidated(String ticketId) {
+    return validatedTickets.contains(ticketId) ||
+        uploadedTickets.contains(ticketId);
+  }
+
+  void markTicketAsValidated(String ticketId) async {
+    validatedTickets.add(ticketId);
+    prefs.setStringList('validatedTickets', validatedTickets);
+
+    if (validatedTickets.length > 5) {
+      result = "Atualizando lista de tickets validados...";
+      notifyListeners();
+
+      try {
+        for (var element in validatedTickets) {
+          await TicketsApiRepositoryImpl().changeStatusTicket(int.parse(element), 5);
+        }
+
+        uploadedTickets.addAll(validatedTickets);
+        prefs.setStringList('uploadedTickets', uploadedTickets);
+        validatedTickets.clear();
+        prefs.setStringList('validatedTickets', validatedTickets);
+      } catch (e, s) {
+        log('Erro ao atualizar lista de validados', error: e, stackTrace: s);
+        throw RepositoryException(message: 'Erro ao alterar status do ticket');
+      }
+    }
+
+    totalValid = validatedTickets.length + uploadedTickets.length;
+  }
 }

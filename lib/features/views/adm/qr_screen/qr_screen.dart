@@ -34,11 +34,12 @@ class _QrScreenState extends ConsumerState<QrScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    ref.read(qrProvider).qrCodeController?.dispose();
+    ref.watch(qrProvider).qrCodeController?.dispose();
   }
 
   @override
   void dispose() {
+    reassemble();
     super.dispose();
   }
 
@@ -66,10 +67,12 @@ class _QrScreenState extends ConsumerState<QrScreen> {
               child: Visibility(
                   visible: controller.isValid,
                   replacement: Center(
-                    child: Text(controller.result, style: AppTextStyle.titleMedium.copyWith(
-                    color: AppColors.green300,
-                          ),
-                        ),
+                    child: Text(
+                      controller.result,
+                      style: AppTextStyle.titleMedium.copyWith(
+                        color: AppColors.green300,
+                      ),
+                    ),
                   ),
                   child: QrCodeResult(qrResult: controller.qrResult)),
             ),

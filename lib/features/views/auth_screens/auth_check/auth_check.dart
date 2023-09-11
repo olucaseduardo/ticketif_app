@@ -18,17 +18,19 @@ class _AuthCheckState extends ConsumerState<AuthCheck> {
   @override
   void initState() {
     ref.read(authCheckProvider).verify();
+    ref.read(authCheckProvider).isLoading = true;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(authCheckProvider);
 
     if (controller.isLoading) {
       return Scaffold(body: Loader.loader());
-    } else if (controller.check && !controller.admin && !controller.restaurant) {
+    } else if (controller.check && !controller.cae && !controller.restaurant) {
       return const HomeScreen();
-    } else if (controller.check && controller.admin) {
+    } else if (controller.check && controller.cae) {
       return const CaeHomeScreen();
     } else if (controller.check && controller.restaurant) {
       return const RestaurantScreen();
