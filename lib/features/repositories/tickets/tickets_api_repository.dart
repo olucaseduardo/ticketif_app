@@ -1,5 +1,6 @@
 import 'package:project_ifma_ticket/features/dto/request_permanent.dart';
 import 'package:project_ifma_ticket/features/dto/request_ticket_model.dart';
+import 'package:project_ifma_ticket/features/models/student_authorization.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 
 abstract class TicketsApiRepository {
@@ -10,4 +11,5 @@ abstract class TicketsApiRepository {
   Future<void> requestPermanent(List<RequestPermanent> tickets);
   Future<void> findAllNotAuthorized();
   Future<void> changeStatusTicket(int idTicket, int statusId);
+  Future<void> changeStatusAuthorization(List<StudentAuthorization> authorizations, int status);
 }

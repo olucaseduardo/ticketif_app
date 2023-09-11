@@ -1,7 +1,8 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/features/dto/student_authorization.dart';
+import 'package:project_ifma_ticket/features/models/student_authorization.dart';
 import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/models/user.dart';
 import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
@@ -45,6 +46,22 @@ class CaeAuthorizationController extends ChangeNotifier {
       loading();
     } catch (e, s) {
       _handleError(e, s);
+    }
+  }
+
+  Future<void> changedAuthorizations(int status) async {
+    try {
+      await TicketsApiRepositoryImpl()
+          .changeStatusAuthorization(selectedAuthorizations, status);
+    } on DioError catch (e, s) {
+      log('Erro ao atualizar autorização permanente', error: e, stackTrace: s);
+
+      error = true;
+      notifyListeners();
+    } catch (e, s) {
+      error = true;
+      notifyListeners();
+      log('Erro ao atualizar autorização', error: e, stackTrace: s);
     }
   }
 
@@ -192,7 +209,7 @@ class CaeAuthorizationController extends ChangeNotifier {
 
     log("sortedDailyClasses :: ${sortedAuthorizationClasses.toString()}");
 
-    if (list.isNotEmpty) {
+    if (list.isNotEmpty && !error) {
       for (String student in list) {
         bool hasKey = sortedAuthorizationClasses.values
             .elementAt(index)
@@ -206,21 +223,6 @@ class CaeAuthorizationController extends ChangeNotifier {
         // sortedAuthorizationClasses[index]![student.matricula];
       }
     }
-
-    // if (list.isNotEmpty) {
-    //   sortedAuthorizationClasses[filteredClasses[index]]!
-    //       .values
-    //       .elementAt(index)
-    //       .addAll(list);
-    // } else {
-    //   filteredClasses.remove(sortedAuthorizationClasses.keys.elementAt(index));
-    //   sortedAuthorizationClasses[filteredClasses[index]]!
-    //       .remove(sortedAuthorizationClasses.keys.elementAt(index));
-    // }
-    // for (var element in filteredClasses) {
-    //   log(element.toString());
-    // }
-
     log("sortedAuthorizationClasses :: ${sortedAuthorizationClasses.toString()}");
     notifyListeners();
   }
@@ -244,8 +246,8 @@ class CaeAuthorizationController extends ChangeNotifier {
       StudentAuthorization studentAuthorization = StudentAuthorization(
           matricula: authorizations.keys.elementAt(index),
           idStudent:
-              authorizations[authorizations.keys.elementAt(index)]!.first.id,
-          justification: authorizations[authorizations.keys.elementAt(index)]!
+              authorizations[authorizations.keys.elementAt(index)]!.first.studentId,
+          text: authorizations[authorizations.keys.elementAt(index)]!
               .first
               .justification,
           meal:

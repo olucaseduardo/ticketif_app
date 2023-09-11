@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
-import 'package:project_ifma_ticket/core/utils/date_util.dart';
+// import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
-import 'package:project_ifma_ticket/features/dto/student_authorization.dart';
+// import 'package:project_ifma_ticket/features/dto/student_authorization.dart';
 import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
@@ -130,8 +130,8 @@ class _AuthorizationEvaluateScreenState
                             controller.filteredAuthorizations[index].matricula,
                         subtitle:
                             "${controller.filteredAuthorizations[index].meal} - ${controller.filteredAuthorizations[index].days}",
-                        justification: controller
-                            .filteredAuthorizations[index].justification,
+                        justification:
+                            controller.filteredAuthorizations[index].text,
                         selected: controller.selectedAuthorizations.contains(
                                 controller.filteredAuthorizations[index])
                             ? true
@@ -156,10 +156,13 @@ class _AuthorizationEvaluateScreenState
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   onPressed: () {
-                    // if (continueSolicitation()) {
-                    //   controller.solicitation(7);
-                    // }
-                    eraserStudents();
+                    if (continueSolicitation()) {
+                      controller.changedAuthorizations(2);
+                      eraserStudents();
+                      AppMessage.i.showInfo('Tickets recusados com sucesso');
+                      Navigator.pop(context, selectedStudents);
+                      // return Future.value(false);
+                    }
                   },
                   child: const Text(
                     'Recusar',
@@ -175,10 +178,13 @@ class _AuthorizationEvaluateScreenState
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    // if (continueSolicitation()) {
-                    //   controller.solicitation(2);
-                    // }
-                    eraserStudents();
+                    if (continueSolicitation()) {
+                      controller.changedAuthorizations(1);
+                      eraserStudents();
+                      AppMessage.i.showInfo('Tickets aprovados com sucesso');
+                      Navigator.pop(context, selectedStudents);
+                      // return Future.value(false);
+                    }
                   },
                   child: const Text(
                     'Aprovar',
