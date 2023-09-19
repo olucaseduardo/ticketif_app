@@ -12,12 +12,11 @@ import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.da
 class CommonTicketWidget extends StatelessWidget {
   final Ticket ticket;
   final VoidCallback? function;
+  final bool isTap;
 
-  const CommonTicketWidget({
-    Key? key,
-    required this.ticket,
-    this.function,
-  }) : super(key: key);
+  const CommonTicketWidget(
+      {Key? key, required this.ticket, this.function, this.isTap = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +109,13 @@ class CommonTicketWidget extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.all(8.h),
                     child: Align(
-                      child: actionWidget(ticket.idStatus, ticket.statusImage(),
-                          function, context),
-                    ),
+                        child: isTap
+                            ? actionWidget(ticket.idStatus,
+                                ticket.statusImage(), function, context)
+                            : SizedBox(
+                                height: 50.h,
+                                width: 50.w,
+                              )),
                   ),
                 )
               ],
