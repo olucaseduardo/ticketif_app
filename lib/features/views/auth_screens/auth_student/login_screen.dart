@@ -41,10 +41,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
+
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+
               children: [
                 const AppLogo(),
+
                 const Padding(
                   padding: EdgeInsets.all(24),
                   child: Text(
@@ -52,8 +55,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     style: AppTextStyle.titleMedium,
                   ),
                 ),
+
                 Form(
                   key: formKey,
+                  
                   child: Column(
                     children: [
                       CommonTextField(
@@ -63,6 +68,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         controller: matriculaEC,
                         validator: true,
                       ),
+
                       CommonTextField(
                         title: 'Senha (SUAP)',
                         labelText: 'Digite sua senha',
@@ -71,18 +77,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         controller: passwordEC,
                         validator: true,
                       ),
+
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6.0),
+
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+
                           children: [
                             const Padding(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
+
                               child: Text(
                                 'Campus',
                                 style: AppTextStyle.bodyLarge,
                               ),
                             ),
+
                             CommonDropDownButton(
                               items: controller.campus,
                               onChanged: (value) => controller.selectCampus(value),
@@ -91,8 +102,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ],
                         ),
                       ),
+
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.h),
+                        
                         child: CommonButton(
                           label: "Entrar na conta",
                           function: () async {

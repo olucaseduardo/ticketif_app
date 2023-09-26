@@ -21,9 +21,11 @@ class HistoricScreen extends ConsumerWidget {
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: const Size(double.infinity, 130),
+
             child: AppBar(
               titleSpacing: 0,
               backgroundColor: AppColors.white,
+
               title: Text(
                 'Voltar',
                 style: TextStyle(
@@ -31,8 +33,10 @@ class HistoricScreen extends ConsumerWidget {
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w700),
               ),
+
               flexibleSpace: Padding(
                   padding: EdgeInsets.only(top: 90.h, left: 20.w, right: 20.w),
+
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -40,23 +44,30 @@ class HistoricScreen extends ConsumerWidget {
                             alignment: Alignment.centerLeft,
                             child: Text(title, style: AppTextStyle.largeText))
                       ])),
+
               leading: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
+
                   icon: const Icon(
                     Icons.arrow_back_rounded,
                     color: AppColors.gray200,
                   )),
+
             )),
+
         body: userTickets.isNotEmpty
             ? ListView.builder(
                 itemBuilder: (context, i) => Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  
                   child: CommonTicketWidget(
                     ticket: userTickets.elementAt(i),
+                    isTap: false,
                   ),
                 ),
+
                 itemCount: userTickets.length, // controller.countOne,
                 physics: const AlwaysScrollableScrollPhysics(),
               )
