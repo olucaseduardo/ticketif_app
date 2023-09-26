@@ -21,13 +21,15 @@ class PeriodReportScreen extends ConsumerStatefulWidget {
 }
 
 class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
-  DateTime now = DateTime.now();
-  late DateTime start = DateTime.utc(now.year, now.month, 1);
-  late DateTime end = DateTime.now();
+  late DateTime start =
+      DateTime.utc(DateUtil.dateTimeNow.year, DateUtil.dateTimeNow.month, 1);
+  late DateTime end = DateUtil.dateTimeNow;
 
-   @override
+  @override
   void initState() {
-    ref.read(periodReportProvider).loadPeriodTickets(initialDate: DateUtil.getDateUSStr(start), finalDate: DateUtil.getDateUSStr(end));
+    ref.read(periodReportProvider).loadPeriodTickets(
+        initialDate: DateUtil.getDateUSStr(start),
+        finalDate: DateUtil.getDateUSStr(end));
     super.initState();
   }
 
@@ -40,26 +42,22 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
         AppMessage.i.showError('Erro ao carregar relatório por período');
       });
     }
-    
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Relatório por Período'),
         ),
         body: Visibility(
           visible: !controller.isLoading,
-          
           replacement: Loader.loader(),
-
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Visibility(
               visible: !controller.error,
-
               replacement: const ErrorResults(
                 msg: 'Voltar para a tela de início',
                 msgError: 'Erro ao carregar relatório por período',
               ),
-
               child: Column(
                 children: [
                   Padding(
@@ -69,75 +67,83 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
                       children: [
                         Text(
                           'De: ${DateUtil.getDateStr(start)} até: ${DateUtil.getDateStr(end)}',
-                          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green300, fontSize: 16.sp),
+                          style: AppTextStyle.titleMedium.copyWith(
+                              color: AppColors.green300, fontSize: 16.sp),
                         ),
-                        
                         IconButton(
-                          onPressed: () async {
-                            DateTimeRange? result = await showDateRangePicker(
-                              context: context,
-                              initialEntryMode: DatePickerEntryMode.calendar,
-                              firstDate:
-                                  DateTime(2022, 1, 1), // the earliest allowable
-                              lastDate:
-                                  DateTime(2025, 12, 31), // the latest allowable
-                              currentDate: DateTime.now(),
-                              saveText: 'Salvar',
-                            );
-                            setState(() {
-                              if (result != null) {
-                                start = result.start;
-                                end = result.end;
-                              }
-                            });
+                            onPressed: () async {
+                              DateTimeRange? result = await showDateRangePicker(
+                                context: context,
+                                initialEntryMode: DatePickerEntryMode.calendar,
+                                firstDate: DateTime(
+                                    2022, 1, 1), // the earliest allowable
+                                lastDate: DateTime(
+                                    2025, 12, 31), // the latest allowable
+                                currentDate: DateUtil.dateTimeNow,
+                                saveText: 'Salvar',
+                              );
+                              setState(() {
+                                if (result != null) {
+                                  start = result.start;
+                                  end = result.end;
+                                }
+                              });
 
-                            controller.updatePeriodDate(start, end);
-                          },
-                          icon: const Icon(
-                            Icons.calendar_month_rounded,
-                            color: AppColors.green300,
-                          )),
+                              controller.updatePeriodTickets(start, end);
+                            },
+                            icon: const Icon(
+                              Icons.calendar_month_rounded,
+                              color: AppColors.green300,
+                            )),
                       ],
                     ),
                   ),
                   Visibility(
                     visible: controller.dailyStatus.isNotEmpty,
-                      
-                    replacement: const WithoutResults(msg: 'Nenhuma solicitação encontrada'),
-                    
+                    replacement: const WithoutResults(
+                        msg: 'Nenhuma solicitação encontrada'),
                     child: Expanded(
                       child: ListView.builder(
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            var status =
-                                controller.dailyStatus.keys.elementAt(index).toString();
+                            var status = controller.dailyStatus.keys
+                                .elementAt(index)
+                                .toString();
                             var meal = controller.dailyStatus[status]!.keys;
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Divider(),
-                                
                                 ListView.builder(
                                     shrinkWrap: true,
                                     itemCount: meal.length,
                                     itemBuilder: (context, indexMeal) {
                                       var keyMeal = meal.elementAt(indexMeal);
-                                      var valuesMeal =
-                                          controller.dailyStatus[status]![keyMeal];
+                                      var valuesMeal = controller
+                                          .dailyStatus[status]![keyMeal];
                                       return CommonTileReport(
-                                        function: () =>
-                                            Navigator.of(context).pushNamed(
-                                              AppRouter.listTickets,
-                                              arguments: ScreenArguments(
-                                                title: keyMeal,
-                                                subtitle: DateUtil.getDateStr(DateTime.parse(valuesMeal.reversed.elementAt(0).useDayDate)),
-                                                description: valuesMeal.reversed.elementAt(0).status,
-                                                tickets: valuesMeal.reversed.toList(),
+                                          function: () =>
+                                              Navigator.of(context).pushNamed(
+                                                AppRouter.listTickets,
+                                                arguments: ScreenArguments(
+                                                  title: keyMeal,
+                                                  subtitle: DateUtil.getDateStr(
+                                                      DateTime.parse(valuesMeal
+                                                          .reversed
+                                                          .elementAt(0)
+                                                          .useDayDate)),
+                                                  description: valuesMeal
+                                                      .reversed
+                                                      .elementAt(0)
+                                                      .status,
+                                                  tickets: valuesMeal.reversed
+                                                      .toList(),
+                                                ),
                                               ),
-                                            ),
                                           status: status,
                                           title: keyMeal,
-                                          subtitle: 'Total: ${valuesMeal!.length}');
+                                          subtitle:
+                                              'Total: ${valuesMeal!.length}');
                                     })
                               ],
                             );
@@ -151,7 +157,9 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            controller.exportCSV();
+          },
           child: const Icon(Icons.save_rounded),
         ));
   }

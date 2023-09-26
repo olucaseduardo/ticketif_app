@@ -39,7 +39,7 @@ class _QrScreenState extends ConsumerState<QrScreen> {
 
   @override
   void dispose() {
-    reassemble();
+    ref.watch(qrProvider).qrCodeController?.dispose();
     super.dispose();
   }
 

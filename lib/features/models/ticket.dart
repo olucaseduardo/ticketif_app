@@ -116,6 +116,6 @@ class Ticket {
 
   @override
   String toString() {
-    return 'Ticket(id: $id, idStudent: $idStudent, idStatus: $idStatus, idMeal: $idMeal, useDayDate: $useDayDate, useDay: $useDay, student: $student, studentName: $studentName, meal: $meal, status: $status, justification: $justification, text: $text, isPermanent: $isPermanent, solicitationDay: $solicitationDay)';
+    return 'Ticket(id: $id, idStudent: $idStudent, idStatus: $idStatus, idMeal: $idMeal, useDayDate: $useDayDate, useDay: $useDay, student: $student, studentName: $studentName, type: $type, meal: $meal, status: $status, justification: $justification, text: $text, isPermanent: $isPermanent, solicitationDay: $solicitationDay)';
   }
 }

@@ -54,6 +54,9 @@ dependencies:
   validatorless: ^1.2.3
   package_info_plus: ^4.1.0
   vibration: ^1.8.1
+  csv: ^5.0.2
+  path_provider: ^2.1.1
+  share: ^2.0.4
 
 dev_dependencies:
   flutter_test:
