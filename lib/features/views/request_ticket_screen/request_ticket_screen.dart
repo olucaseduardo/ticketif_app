@@ -12,6 +12,7 @@ class RequestTicket extends ConsumerWidget {
   final bool? caeRequest;
   final int? idStudent;
   final String? title;
+
   const RequestTicket({
     Key? key,
     this.title,
@@ -26,6 +27,7 @@ class RequestTicket extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
+
         title: Text(
          title ?? 'Voltar',
           style: TextStyle(
@@ -33,23 +35,29 @@ class RequestTicket extends ConsumerWidget {
               fontSize: 18.sp,
               fontWeight: FontWeight.w700),
         ),
+
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
+
             icon: const Icon(
               Icons.arrow_back_rounded,
               color: AppColors.gray200,
             )),
+
         titleTextStyle: const TextStyle(color: AppColors.gray200),
         backgroundColor: AppColors.white,
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.h),
+
           child: Form(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.h),
@@ -58,6 +66,7 @@ class RequestTicket extends ConsumerWidget {
                     style: AppTextStyle.largeText,
                   ),
                 ),
+
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),
                   child: const Text(
@@ -65,6 +74,7 @@ class RequestTicket extends ConsumerWidget {
                     style: AppTextStyle.smallText,
                   ),
                 ),
+
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),
                   child: const Text(
@@ -72,10 +82,12 @@ class RequestTicket extends ConsumerWidget {
                     style: AppTextStyle.normalText,
                   ),
                 ),
+
                 CommonDropDownButton(
                     hint: 'Selecione uma refeição',
                     items: controller.meals.map((e) => e.description).toList(),
                     onChanged: (value) => controller.onMealsChanged(value)),
+
                 Padding(
                   padding: EdgeInsets.only(top: 12.h),
                   child: const Text(
@@ -83,8 +95,10 @@ class RequestTicket extends ConsumerWidget {
                     style: AppTextStyle.normalText,
                   ),
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+
                   children: [
                     Transform.scale(
                         scale: 1.5,
@@ -94,12 +108,14 @@ class RequestTicket extends ConsumerWidget {
                             controller.onPermanentChanged(!value!);
                           },
                         )),
+
                     const Text(
                       'Apenas para hoje',
                       style: AppTextStyle.normalText,
                     ),
                   ],
                 ),
+
                 Row(
                   children: [
                     Transform.scale(
@@ -110,12 +126,14 @@ class RequestTicket extends ConsumerWidget {
                             controller.onPermanentChanged(value);
                           },
                         )),
+
                     const Text(
                       'Permanente',
                       style: AppTextStyle.normalText,
                     ),
                   ],
                 ),
+
                 controller.isPermanent
                     ? Wrap(
                         spacing: 8,
@@ -130,6 +148,7 @@ class RequestTicket extends ConsumerWidget {
                             .toList(),
                       )
                     : Container(),
+
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),
                   child: const Text(
@@ -137,6 +156,7 @@ class RequestTicket extends ConsumerWidget {
                     style: AppTextStyle.normalText,
                   ),
                 ),
+
                 CommonDropDownButton(
                     hint: 'Selecione uma justificativa',
                     items: controller.justifications
@@ -144,6 +164,7 @@ class RequestTicket extends ConsumerWidget {
                         .toList(),
                     onChanged: (value) =>
                         controller.onJustificationChanged(value)),
+
                 CommonTextField(
                   controller: controller.justificationController,
                   title: 'Justificativa detalhada (opcional)',
@@ -158,6 +179,7 @@ class RequestTicket extends ConsumerWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20),
+        
         child: SizedBox(
           height: 60,
           child: CommonButton(

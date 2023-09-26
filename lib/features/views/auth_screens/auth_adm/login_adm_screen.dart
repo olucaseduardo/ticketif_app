@@ -40,12 +40,15 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
+
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+
               children: [
                 const AppLogo(
                   adm: true,
                 ),
+
                 const Padding(
                   padding: EdgeInsets.all(24),
                   child: Text(
@@ -53,8 +56,10 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                     style: AppTextStyle.titleMedium,
                   ),
                 ),
+
                 Form(
                   key: formKey,
+
                   child: Column(
                     children: [
                       CommonTextField(
@@ -64,6 +69,7 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                         controller: usernameEC,
                         validator: true,
                       ),
+
                       CommonTextField(
                         title: 'Senha',
                         labelText: 'Digite sua senha',
@@ -72,10 +78,13 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                         controller: passwordEC,
                         validator: true,
                       ),
+
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6.0),
+
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+
                           children: [
                             const Padding(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
@@ -84,6 +93,7 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                                 style: AppTextStyle.bodyLarge,
                               ),
                             ),
+
                             CommonDropDownButton(
                               items: controller.campus,
                               onChanged: (value) => controller.selectCampus(value),
@@ -92,8 +102,10 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                           ],
                         ),
                       ),
+
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.h),
+                        
                         child: CommonButton(
                           label: "Entrar na conta",
                           function: () async {
