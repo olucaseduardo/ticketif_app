@@ -46,39 +46,50 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
       body: Visibility(
         visible: !controller.isLoading,
         replacement: Loader.loader(),
+
         child: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+
           child: Visibility(
             visible: !controller.error,
+
             replacement: const ErrorResults(
               msg: 'Voltar para a tela de início',
               msgError: 'Erro ao carregar relatório diário',
             ),
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                     children: [
                       Text(
                         'Data: ${DateUtil.getDateStr(controller.day)}',
                         style: AppTextStyle.titleMedium.copyWith(
                             color: AppColors.green300, fontSize: 16.sp),
                       ),
+
                       IconButton(
                           onPressed: () async {
                             var pickDate = await showDatePicker(
-                                context: context,
-                                initialDate: controller.day,
-                                firstDate: controller.day
-                                    .subtract(const Duration(days: 365)),
-                                lastDate: controller.day
-                                    .add(const Duration(days: 365)));
+                              context: context,
+                              initialDate: controller.day,
+                              firstDate: controller.day
+                                  .subtract(const Duration(days: 365)),
+                              lastDate: controller.day.add(
+                                const Duration(days: 365),
+                              ),
+                            );
 
                             controller.updateDate(pickDate: pickDate,cae: widget.cae as bool);
                           },
+
                           icon: const Icon(
                             Icons.calendar_today_rounded,
                             color: AppColors.green300,
@@ -86,37 +97,50 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                     ],
                   ),
                 ),
+
                 Visibility(
                   visible: controller.dailyStatus.isNotEmpty,
+
                   replacement: const WithoutResults(
                       msg: 'Nenhuma solicitação encontrada'),
+
                   child: Expanded(
                     child: ListView.builder(
                         shrinkWrap: true,
+
                         itemBuilder: (context, index) {
                           var status = controller.dailyStatus.keys
                               .elementAt(index)
                               .toString();
+
                           var meal = controller.dailyStatus[status]!.keys;
+
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+
                             children: [
                               const Divider(),
+
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 8.0),
+
                                 child: Text(
                                   controller.dailyStatus.keys.elementAt(index),
                                   style: AppTextStyle.normalText,
                                 ),
                               ),
+
                               ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: meal.length,
+
                                   itemBuilder: (context, indexMeal) {
                                     var keyMeal = meal.elementAt(indexMeal);
+
                                     var valuesMeal = controller
                                         .dailyStatus[status]![keyMeal];
+
                                     return CommonTileReport(
                                         function: () =>
                                             Navigator.of(context).pushNamed(
@@ -135,6 +159,7 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                                                     .toList(),
                                               ),
                                             ),
+
                                         status: status,
                                         title: keyMeal,
                                         subtitle:
@@ -143,6 +168,7 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                             ],
                           );
                         },
+                        
                         itemCount: controller.dailyStatus.keys.length),
                   ),
                 )

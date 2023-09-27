@@ -28,25 +28,32 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+
         title: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+
             children: [
-              Text(DateUtil.todayDate(DateUtil.dateTimeNow),
-                  style: AppTextStyle.labelBig
-                      .copyWith(fontWeight: FontWeight.w700)),
+              Text(
+                DateUtil.todayDate(DateUtil.dateTimeNow),
+                style:
+                    AppTextStyle.labelBig.copyWith(fontWeight: FontWeight.w700),
+              ),
               const Text('Restaurante', style: AppTextStyle.labelMedium)
             ],
           ),
         ),
+
         actions: [
           IconButton(
             icon: const Icon(
               Icons.logout,
             ),
+
             onPressed: () {
               controller.onLogoutTap();
+
               Navigator.of(context)
                   .pushNamedAndRemoveUntil(AppRouter.admLoginRoute, (route) => false);
             },
@@ -56,19 +63,25 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
+
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+
                 children: [
                   Center(
-                      child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Image.asset(
-                      'assets/images/Restaurant.png',
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+
+                      child: Image.asset(
+                        'assets/images/Restaurant.png',
+                      ),
                     ),
-                  )),
+                  ),
+
                   CommonTileOptions(
                     leading: Icons.qr_code_scanner_rounded,
                     label: 'Validar Ticket',
@@ -77,6 +90,7 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
                       AppRouter.qrRoute,
                     ),
                   ),
+                  
                   CommonTileOptions(
                     leading: Icons.description_rounded,
                     label: 'Relatórios',

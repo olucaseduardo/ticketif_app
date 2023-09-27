@@ -88,14 +88,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-
+            
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(16),
-
+            
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+            
                       children: [
                         Flexible(
                           child: Text(
@@ -104,7 +104,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 .copyWith(fontWeight: FontWeight.w700),
                           ),
                         ),
-
+            
                         CommonButton(
                           label: 'Solicitar um ticket',
                           textPadding: 8,
@@ -121,23 +121,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ],
                     ),
                   ),
-
+            
                   const Divider(
                     height: 1,
                     thickness: 1.5,
                     color: AppColors.gray800,
                   ),
-
+            
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-
+            
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-
+            
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 18),
-
+            
                           child: Text(
                             'Suas refeições de hoje',
                             style: AppTextStyle.labelBig.copyWith(
@@ -145,13 +145,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 color: AppColors.gray200),
                           ),
                         ),
-
+            
                         controller.todayTickets!.isNotEmpty 
                           && todayTicket != null
                             ? Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 6.0),
-
+            
                                 child: CommonTicketWidget(
                                   ticket: todayTicket,
                                   function: () => controller.changeTicket(
@@ -160,7 +160,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               )
                             : Padding(
                                 padding: EdgeInsets.symmetric(vertical: 20.h),
-
+            
                                 child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
@@ -169,10 +169,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                             fontSize: 12.sp,
                                             color: AppColors.gray400))),
                               ),
-
+            
                         Padding(
                           padding: EdgeInsets.only(bottom: 18.h),
-
+            
                           child: Text(
                             'Outras opções',
                             style: AppTextStyle.labelBig.copyWith(
@@ -184,7 +184,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         CommonTileOptions(
                           leading: Icons.menu_rounded,
                           label: 'Seus tickets',
-
+            
                           function: () => Navigator.pushNamed(
                             context,
                             AppRouter.historicRoute,
@@ -196,7 +196,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-
+            
                         CommonTileOptions(
                           leading: Icons.access_time_rounded,
                           label: 'Histórico',

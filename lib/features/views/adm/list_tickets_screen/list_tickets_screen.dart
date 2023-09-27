@@ -30,16 +30,25 @@ class ListTicketsScreen extends StatelessWidget {
           ],
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
-            Text(description, style: AppTextStyle.labelBig.copyWith(color: AppColors.gray400),),
+            Text(
+              description,
+              style: AppTextStyle.labelBig.copyWith(color: AppColors.gray400),
+            ),
+
             const Divider(),
+
             Expanded(
               child: ListView.builder(
                 itemCount: tickets.length,
+                
                 itemBuilder: (_, index) => CommonTileTicket(
                   title: tickets.elementAt(index).student,
                   subtitle: tickets.elementAt(index).studentName,

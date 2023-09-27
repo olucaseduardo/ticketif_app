@@ -17,33 +17,40 @@ class DialogForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: AppColors.white,
+
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(20.0),
         ),
       ),
+
       title: Text(
         title,
         style: AppTextStyle.largeText,
       ),
+
       content: Text(
         message,
         style: AppTextStyle.normalText,
       ),
+
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context, false),
+          
           child: Text(
             'Não',
             style: AppTextStyle.normalText
                 .copyWith(color: AppColors.red, fontWeight: FontWeight.bold),
           ),
         ),
+
         TextButton(
           onPressed: () {
             action!();
             Navigator.pop(context, true);
           },
+
           child: Text(
             'Sim',
             style: AppTextStyle.normalText.copyWith(

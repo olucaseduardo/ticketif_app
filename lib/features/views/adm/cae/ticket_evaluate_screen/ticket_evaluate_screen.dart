@@ -59,31 +59,40 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
         Navigator.pop(context, controller.filteredTickets);
         return Future.value(false);
       },
+      
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context, controller.filteredTickets);
-              },
-              icon: const Icon(Icons.arrow_back_rounded)),
+            onPressed: () {
+              Navigator.pop(context, controller.filteredTickets);
+            },
+            icon: const Icon(Icons.arrow_back_rounded),
+          ),
+
           title: Text(widget.title),
+
           actions: [
             IconButton(
               onPressed: () {
                 if (controller.isLoading) return;
                 controller.isSelected(widget.tickets);
               },
+
               icon: Icon(controller.selectAll
                   ? Icons.check_box
                   : Icons.check_box_outline_blank),
             )
           ],
         ),
+
         body: Padding(
           padding: const EdgeInsets.all(20),
+
           child: Visibility(
             visible: !controller.isLoading,
+
             replacement: Loader.loader(),
+
             child: Column(
               children: [
                 TextField(
@@ -99,16 +108,21 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                 ),
+
                 const SizedBox(
                   height: 20,
                 ),
+
                 Visibility(
                   visible: controller.filteredTickets.isNotEmpty,
+
                   replacement: const WithoutResults(
                       msg: 'Nenhuma solicitação encontrada'),
+
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredTickets.length,
+
                       itemBuilder: (context, index) => CommonTileTicket(
                         title:
                             controller.filteredTickets.elementAt(index).student,
@@ -132,18 +146,22 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
             ),
           ),
         ),
+
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
+
           child: Row(
             children: [
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+
                   onPressed: () {
                     if (continueSolicitation()) {
                       controller.solicitation(7);
                     }
                   },
+
                   child: const Text(
                     'Recusar',
                     // style: Style.buttonTextStyle,
@@ -162,6 +180,7 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                       controller.solicitation(2);
                     }
                   },
+                  
                   child: const Text(
                     'Aprovar',
                     // style: Style.buttonTextStyle,

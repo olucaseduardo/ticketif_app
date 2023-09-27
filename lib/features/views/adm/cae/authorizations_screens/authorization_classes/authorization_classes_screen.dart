@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
-// import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
-// import 'package:project_ifma_ticket/features/dto/student_authorization.dart';
-// import 'package:project_ifma_ticket/features/models/authorization.dart';
-// import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
@@ -47,19 +43,26 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
+
       body: Visibility(
         visible: !controller.isLoading,
+
         replacement: Loader.loader(),
+
         child: Padding(
           padding: const EdgeInsets.all(20),
+
           child: Visibility(
             visible: !controller.error,
+
             replacement: const ErrorResults(
               msg: 'Voltar para a tela de início',
               msgError: 'Erro ao carregar as solicitações por turmas',
             ),
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 TextField(
                   onChanged: (value) => controller.filterClasses(value),
@@ -74,21 +77,29 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
                     ),
                   ),
                 ),
+
                 const SizedBox(
                   height: 8,
                 ),
+
                 const Divider(),
+
                 const Text("Turmas"),
+
                 const SizedBox(
                   height: 8,
                 ),
+
                 Visibility(
                   visible: controller.filteredClasses.isNotEmpty,
+
                   replacement: const WithoutResults(
                       msg: 'Nenhuma solicitação encontrada'),
+
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredClasses.length,
+                      
                       itemBuilder: (context, index) => CommonTileClass(
                           title:
                               'Turma: ${controller.sortedAuthorizationClasses.keys.elementAt(index)}',

@@ -28,25 +28,34 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+
         title: Padding(
           padding: const EdgeInsets.all(8),
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+
             children: [
-              Text(DateUtil.todayDate(DateUtil.dateTimeNow),
-                  style: AppTextStyle.labelBig
-                      .copyWith(fontWeight: FontWeight.w700)),
+              Text(
+                DateUtil.todayDate(DateUtil.dateTimeNow),
+                style:
+                    AppTextStyle.labelBig.copyWith(fontWeight: FontWeight.w700),
+              ),
+
               const Text('Administrador', style: AppTextStyle.labelMedium)
             ],
           ),
         ),
+        
         actions: [
           IconButton(
             icon: const Icon(
               Icons.logout,
             ),
+
             onPressed: () {
               controller.onLogoutTap();
+
               Navigator.of(context).pushNamedAndRemoveUntil(
                   AppRouter.admLoginRoute, (route) => false);
             },
@@ -56,43 +65,58 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
+
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+
                 children: [
                   Center(
-                      child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Image.asset(
-                      'assets/images/CAE.png',
-                      width: 207,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+
+                      child: Image.asset(
+                        'assets/images/CAE.png',
+                        width: 207,
+                      ),
                     ),
-                  )),
+                  ),
+
                   CommonTileOptions(
                     leading: Icons.local_restaurant_rounded,
                     label: 'Tickets Diários',
                     function: () => Navigator.pushNamed(
-                        context, AppRouter.caeClassesRoute,
-                        arguments: ScreenArguments(
-                            isPermanent: false, title: 'Tickets Diários')),
+                      context,
+                      AppRouter.caeClassesRoute,
+                      arguments: ScreenArguments(
+                          isPermanent: false, title: 'Tickets Diários'),
+                    ),
                   ),
+
                   CommonTileOptions(
                     leading: Icons.menu_rounded,
                     label: 'Autorizações Permanentes',
                     function: () => Navigator.pushNamed(
-                        context, AppRouter.authorizationClassesRoute,
-                        arguments:
-                            ScreenArguments(title: 'Autorizações Permanentes')),
+                      context,
+                      AppRouter.authorizationClassesRoute,
+                      arguments:
+                          ScreenArguments(title: 'Autorizações Permanentes'),
+                    ),
                   ),
+
                   CommonTileOptions(
                     leading: Icons.description_rounded,
                     label: 'Relatório Diário',
                     function: () => Navigator.pushNamed(
-                        context, AppRouter.dailyReportRoute,
-                        arguments: ScreenArguments(cae: true)),
+                      context,
+                      AppRouter.dailyReportRoute,
+                      arguments: ScreenArguments(cae: true),
+                    ),
                   ),
+
                   CommonTileOptions(
                     leading: Icons.calendar_month_rounded,
                     label: 'Relatório por Periódo',
@@ -101,6 +125,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                       AppRouter.caePeriodReportRoute,
                     ),
                   ),
+                  
                   CommonTileOptions(
                     leading: Icons.confirmation_number_rounded,
                     label: 'Solicitar Ticket',
