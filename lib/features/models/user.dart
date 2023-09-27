@@ -13,6 +13,27 @@ class User {
     required this.type,
   });
 
+  String get username {
+    List<String> words = name.split(' ');
+    String firstName = words[0];
+    String lastName = words[words.length - 1];
+    String middleInitials = '';
+
+    for (int i = 1; i < words.length - 1; i++) {
+      String part = words[i];
+
+      part[0] == part[0].toLowerCase()
+          ? middleInitials += '$part '
+          : middleInitials += '${part[0]}. ';
+    }
+
+    if (middleInitials == '') {
+      return '$firstName $lastName';
+    } else {
+      return '$firstName $middleInitials$lastName';
+    }
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,

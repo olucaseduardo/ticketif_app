@@ -72,7 +72,7 @@ class HistoricScreen extends ConsumerWidget {
                 physics: const AlwaysScrollableScrollPhysics(),
               )
             : Center(
-                child: Text('Sem tickets no seu $title'),
+                child: Text(title == 'Histórico' ? 'Sem tickets no seu $title' : 'Sem tickets no momento'),
               ));
   }
 }

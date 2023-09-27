@@ -99,7 +99,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       children: [
                         Flexible(
                           child: Text(
-                            'Olá, ${controller.user?.name ?? ''}',
+                            'Olá, ${controller.user?.username?? ''}',
                             style: AppTextStyle.labelBig
                                 .copyWith(fontWeight: FontWeight.w700),
                           ),
