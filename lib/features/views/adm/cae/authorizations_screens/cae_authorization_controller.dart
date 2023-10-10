@@ -41,6 +41,8 @@ class CaeAuthorizationController extends ChangeNotifier {
 
       authorizations = tickets;
 
+      log("Load Authorizations :: ${authorizations!.length.toString()}");
+
       _processAuthorizations();
 
       loading();
@@ -112,7 +114,7 @@ class CaeAuthorizationController extends ChangeNotifier {
         authorizationClasses.entries.toList()
           ..sort((element1, element2) => element1.key.compareTo(element2.key)));
     filteredClasses.addAll(sortedAuthorizationClasses.keys.toList());
-    log("dailyClasses :: ${sortedAuthorizationClasses.toString()}");
+    log("AuthorizationsClasses :: ${sortedAuthorizationClasses.toString()}");
   }
 
   ///Função de error
@@ -245,8 +247,9 @@ class CaeAuthorizationController extends ChangeNotifier {
     for (int index = 0; index < authorizations.keys.length; index++) {
       StudentAuthorization studentAuthorization = StudentAuthorization(
           matricula: authorizations.keys.elementAt(index),
-          idStudent:
-              authorizations[authorizations.keys.elementAt(index)]!.first.studentId,
+          idStudent: authorizations[authorizations.keys.elementAt(index)]!
+              .first
+              .studentId,
           text: authorizations[authorizations.keys.elementAt(index)]!
               .first
               .justification,
@@ -256,5 +259,25 @@ class CaeAuthorizationController extends ChangeNotifier {
       filteredAuthorizations.add(studentAuthorization);
       selectedAuthorizations.add(studentAuthorization);
     }
+  }
+
+  List<StudentAuthorization> studentsAuthorizationsList(
+      Map<String, List<Authorization>> authorizations) {
+    List<StudentAuthorization> list = [];
+    for (int index = 0; index < authorizations.keys.length; index++) {
+      StudentAuthorization studentAuthorization = StudentAuthorization(
+          matricula: authorizations.keys.elementAt(index),
+          idStudent: authorizations[authorizations.keys.elementAt(index)]!
+              .first
+              .studentId,
+          text: authorizations[authorizations.keys.elementAt(index)]!
+              .first
+              .justification,
+          meal:
+              authorizations[authorizations.keys.elementAt(index)]!.first.meal,
+          days: getDays(authorizations[authorizations.keys.elementAt(index)]!));
+      list.add(studentAuthorization);
+    }
+    return list;
   }
 }

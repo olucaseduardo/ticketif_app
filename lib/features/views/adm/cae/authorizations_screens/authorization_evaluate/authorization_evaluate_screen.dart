@@ -7,6 +7,7 @@ import 'package:project_ifma_ticket/core/services/providers.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
 // import 'package:project_ifma_ticket/features/dto/student_authorization.dart';
 import 'package:project_ifma_ticket/features/models/authorization.dart';
+import 'package:project_ifma_ticket/features/models/student_authorization.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
@@ -42,8 +43,11 @@ class _AuthorizationEvaluateScreenState
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(caePermanentProvider);
-    Map<String, List<Authorization>> allAuthorizations = widget.authorizations;
-    final lengthTickets = allAuthorizations.keys.length;
+    // Map<String, List<Authorization>> allAuthorizations = widget.authorizations;
+
+    List<StudentAuthorization> allStudents =
+        controller.studentsAuthorizationsList(widget.authorizations);
+    final lengthTickets = allStudents.length;
     List<String> selectedStudents = [];
 
     log('Selected ${controller.selectedAuthorizations.length.toString()}');
@@ -72,7 +76,6 @@ class _AuthorizationEvaluateScreenState
         Navigator.pop(context, selectedStudents);
         return Future.value(false);
       },
-
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -81,16 +84,13 @@ class _AuthorizationEvaluateScreenState
             },
             icon: const Icon(Icons.arrow_back_rounded),
           ),
-          
           title: Text(widget.title),
-          
           actions: [
             IconButton(
               onPressed: () {
                 if (controller.isLoading) return;
                 controller.isSelected(controller.filteredAuthorizations);
               },
-
               icon: Icon(controller.selectAll
                   ? Icons.check_box
                   : Icons.check_box_outline_blank),
@@ -99,24 +99,21 @@ class _AuthorizationEvaluateScreenState
         ),
         body: Padding(
           padding: const EdgeInsets.all(20),
-
           child: Visibility(
             visible: !controller.isLoading,
 
             replacement: Loader.loader(),
-
+            // TODO: Arrumar a busca dos estudantes
             child: Column(
               children: [
                 TextField(
-                  onChanged: (value) => controller.filterAuthorizations(
-                      value, controller.filteredAuthorizations),
-
+                  onChanged: (value) =>
+                      controller.filterAuthorizations(value, allStudents),
                   decoration: const InputDecoration(
                     fillColor: AppColors.gray800,
                     filled: true,
                     hintText: "Busca",
                     prefixIcon: Icon(Icons.search, color: AppColors.green500),
-
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(
@@ -125,21 +122,16 @@ class _AuthorizationEvaluateScreenState
                     ),
                   ),
                 ),
-
                 const SizedBox(
                   height: 20,
                 ),
-
                 Visibility(
                   visible: controller.filteredAuthorizations.isNotEmpty,
-
                   replacement: const WithoutResults(
                       msg: 'Nenhuma solicitação encontrada'),
-
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredAuthorizations.length,
-
                       itemBuilder: (context, index) => CommonTileTicket(
                         title:
                             controller.filteredAuthorizations[index].matricula,
@@ -163,16 +155,13 @@ class _AuthorizationEvaluateScreenState
             ),
           ),
         ),
-
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-
           child: Row(
             children: [
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-
                   onPressed: () {
                     if (continueSolicitation()) {
                       controller.changedAuthorizations(2);
@@ -181,18 +170,15 @@ class _AuthorizationEvaluateScreenState
                       Navigator.pop(context, selectedStudents);
                     }
                   },
-
                   child: const Text(
                     'Recusar',
                     style: AppTextStyle.buttonTextStyle,
                   ),
                 ),
               ),
-
               const SizedBox(
                 width: 10,
               ),
-
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
@@ -204,7 +190,6 @@ class _AuthorizationEvaluateScreenState
                       // return Future.value(false);
                     }
                   },
-                  
                   child: const Text(
                     'Aprovar',
                     style: AppTextStyle.buttonTextStyle,

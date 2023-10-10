@@ -43,26 +43,19 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-
       body: Visibility(
         visible: !controller.isLoading,
-
         replacement: Loader.loader(),
-
         child: Padding(
           padding: const EdgeInsets.all(20),
-
           child: Visibility(
             visible: !controller.error,
-
             replacement: const ErrorResults(
               msg: 'Voltar para a tela de início',
               msgError: 'Erro ao carregar as solicitações por turmas',
             ),
-
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
               children: [
                 TextField(
                   onChanged: (value) => controller.filterClasses(value),
@@ -77,32 +70,23 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
                     ),
                   ),
                 ),
-
                 const SizedBox(
                   height: 8,
                 ),
-
                 const Divider(),
-
                 const Text("Turmas"),
-
                 const SizedBox(
                   height: 8,
                 ),
-
                 Visibility(
                   visible: controller.filteredClasses.isNotEmpty,
-
                   replacement: const WithoutResults(
                       msg: 'Nenhuma solicitação encontrada'),
-
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredClasses.length,
-                      
                       itemBuilder: (context, index) => CommonTileClass(
-                          title:
-                              'Turma: ${controller.sortedAuthorizationClasses.keys.elementAt(index)}',
+                          title: 'Turma: ${controller.filteredClasses[index]}',
                           subtitle:
                               'Total: ${controller.sortedAuthorizationClasses[controller.filteredClasses[index]]!.length}',
                           // function: (){}, )
@@ -111,12 +95,10 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
                               context,
                               AppRouter.authorizationEvaluateRoute,
                               arguments: ScreenArguments(
-                                  title: controller
-                                      .sortedAuthorizationClasses.keys
-                                      .elementAt(index),
-                                  authorizations: controller
-                                      .sortedAuthorizationClasses.values
-                                      .elementAt(index)),
+                                  title: controller.filteredClasses[index],
+                                  authorizations:
+                                      controller.sortedAuthorizationClasses[
+                                          controller.filteredClasses[index]]),
                             );
                             controller.updateClasses(
                                 list as List<String>, index);
