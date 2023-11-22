@@ -3,9 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
-// import 'package:project_ifma_ticket/core/utils/date_util.dart';
 import 'package:project_ifma_ticket/core/utils/loader.dart';
-// import 'package:project_ifma_ticket/features/dto/student_authorization.dart';
 import 'package:project_ifma_ticket/features/models/authorization.dart';
 import 'package:project_ifma_ticket/features/models/student_authorization.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
@@ -29,8 +27,7 @@ class AuthorizationEvaluateScreen extends ConsumerStatefulWidget {
       _AuthorizationEvaluateScreenState();
 }
 
-class _AuthorizationEvaluateScreenState
-    extends ConsumerState<AuthorizationEvaluateScreen> {
+class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvaluateScreen> {
   @override
   void initState() {
     super.initState();
@@ -43,7 +40,6 @@ class _AuthorizationEvaluateScreenState
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(caePermanentProvider);
-    // Map<String, List<Authorization>> allAuthorizations = widget.authorizations;
 
     List<StudentAuthorization> allStudents =
         controller.studentsAuthorizationsList(widget.authorizations);
@@ -84,13 +80,16 @@ class _AuthorizationEvaluateScreenState
             },
             icon: const Icon(Icons.arrow_back_rounded),
           ),
+
           title: Text(widget.title),
+
           actions: [
             IconButton(
               onPressed: () {
                 if (controller.isLoading) return;
                 controller.isSelected(controller.filteredAuthorizations);
               },
+
               icon: Icon(controller.selectAll
                   ? Icons.check_box
                   : Icons.check_box_outline_blank),
@@ -99,16 +98,18 @@ class _AuthorizationEvaluateScreenState
         ),
         body: Padding(
           padding: const EdgeInsets.all(20),
+
           child: Visibility(
             visible: !controller.isLoading,
 
             replacement: Loader.loader(),
-            // TODO: Arrumar a busca dos estudantes
+
             child: Column(
               children: [
                 TextField(
                   onChanged: (value) =>
                       controller.filterAuthorizations(value, allStudents),
+
                   decoration: const InputDecoration(
                     fillColor: AppColors.gray800,
                     filled: true,
@@ -122,16 +123,21 @@ class _AuthorizationEvaluateScreenState
                     ),
                   ),
                 ),
+
                 const SizedBox(
                   height: 20,
                 ),
+
                 Visibility(
                   visible: controller.filteredAuthorizations.isNotEmpty,
+
                   replacement: const WithoutResults(
                       msg: 'Nenhuma solicitação encontrada'),
+
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredAuthorizations.length,
+
                       itemBuilder: (context, index) => CommonTileTicket(
                         title:
                             controller.filteredAuthorizations[index].matricula,
@@ -140,12 +146,16 @@ class _AuthorizationEvaluateScreenState
                         justification:
                             controller.filteredAuthorizations[index].text,
                         selected: controller.selectedAuthorizations.contains(
-                                controller.filteredAuthorizations[index])
+                                controller.filteredAuthorizations[index],
+                            )
                             ? true
                             : false,
+
                         function: () => controller.verifySelected(
-                            controller.filteredAuthorizations[index],
-                            lengthTickets),
+                          controller.filteredAuthorizations[index],
+                          lengthTickets,
+                        ),
+
                         check: true,
                       ),
                     ),
@@ -155,13 +165,16 @@ class _AuthorizationEvaluateScreenState
             ),
           ),
         ),
+
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
+
           child: Row(
             children: [
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+
                   onPressed: () {
                     if (continueSolicitation()) {
                       controller.changedAuthorizations(2);
@@ -170,15 +183,18 @@ class _AuthorizationEvaluateScreenState
                       Navigator.pop(context, selectedStudents);
                     }
                   },
+
                   child: const Text(
                     'Recusar',
                     style: AppTextStyle.buttonTextStyle,
                   ),
                 ),
               ),
+
               const SizedBox(
                 width: 10,
               ),
+
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
@@ -190,6 +206,7 @@ class _AuthorizationEvaluateScreenState
                       // return Future.value(false);
                     }
                   },
+
                   child: const Text(
                     'Aprovar',
                     style: AppTextStyle.buttonTextStyle,

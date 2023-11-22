@@ -85,9 +85,9 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
                                 context: context,
                                 initialEntryMode: DatePickerEntryMode.calendar,
                                 firstDate: DateTime(
-                                    2022, 1, 1), // the earliest allowable
+                                    2022, 1, 1,), // the earliest allowable
                                 lastDate: DateTime(
-                                    2025, 12, 31), // the latest allowable
+                                    2025, 12, 31,), // the latest allowable
                                 currentDate: DateUtil.dateTimeNow,
                                 saveText: 'Salvar',
                               );

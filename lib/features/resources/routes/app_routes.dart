@@ -43,83 +43,108 @@ class AppRouter {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final ScreenArguments? args = settings.arguments as ScreenArguments?;
+
     switch (settings.name) {
       case loginRoute:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+
       case admLoginRoute:
         return MaterialPageRoute(builder: (_) => const LoginAdmScreen());
+
       case homeRoute:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+
       case historicRoute:
         return MaterialPageRoute(
-            builder: (_) => HistoricScreen(
-                  title: args!.title as String,
-                  userTickets: args.tickets as List<Ticket>,
-                ));
+          builder: (_) => HistoricScreen(
+            title: args!.title as String,
+            userTickets: args.tickets as List<Ticket>,
+          ),
+        );
+
       case requestTicketRoute:
         return MaterialPageRoute(
-            builder: (_) => RequestTicket(
-                  title: args?.title,
-                  caeRequest: args?.cae,
-                  idStudent: args?.idStudent,
-                ));
+          builder: (_) => RequestTicket(
+            title: args?.title,
+            caeRequest: args?.cae,
+            idStudent: args?.idStudent,
+          ),
+        );
 
       // CAE ROUTES
       case caeHomeRoute:
         return MaterialPageRoute(builder: (_) => const CaeHomeScreen());
+
       case caeClassesRoute:
         return MaterialPageRoute(
-            builder: (_) => ClassesScreen(
-                  title: args?.title as String,
-                  isPermanent: args?.isPermanent as bool,
-                ));
+          builder: (_) => ClassesScreen(
+            title: args?.title as String,
+            isPermanent: args?.isPermanent as bool,
+          ),
+        );
+
       case authorizationClassesRoute:
         return MaterialPageRoute(
-            builder: (_) => AuthorizationClassesScreen(
-                  title: args?.title as String,
-                ));
+          builder: (_) => AuthorizationClassesScreen(
+            title: args?.title as String,
+          ),
+        );
 
       case authorizationEvaluateRoute:
         return MaterialPageRoute(
             builder: (_) => AuthorizationEvaluateScreen(
-                  title: args?.title as String,
-                  authorizations:
-                      args!.authorizations as Map<String, List<Authorization>>,
-                ));
+            title: args?.title as String,
+            authorizations:
+                args!.authorizations as Map<String, List<Authorization>>,
+          ),
+        );
+
       case dailyReportRoute:
         return MaterialPageRoute(
-            builder: (_) => DailyReportScreen(
-                  cae: args!.cae as bool,
-                ));
+          builder: (_) => DailyReportScreen(
+            cae: args!.cae as bool,
+          ),
+        );
+
       case caePeriodReportRoute:
         return MaterialPageRoute(builder: (_) => const PeriodReportScreen());
+
       case caeTicketEvaluateRoute:
         return MaterialPageRoute(
-            builder: (_) => TicketEvaluateScreen(
-                  title: args!.title as String,
-                  tickets: args.tickets as List<Ticket>,
-                ));
+          builder: (_) => TicketEvaluateScreen(
+            title: args!.title as String,
+            tickets: args.tickets as List<Ticket>,
+          ),
+        );
+
       case listTickets:
         return MaterialPageRoute(
-            builder: (_) => ListTicketsScreen(
-                  title: args!.title as String,
-                  tickets: args.tickets as List<Ticket>,
-                  description: args.description as String,
-                  subtitle: args.subtitle as String,
-                ));
+          builder: (_) => ListTicketsScreen(
+            title: args!.title as String,
+            tickets: args.tickets as List<Ticket>,
+            description: args.description as String,
+            subtitle: args.subtitle as String,
+          ),
+        );
+
       case caeSearchStudentRoute:
         return MaterialPageRoute(builder: (_) => const SearchStudentScreen());
+
       case qrRoute:
         return MaterialPageRoute(builder: (_) => const QrScreen());
+
       case restaurantHomeRoute:
         return MaterialPageRoute(builder: (_) => const RestaurantScreen());
+
       case authCheck:
         return MaterialPageRoute(builder: (_) => const AuthCheck());
+
       default:
         return MaterialPageRoute(
-            builder: (_) => const RouteErrorScreen(
-                title: 'Rota não encontrada',
-                message: 'Erro! A rota {settings.name} não foi encontrada.'));
+          builder: (_) => const RouteErrorScreen(
+              title: 'Rota não encontrada',
+              message: 'Erro! A rota {settings.name} não foi encontrada.'),
+        );
     }
   }
 }

@@ -13,24 +13,30 @@ class CommonTileClass extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: function,
+
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
+
         child: Container(
           decoration: BoxDecoration(
             color: AppColors.gray900,
             borderRadius: BorderRadius.circular(4),
           ),
+
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+
                     children: [
                       Text(
                         title,
@@ -40,9 +46,11 @@ class CommonTileClass extends StatelessWidget {
                           color: AppColors.gray400,
                         ),
                       ),
+
                       const SizedBox(
                          height: 2,
                       ),
+
                       Text(
                         subtitle,
                         style: const TextStyle(
@@ -54,6 +62,7 @@ class CommonTileClass extends StatelessWidget {
                     ],
                   ),
                 ),
+                
                 const Icon(
                   Icons.arrow_forward_rounded,
                   color: AppColors.gray400,

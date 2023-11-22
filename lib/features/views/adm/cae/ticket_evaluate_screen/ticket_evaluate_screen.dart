@@ -164,7 +164,6 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
 
                   child: const Text(
                     'Recusar',
-                    // style: Style.buttonTextStyle,
                   ),
                 ),
               ),
@@ -172,7 +171,7 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
               const SizedBox(
                 width: 10,
               ),
-              // Style.formSizedBox,
+
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
@@ -183,7 +182,6 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                   
                   child: const Text(
                     'Aprovar',
-                    // style: Style.buttonTextStyle,
                   ),
                 ),
               ),

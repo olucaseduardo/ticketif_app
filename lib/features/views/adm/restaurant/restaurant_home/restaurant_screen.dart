@@ -60,6 +60,7 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
           ),
         ],
       ),
+      
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,8 +96,9 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
                     leading: Icons.description_rounded,
                     label: 'Relatórios',
                     function: () => Navigator.pushNamed(
-                        context, AppRouter.dailyReportRoute,
-                        arguments: ScreenArguments(cae: false)),
+                      context, AppRouter.dailyReportRoute,
+                      arguments: ScreenArguments(cae: false),
+                    ),
                   ),
                 ],
               ),

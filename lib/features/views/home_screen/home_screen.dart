@@ -70,7 +70,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ],
             )
           : const PreferredSize(
-              preferredSize: Size(0, 0), child: SizedBox.shrink()),
+              preferredSize: Size(0, 0), child: SizedBox.shrink(),
+            ),
               
       body: Visibility(
         visible: !controller.isLoading,
@@ -162,12 +163,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 padding: EdgeInsets.symmetric(vertical: 20.h),
             
                                 child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                        'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
-                                        style: TextStyle(
-                                            fontSize: 12.sp,
-                                            color: AppColors.gray400))),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: AppColors.gray400,
+                                    ),
+                                  ),
+                                ),
                               ),
             
                         Padding(
@@ -212,10 +216,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
-            )),
+            ),
+          ),
       ),
     );
   }

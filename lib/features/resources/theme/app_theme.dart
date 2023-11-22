@@ -35,19 +35,25 @@ mixin TicketTheme {
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(AppColors.green500),
-      elevation: MaterialStateProperty.all<double>(0),
-      shape: MaterialStateProperty.all<OutlinedBorder>(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(AppColors.green500),
+        elevation: MaterialStateProperty.all<double>(0),
+
+        shape: MaterialStateProperty.all<OutlinedBorder>(
           const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-      )),
-    )),
+            borderRadius: BorderRadius.all(
+              Radius.circular(4),
+            ),
+          ),
+        ),
+      ),
+    ),
 
     checkboxTheme: CheckboxThemeData(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         side: const BorderSide(color: AppColors.green800),
-        fillColor: MaterialStateProperty.all(AppColors.green500)),
+        fillColor: MaterialStateProperty.all(AppColors.green500),
+    ),
 
     inputDecorationTheme: InputDecorationTheme(
       errorBorder: _errorBorder,

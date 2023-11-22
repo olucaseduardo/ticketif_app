@@ -177,6 +177,7 @@ class RequestTicket extends ConsumerWidget {
           ),
         ),
       ),
+      
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20),
         

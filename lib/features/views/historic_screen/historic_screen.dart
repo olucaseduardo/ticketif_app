@@ -31,19 +31,24 @@ class HistoricScreen extends ConsumerWidget {
                 style: TextStyle(
                     color: AppColors.gray200,
                     fontSize: 18.sp,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w700,
+                  ),
               ),
 
               flexibleSpace: Padding(
-                  padding: EdgeInsets.only(top: 90.h, left: 20.w, right: 20.w),
+                padding: EdgeInsets.only(top: 90.h, left: 20.w, right: 20.w),
 
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(title, style: AppTextStyle.largeText))
-                      ])),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(title, style: AppTextStyle.largeText),
+                    ),
+                  ],
+                ),
+            ),
 
               leading: IconButton(
                   onPressed: () {
@@ -58,21 +63,22 @@ class HistoricScreen extends ConsumerWidget {
             )),
 
         body: userTickets.isNotEmpty
-            ? ListView.builder(
-                itemBuilder: (context, i) => Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  
-                  child: CommonTicketWidget(
-                    ticket: userTickets.elementAt(i),
-                    isTap: false,
-                  ),
+          ? ListView.builder(
+              itemBuilder: (context, i) => Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                
+                child: CommonTicketWidget(
+                  ticket: userTickets.elementAt(i),
+                  isTap: false,
                 ),
+              ),
 
-                itemCount: userTickets.length, // controller.countOne,
-                physics: const AlwaysScrollableScrollPhysics(),
-              )
-            : Center(
-                child: Text(title == 'Histórico' ? 'Sem tickets no seu $title' : 'Sem tickets no momento'),
-              ));
+              itemCount: userTickets.length, // controller.countOne,
+              physics: const AlwaysScrollableScrollPhysics(),
+            )
+          : Center(
+              child: Text(title == 'Histórico' ? 'Sem tickets no seu $title' : 'Sem tickets no momento'),
+            ),
+          );
   }
 }

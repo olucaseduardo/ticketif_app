@@ -20,37 +20,46 @@ class CommonTileReport extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: function,
+
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
+
         child: Container(
           decoration: BoxDecoration(
             color: AppColors.gray900,
             borderRadius: BorderRadius.circular(4),
           ),
+
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
+
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
               children: [
                 Row(
                   children: [
                     Container(
                       height: 40,
                       width: 40,
+
                       decoration: BoxDecoration(
                         color: TicketStatus.statusImage(status).$2,
                         borderRadius: BorderRadius.circular(40),
                       ),
+
                       child: Icon(
                         TicketStatus.statusImage(status).$1,
                         weight: 40,
                         color: Colors.white,
                       ),
                     ),
+
                     const SizedBox(
                       width: 10,
                     ),
+
                     Text(
                       title,
                       style: const TextStyle(
@@ -61,6 +70,7 @@ class CommonTileReport extends StatelessWidget {
                     ),
                   ],
                 ),
+                
                 Text(
                   subtitle,
                   style: const TextStyle(

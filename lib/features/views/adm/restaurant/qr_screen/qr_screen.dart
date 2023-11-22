@@ -51,8 +51,10 @@ class _QrScreenState extends ConsumerState<QrScreen> {
       appBar: AppBar(
         title: const Text('QR CODE'),
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(20.0),
+
         child: Column(
           children: [
             Expanded(
@@ -62,10 +64,12 @@ class _QrScreenState extends ConsumerState<QrScreen> {
                 onQRViewCreated: controller.onQRViewCreated,
               ),
             ),
+
             Expanded(
               flex: 1,
               child: Visibility(
                   visible: controller.isValid,
+
                   replacement: Center(
                     child: Text(
                       controller.result,
@@ -76,6 +80,7 @@ class _QrScreenState extends ConsumerState<QrScreen> {
                   ),
                   child: QrCodeResult(qrResult: controller.qrResult)),
             ),
+            
             Text(
               'Total Validados: ${controller.totalValid.toString()}',
               style: AppTextStyle.titleLarge.copyWith(
