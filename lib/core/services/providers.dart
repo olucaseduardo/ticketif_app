@@ -15,45 +15,59 @@ import 'package:project_ifma_ticket/features/views/adm/restaurant/restaurant_hom
 
 final requestTicketProvider =
     ChangeNotifierProvider.autoDispose<RequestTicketController>(
-        (ref) => RequestTicketController());
+  (ref) => RequestTicketController(),
+);
 
 final homeProvider = ChangeNotifierProvider.autoDispose<HomeController>(
-    (ref) => HomeController());
+  (ref) => HomeController(),
+);
 
-final caeProvider =
-    ChangeNotifierProvider.autoDispose<CaeController>((ref) => CaeController());
+final caeProvider = ChangeNotifierProvider.autoDispose<CaeController>(
+  (ref) => CaeController(),
+);
 
-final classesProvider =
-    ChangeNotifierProvider.autoDispose<ClassesController>((ref) => ClassesController());
+final classesProvider = ChangeNotifierProvider.autoDispose<ClassesController>(
+  (ref) => ClassesController(),
+);
 
 final ticketEvaluateProvider =
-    ChangeNotifierProvider.autoDispose<TicketEvaluateController>((ref) => TicketEvaluateController());
+    ChangeNotifierProvider.autoDispose<TicketEvaluateController>(
+  (ref) => TicketEvaluateController(),
+);
 
 final loginProvider = ChangeNotifierProvider.autoDispose<LoginController>(
-    (ref) => LoginController());
+  (ref) => LoginController(),
+);
 
 final authCheckProvider =
     ChangeNotifierProvider.autoDispose<AuthCheckController>(
-        (ref) => AuthCheckController());
+  (ref) => AuthCheckController(),
+);
 
 final reportProvider = ChangeNotifierProvider.autoDispose<ReportController>(
-    (ref) => ReportController());
+  (ref) => ReportController(),
+);
 
-final periodReportProvider = ChangeNotifierProvider.autoDispose<PeriodReportController>(
-    (ref) => PeriodReportController());
+final periodReportProvider =
+    ChangeNotifierProvider.autoDispose<PeriodReportController>(
+  (ref) => PeriodReportController(),
+);
 
 final restaurantProvider =
     ChangeNotifierProvider.autoDispose<RestaurantController>(
-        (ref) => RestaurantController());
+  (ref) => RestaurantController(),
+);
 
 final caePermanentProvider =
     ChangeNotifierProvider.autoDispose<CaeAuthorizationController>(
-        (ref) => CaeAuthorizationController());
+  (ref) => CaeAuthorizationController(),
+);
 
 final searchStudentProvider =
     ChangeNotifierProvider.autoDispose<SearchStudentController>(
-        (ref) => SearchStudentController());
+  (ref) => SearchStudentController(),
+);
 
-final qrProvider =
-    ChangeNotifierProvider.autoDispose<QrController>(
-        (ref) => QrController());
+final qrProvider = ChangeNotifierProvider.autoDispose<QrController>(
+  (ref) => QrController(),
+);

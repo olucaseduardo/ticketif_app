@@ -117,10 +117,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               controller.isLoading
                                   ? Loader.i.showLoader()
                                   : const SizedBox.shrink();
+
                               await controller.onLoginTap(
                                 matriculaEC.text,
                                 passwordEC.text,
                               );
+                              
                               if (!controller.error) {
                                 nav.pushNamedAndRemoveUntil(
                                     AppRouter.homeRoute, (route) => false);

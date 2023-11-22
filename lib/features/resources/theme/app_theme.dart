@@ -14,7 +14,9 @@ mixin TicketTheme {
     scaffoldBackgroundColor: AppColors.white,
 
     colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.green800, primary: AppColors.green500),
+      seedColor: AppColors.green800,
+      primary: AppColors.green500,
+    ),
 
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.green500,

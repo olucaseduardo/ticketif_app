@@ -163,7 +163,8 @@ class RequestTicket extends ConsumerWidget {
                         .map((e) => e.description)
                         .toList(),
                     onChanged: (value) =>
-                        controller.onJustificationChanged(value)),
+                        controller.onJustificationChanged(value),
+                ),
 
                 CommonTextField(
                   controller: controller.justificationController,

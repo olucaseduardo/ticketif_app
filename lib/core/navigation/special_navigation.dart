@@ -18,10 +18,10 @@ class SpecialNavigation {
 
   void isNotCae() {
     Navigator.pushNamedAndRemoveUntil(
-                  _navigatorKey.currentContext!,
-                  AppRouter.homeRoute,
-                  (route) => false,
-                );
+      _navigatorKey.currentContext!,
+      AppRouter.homeRoute,
+      (route) => false,
+    );
   }
 
   void isCae() {

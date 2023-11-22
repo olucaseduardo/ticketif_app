@@ -45,12 +45,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
 
                   children: [
-                    Text(DateUtil.todayDate(DateUtil.dateTimeNow),
-                        style: AppTextStyle.labelBig
-                            .copyWith(fontWeight: FontWeight.w700)),
+                    Text(
+                      DateUtil.todayDate(DateUtil.dateTimeNow),
+                      style: AppTextStyle.labelBig
+                          .copyWith(fontWeight: FontWeight.w700),
+                    ),
 
-                    Text(controller.user?.matricula ?? '',
-                        style: AppTextStyle.labelMedium)
+                    Text(
+                      controller.user?.matricula ?? '',
+                      style: AppTextStyle.labelMedium,
+                    )
                   ],
                 ),
               ),
@@ -79,6 +83,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
         child: Visibility(
             visible: !controller.error,
+            
             replacement: ErrorResults(
               msg: 'Voltar ao login',
               msgError: 'Erro ao carregar usuario',
