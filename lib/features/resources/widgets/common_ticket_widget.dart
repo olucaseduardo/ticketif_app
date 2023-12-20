@@ -158,9 +158,11 @@ class CommonTicketWidget extends StatelessWidget {
                               function,
                               context,
                             )
-                        : SizedBox(
-                            height: 50.h,
-                            width: 50.w,
+                        : SvgPicture.asset(
+                            path_image.empty,
+                            height: 55,
+                            width: 55,
+                            color: AppColors.green500,
                           ),
                     ),
                   ),

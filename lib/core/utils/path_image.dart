@@ -5,6 +5,7 @@ String authorizedUse = 'assets/svg/status/authorized_used.svg';
 String canceled = 'assets/svg/status/canceled.svg';
 String used = 'assets/svg/status/used.svg';
 String waitPay = 'assets/svg/status/wait_pay.svg';
+String empty = 'assets/svg/status/empty.svg';
 //actions tickets
 String qrCode = 'assets/svg/QrCode.svg';
 String qrPay = 'assets/svg/QrPay.svg';
