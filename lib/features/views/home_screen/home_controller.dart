@@ -8,6 +8,7 @@ import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_re
 import 'package:project_ifma_ticket/features/repositories/user/user_api_repository_impl.dart';
 import 'package:project_ifma_ticket/features/models/ticket.dart';
 import 'package:project_ifma_ticket/features/models/user.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends ChangeNotifier {
@@ -65,7 +66,7 @@ class HomeController extends ChangeNotifier {
       todayTickets!.sort((a, b) => a.idMeal.compareTo(b.idMeal));
 
       // verificando qual o ticket deve ser exibido na homescreen
-      var hour = DateTime.now().hour;
+      final hour = DateTime.now().hour;
       for (var ticket in todayTickets!) {
         if (hour >= 8 && hour <= 12) {
           if (ticket.idMeal == 2) {
@@ -91,11 +92,17 @@ class HomeController extends ChangeNotifier {
   /// Realza a confimação do aluno de que irá almoçar
   Future<void> changeTicket(int idTicket, int status) async {
     int statusId = 1;
+    final hour = DateTime.now().hour;
 
     if (status == 1) {
+      // Cancela o ticket
       statusId = 6;
-    } else if (status == 2) {
+    } else if (status == 2 && (hour > 12 || (hour >= 7 && hour < 9))) {
+      // Confirma presença
       statusId = 4;
+    } else {
+      AppMessage.i.showInfo('A confirmação só está disponível no período das 7h às 9h');
+      return;
     }
 
     try {

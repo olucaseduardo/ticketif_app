@@ -93,11 +93,11 @@ class RequestTicketController extends ChangeNotifier {
       return false;
     }
 
-    var hour = DateTime.now().hour;
-    var minutes = DateTime.now().minute;
+    final hour = DateTime.now().hour;
+    final minutes = DateTime.now().minute;
 
     /// Verifica se o pedido de almoço ocorre dentro do horário estipulado
-    if (!((hour >= 8) && (hour <= 10 && minutes <= 30)) && isCae == false) {
+    if (((hour >= 8) && (hour <= 10 && minutes <= 30)) && isCae == false) {
       if (meal!.id == 2) {
         AppMessage.i.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
@@ -121,7 +121,7 @@ class RequestTicketController extends ChangeNotifier {
         studentId: id,
         weekId: weekId,
         mealId: meal!.id,
-        statusId: isCae ? 2 : 1,
+        statusId: isCae ? 4 : 1,
         justificationId: justification!.id,
         isPermanent: 0,
         solicitationDay: DateTime.now().toString(),
@@ -159,8 +159,8 @@ class RequestTicketController extends ChangeNotifier {
           justificationId: justification?.id ?? 0,
           text: justificationController.text,
           useDay: day.description,
-          useDayDate: day.id == DateTime.now().weekday 
-            ? DateTime.now().toString() : "",
+          useDayDate:
+              day.id == DateTime.now().weekday ? DateTime.now().toString() : "",
           authorized: isCae ? 1 : 0,
           statusId: isCae ? 2 : 1,
         ));
@@ -206,9 +206,7 @@ class RequestTicketController extends ChangeNotifier {
 
         if (!error) {
           AppMessage.i.showMessage('Requisição enviada com sucesso');
-          !isCae
-              ? SpecialNavigation.i.isNotCae()
-              : SpecialNavigation.i.isCae();
+          !isCae ? SpecialNavigation.i.isNotCae() : SpecialNavigation.i.isCae();
         } else {
           AppMessage.i.showError('Erro ao solicitar Ticket');
         }
@@ -229,7 +227,7 @@ class RequestTicketController extends ChangeNotifier {
     }
     return false;
   }
- 
+
   List<DaysTicketDto> listOfDays() {
     List<DaysTicketDto> order = [];
     for (var day in days) {
