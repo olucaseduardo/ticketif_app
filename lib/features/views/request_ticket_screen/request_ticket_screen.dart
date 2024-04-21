@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_ifma_ticket/core/services/providers.dart';
@@ -39,11 +38,11 @@ class RequestTicket extends ConsumerWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_rounded,
               color: AppColors.black,
             )),
-        titleTextStyle: TextStyle(color: AppColors.black),
+        titleTextStyle: const TextStyle(color: AppColors.black),
         backgroundColor: AppColors.white,
       ),
       body:
@@ -142,7 +141,7 @@ class RequestTicket extends ConsumerWidget {
                         : Container(),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.h),
-                      child: Text(
+                      child: const Text(
                         'Justificativa',
                         style: AppTextStyle.titleSmall,
                       ),

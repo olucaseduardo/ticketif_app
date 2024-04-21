@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:project_ifma_ticket/features/app/app.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 
 mixin TicketTheme {
   static final _errorBorder = OutlineInputBorder(

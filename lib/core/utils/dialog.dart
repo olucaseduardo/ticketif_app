@@ -31,7 +31,7 @@ class DialogForm extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w700,
         ),
@@ -53,7 +53,7 @@ class DialogForm extends StatelessWidget {
             backgroundColor: colorConfirmButton ?? AppColors.green,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         CommonButton(

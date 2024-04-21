@@ -34,7 +34,7 @@ class CommonTileClass extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                           color: AppColors.black,
@@ -45,7 +45,7 @@ class CommonTileClass extends StatelessWidget {
                       ),
                       Text(
                         subtitle,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                           color: AppColors.black,
@@ -54,7 +54,7 @@ class CommonTileClass extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(Icons.arrow_forward_rounded, color: AppColors.black),
+                const Icon(Icons.arrow_forward_rounded, color: AppColors.black),
               ],
             ),
           ),

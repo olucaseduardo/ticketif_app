@@ -65,7 +65,7 @@ class _ClassesScreenState extends ConsumerState<ClassesScreen> {
               children: [
                 TextField(
                   onChanged: (value) => controller.filterClasses(value),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     filled: true,
                     hintText: "Busca",
                     prefixIcon: Icon(Icons.search, color: AppColors.green),

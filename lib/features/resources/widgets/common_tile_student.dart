@@ -58,7 +58,7 @@ class CommonTileStudent extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_rounded,
                 ),
               ],

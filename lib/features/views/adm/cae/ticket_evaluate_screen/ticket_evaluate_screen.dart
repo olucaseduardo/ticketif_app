@@ -90,12 +90,12 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                 TextField(
                   onChanged: (value) =>
                       controller.filterTickets(value, allTickets),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     filled: true,
                     hintText: "Busca",
                     prefixIcon:
-                        const Icon(Icons.search, color: AppColors.green),
-                    border: const OutlineInputBorder(
+                        Icon(Icons.search, color: AppColors.green),
+                    border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),

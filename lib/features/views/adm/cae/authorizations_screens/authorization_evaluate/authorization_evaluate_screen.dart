@@ -108,8 +108,8 @@ class _AuthorizationEvaluateScreenState
                     fillColor: AppColors.gray[800],
                     filled: true,
                     hintText: "Busca",
-                    prefixIcon: Icon(Icons.search, color: AppColors.green),
-                    border: OutlineInputBorder(
+                    prefixIcon: const Icon(Icons.search, color: AppColors.green),
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),

@@ -53,7 +53,7 @@ class CommonTileReport extends StatelessWidget {
                     ),
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                       ),
@@ -62,7 +62,7 @@ class CommonTileReport extends StatelessWidget {
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                   ),

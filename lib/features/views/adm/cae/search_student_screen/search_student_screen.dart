@@ -55,7 +55,7 @@ class _SearchStudentScreenState extends ConsumerState<SearchStudentScreen> {
               children: [
                 TextField(
                   onChanged: (value) => controller.searchStudent(value),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     filled: true,
                     hintText: "Busca por matrícula",
                     prefixIcon: Icon(Icons.search, color: AppColors.green),
