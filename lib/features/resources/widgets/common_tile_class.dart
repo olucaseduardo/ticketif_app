@@ -13,60 +13,48 @@ class CommonTileClass extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: function,
-
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
-
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.gray900,
-            borderRadius: BorderRadius.circular(4),
+            color: AppColors.gray[50],
+            borderRadius: BorderRadius.circular(8),
           ),
-
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.gray400,
+                          color: AppColors.black,
                         ),
                       ),
-
                       const SizedBox(
-                         height: 2,
+                        height: 2,
                       ),
-
                       Text(
                         subtitle,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
-                          color: AppColors.gray400,
+                          color: AppColors.black,
                         ),
                       ),
                     ],
                   ),
                 ),
-                
-                const Icon(
-                  Icons.arrow_forward_rounded,
-                  color: AppColors.gray400,
-                ),
+                Icon(Icons.arrow_forward_rounded, color: AppColors.black),
               ],
             ),
           ),

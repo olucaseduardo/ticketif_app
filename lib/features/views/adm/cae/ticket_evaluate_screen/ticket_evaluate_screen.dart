@@ -59,7 +59,6 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
         Navigator.pop(context, controller.filteredTickets);
         return Future.value(false);
       },
-      
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -68,61 +67,49 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
             },
             icon: const Icon(Icons.arrow_back_rounded),
           ),
-
           title: Text(widget.title),
-
           actions: [
             IconButton(
               onPressed: () {
                 if (controller.isLoading) return;
                 controller.isSelected(widget.tickets);
               },
-
               icon: Icon(controller.selectAll
                   ? Icons.check_box
                   : Icons.check_box_outline_blank),
             )
           ],
         ),
-
         body: Padding(
           padding: const EdgeInsets.all(20),
-
           child: Visibility(
             visible: !controller.isLoading,
-
             replacement: Loader.loader(),
-
             child: Column(
               children: [
                 TextField(
                   onChanged: (value) =>
                       controller.filterTickets(value, allTickets),
-                  decoration: const InputDecoration(
-                    fillColor: AppColors.gray800,
+                  decoration: InputDecoration(
                     filled: true,
                     hintText: "Busca",
-                    prefixIcon: Icon(Icons.search, color: AppColors.green500),
-                    border: OutlineInputBorder(
+                    prefixIcon:
+                        const Icon(Icons.search, color: AppColors.green),
+                    border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                 ),
-
                 const SizedBox(
                   height: 20,
                 ),
-
                 Visibility(
                   visible: controller.filteredTickets.isNotEmpty,
-
                   replacement: const WithoutResults(
                       msg: 'Nenhuma solicitação encontrada'),
-
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredTickets.length,
-
                       itemBuilder: (context, index) => CommonTileTicket(
                         title:
                             controller.filteredTickets.elementAt(index).student,
@@ -146,32 +133,26 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
             ),
           ),
         ),
-
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-
           child: Row(
             children: [
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-
                   onPressed: () {
                     if (continueSolicitation()) {
                       controller.solicitation(7);
                     }
                   },
-
                   child: const Text(
                     'Recusar',
                   ),
                 ),
               ),
-
               const SizedBox(
                 width: 10,
               ),
-
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
@@ -179,7 +160,6 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                       controller.solicitation(2);
                     }
                   },
-                  
                   child: const Text(
                     'Aprovar',
                   ),

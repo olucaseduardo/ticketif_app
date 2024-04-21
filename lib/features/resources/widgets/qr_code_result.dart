@@ -14,35 +14,31 @@ class QrCodeResult extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
-
       children: [
-        Text('TICKET VALIDADO',
+        Text(
+          'TICKET VALIDADO',
           style: AppTextStyle.titleMedium.copyWith(
-            color: AppColors.green300,
+            color: AppColors.green[300],
             fontWeight: FontWeight.bold,
           ),
         ),
-
         Text(
           'Refeição: ${qrResult?.meal ?? ''}',
-          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green300),
+          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green[300]),
         ),
-
         Text(
           qrResult?.date != null
               ? 'Data de Uso: ${DateUtil.todayDate(DateTime.parse(qrResult!.date))}'
               : '',
-          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green300),
+          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green[300]),
         ),
-
         Text(
           'Nome do Aluno: ${qrResult?.studentName ?? ''}',
-          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green300),
+          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green[300]),
         ),
-        
         Text(
           'Matricula do Aluno: ${qrResult?.student ?? ''}',
-          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green300),
+          style: AppTextStyle.titleMedium.copyWith(color: AppColors.green[300]),
         ),
       ],
     );

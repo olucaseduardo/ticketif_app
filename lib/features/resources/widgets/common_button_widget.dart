@@ -8,25 +8,27 @@ class CommonButton extends StatelessWidget {
   final String label;
   final double? textPadding;
   final TextStyle? textStyle;
-
+  final ButtonStyle? style;
   const CommonButton({
     Key? key,
     required this.label,
     this.textPadding,
     this.textStyle,
+    this.style,
     this.function,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => ElevatedButton(
         onPressed: function,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.green500,
-        ),
+        style: style ??
+            ElevatedButton.styleFrom(
+              backgroundColor: AppColors.green,
+            ),
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(textPadding ?? 18.sp),
-            child: Text(label, style: textStyle ?? AppTextStyle.titleSmall),
+            padding: EdgeInsets.all(textPadding ?? 14.sp),
+            child: Text(label, style: textStyle ?? AppTextStyle.titleMedium),
           ),
         ),
       );

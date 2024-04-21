@@ -24,6 +24,7 @@ class App extends StatelessWidget {
       designSize: const Size(414, 736),
       builder: (context, child) => MaterialApp(
         title: 'Ticket IFMA',
+        debugShowCheckedModeBanner: false,
         navigatorKey: _navigatorKey,
         scaffoldMessengerKey: _scaffoldMessengerKey,
         onGenerateRoute: (settings) => AppRouter.generateRoute(settings),

@@ -28,12 +28,10 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-
         title: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
               Text(
                 DateUtil.todayDate(DateUtil.dateTimeNow),
@@ -44,45 +42,37 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
             ],
           ),
         ),
-
         actions: [
           IconButton(
             icon: const Icon(
               Icons.logout,
             ),
-
             onPressed: () {
               controller.onLogoutTap();
 
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil(AppRouter.admLoginRoute, (route) => false);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRouter.admLoginRoute, (route) => false);
             },
           ),
         ],
       ),
-      
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-
                 children: [
+                  const SizedBox(height: 20),
                   Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-
-                      child: Image.asset(
-                        'assets/images/Restaurant.png',
-                      ),
+                    child: Image.asset(
+                      'assets/images/Restaurant.png',
+                      width: 200,
                     ),
                   ),
-
+                  const SizedBox(height: 20),
                   CommonTileOptions(
                     leading: Icons.qr_code_scanner_rounded,
                     label: 'Validar Ticket',
@@ -91,12 +81,13 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
                       AppRouter.qrRoute,
                     ),
                   ),
-                  
+                  const SizedBox(height: 8),
                   CommonTileOptions(
                     leading: Icons.description_rounded,
                     label: 'Relatórios',
                     function: () => Navigator.pushNamed(
-                      context, AppRouter.dailyReportRoute,
+                      context,
+                      AppRouter.dailyReportRoute,
                       arguments: ScreenArguments(cae: false),
                     ),
                   ),

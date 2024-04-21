@@ -40,58 +40,43 @@ class _SearchStudentScreenState extends ConsumerState<SearchStudentScreen> {
       appBar: AppBar(
         title: const Text('Selecionar Matrícula'),
       ),
-
       body: Visibility(
         visible: !controller.isLoading,
-
         replacement: Loader.loader(),
-
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-
           child: Visibility(
             visible: !controller.error,
-
             replacement: const ErrorResults(
               msg: 'Voltar para a tela de início',
               msgError: 'Erro ao carregar os estudantes',
             ),
-
             child: Column(
               children: [
                 TextField(
                   onChanged: (value) => controller.searchStudent(value),
-
-                  decoration: const InputDecoration(
-                    fillColor: AppColors.gray800,
+                  decoration: InputDecoration(
                     filled: true,
                     hintText: "Busca por matrícula",
-                    prefixIcon: Icon(Icons.search, color: AppColors.green500),
+                    prefixIcon: Icon(Icons.search, color: AppColors.green),
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                 ),
-
                 const SizedBox(
                   height: 8,
                 ),
-
                 const Divider(),
-
                 Visibility(
                   visible: allStudents.isNotEmpty,
-
                   replacement:
                       const WithoutResults(msg: 'Nenhum estudante encontrado'),
-
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: allStudents.length,
-
                       itemBuilder: (_, index) => CommonTileStudent(
                         student: allStudents.elementAt(index),
-                        
                         function: () => Navigator.pushNamed(
                           context,
                           AppRouter.requestTicketRoute,

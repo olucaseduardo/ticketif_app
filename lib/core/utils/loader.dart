@@ -16,7 +16,6 @@ class Loader {
 
   set navigatorKey(GlobalKey<NavigatorState> key) => _navigatorKey = key;
 
-  
   void showLoader() {
     showDialog(
       context: _navigatorKey.currentState!.context,
@@ -31,7 +30,7 @@ class Loader {
   static Widget loader() {
     return Center(
       child: LoadingAnimationWidget.twistingDots(
-        leftDotColor: AppColors.green500,
+        leftDotColor: AppColors.green,
         rightDotColor: AppColors.red,
         size: 60,
       ),

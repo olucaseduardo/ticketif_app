@@ -3,6 +3,7 @@ import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
 import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 
 class ErrorResults extends StatelessWidget {
   final String msg;
@@ -31,19 +32,22 @@ class ErrorResults extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-              onPressed: () {
-                function?.call();
-                homeStudent == true ? AppMessage.i.showError('Erro ao carregar usuario') : null;
-                     
-                homeStudent == true ? Navigator.pushNamedAndRemoveUntil(context,
-                          AppRouter.loginRoute, (route) => false) :
-                Navigator.pop(context);
-              },
-              child: Text(
-                msg,
-                style:
-                    AppTextStyle.largeText.copyWith(color: AppColors.green500),
+            child: SizedBox(
+              width: 200,
+              child: CommonButton(
+                textPadding: 8,
+                function: () {
+                  function?.call();
+                  homeStudent == true
+                      ? AppMessage.i.showError('Erro ao carregar usuario')
+                      : null;
+
+                  homeStudent == true
+                      ? Navigator.pushNamedAndRemoveUntil(
+                          context, AppRouter.loginRoute, (route) => false)
+                      : Navigator.pop(context);
+                },
+                label: msg,
               ),
             ),
           ),

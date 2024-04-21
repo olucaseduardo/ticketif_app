@@ -12,70 +12,54 @@ class CommonTileStudent extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: function,
-
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
-
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.gray900,
+            color: AppColors.gray[50],
             borderRadius: BorderRadius.circular(4),
           ),
-
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
               children: [
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     children: [
                       Text(
                         student!.name,
-                          style: AppTextStyle.titleLarge.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.gray400,
-                          ),
+                        style: AppTextStyle.titleMedium.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-
                       const SizedBox(
                         height: 2,
                       ),
-
                       Text(
                         student!.matricula,
                         style: AppTextStyle.labelLarge.copyWith(
                           fontWeight: FontWeight.normal,
-                          color: AppColors.gray400,
                         ),
                       ),
-
                       const SizedBox(
                         height: 2,
                       ),
-                      
                       Text(
                         student!.type,
                         style: AppTextStyle.labelLarge.copyWith(
                           fontWeight: FontWeight.normal,
-                          color: AppColors.gray400,
                         ),
                       ),
                     ],
                   ),
                 ),
-                
-                const Icon(
+                Icon(
                   Icons.arrow_forward_rounded,
-                  color: AppColors.gray400,
                 ),
               ],
             ),

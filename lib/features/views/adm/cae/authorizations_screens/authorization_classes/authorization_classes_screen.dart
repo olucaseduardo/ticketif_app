@@ -59,11 +59,10 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
               children: [
                 TextField(
                   onChanged: (value) => controller.filterClasses(value),
-                  decoration: const InputDecoration(
-                    fillColor: AppColors.gray800,
+                  decoration: InputDecoration(
                     filled: true,
                     hintText: "Busca",
-                    prefixIcon: Icon(Icons.search, color: AppColors.green500),
+                    prefixIcon: Icon(Icons.search, color: AppColors.green),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(Radius.circular(10)),

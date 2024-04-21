@@ -1,62 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
 import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
+import 'package:project_ifma_ticket/features/resources/widgets/common_button_widget.dart';
 
 class DialogForm extends StatelessWidget {
   final VoidCallback? action;
   final String message;
   final String title;
+  final Color? colorConfirmButton;
+  final String labelConfirmButton;
 
   const DialogForm({
     Key? key,
     required this.action,
-    required this.message, required this.title,
+    required this.message,
+    required this.title,
+    this.labelConfirmButton = 'Sim',
+    this.colorConfirmButton,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      contentPadding: const EdgeInsets.all(16),
       backgroundColor: AppColors.white,
-
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(20.0),
+          Radius.circular(10.0),
         ),
       ),
-
       title: Text(
         title,
-        style: AppTextStyle.largeText,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+        ),
+        textAlign: TextAlign.center,
       ),
-
       content: Text(
         message,
-        style: AppTextStyle.normalText,
+        style: AppTextStyle.smallText,
+        textAlign: TextAlign.center,
       ),
-
       actions: <Widget>[
-        TextButton(
-          onPressed: () => Navigator.pop(context, false),
-          
-          child: Text(
-            'Não',
-            style: AppTextStyle.normalText
-                .copyWith(color: AppColors.red, fontWeight: FontWeight.bold),
-          ),
-        ),
-
-        TextButton(
-          onPressed: () {
+        CommonButton(
+          function: () {
             action!();
             Navigator.pop(context, true);
           },
-
-          child: Text(
-            'Sim',
-            style: AppTextStyle.normalText.copyWith(
-                color: AppColors.green500, fontWeight: FontWeight.bold),
+          label: labelConfirmButton,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: colorConfirmButton ?? AppColors.green,
           ),
         ),
+        SizedBox(
+          height: 4,
+        ),
+        CommonButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: AppColors.gray[300]!,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            function: () => Navigator.pop(context, false),
+            label: 'Voltar',
+            textStyle: AppTextStyle.titleMedium.copyWith(
+              color: AppColors.black,
+            )),
       ],
     );
   }

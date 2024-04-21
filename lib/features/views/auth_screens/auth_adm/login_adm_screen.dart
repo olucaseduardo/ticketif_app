@@ -39,27 +39,21 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-
               children: [
                 const AppLogo(
                   adm: true,
                 ),
-
-                const Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Text(
-                    "Entre para continuar",
-                    style: AppTextStyle.titleMedium,
-                  ),
+                const SizedBox(height: 8),
+                const Text(
+                  "Entre para continuar",
+                  style: AppTextStyle.titleMedium,
                 ),
-
+                const SizedBox(height: 24),
                 Form(
                   key: formKey,
-
                   child: Column(
                     children: [
                       CommonTextField(
@@ -69,7 +63,6 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                         controller: usernameEC,
                         validator: true,
                       ),
-
                       CommonTextField(
                         title: 'Senha',
                         labelText: 'Digite sua senha',
@@ -78,13 +71,10 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                         controller: passwordEC,
                         validator: true,
                       ),
-
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6.0),
-
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-
                           children: [
                             const Padding(
                               padding: EdgeInsets.symmetric(vertical: 4.0),
@@ -93,24 +83,22 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                                 style: AppTextStyle.bodyLarge,
                               ),
                             ),
-
                             CommonDropDownButton(
                               items: controller.campus,
-                              onChanged: (value) => controller.selectCampus(value),
+                              onChanged: (value) =>
+                                  controller.selectCampus(value),
                               hint: 'Selecione seu campus',
                             ),
                           ],
                         ),
                       ),
-
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.h),
-                        
                         child: CommonButton(
                           label: "Entrar na conta",
                           function: () async {
-
-                            final valid = formKey.currentState?.validate() ?? false;
+                            final valid =
+                                formKey.currentState?.validate() ?? false;
 
                             if (valid && controller.campusSelect != "") {
                               controller.loading();
@@ -128,26 +116,25 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                                 nav.pushNamedAndRemoveUntil(
                                     AppRouter.authCheck, (route) => false);
                               } else {
-                                AppMessage.i.showError('Erro ao realizar login');
+                                AppMessage.i
+                                    .showError('Erro ao realizar login');
                                 Loader.i.hideDialog();
                               }
                             } else if (valid && controller.campusSelect == "") {
                               AppMessage.i.showInfo("Selecione o seu campus!");
                               Vibration.vibrate(duration: 1000);
-                            } 
+                            }
                           },
                         ),
                       ),
                     ],
                   ),
                 ),
-
                 TextButton(
                   onPressed: () => nav.pushNamedAndRemoveUntil(
                       AppRouter.loginRoute, (route) => false),
                   child: const Text('Login aluno'),
                 ),
-
                 Text(
                   "Versão: ${controller.packageInfo?.version.toString() ?? ''}",
                 ),

@@ -37,34 +37,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: !controller.isLoading && !controller.error
           ? AppBar(
               automaticallyImplyLeading: false,
-
-              title: Padding(
-                padding: const EdgeInsets.all(8),
-
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-
-                  children: [
-                    Text(
-                      DateUtil.todayDate(DateUtil.dateTimeNow),
-                      style: AppTextStyle.labelBig
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-
-                    Text(
-                      controller.user?.matricula ?? '',
-                      style: AppTextStyle.labelMedium,
-                    )
-                  ],
-                ),
+              title: Text(
+                DateUtil.todayDate(DateUtil.dateTimeNow),
+                style: AppTextStyle.labelBig,
               ),
-
+              toolbarHeight: 50,
               actions: [
                 IconButton(
                   icon: const Icon(
                     Icons.logout,
                   ),
-
                   onPressed: () {
                     controller.onLogoutTap();
                     Navigator.of(context)
@@ -74,158 +56,154 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ],
             )
           : const PreferredSize(
-              preferredSize: Size(0, 0), child: SizedBox.shrink(),
+              preferredSize: Size(0, 0),
+              child: SizedBox.shrink(),
             ),
-              
       body: Visibility(
         visible: !controller.isLoading,
         replacement: Loader.loader(),
-
         child: Visibility(
-            visible: !controller.error,
-            
-            replacement: ErrorResults(
-              msg: 'Voltar ao login',
-              msgError: 'Erro ao carregar usuario',
-              function: () => controller.onLogoutTap(),
-              homeStudent: true,
-            ),
-
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-            
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-            
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            
-                      children: [
-                        Flexible(
-                          child: Text(
-                            'Olá, ${controller.user?.username?? ''}',
-                            style: AppTextStyle.labelBig
-                                .copyWith(fontWeight: FontWeight.w700),
+          visible: !controller.error,
+          replacement: ErrorResults(
+            msg: 'Voltar ao login',
+            msgError: 'Erro ao carregar usuario',
+            function: () => controller.onLogoutTap(),
+            homeStudent: true,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Olá, ${controller.user?.username ?? ''}',
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.labelBig
+                                  .copyWith(fontWeight: FontWeight.w700),
+                            ),
+                            Text(
+                              controller.user?.matricula ?? '',
+                              style: AppTextStyle.labelMedium,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      CommonButton(
+                        label: 'Solicitar um ticket',
+                        textPadding: 8,
+                        textStyle: AppTextStyle.smallButton,
+                        function: () => todayTicket?.idStatus == 7 ||
+                                todayTicket?.idStatus == 6 ||
+                                todayTicket?.idStatus == 5 ||
+                                todayTicket == null
+                            ? Navigator.pushNamed(
+                                context, AppRouter.requestTicketRoute)
+                            : AppMessage.i.showInfo(
+                                'Você já possui um ticket para ${todayTicket.meal.toLowerCase()}'),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  height: 0,
+                  indent: 0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18),
+                        child: Text(
+                          'Suas refeições de hoje',
+                          style: AppTextStyle.labelBig.copyWith(
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-            
-                        CommonButton(
-                          label: 'Solicitar um ticket',
-                          textPadding: 8,
-                          textStyle: AppTextStyle.smallButton,
-                          function: () => todayTicket?.idStatus == 7 ||
-                                  todayTicket?.idStatus == 6 ||
-                                  todayTicket?.idStatus == 5 ||
-                                  todayTicket == null
-                              ? Navigator.pushNamed(
-                                  context, AppRouter.requestTicketRoute)
-                              : AppMessage.i.showInfo(
-                                  'Você já possui um ticket para ${todayTicket.meal.toLowerCase()}'),
-                        ),
-                      ],
-                    ),
-                  ),
-            
-                  const Divider(
-                    height: 1,
-                    thickness: 1.5,
-                    color: AppColors.gray800,
-                  ),
-            
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-            
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-            
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 18),
-            
-                          child: Text(
-                            'Suas refeições de hoje',
-                            style: AppTextStyle.labelBig.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.gray200),
-                          ),
-                        ),
-            
-                        controller.todayTickets!.isNotEmpty 
-                          && todayTicket != null
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 6.0),
-            
-                                child: CommonTicketWidget(
+                      ),
+                      controller.todayTickets!.isNotEmpty && todayTicket != null
+                          ? Column(
+                              children: [
+                                const SizedBox(height: 8),
+                                CommonTicketWidget(
                                   ticket: todayTicket,
                                   function: () => controller.changeTicket(
                                       todayTicket.id, todayTicket.idStatus),
                                 ),
-                              )
-                            : Padding(
-                                padding: EdgeInsets.symmetric(vertical: 20.h),
-            
-                                child: Align(
-                                  alignment: Alignment.center,
+                                const SizedBox(height: 14),
+                              ],
+                            )
+                          : Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.h),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: SizedBox(
+                                  width: 200,
                                   child: Text(
-                                    'Nenhum ticket, faça sua solicitação e aguarde ser aprovado',
+                                    'Nenhum ticket, faça sua solicitação e aguarde ser aprovado.',
                                     style: TextStyle(
                                       fontSize: 12.sp,
-                                      color: AppColors.gray400,
+                                      color: AppColors.gray[800],
                                     ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
-            
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 18.h),
-            
-                          child: Text(
-                            'Outras opções',
-                            style: AppTextStyle.labelBig.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.gray200),
-                          ),
-                        ),
-                        
-                        CommonTileOptions(
-                          leading: Icons.menu_rounded,
-                          label: 'Seus tickets',
-            
-                          function: () => Navigator.pushNamed(
-                            context,
-                            AppRouter.historicRoute,
-                            arguments: ScreenArguments(
-                              title: 'Seus tickets',
-                              tickets: controller.userTickets
-                                  ?.where((a) => a.status != 'Cancelado')
-                                  .toList(),
                             ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 8.h),
+                        child: Text(
+                          'Outras opções',
+                          style: AppTextStyle.labelBig.copyWith(
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-            
-                        CommonTileOptions(
-                          leading: Icons.access_time_rounded,
-                          label: 'Histórico',
-                          
-                          function: () => Navigator.pushNamed(
-                            context,
-                            AppRouter.historicRoute,
-                            arguments: ScreenArguments(
-                              title: 'Histórico',
-                              tickets: controller.userTickets,
-                            ),
+                      ),
+                      CommonTileOptions(
+                        leading: Icons.menu_rounded,
+                        label: 'Seus tickets',
+                        function: () => Navigator.pushNamed(
+                          context,
+                          AppRouter.historicRoute,
+                          arguments: ScreenArguments(
+                            title: 'Seus tickets',
+                            tickets: controller.userTickets
+                                ?.where((a) => a.status != 'Cancelado')
+                                .toList(),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 4),
+                      CommonTileOptions(
+                        leading: Icons.access_time_rounded,
+                        label: 'Histórico',
+                        function: () => Navigator.pushNamed(
+                          context,
+                          AppRouter.historicRoute,
+                          arguments: ScreenArguments(
+                            title: 'Histórico',
+                            tickets: controller.userTickets,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
+        ),
       ),
     );
   }

@@ -16,11 +16,10 @@ class AppMessage {
   set scaffoldMessagerKey(GlobalKey<ScaffoldMessengerState> key) =>
       _scaffoldMessengerKey = key;
 
-
   void showMessage(String text) {
     _scaffoldMessengerKey.currentState!.showSnackBar(
       SnackBar(
-        backgroundColor: AppColors.green500,
+        backgroundColor: AppColors.green,
         content: Text(
           text,
           textAlign: TextAlign.center,

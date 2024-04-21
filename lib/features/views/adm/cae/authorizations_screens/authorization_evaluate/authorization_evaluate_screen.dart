@@ -27,7 +27,8 @@ class AuthorizationEvaluateScreen extends ConsumerStatefulWidget {
       _AuthorizationEvaluateScreenState();
 }
 
-class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvaluateScreen> {
+class _AuthorizationEvaluateScreenState
+    extends ConsumerState<AuthorizationEvaluateScreen> {
   @override
   void initState() {
     super.initState();
@@ -80,16 +81,13 @@ class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvalu
             },
             icon: const Icon(Icons.arrow_back_rounded),
           ),
-
           title: Text(widget.title),
-
           actions: [
             IconButton(
               onPressed: () {
                 if (controller.isLoading) return;
                 controller.isSelected(controller.filteredAuthorizations);
               },
-
               icon: Icon(controller.selectAll
                   ? Icons.check_box
                   : Icons.check_box_outline_blank),
@@ -98,23 +96,19 @@ class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvalu
         ),
         body: Padding(
           padding: const EdgeInsets.all(20),
-
           child: Visibility(
             visible: !controller.isLoading,
-
             replacement: Loader.loader(),
-
             child: Column(
               children: [
                 TextField(
                   onChanged: (value) =>
                       controller.filterAuthorizations(value, allStudents),
-
-                  decoration: const InputDecoration(
-                    fillColor: AppColors.gray800,
+                  decoration: InputDecoration(
+                    fillColor: AppColors.gray[800],
                     filled: true,
                     hintText: "Busca",
-                    prefixIcon: Icon(Icons.search, color: AppColors.green500),
+                    prefixIcon: Icon(Icons.search, color: AppColors.green),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(
@@ -123,21 +117,16 @@ class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvalu
                     ),
                   ),
                 ),
-
                 const SizedBox(
                   height: 20,
                 ),
-
                 Visibility(
                   visible: controller.filteredAuthorizations.isNotEmpty,
-
                   replacement: const WithoutResults(
                       msg: 'Nenhuma solicitação encontrada'),
-
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.filteredAuthorizations.length,
-
                       itemBuilder: (context, index) => CommonTileTicket(
                         title:
                             controller.filteredAuthorizations[index].matricula,
@@ -146,16 +135,14 @@ class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvalu
                         justification:
                             controller.filteredAuthorizations[index].text,
                         selected: controller.selectedAuthorizations.contains(
-                                controller.filteredAuthorizations[index],
-                            )
+                          controller.filteredAuthorizations[index],
+                        )
                             ? true
                             : false,
-
                         function: () => controller.verifySelected(
                           controller.filteredAuthorizations[index],
                           lengthTickets,
                         ),
-
                         check: true,
                       ),
                     ),
@@ -165,16 +152,13 @@ class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvalu
             ),
           ),
         ),
-
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-
           child: Row(
             children: [
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-
                   onPressed: () {
                     if (continueSolicitation()) {
                       controller.changedAuthorizations(2);
@@ -183,18 +167,15 @@ class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvalu
                       Navigator.pop(context, selectedStudents);
                     }
                   },
-
                   child: const Text(
                     'Recusar',
                     style: AppTextStyle.buttonTextStyle,
                   ),
                 ),
               ),
-
               const SizedBox(
                 width: 10,
               ),
-
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
@@ -206,7 +187,6 @@ class _AuthorizationEvaluateScreenState extends ConsumerState<AuthorizationEvalu
                       // return Future.value(false);
                     }
                   },
-
                   child: const Text(
                     'Aprovar',
                     style: AppTextStyle.buttonTextStyle,

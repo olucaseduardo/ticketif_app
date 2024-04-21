@@ -10,9 +10,9 @@ class TicketStatus {
     } else if (status == 'Aguardando pagamento') {
       return (Icons.access_time, AppColors.yellow);
     } else if (status == 'Utilização autorizada') {
-      return (Icons.check, AppColors.green500);
+      return (Icons.check, AppColors.green);
     } else if (status == 'Utilizado') {
-      return (Icons.food_bank, AppColors.green500);
+      return (Icons.food_bank, AppColors.green);
     } else if (status == 'Cancelado') {
       return (Icons.close, AppColors.yellow);
     } else if (status == 'Não autorizado') {

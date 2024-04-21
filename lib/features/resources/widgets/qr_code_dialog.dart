@@ -5,43 +5,43 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 Future<String?> showQrCodeDialog(BuildContext context, String data) =>
     showDialog<String>(
-      barrierDismissible: false,
       context: context,
-
       builder: (BuildContext context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: <Widget>[
               Align(
                 alignment: Alignment.topRight,
-
                 child: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-
                     icon: const Icon(Icons.close)),
               ),
-
-              const Text(
-                'Validação de pagamento',
+              const Center(
+                child: Text(
+                  'Validação de pagamento',
                   style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.gray200,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
                   ),
+                  textAlign: TextAlign.center,
+                ),
               ),
-
-              const Text(
-                'Aponte o QR Code para a câmera do(a) vendedor(a) para validar o pagamento.',
-                style: AppTextStyle.smallText,
+              const SizedBox(height: 12),
+              Center(
+                child: Text(
+                  'Aponte o QR Code para a câmera do(a) vendedor(a) para validar o pagamento.',
+                  style: AppTextStyle.smallText,
+                  textAlign: TextAlign.center,
+                ),
               ),
-
               Center(child: showQrCode(data)),
             ],
           ),
@@ -50,4 +50,4 @@ Future<String?> showQrCodeDialog(BuildContext context, String data) =>
     );
 
 QrImageView showQrCode(String data) =>
-    QrImageView(data: data, version: QrVersions.auto, size: 200);
+    QrImageView(data: data, version: QrVersions.auto, size: 250);

@@ -47,47 +47,44 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
         appBar: AppBar(
           title: const Text('Relatório por Período'),
         ),
-
         body: Visibility(
           visible: !controller.isLoading,
-
           replacement: Loader.loader(),
-
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-
             child: Visibility(
               visible: !controller.error,
-
               replacement: const ErrorResults(
                 msg: 'Voltar para a tela de início',
                 msgError: 'Erro ao carregar relatório por período',
               ),
-
               child: Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
-
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                       children: [
                         Text(
                           'De: ${DateUtil.getDateStr(start)} até: ${DateUtil.getDateStr(end)}',
-                          style: AppTextStyle.titleMedium.copyWith(
-                              color: AppColors.green300, fontSize: 16.sp),
+                          style: AppTextStyle.titleMedium
+                              .copyWith(fontSize: 16.sp),
                         ),
-
                         IconButton(
                             onPressed: () async {
                               DateTimeRange? result = await showDateRangePicker(
                                 context: context,
                                 initialEntryMode: DatePickerEntryMode.calendar,
                                 firstDate: DateTime(
-                                    2022, 1, 1,), // the earliest allowable
+                                  2022,
+                                  1,
+                                  1,
+                                ), // the earliest allowable
                                 lastDate: DateTime(
-                                    2025, 12, 31,), // the latest allowable
+                                  2025,
+                                  12,
+                                  31,
+                                ), // the latest allowable
                                 currentDate: DateUtil.dateTimeNow,
                                 saveText: 'Salvar',
                               );
@@ -101,21 +98,16 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
 
                               controller.updatePeriodTickets(start, end);
                             },
-
-                            icon: const Icon(
-                              Icons.calendar_month_rounded,
-                              color: AppColors.green300,
+                            icon: Icon(
+                              Icons.edit,
                             )),
                       ],
                     ),
                   ),
-
                   Visibility(
                     visible: controller.dailyStatus.isNotEmpty,
-
                     replacement: const WithoutResults(
                         msg: 'Nenhuma solicitação encontrada'),
-
                     child: Expanded(
                       child: ListView.builder(
                           shrinkWrap: true,
@@ -127,14 +119,11 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
 
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-
                               children: [
                                 const Divider(),
-
                                 ListView.builder(
                                     shrinkWrap: true,
                                     itemCount: meal.length,
-
                                     itemBuilder: (context, indexMeal) {
                                       var keyMeal = meal.elementAt(indexMeal);
                                       var valuesMeal = controller
@@ -167,7 +156,6 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
                               ],
                             );
                           },
-
                           itemCount: controller.dailyStatus.keys.length),
                     ),
                   ),
@@ -176,7 +164,6 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
             ),
           ),
         ),
-        
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             controller.exportCSV();

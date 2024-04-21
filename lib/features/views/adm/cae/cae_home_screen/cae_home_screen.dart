@@ -28,31 +28,25 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-
         title: Padding(
           padding: const EdgeInsets.all(8),
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
               Text(
                 DateUtil.todayDate(DateUtil.dateTimeNow),
                 style:
                     AppTextStyle.labelBig.copyWith(fontWeight: FontWeight.w700),
               ),
-
               const Text('Administrador', style: AppTextStyle.labelMedium)
             ],
           ),
         ),
-        
         actions: [
           IconButton(
             icon: const Icon(
               Icons.logout,
             ),
-
             onPressed: () {
               controller.onLogoutTap();
 
@@ -62,30 +56,23 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
           ),
         ],
       ),
-      
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-
                 children: [
+                  const SizedBox(height: 26),
                   Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-
-                      child: Image.asset(
-                        'assets/images/CAE.png',
-                        width: 207,
-                      ),
+                    child: Image.asset(
+                      'assets/images/CAE.png',
+                      width: 207,
                     ),
                   ),
-
+                  const SizedBox(height: 26),
                   CommonTileOptions(
                     leading: Icons.local_restaurant_rounded,
                     label: 'Tickets Diários',
@@ -96,7 +83,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                           isPermanent: false, title: 'Tickets Diários'),
                     ),
                   ),
-
+                  const SizedBox(height: 8),
                   CommonTileOptions(
                     leading: Icons.menu_rounded,
                     label: 'Autorizações Permanentes',
@@ -107,7 +94,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                           ScreenArguments(title: 'Autorizações Permanentes'),
                     ),
                   ),
-
+                  const SizedBox(height: 8),
                   CommonTileOptions(
                     leading: Icons.description_rounded,
                     label: 'Relatório Diário',
@@ -117,7 +104,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                       arguments: ScreenArguments(cae: true),
                     ),
                   ),
-
+                  const SizedBox(height: 8),
                   CommonTileOptions(
                     leading: Icons.calendar_month_rounded,
                     label: 'Relatório por Periódo',
@@ -126,7 +113,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                       AppRouter.caePeriodReportRoute,
                     ),
                   ),
-                  
+                  const SizedBox(height: 8),
                   CommonTileOptions(
                     leading: Icons.confirmation_number_rounded,
                     label: 'Solicitar Ticket',
