@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/features/models/ticket.dart';
-import 'package:TicketIFMA/features/models/user.dart';
-import 'package:TicketIFMA/features/repositories/user/user_api_repository_impl.dart';
+import 'package:ticket_ifma/features/models/ticket.dart';
+import 'package:ticket_ifma/features/models/user.dart';
+import 'package:ticket_ifma/features/repositories/user/user_api_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchStudentController extends ChangeNotifier {

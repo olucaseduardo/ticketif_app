@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
-import 'package:TicketIFMA/core/utils/date_util.dart';
-import 'package:TicketIFMA/features/dto/qr_result.dart';
-import 'package:TicketIFMA/features/repositories/tickets/tickets_api_repository_impl.dart';
+import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
+import 'package:ticket_ifma/core/utils/date_util.dart';
+import 'package:ticket_ifma/features/dto/qr_result.dart';
+import 'package:ticket_ifma/features/repositories/tickets/tickets_api_repository_impl.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';

@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/core/exceptions/unauthorized_exception.dart';
-import 'package:TicketIFMA/core/utils/links.dart';
-import 'package:TicketIFMA/features/repositories/auth/auth_api_repository_impl.dart';
+import 'package:ticket_ifma/core/exceptions/unauthorized_exception.dart';
+import 'package:ticket_ifma/core/utils/links.dart';
+import 'package:ticket_ifma/features/repositories/auth/auth_api_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 

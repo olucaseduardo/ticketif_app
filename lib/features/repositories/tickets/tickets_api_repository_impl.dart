@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
-import 'package:TicketIFMA/core/services/dio_client.dart';
-import 'package:TicketIFMA/features/dto/request_permanent.dart';
-import 'package:TicketIFMA/features/dto/request_ticket_model.dart';
-import 'package:TicketIFMA/features/models/student_authorization.dart';
-import 'package:TicketIFMA/features/models/authorization.dart';
-import 'package:TicketIFMA/features/models/ticket.dart';
+import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
+import 'package:ticket_ifma/core/services/dio_client.dart';
+import 'package:ticket_ifma/features/dto/request_permanent.dart';
+import 'package:ticket_ifma/features/dto/request_ticket_model.dart';
+import 'package:ticket_ifma/features/models/student_authorization.dart';
+import 'package:ticket_ifma/features/models/authorization.dart';
+import 'package:ticket_ifma/features/models/ticket.dart';
 
 import './tickets_api_repository.dart';
 

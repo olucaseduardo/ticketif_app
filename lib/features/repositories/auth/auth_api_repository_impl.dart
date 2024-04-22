@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
-import 'package:TicketIFMA/core/exceptions/unauthorized_exception.dart';
-import 'package:TicketIFMA/core/services/dio_client.dart';
-import 'package:TicketIFMA/features/models/auth_model.dart';
+import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
+import 'package:ticket_ifma/core/exceptions/unauthorized_exception.dart';
+import 'package:ticket_ifma/core/services/dio_client.dart';
+import 'package:ticket_ifma/features/models/auth_model.dart';
 import './auth_api_repository.dart';
 
 class AuthApiRepositoryImpl implements AuthApiRepository {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/features/resources/theme/app_text_styles.dart';
+import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 
 class WithoutResults extends StatelessWidget {
   final String msg;

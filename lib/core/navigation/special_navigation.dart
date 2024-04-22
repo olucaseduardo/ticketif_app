@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/features/resources/routes/app_routes.dart';
+import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
 
 class SpecialNavigation {
   late final GlobalKey<NavigatorState> _navigatorKey;

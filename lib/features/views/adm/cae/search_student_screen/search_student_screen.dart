@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:TicketIFMA/core/services/providers.dart';
-import 'package:TicketIFMA/core/utils/loader.dart';
-import 'package:TicketIFMA/features/resources/routes/app_routes.dart';
-import 'package:TicketIFMA/features/resources/routes/screen_arguments.dart';
-import 'package:TicketIFMA/features/resources/theme/app_colors.dart';
-import 'package:TicketIFMA/features/resources/widgets/app_message.dart';
-import 'package:TicketIFMA/features/resources/widgets/common_tile_student.dart';
-import 'package:TicketIFMA/features/resources/widgets/error_results.dart';
-import 'package:TicketIFMA/features/resources/widgets/without_results.dart';
+import 'package:ticket_ifma/core/services/providers.dart';
+import 'package:ticket_ifma/core/utils/loader.dart';
+import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
+import 'package:ticket_ifma/features/resources/routes/screen_arguments.dart';
+import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
+import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
+import 'package:ticket_ifma/features/resources/widgets/common_tile_student.dart';
+import 'package:ticket_ifma/features/resources/widgets/error_results.dart';
+import 'package:ticket_ifma/features/resources/widgets/without_results.dart';
 
 class SearchStudentScreen extends ConsumerStatefulWidget {
   const SearchStudentScreen({super.key});

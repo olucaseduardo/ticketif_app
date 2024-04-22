@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/core/utils/links.dart';
+import 'package:ticket_ifma/core/utils/links.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CaeController extends ChangeNotifier {

@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
-import 'package:TicketIFMA/core/utils/links.dart';
-import 'package:TicketIFMA/features/repositories/tickets/tickets_api_repository_impl.dart';
-import 'package:TicketIFMA/features/repositories/user/user_api_repository_impl.dart';
-import 'package:TicketIFMA/features/models/ticket.dart';
-import 'package:TicketIFMA/features/models/user.dart';
-import 'package:TicketIFMA/features/resources/widgets/app_message.dart';
+import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
+import 'package:ticket_ifma/core/utils/links.dart';
+import 'package:ticket_ifma/features/repositories/tickets/tickets_api_repository_impl.dart';
+import 'package:ticket_ifma/features/repositories/user/user_api_repository_impl.dart';
+import 'package:ticket_ifma/features/models/ticket.dart';
+import 'package:ticket_ifma/features/models/user.dart';
+import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends ChangeNotifier {

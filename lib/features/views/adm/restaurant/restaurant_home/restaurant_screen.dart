@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:TicketIFMA/core/services/providers.dart';
-import 'package:TicketIFMA/core/utils/date_util.dart';
-import 'package:TicketIFMA/features/resources/routes/app_routes.dart';
-import 'package:TicketIFMA/features/resources/routes/screen_arguments.dart';
-import 'package:TicketIFMA/features/resources/theme/app_text_styles.dart';
-import 'package:TicketIFMA/features/resources/widgets/common_tile_options.dart';
+import 'package:ticket_ifma/core/services/providers.dart';
+import 'package:ticket_ifma/core/utils/date_util.dart';
+import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
+import 'package:ticket_ifma/features/resources/routes/screen_arguments.dart';
+import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
+import 'package:ticket_ifma/features/resources/widgets/common_tile_options.dart';
 
 class RestaurantScreen extends ConsumerStatefulWidget {
   const RestaurantScreen({Key? key}) : super(key: key);

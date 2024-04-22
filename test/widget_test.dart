@@ -6,6 +6,6 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 // import 'package:flutter_test/flutter_test.dart';
-// import 'package:TicketIFMA/core/Services/dio_client.dart';
+// import 'package:ticket_ifma/core/Services/dio_client.dart';
 
 void main() {}

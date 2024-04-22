@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
-import 'package:TicketIFMA/core/utils/links.dart';
+import 'package:ticket_ifma/core/utils/links.dart';
 
 class DioClient extends DioForNative {
   DioClient()

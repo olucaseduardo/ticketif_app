@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
-import 'package:TicketIFMA/core/services/dio_client.dart';
-import 'package:TicketIFMA/features/models/user.dart';
+import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
+import 'package:ticket_ifma/core/services/dio_client.dart';
+import 'package:ticket_ifma/features/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import './user_api_repository.dart';

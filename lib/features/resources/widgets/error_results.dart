@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/features/resources/routes/app_routes.dart';
-import 'package:TicketIFMA/features/resources/theme/app_text_styles.dart';
-import 'package:TicketIFMA/features/resources/widgets/app_message.dart';
-import 'package:TicketIFMA/features/resources/widgets/common_button_widget.dart';
+import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
+import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
+import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
+import 'package:ticket_ifma/features/resources/widgets/common_button_widget.dart';
 
 class ErrorResults extends StatelessWidget {
   final String msg;

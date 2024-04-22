@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/features/resources/theme/app_colors.dart';
-import 'package:TicketIFMA/features/resources/theme/app_text_styles.dart';
-import 'package:TicketIFMA/features/resources/widgets/common_button_widget.dart';
+import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
+import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
+import 'package:ticket_ifma/features/resources/widgets/common_button_widget.dart';
 
 class DialogForm extends StatelessWidget {
   final VoidCallback? action;

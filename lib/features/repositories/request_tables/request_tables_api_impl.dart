@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
-import 'package:TicketIFMA/core/services/dio_client.dart';
-import 'package:TicketIFMA/features/repositories/request_tables/request_tables_api.dart';
-import 'package:TicketIFMA/features/models/list_tables_model.dart';
-import 'package:TicketIFMA/features/models/tables_model.dart';
+import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
+import 'package:ticket_ifma/core/services/dio_client.dart';
+import 'package:ticket_ifma/features/repositories/request_tables/request_tables_api.dart';
+import 'package:ticket_ifma/features/models/list_tables_model.dart';
+import 'package:ticket_ifma/features/models/tables_model.dart';
 
 class RequestTablesApiImpl implements RequestTablesApi {
   @override

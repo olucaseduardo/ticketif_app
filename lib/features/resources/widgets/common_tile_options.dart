@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:TicketIFMA/features/resources/theme/app_colors.dart';
+import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 
 class CommonTileOptions extends StatelessWidget {
   final IconData leading;
