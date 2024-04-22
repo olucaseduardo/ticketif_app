@@ -64,8 +64,7 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                     children: [
                       Text(
                         'Data: ${DateUtil.getDateStr(controller.day)}',
-                        style:
-                            AppTextStyle.titleMedium.copyWith(fontSize: 16.sp),
+                        style: AppTextStyle.titleMedium.copyWith(fontSize: 16),
                       ),
                       IconButton(
                           onPressed: () async {

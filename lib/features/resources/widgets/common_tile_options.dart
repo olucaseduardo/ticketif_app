@@ -29,17 +29,11 @@ class CommonTileOptions extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.gray[200],
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Icon(
-                        leading,
-                        color: AppColors.black,
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Icon(
+                      leading,
+                      color: AppColors.black,
                     ),
                   ),
                   Padding(

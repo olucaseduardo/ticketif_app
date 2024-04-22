@@ -29,9 +29,9 @@ class RequestTicket extends ConsumerWidget {
         titleSpacing: 0,
         title: Text(
           title ?? 'Voltar',
-          style: TextStyle(
+          style: const TextStyle(
               color: AppColors.black,
-              fontSize: 18.sp,
+              fontSize: 18,
               fontWeight: FontWeight.w700),
         ),
         leading: IconButton(
@@ -50,7 +50,7 @@ class RequestTicket extends ConsumerWidget {
         Expanded(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.h),
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Form(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +65,7 @@ class RequestTicket extends ConsumerWidget {
                     ),
                     const SizedBox(height: 12),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4.h),
+                      padding: EdgeInsets.symmetric(vertical: 4),
                       child: const Text(
                         'Refeição',
                         style: AppTextStyle.titleSmall,
@@ -77,7 +77,7 @@ class RequestTicket extends ConsumerWidget {
                             controller.meals.map((e) => e.description).toList(),
                         onChanged: (value) => controller.onMealsChanged(value)),
                     Padding(
-                      padding: EdgeInsets.only(top: 12.h),
+                      padding: EdgeInsets.only(top: 12),
                       child: const Text(
                         'Validade',
                         style: AppTextStyle.titleSmall,
@@ -140,7 +140,7 @@ class RequestTicket extends ConsumerWidget {
                           )
                         : Container(),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4.h),
+                      padding: EdgeInsets.symmetric(vertical: 4),
                       child: const Text(
                         'Justificativa',
                         style: AppTextStyle.titleSmall,

@@ -66,8 +66,8 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
                       children: [
                         Text(
                           'De: ${DateUtil.getDateStr(start)} até: ${DateUtil.getDateStr(end)}',
-                          style: AppTextStyle.titleMedium
-                              .copyWith(fontSize: 16.sp),
+                          style:
+                              AppTextStyle.titleMedium.copyWith(fontSize: 16),
                         ),
                         IconButton(
                             onPressed: () async {

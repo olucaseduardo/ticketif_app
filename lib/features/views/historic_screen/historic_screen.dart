@@ -26,15 +26,15 @@ class HistoricScreen extends ConsumerWidget {
             backgroundColor: AppColors.white,
             foregroundColor: AppColors.black,
             centerTitle: false,
-            title: Text(
+            title: const Text(
               'Voltar',
               style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 18,
                 fontWeight: FontWeight.w700,
               ),
             ),
             flexibleSpace: Padding(
-              padding: EdgeInsets.only(top: 90.h, left: 20.w, right: 20.w),
+              padding: EdgeInsets.only(top: 90.h, left: 20.w, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -62,10 +62,11 @@ class HistoricScreen extends ConsumerWidget {
           )),
       body: userTickets.isNotEmpty
           ? ListView.builder(
+              padding: EdgeInsets.only(top: 14),
               itemCount: userTickets.length, // controller.countOne,
               physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, i) => Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
                     CommonTicketWidget(

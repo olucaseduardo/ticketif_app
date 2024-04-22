@@ -39,7 +39,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -91,7 +91,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.h),
+                        padding: EdgeInsets.symmetric(vertical: 20),
                         child: CommonButton(
                           label: "Entrar na conta",
                           function: () async {

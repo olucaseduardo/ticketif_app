@@ -40,13 +40,15 @@ class CommonTicketWidget extends StatelessWidget {
                     DateUtil.ticketDay(
                       DateTime.parse(ticket.useDayDate),
                     ),
-                    style: TextStyle(
-                      fontSize: 18.sp,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
+                      letterSpacing: -1,
                     ),
                   ),
                   SizedBox(
-                    height: 8.h,
+                    height: 8,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +60,7 @@ class CommonTicketWidget extends StatelessWidget {
                             size: 12,
                             color: AppColors.gray[500],
                           ),
-                          SizedBox(width: 4.w),
+                          SizedBox(width: 4),
                           Text(
                             ticket.meal,
                             style: const TextStyle(
@@ -68,7 +70,7 @@ class CommonTicketWidget extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        width: 16.w,
+                        width: 16,
                       ),
                       Row(
                         children: [
@@ -80,7 +82,7 @@ class CommonTicketWidget extends StatelessWidget {
                                 height: 12,
                                 width: 12,
                               ),
-                              SizedBox(width: 4.w),
+                              SizedBox(width: 4),
                               Text(
                                 ticket.status,
                                 style: const TextStyle(
@@ -99,7 +101,7 @@ class CommonTicketWidget extends StatelessWidget {
           ),
           if (isTap)
             SizedBox(
-              width: 120.w,
+              width: 120,
               height: 100,
               child: Material(
                 color: Colors.transparent,
@@ -134,9 +136,9 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
           ),
         );
       },
-      child: Row(
+      child: const Row(
         children: [
-          const DottedLine(
+          DottedLine(
             direction: Axis.vertical,
             lineLength: 60,
             dashLength: 2,
@@ -151,7 +153,7 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
                 color: AppColors.red,
                 letterSpacing: -1,
                 fontWeight: FontWeight.w700,
-                fontSize: 16.sp,
+                fontSize: 16,
               ),
             )),
           ),
@@ -189,7 +191,7 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
                     color: AppColors.green,
                     fontWeight: FontWeight.w700,
                     letterSpacing: -1,
-                    fontSize: 16.sp,
+                    fontSize: 16,
                     height: 1),
               ),
             ),
@@ -243,9 +245,9 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
   //     color: AppColors.yellow,
   //   );
   // }
-  return SizedBox(
-    height: 50.h,
-    width: 50.w,
+  return const SizedBox(
+    height: 50,
+    width: 50,
   );
 }
 // 'Café da manhã',

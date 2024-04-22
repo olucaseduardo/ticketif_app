@@ -67,7 +67,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           visible: !controller.error,
           replacement: ErrorResults(
             msg: 'Voltar ao login',
-            msgError: 'Erro ao carregar usuario',
+            msgError: 'Erro ao carregar usuário',
             function: () => controller.onLogoutTap(),
             homeStudent: true,
           ),
@@ -100,7 +100,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                       const SizedBox(width: 16),
                       CommonButton(
-                        label: 'Solicitar um ticket',
+                        label: 'Solicitar ticket',
                         textPadding: 8,
                         textStyle: AppTextStyle.smallButton,
                         function: () => todayTicket?.idStatus == 7 ||
@@ -146,7 +146,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ],
                             )
                           : Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20.h),
+                              padding: EdgeInsets.symmetric(vertical: 20),
                               child: Align(
                                 alignment: Alignment.center,
                                 child: SizedBox(
@@ -154,7 +154,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   child: Text(
                                     'Nenhum ticket, faça sua solicitação e aguarde ser aprovado.',
                                     style: TextStyle(
-                                      fontSize: 12.sp,
+                                      fontSize: 12,
                                       color: AppColors.gray[800],
                                     ),
                                     textAlign: TextAlign.center,
@@ -163,7 +163,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ),
                             ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 8.h),
+                        padding: EdgeInsets.only(bottom: 8),
                         child: Text(
                           'Outras opções',
                           style: AppTextStyle.labelBig.copyWith(
@@ -185,7 +185,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 8),
                       CommonTileOptions(
                         leading: Icons.access_time_rounded,
                         label: 'Histórico',

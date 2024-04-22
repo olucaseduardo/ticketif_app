@@ -27,7 +27,7 @@ class CommonButton extends StatelessWidget {
             ),
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(textPadding ?? 14.sp),
+            padding: EdgeInsets.all(textPadding ?? 14),
             child: Text(label, style: textStyle ?? AppTextStyle.titleMedium),
           ),
         ),
