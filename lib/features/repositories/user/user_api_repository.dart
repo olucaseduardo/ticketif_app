@@ -1,4 +1,4 @@
-import 'package:project_ifma_ticket/features/models/user.dart';
+import 'package:TicketIFMA/features/models/user.dart';
 
 abstract class UserApiRepository {
   Future<User> loadUser();

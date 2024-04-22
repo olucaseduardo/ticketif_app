@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/features/models/user.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
+import 'package:TicketIFMA/features/models/user.dart';
+import 'package:TicketIFMA/features/resources/theme/app_colors.dart';
+import 'package:TicketIFMA/features/resources/theme/app_text_styles.dart';
 
 class CommonTileStudent extends StatelessWidget {
   final User? student;

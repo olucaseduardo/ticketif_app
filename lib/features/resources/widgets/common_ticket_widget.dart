@@ -2,12 +2,12 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:project_ifma_ticket/core/utils/date_util.dart';
-import 'package:project_ifma_ticket/core/utils/dialog.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
-import 'package:project_ifma_ticket/features/resources/widgets/qr_code_dialog.dart';
+import 'package:TicketIFMA/core/utils/date_util.dart';
+import 'package:TicketIFMA/core/utils/dialog.dart';
+import 'package:TicketIFMA/features/models/ticket.dart';
+import 'package:TicketIFMA/features/resources/theme/app_colors.dart';
+import 'package:TicketIFMA/core/utils/path_image.dart' as path_image;
+import 'package:TicketIFMA/features/resources/widgets/qr_code_dialog.dart';
 
 class CommonTicketWidget extends StatelessWidget {
   final Ticket ticket;

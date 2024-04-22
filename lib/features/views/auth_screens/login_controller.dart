@@ -1,16 +1,19 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/core/exceptions/unauthorized_exception.dart';
-import 'package:project_ifma_ticket/core/utils/links.dart';
-import 'package:project_ifma_ticket/features/repositories/auth/auth_api_repository_impl.dart';
+import 'package:TicketIFMA/core/exceptions/unauthorized_exception.dart';
+import 'package:TicketIFMA/core/utils/links.dart';
+import 'package:TicketIFMA/features/repositories/auth/auth_api_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class LoginController extends ChangeNotifier {
   bool isLoading = false;
   bool error = false;
-  List<String> campus = ["Caxias", "Timon",];
+  List<String> campus = [
+    "Caxias",
+    "Timon",
+  ];
   String campusSelect = "";
   PackageInfo? packageInfo;
 

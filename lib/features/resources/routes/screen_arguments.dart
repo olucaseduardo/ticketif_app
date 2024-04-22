@@ -1,5 +1,5 @@
-import 'package:project_ifma_ticket/features/models/authorization.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
+import 'package:TicketIFMA/features/models/authorization.dart';
+import 'package:TicketIFMA/features/models/ticket.dart';
 
 class ScreenArguments {
   final String? title;

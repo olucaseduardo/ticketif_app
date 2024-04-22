@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
+import 'package:TicketIFMA/features/resources/theme/app_colors.dart';
 
 class CommonTileClass extends StatelessWidget {
   final String title;

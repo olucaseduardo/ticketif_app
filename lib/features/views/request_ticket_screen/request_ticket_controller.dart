@@ -3,17 +3,17 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
-import 'package:project_ifma_ticket/core/navigation/special_navigation.dart';
-import 'package:project_ifma_ticket/core/utils/date_util.dart';
-import 'package:project_ifma_ticket/features/dto/request_permanent.dart';
-import 'package:project_ifma_ticket/features/repositories/request_tables/request_tables_api_impl.dart';
-import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
-import 'package:project_ifma_ticket/features/dto/days_ticket_dto.dart';
-import 'package:project_ifma_ticket/features/dto/request_ticket_model.dart';
-import 'package:project_ifma_ticket/features/models/tables_model.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_theme.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
+import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
+import 'package:TicketIFMA/core/navigation/special_navigation.dart';
+import 'package:TicketIFMA/core/utils/date_util.dart';
+import 'package:TicketIFMA/features/dto/request_permanent.dart';
+import 'package:TicketIFMA/features/repositories/request_tables/request_tables_api_impl.dart';
+import 'package:TicketIFMA/features/repositories/tickets/tickets_api_repository_impl.dart';
+import 'package:TicketIFMA/features/dto/days_ticket_dto.dart';
+import 'package:TicketIFMA/features/dto/request_ticket_model.dart';
+import 'package:TicketIFMA/features/models/tables_model.dart';
+import 'package:TicketIFMA/features/resources/theme/app_theme.dart';
+import 'package:TicketIFMA/features/resources/widgets/app_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RequestTicketController extends ChangeNotifier {

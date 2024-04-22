@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
-import 'package:project_ifma_ticket/core/utils/date_util.dart';
-import 'package:project_ifma_ticket/features/dto/qr_result.dart';
-import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
+import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
+import 'package:TicketIFMA/core/utils/date_util.dart';
+import 'package:TicketIFMA/features/dto/qr_result.dart';
+import 'package:TicketIFMA/features/repositories/tickets/tickets_api_repository_impl.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
@@ -99,7 +99,8 @@ class QrController extends ChangeNotifier {
 
       try {
         for (var element in validatedTickets) {
-          await TicketsApiRepositoryImpl().changeStatusTicket(int.parse(element), 5);
+          await TicketsApiRepositoryImpl()
+              .changeStatusTicket(int.parse(element), 5);
         }
 
         uploadedTickets.addAll(validatedTickets);

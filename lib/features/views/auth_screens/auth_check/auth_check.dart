@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_ifma_ticket/core/services/providers.dart';
-import 'package:project_ifma_ticket/core/utils/loader.dart';
-import 'package:project_ifma_ticket/features/views/adm/cae/cae_home_screen/cae_home_screen.dart';
-import 'package:project_ifma_ticket/features/views/home_screen/home_screen.dart';
-import 'package:project_ifma_ticket/features/views/auth_screens/auth_student/login_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/restaurant/restaurant_home/restaurant_screen.dart';
+import 'package:TicketIFMA/core/services/providers.dart';
+import 'package:TicketIFMA/core/utils/loader.dart';
+import 'package:TicketIFMA/features/views/adm/cae/cae_home_screen/cae_home_screen.dart';
+import 'package:TicketIFMA/features/views/home_screen/home_screen.dart';
+import 'package:TicketIFMA/features/views/auth_screens/auth_student/login_screen.dart';
+import 'package:TicketIFMA/features/views/adm/restaurant/restaurant_home/restaurant_screen.dart';
 
 class AuthCheck extends ConsumerStatefulWidget {
   const AuthCheck({super.key});

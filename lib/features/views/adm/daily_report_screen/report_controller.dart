@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/core/utils/date_util.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
-import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
+import 'package:TicketIFMA/core/utils/date_util.dart';
+import 'package:TicketIFMA/features/models/ticket.dart';
+import 'package:TicketIFMA/features/repositories/tickets/tickets_api_repository_impl.dart';
 
 class ReportController extends ChangeNotifier {
   List<Ticket>? dailyTickets = [];

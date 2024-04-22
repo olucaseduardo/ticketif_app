@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
-import 'package:project_ifma_ticket/features/models/user.dart';
-import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
+import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
+import 'package:TicketIFMA/features/models/ticket.dart';
+import 'package:TicketIFMA/features/models/user.dart';
+import 'package:TicketIFMA/features/repositories/tickets/tickets_api_repository_impl.dart';
 
 class TicketEvaluateController extends ChangeNotifier {
   List<Ticket>? dailyTickets = [];

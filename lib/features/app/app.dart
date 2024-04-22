@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_ifma_ticket/core/navigation/special_navigation.dart';
-import 'package:project_ifma_ticket/core/utils/loader.dart';
-import 'package:project_ifma_ticket/features/resources/routes/app_routes.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_theme.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
-import 'package:project_ifma_ticket/features/views/auth_screens/auth_check/auth_check.dart';
+import 'package:TicketIFMA/core/navigation/special_navigation.dart';
+import 'package:TicketIFMA/core/utils/loader.dart';
+import 'package:TicketIFMA/features/resources/routes/app_routes.dart';
+import 'package:TicketIFMA/features/resources/theme/app_theme.dart';
+import 'package:TicketIFMA/features/resources/widgets/app_message.dart';
+import 'package:TicketIFMA/features/views/auth_screens/auth_check/auth_check.dart';
 
 class App extends StatelessWidget {
   final _navigatorKey = GlobalKey<NavigatorState>();

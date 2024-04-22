@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_ifma_ticket/core/services/providers.dart';
-import 'package:project_ifma_ticket/core/utils/date_util.dart';
-import 'package:project_ifma_ticket/core/utils/loader.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/common_tile_ticket.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/without_results.dart';
+import 'package:TicketIFMA/core/services/providers.dart';
+import 'package:TicketIFMA/core/utils/date_util.dart';
+import 'package:TicketIFMA/core/utils/loader.dart';
+import 'package:TicketIFMA/features/models/ticket.dart';
+import 'package:TicketIFMA/features/resources/theme/app_colors.dart';
+import 'package:TicketIFMA/features/resources/widgets/app_message.dart';
+import 'package:TicketIFMA/features/resources/widgets/common_tile_ticket.dart';
+import 'package:TicketIFMA/features/resources/widgets/without_results.dart';
 
 class TicketEvaluateScreen extends ConsumerStatefulWidget {
   final List<Ticket> tickets;
@@ -93,8 +93,7 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                   decoration: const InputDecoration(
                     filled: true,
                     hintText: "Busca",
-                    prefixIcon:
-                        Icon(Icons.search, color: AppColors.green),
+                    prefixIcon: Icon(Icons.search, color: AppColors.green),
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10))),

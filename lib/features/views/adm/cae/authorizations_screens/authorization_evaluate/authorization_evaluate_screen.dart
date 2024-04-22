@@ -2,15 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_ifma_ticket/core/services/providers.dart';
-import 'package:project_ifma_ticket/core/utils/loader.dart';
-import 'package:project_ifma_ticket/features/models/authorization.dart';
-import 'package:project_ifma_ticket/features/models/student_authorization.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/common_tile_ticket.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/without_results.dart';
+import 'package:TicketIFMA/core/services/providers.dart';
+import 'package:TicketIFMA/core/utils/loader.dart';
+import 'package:TicketIFMA/features/models/authorization.dart';
+import 'package:TicketIFMA/features/models/student_authorization.dart';
+import 'package:TicketIFMA/features/resources/theme/app_colors.dart';
+import 'package:TicketIFMA/features/resources/theme/app_text_styles.dart';
+import 'package:TicketIFMA/features/resources/widgets/app_message.dart';
+import 'package:TicketIFMA/features/resources/widgets/common_tile_ticket.dart';
+import 'package:TicketIFMA/features/resources/widgets/without_results.dart';
 
 class AuthorizationEvaluateScreen extends ConsumerStatefulWidget {
   final Map<String, List<Authorization>> authorizations;
@@ -108,7 +108,8 @@ class _AuthorizationEvaluateScreenState
                     fillColor: AppColors.gray[800],
                     filled: true,
                     hintText: "Busca",
-                    prefixIcon: const Icon(Icons.search, color: AppColors.green),
+                    prefixIcon:
+                        const Icon(Icons.search, color: AppColors.green),
                     border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(

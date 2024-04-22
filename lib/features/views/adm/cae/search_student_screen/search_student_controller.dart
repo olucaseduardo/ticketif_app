@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
-import 'package:project_ifma_ticket/features/models/user.dart';
-import 'package:project_ifma_ticket/features/repositories/user/user_api_repository_impl.dart';
+import 'package:TicketIFMA/features/models/ticket.dart';
+import 'package:TicketIFMA/features/models/user.dart';
+import 'package:TicketIFMA/features/repositories/user/user_api_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchStudentController extends ChangeNotifier {
@@ -68,7 +68,7 @@ class SearchStudentController extends ChangeNotifier {
         .where((student) =>
             student.matricula.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
-        
+
     notifyListeners();
   }
 }

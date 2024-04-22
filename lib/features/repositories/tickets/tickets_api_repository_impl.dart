@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
-import 'package:project_ifma_ticket/core/services/dio_client.dart';
-import 'package:project_ifma_ticket/features/dto/request_permanent.dart';
-import 'package:project_ifma_ticket/features/dto/request_ticket_model.dart';
-import 'package:project_ifma_ticket/features/models/student_authorization.dart';
-import 'package:project_ifma_ticket/features/models/authorization.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
+import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
+import 'package:TicketIFMA/core/services/dio_client.dart';
+import 'package:TicketIFMA/features/dto/request_permanent.dart';
+import 'package:TicketIFMA/features/dto/request_ticket_model.dart';
+import 'package:TicketIFMA/features/models/student_authorization.dart';
+import 'package:TicketIFMA/features/models/authorization.dart';
+import 'package:TicketIFMA/features/models/ticket.dart';
 
 import './tickets_api_repository.dart';
 
@@ -82,9 +82,8 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
       }
       await DioClient().post(
         "/permanent",
-        data: jsonEncode({
-          "permanent_days": tickets.map((e) => e.toMap()).toList()
-        }),
+        data: jsonEncode(
+            {"permanent_days": tickets.map((e) => e.toMap()).toList()}),
       );
     } on DioError catch (e, s) {
       log("Erro ao solicitar tickets permanentes", error: e, stackTrace: s);
@@ -92,26 +91,31 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
           message: 'Erro ao solicitar tickets permanentes');
     }
   }
-  
+
   @override
   Future<List<Authorization>> findAllNotAuthorized() async {
     try {
       final result = await DioClient().get("/not-authorized");
 
-      return result.data.map<Authorization>((t) => Authorization.fromMap(t)).toList();
+      return result.data
+          .map<Authorization>((t) => Authorization.fromMap(t))
+          .toList();
     } on DioError catch (e, s) {
       log('Erro ao buscar autorizações não tratadas', error: e, stackTrace: s);
-      throw RepositoryException(message: 'Erro ao buscar autorizações não tratadas');
+      throw RepositoryException(
+          message: 'Erro ao buscar autorizações não tratadas');
     }
   }
 
   @override
-  Future<void> changeStatusAuthorization(List<StudentAuthorization> authorizations, int status) async {
+  Future<void> changeStatusAuthorization(
+      List<StudentAuthorization> authorizations, int status) async {
     try {
-      await DioClient().patch("/not-authorized/$status", data: jsonEncode({
-          "authorizations": authorizations.map((e) => e.toMap()).toList()
-        }),);
-
+      await DioClient().patch(
+        "/not-authorized/$status",
+        data: jsonEncode(
+            {"authorizations": authorizations.map((e) => e.toMap()).toList()}),
+      );
     } on DioError catch (e, s) {
       log('Erro ao atualizar autorizações', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao atualizar autorizações');

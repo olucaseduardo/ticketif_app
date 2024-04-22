@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/features/models/authorization.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
+import 'package:TicketIFMA/features/models/authorization.dart';
+import 'package:TicketIFMA/features/models/ticket.dart';
 
-import 'package:project_ifma_ticket/features/resources/routes/screen_arguments.dart';
-import 'package:project_ifma_ticket/features/views/auth_screens/auth_adm/login_adm_screen.dart';
-import 'package:project_ifma_ticket/features/views/auth_screens/auth_check/auth_check.dart';
-import 'package:project_ifma_ticket/features/views/adm/cae/authorizations_screens/authorization_classes/authorization_classes_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/cae/authorizations_screens/authorization_evaluate/authorization_evaluate_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/cae/cae_home_screen/cae_home_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/cae/classes_screen/classes_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/daily_report_screen/daily_report_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/list_tickets_screen/list_tickets_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/cae/period_report_screen/period_report_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/cae/search_student_screen/search_student_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/cae/ticket_evaluate_screen/ticket_evaluate_screen.dart';
-import 'package:project_ifma_ticket/features/views/historic_screen/historic_screen.dart';
-import 'package:project_ifma_ticket/features/views/home_screen/home_screen.dart';
-import 'package:project_ifma_ticket/features/views/auth_screens/auth_student/login_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/restaurant/qr_screen/qr_screen.dart';
-import 'package:project_ifma_ticket/features/views/request_ticket_screen/request_ticket_screen.dart';
-import 'package:project_ifma_ticket/features/views/adm/restaurant/restaurant_home/restaurant_screen.dart';
+import 'package:TicketIFMA/features/resources/routes/screen_arguments.dart';
+import 'package:TicketIFMA/features/views/auth_screens/auth_adm/login_adm_screen.dart';
+import 'package:TicketIFMA/features/views/auth_screens/auth_check/auth_check.dart';
+import 'package:TicketIFMA/features/views/adm/cae/authorizations_screens/authorization_classes/authorization_classes_screen.dart';
+import 'package:TicketIFMA/features/views/adm/cae/authorizations_screens/authorization_evaluate/authorization_evaluate_screen.dart';
+import 'package:TicketIFMA/features/views/adm/cae/cae_home_screen/cae_home_screen.dart';
+import 'package:TicketIFMA/features/views/adm/cae/classes_screen/classes_screen.dart';
+import 'package:TicketIFMA/features/views/adm/daily_report_screen/daily_report_screen.dart';
+import 'package:TicketIFMA/features/views/adm/list_tickets_screen/list_tickets_screen.dart';
+import 'package:TicketIFMA/features/views/adm/cae/period_report_screen/period_report_screen.dart';
+import 'package:TicketIFMA/features/views/adm/cae/search_student_screen/search_student_screen.dart';
+import 'package:TicketIFMA/features/views/adm/cae/ticket_evaluate_screen/ticket_evaluate_screen.dart';
+import 'package:TicketIFMA/features/views/historic_screen/historic_screen.dart';
+import 'package:TicketIFMA/features/views/home_screen/home_screen.dart';
+import 'package:TicketIFMA/features/views/auth_screens/auth_student/login_screen.dart';
+import 'package:TicketIFMA/features/views/adm/restaurant/qr_screen/qr_screen.dart';
+import 'package:TicketIFMA/features/views/request_ticket_screen/request_ticket_screen.dart';
+import 'package:TicketIFMA/features/views/adm/restaurant/restaurant_home/restaurant_screen.dart';
 
 class AppRouter {
   static const String loginRoute = '/login';
@@ -92,7 +92,7 @@ class AppRouter {
 
       case authorizationEvaluateRoute:
         return MaterialPageRoute(
-            builder: (_) => AuthorizationEvaluateScreen(
+          builder: (_) => AuthorizationEvaluateScreen(
             title: args?.title as String,
             authorizations:
                 args!.authorizations as Map<String, List<Authorization>>,

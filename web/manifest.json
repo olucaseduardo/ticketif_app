@@ -1,6 +1,6 @@
 {
-    "name": "project_ifma_ticket",
-    "short_name": "project_ifma_ticket",
+    "name": "TicketIFMA",
+    "short_name": "TicketIFMA",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

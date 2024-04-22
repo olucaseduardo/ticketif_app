@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:project_ifma_ticket/core/utils/path_image.dart' as path_image;
+import 'package:TicketIFMA/core/utils/path_image.dart' as path_image;
 
 class Ticket {
   final int id;

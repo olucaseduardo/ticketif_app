@@ -1,4 +1,4 @@
-# project_ifma_ticket
+# TicketIFMA
 
 Novo aplicativo do Ticket IFMA
 

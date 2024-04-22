@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/core/exceptions/repository_exception.dart';
-import 'package:project_ifma_ticket/core/utils/links.dart';
-import 'package:project_ifma_ticket/features/repositories/tickets/tickets_api_repository_impl.dart';
-import 'package:project_ifma_ticket/features/repositories/user/user_api_repository_impl.dart';
-import 'package:project_ifma_ticket/features/models/ticket.dart';
-import 'package:project_ifma_ticket/features/models/user.dart';
-import 'package:project_ifma_ticket/features/resources/widgets/app_message.dart';
+import 'package:TicketIFMA/core/exceptions/repository_exception.dart';
+import 'package:TicketIFMA/core/utils/links.dart';
+import 'package:TicketIFMA/features/repositories/tickets/tickets_api_repository_impl.dart';
+import 'package:TicketIFMA/features/repositories/user/user_api_repository_impl.dart';
+import 'package:TicketIFMA/features/models/ticket.dart';
+import 'package:TicketIFMA/features/models/user.dart';
+import 'package:TicketIFMA/features/resources/widgets/app_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends ChangeNotifier {
@@ -101,7 +101,8 @@ class HomeController extends ChangeNotifier {
       // Confirma presença
       statusId = 4;
     } else {
-      AppMessage.i.showInfo('A confirmação só está disponível no período das 7h às 9h');
+      AppMessage.i
+          .showInfo('A confirmação só está disponível no período das 7h às 9h');
       return;
     }
 

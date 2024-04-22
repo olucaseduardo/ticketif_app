@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_text_styles.dart';
+import 'package:TicketIFMA/features/resources/theme/app_text_styles.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 Future<String?> showQrCodeDialog(BuildContext context, String data) =>

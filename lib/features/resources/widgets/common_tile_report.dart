@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_ifma_ticket/features/resources/theme/app_colors.dart';
-import 'package:project_ifma_ticket/features/resources/theme/ticket_status.dart';
+import 'package:TicketIFMA/features/resources/theme/app_colors.dart';
+import 'package:TicketIFMA/features/resources/theme/ticket_status.dart';
 
 class CommonTileReport extends StatelessWidget {
   final String title;
