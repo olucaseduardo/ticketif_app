@@ -57,8 +57,7 @@ class AppRouter {
       case historicRoute:
         return MaterialPageRoute(
           builder: (_) => HistoricScreen(
-            title: args!.title as String,
-            userTickets: args.tickets as List<Ticket>,
+            userTickets: args?.tickets as List<Ticket>,
           ),
         );
 

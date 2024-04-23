@@ -171,20 +171,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                       ),
-                      CommonTileOptions(
-                        leading: Icons.menu_rounded,
-                        label: 'Seus tickets',
-                        function: () => Navigator.pushNamed(
-                          context,
-                          AppRouter.historicRoute,
-                          arguments: ScreenArguments(
-                            title: 'Seus tickets',
-                            tickets: controller.userTickets
-                                ?.where((a) => a.status != 'Cancelado')
-                                .toList(),
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 8),
                       CommonTileOptions(
                         leading: Icons.access_time_rounded,
@@ -193,7 +179,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           context,
                           AppRouter.historicRoute,
                           arguments: ScreenArguments(
-                            title: 'Histórico',
                             tickets: controller.userTickets,
                           ),
                         ),

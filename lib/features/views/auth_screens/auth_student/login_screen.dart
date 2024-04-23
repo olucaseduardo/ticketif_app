@@ -74,17 +74,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 4.0),
-                              child: Text(
-                                'Campus',
-                                style: AppTextStyle.titleSmall,
-                              ),
+                            const Text(
+                              'Campus',
+                              style: AppTextStyle.titleSmall,
                             ),
+                            const SizedBox(height: 4),
                             CommonDropDownButton(
                               items: controller.campus,
+                              validator: (value) =>
+                                  value == null ? 'Selecione um campus' : null,
                               onChanged: (value) =>
-                                  controller.selectCampus(value),
+                                  controller.selectCampus(value!),
                               hint: 'Selecione seu campus',
                             ),
                           ],

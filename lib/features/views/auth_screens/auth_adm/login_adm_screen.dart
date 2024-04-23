@@ -85,8 +85,10 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                             ),
                             CommonDropDownButton(
                               items: controller.campus,
+                              validator: (value) =>
+                                  value == null ? 'Selecione um campus' : null,
                               onChanged: (value) =>
-                                  controller.selectCampus(value),
+                                  controller.selectCampus(value!),
                               hint: 'Selecione seu campus',
                             ),
                           ],

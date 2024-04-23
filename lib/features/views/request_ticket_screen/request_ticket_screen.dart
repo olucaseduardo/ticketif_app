@@ -23,7 +23,6 @@ class RequestTicket extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final controller = ref.watch(requestTicketProvider);
-
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -52,6 +51,7 @@ class RequestTicket extends ConsumerWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Form(
+                key: controller.formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -73,6 +73,8 @@ class RequestTicket extends ConsumerWidget {
                     ),
                     CommonDropDownButton(
                         hint: 'Selecione uma refeição',
+                        validator: (value) =>
+                            value == null ? 'Selecione um campus' : null,
                         items:
                             controller.meals.map((e) => e.description).toList(),
                         onChanged: (value) => controller.onMealsChanged(value)),
@@ -148,6 +150,8 @@ class RequestTicket extends ConsumerWidget {
                     ),
                     CommonDropDownButton(
                       hint: 'Selecione uma justificativa',
+                      validator: (value) =>
+                          value == null ? 'Selecione um campus' : null,
                       items: controller.justifications
                           .map((e) => e.description)
                           .toList(),

@@ -22,6 +22,7 @@ class RequestTicketController extends ChangeNotifier {
   TablesModel? meal;
   TablesModel? justification;
   TextEditingController justificationController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   List<TablesModel> meals = [];
   List<TablesModel> justifications = [];
@@ -80,16 +81,12 @@ class RequestTicketController extends ChangeNotifier {
 
   /// Realiza as validações para que não haja erros nas requisições
   bool validation(bool isCae) {
-    if (meal == null) {
-      AppMessage.i.showError('Selecione uma refeição');
-      return false;
-    }
     if (isPermanent && permanentDays.isEmpty) {
       AppMessage.i.showError('Selecione pelo menos um dia na semana');
       return false;
     }
-    if (justification == null) {
-      AppMessage.i.showError('Selecione uma justificativa');
+
+    if (!formKey.currentState!.validate()) {
       return false;
     }
 
