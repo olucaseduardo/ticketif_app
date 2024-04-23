@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
@@ -49,7 +48,7 @@ class RequestTicket extends ConsumerWidget {
         Expanded(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
                 key: controller.formKey,
                 child: Column(
@@ -64,9 +63,9 @@ class RequestTicket extends ConsumerWidget {
                       style: AppTextStyle.smallText,
                     ),
                     const SizedBox(height: 12),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.symmetric(vertical: 4),
-                      child: const Text(
+                      child: Text(
                         'Refeição',
                         style: AppTextStyle.titleSmall,
                       ),
@@ -78,9 +77,9 @@ class RequestTicket extends ConsumerWidget {
                         items:
                             controller.meals.map((e) => e.description).toList(),
                         onChanged: (value) => controller.onMealsChanged(value)),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(top: 12),
-                      child: const Text(
+                      child: Text(
                         'Validade',
                         style: AppTextStyle.titleSmall,
                       ),
@@ -141,9 +140,9 @@ class RequestTicket extends ConsumerWidget {
                                 .toList(),
                           )
                         : Container(),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.symmetric(vertical: 4),
-                      child: const Text(
+                      child: Text(
                         'Justificativa',
                         style: AppTextStyle.titleSmall,
                       ),

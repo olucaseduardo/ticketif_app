@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
 import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/core/utils/loader.dart';
@@ -146,7 +145,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ],
                             )
                           : Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20),
+                              padding: const EdgeInsets.symmetric(vertical: 20),
                               child: Align(
                                 alignment: Alignment.center,
                                 child: SizedBox(
@@ -163,7 +162,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ),
                             ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.only(bottom: 8),
                         child: Text(
                           'Outras opções',
                           style: AppTextStyle.labelBig.copyWith(

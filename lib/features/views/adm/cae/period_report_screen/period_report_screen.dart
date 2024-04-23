@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
 import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/core/utils/loader.dart';

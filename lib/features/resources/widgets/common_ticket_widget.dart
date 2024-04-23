@@ -47,7 +47,7 @@ class CommonTicketWidget extends StatelessWidget {
                       letterSpacing: -1,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Column(
@@ -60,7 +60,7 @@ class CommonTicketWidget extends StatelessWidget {
                             size: 12,
                             color: AppColors.gray[500],
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
                             ticket.meal,
                             style: const TextStyle(
@@ -69,7 +69,7 @@ class CommonTicketWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       Row(
@@ -82,7 +82,7 @@ class CommonTicketWidget extends StatelessWidget {
                                 height: 12,
                                 width: 12,
                               ),
-                              SizedBox(width: 4),
+                              const SizedBox(width: 4),
                               Text(
                                 ticket.status,
                                 style: const TextStyle(
@@ -174,9 +174,9 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
           ),
         );
       },
-      child: Row(
+      child: const Row(
         children: [
-          const DottedLine(
+          DottedLine(
             direction: Axis.vertical,
             lineLength: 60,
             dashLength: 2,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
 import 'package:ticket_ifma/core/utils/loader.dart';
 import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
@@ -39,7 +38,7 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -95,7 +94,7 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         child: CommonButton(
                           label: "Entrar na conta",
                           function: () async {

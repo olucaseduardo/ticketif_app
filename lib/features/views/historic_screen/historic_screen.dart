@@ -1,10 +1,6 @@
-import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
@@ -37,7 +33,7 @@ class HistoricScreen extends ConsumerWidget {
               ),
             ),
             flexibleSpace: Padding(
-              padding: EdgeInsets.only(top: 94, left: 16, right: 20),
+              padding: const EdgeInsets.only(top: 94, left: 16, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -123,7 +119,7 @@ class HistoricScreen extends ConsumerWidget {
                         SizedBox(
                           height: 42,
                           child: CommonDropDownButton(
-                            items: ["status 1", "satus 2"],
+                            items: const ["status 1", "satus 2"],
                             onChanged: (v) {},
                             isDense: true,
                             hint: 'Selecione seu campus',
@@ -139,11 +135,11 @@ class HistoricScreen extends ConsumerWidget {
             if (userTickets.isNotEmpty)
               Expanded(
                 child: ListView.builder(
-                  padding: EdgeInsets.only(top: 14),
+                  padding: const EdgeInsets.only(top: 14),
                   itemCount: userTickets.length, // controller.countOne,
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, i) => Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
                         CommonTicketWidget(
