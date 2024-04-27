@@ -105,7 +105,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   : const SizedBox.shrink();
 
                               await controller.onLoginTap(
-                                matriculaEC.text,
+                                matriculaEC.text.toUpperCase(),
                                 passwordEC.text,
                               );
 

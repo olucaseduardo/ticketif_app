@@ -49,7 +49,16 @@ class CommonDropDownButton extends StatelessWidget {
       ),
       items: items
           .map((element) =>
-              DropdownMenuItem(value: element, child: Text(element)))
+              DropdownMenuItem(
+              value: element,
+              child: Text(element == 'Almoço'
+                ? '$element (11:00 às 13:30)'
+                : element == 'Jantar' 
+                  ? '$element (18:00 às 19:30)' 
+                  : element,
+              ),
+            ),
+          )
           .toList(),
       onChanged: onChanged,
     );

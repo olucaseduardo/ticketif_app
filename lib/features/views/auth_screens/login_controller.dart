@@ -38,6 +38,8 @@ class LoginController extends ChangeNotifier {
     error = false;
     notifyListeners();
     try {
+      log(matricula);
+
       final authModel =
           await AuthApiRepositoryImpl().login(matricula, password);
 
@@ -67,6 +69,8 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
 
     try {
+      log(username);
+
       final authModel =
           await AuthApiRepositoryImpl().loginADM(username, password);
 
