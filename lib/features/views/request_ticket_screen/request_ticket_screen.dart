@@ -73,9 +73,11 @@ class RequestTicket extends ConsumerWidget {
                     CommonDropDownButton(
                         hint: 'Selecione uma refeição',
                         validator: (value) =>
-                            value == null ? 'Selecione um campus' : null,
+                            value == null ? 'Selecione uma refeição' : null,
                         items:
-                            controller.meals.map((e) => e.description).toList(),
+                            controller.meals.map((e)
+                            => e.description
+                            ).toList(),
                         onChanged: (value) => controller.onMealsChanged(value)),
                     const Padding(
                       padding: EdgeInsets.only(top: 12),
@@ -150,7 +152,7 @@ class RequestTicket extends ConsumerWidget {
                     CommonDropDownButton(
                       hint: 'Selecione uma justificativa',
                       validator: (value) =>
-                          value == null ? 'Selecione um campus' : null,
+                          value == null ? 'Selecione uma justificativa' : null,
                       items: controller.justifications
                           .map((e) => e.description)
                           .toList(),

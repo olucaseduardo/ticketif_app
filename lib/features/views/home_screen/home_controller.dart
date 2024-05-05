@@ -50,6 +50,7 @@ class HomeController extends ChangeNotifier {
 
       // verificando quais os tickets do aluno para o dia
       for (var index = 0; index < tickets.length; index++) {
+        log(tickets.elementAt(index).toString());
         if (tickets.elementAt(index).useDayDate != '') {
           if (DateTime.parse(tickets.elementAt(index).useDayDate).day ==
                   DateTime.now().day &&
@@ -58,6 +59,7 @@ class HomeController extends ChangeNotifier {
             todayTickets?.add(tickets.elementAt(index));
             userTickets?.add(tickets.elementAt(index));
           } else {
+            log(tickets.elementAt(index).toString());
             userTickets?.add(tickets.elementAt(index));
           }
         }

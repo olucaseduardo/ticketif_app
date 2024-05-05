@@ -3,6 +3,7 @@ import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 
 class CommonDropDownButton extends StatelessWidget {
   final String? hint;
+  final String? value;
   final List<String> items;
   final bool isDense;
   final void Function(String?)? onChanged;
@@ -11,6 +12,7 @@ class CommonDropDownButton extends StatelessWidget {
   const CommonDropDownButton(
       {Key? key,
       this.hint,
+      this.value,
       required this.items,
       this.isDense = false,
       required this.onChanged,
@@ -41,6 +43,7 @@ class CommonDropDownButton extends StatelessWidget {
       ),
       borderRadius: BorderRadius.circular(4.0),
       isExpanded: true,
+      value: value,
       hint: Text(
         hint ?? "",
         maxLines: 1,
@@ -51,11 +54,7 @@ class CommonDropDownButton extends StatelessWidget {
           .map((element) =>
               DropdownMenuItem(
               value: element,
-              child: Text(element == 'Almoço'
-                ? '$element (11:00 às 13:30)'
-                : element == 'Jantar' 
-                  ? '$element (18:00 às 19:30)' 
-                  : element,
+              child: Text(element,
               ),
             ),
           )

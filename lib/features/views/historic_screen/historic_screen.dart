@@ -1,13 +1,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ticket_ifma/core/services/providers.dart';
+import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_dropdown_widget.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_ticket_widget.dart';
 
-class HistoricScreen extends ConsumerWidget {
+class HistoricScreen extends ConsumerStatefulWidget {
   final List<Ticket> userTickets;
 
   const HistoricScreen({
@@ -16,7 +18,21 @@ class HistoricScreen extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<HistoricScreen> createState() => _HistoricScreenState();
+}
+
+
+class _HistoricScreenState extends ConsumerState<HistoricScreen>{
+  @override
+  void initState() {
+    ref.read(historicProvider).loadData(widget.userTickets);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    final controller = ref.watch(historicProvider);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size(double.infinity, 108),
@@ -37,7 +53,7 @@ class HistoricScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
+                  // const SizedBox(height: 20),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -47,6 +63,7 @@ class HistoricScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
+                  // const SizedBox(height: 20,)
                 ],
               ),
             ),
@@ -62,6 +79,7 @@ class HistoricScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(height: 10,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
@@ -76,7 +94,17 @@ class HistoricScreen extends ConsumerWidget {
                         ),
                         const SizedBox(height: 4),
                         InkWell(
-                            onTap: () {},
+                            onTap: () async{
+                              var pickDate = await showDatePicker(
+                                context: context,
+                                 initialDate: controller.changeDate,
+                                 firstDate: controller.changeDate.subtract(const Duration(days: 365)),
+                                lastDate: controller.changeDate.add(
+                                  const Duration(days: 365),
+                                ),
+                              );
+                              controller.updateDate(pickDate);
+                            },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 8),
@@ -91,7 +119,7 @@ class HistoricScreen extends ConsumerWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Selecione a data',
+                                    controller.day == null ? 'Selecione a data' : DateUtil.getDateStr(controller.changeDate),
                                     style: TextStyle(
                                       color: AppColors.gray[700],
                                     ),
@@ -119,10 +147,11 @@ class HistoricScreen extends ConsumerWidget {
                         SizedBox(
                           height: 42,
                           child: CommonDropDownButton(
-                            items: const ["status 1", "satus 2"],
-                            onChanged: (v) {},
+                            items: controller.status.entries.map((e) => e.value).toList(),
+                            onChanged: (value) => controller.onStatusChanged(value),
                             isDense: true,
-                            hint: 'Selecione seu campus',
+                            hint: controller.statusValue,
+                            value: controller.statusValue,
                           ),
                         ),
                       ],
@@ -132,18 +161,18 @@ class HistoricScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 12),
-            if (userTickets.isNotEmpty)
+            if (controller.historicTickets.isNotEmpty)
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.only(top: 14),
-                  itemCount: userTickets.length, // controller.countOne,
+                  itemCount: controller.historicTickets.length, // controller.countOne,
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, i) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
                         CommonTicketWidget(
-                          ticket: userTickets.elementAt(i),
+                          ticket: controller.historicTickets.elementAt(i),
                         ),
                         const SizedBox(height: 8),
                       ],

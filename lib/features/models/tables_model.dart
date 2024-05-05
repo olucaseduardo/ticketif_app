@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class TablesModel {
   final int id;
-  final String description;
+  String description;
 
   TablesModel({
     required this.id,

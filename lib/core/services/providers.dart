@@ -7,6 +7,7 @@ import 'package:ticket_ifma/features/views/adm/cae/ticket_evaluate_screen/ticket
 import 'package:ticket_ifma/features/views/auth_screens/auth_check/auth_check_controller.dart';
 import 'package:ticket_ifma/features/views/adm/cae/cae_home_screen/cae_controller.dart';
 import 'package:ticket_ifma/features/views/adm/cae/authorizations_screens/cae_authorization_controller.dart';
+import 'package:ticket_ifma/features/views/historic_screen/historic_controller.dart';
 import 'package:ticket_ifma/features/views/home_screen/home_controller.dart';
 import 'package:ticket_ifma/features/views/auth_screens/login_controller.dart';
 import 'package:ticket_ifma/features/views/adm/daily_report_screen/report_controller.dart';
@@ -21,6 +22,9 @@ final requestTicketProvider =
 final homeProvider = ChangeNotifierProvider.autoDispose<HomeController>(
   (ref) => HomeController(),
 );
+
+final historicProvider = ChangeNotifierProvider.autoDispose<HistoricController>(
+    (ref) => HistoricController());
 
 final caeProvider = ChangeNotifierProvider.autoDispose<CaeController>(
   (ref) => CaeController(),

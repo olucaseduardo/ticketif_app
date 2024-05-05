@@ -45,7 +45,17 @@ class RequestTicketController extends ChangeNotifier {
   Future<void> requestList() async {
     try {
       final tables = await RequestTablesApiImpl().listTables();
-      meals = tables.meals;
+      meals = tables.meals.map((e) {
+        if (e.description == 'Almoço') {
+          e.description = '${e.description} (11:00 às 13:30)';
+          return e;
+        } else if (e.description == 'Jantar') {
+          e.description = '${e.description} (18:00 às 19:30)';
+          return e;
+        } else {
+          return e;
+        }
+      }).toList();
       justifications = tables.justifications;
       meals.removeLast();
       meals.removeAt(0);
