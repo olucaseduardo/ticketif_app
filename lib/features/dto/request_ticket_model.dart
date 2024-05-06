@@ -5,6 +5,7 @@ class RequestTicketModel {
   final int weekId;
   final int mealId;
   final int statusId;
+  final int isCae;
   final int justificationId;
   final int isPermanent;
   final String solicitationDay;
@@ -18,6 +19,7 @@ class RequestTicketModel {
     required this.weekId,
     required this.mealId,
     required this.statusId,
+    this.isCae = 0,
     required this.justificationId,
     required this.isPermanent,
     required this.solicitationDay,
@@ -34,6 +36,7 @@ class RequestTicketModel {
       'week_id': weekId,
       'meal_id': mealId,
       'status_id': statusId,
+      'is_cae': isCae,
       'justification_id': justificationId,
       'solicitation_day': solicitationDay,
       'use_day': useDay,

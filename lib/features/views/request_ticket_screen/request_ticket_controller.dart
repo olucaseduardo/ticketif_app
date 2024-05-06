@@ -104,7 +104,7 @@ class RequestTicketController extends ChangeNotifier {
     final minutes = DateTime.now().minute;
 
     /// Verifica se o pedido de almoço ocorre dentro do horário estipulado
-    if (((hour >= 8) && (hour <= 10 && minutes <= 30)) && isCae == false) {
+    if (((hour >= 7) && (hour <= 10 && minutes <= 30)) && isCae == false) {
       if (meal!.id == 2) {
         AppMessage.i.showInfo(
             'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
@@ -135,6 +135,7 @@ class RequestTicketController extends ChangeNotifier {
         useDay: useDay,
         useDayDate: useDayDate,
         paymentDay: '',
+        isCae: isCae ? 1 : 0,
         text: justificationController.text,
       ));
     } on DioError catch (e, s) {

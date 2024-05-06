@@ -28,6 +28,7 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
   @override
   Future<void> requestTicket(RequestTicketModel ticket) async {
     try {
+      log(ticket.toMap().toString());
       await DioClient().post("/ticket", data: ticket.toMap());
     } on DioError catch (e, s) {
       log("Erro ao solicitar ticket", error: e, stackTrace: s);
