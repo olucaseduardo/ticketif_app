@@ -102,14 +102,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         label: 'Solicitar ticket',
                         textPadding: 8,
                         textStyle: AppTextStyle.smallButton,
-                        function: () => todayTicket?.idStatus == 7 ||
-                                todayTicket?.idStatus == 6 ||
-                                todayTicket?.idStatus == 5 ||
-                                todayTicket == null
+                        function: () => controller.checkingRequestBlocking()
                             ? Navigator.pushNamed(
                                 context, AppRouter.requestTicketRoute)
                             : AppMessage.i.showInfo(
-                                'Você já possui um ticket para ${todayTicket.meal.toLowerCase()}'),
+                                'Você já possui um ticket para ${todayTicket?.meal.toLowerCase()}'),
                       ),
                     ],
                   ),
@@ -132,18 +129,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                       ),
+                      
                       controller.todayTickets!.isNotEmpty && todayTicket != null
                           ? Column(
-                              children: [
-                                const SizedBox(height: 8),
-                                CommonTicketWidget(
-                                  ticket: todayTicket,
-                                  function: () => controller.changeTicket(
-                                      todayTicket.id, todayTicket.idStatus),
+                            children: [
+                              const SizedBox(height: 8),
+
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: controller.todayTickets!.length,
+                                
+                                itemBuilder: (_, index) => Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            
+                                  child: CommonTicketWidget(
+                                    ticket: controller.todayTickets!.elementAt(index),
+                                    function: () => controller.changeTicket(
+                                      controller.todayTickets!.elementAt(index).id,
+                                      controller.todayTickets!.elementAt(index).idStatus,
+                                    ),
+                                  ),
                                 ),
-                                const SizedBox(height: 14),
-                              ],
-                            )
+                              ),
+
+                              const SizedBox(height: 14),
+                            ],
+                          )
                           : Padding(
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               child: Align(

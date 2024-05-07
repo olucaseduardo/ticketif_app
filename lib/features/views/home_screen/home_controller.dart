@@ -30,6 +30,18 @@ class HomeController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool checkingRequestBlocking() {
+    return todayTicket?.idStatus == 7 ||
+        todayTicket?.idStatus == 6 ||
+        todayTicket?.idStatus == 5 ||
+        todayTicket == null;
+  }
+
+  bool _checkingTodayTicket(String date) {
+    return DateTime.parse(date).day == DateTime.now().day &&
+        DateTime.parse(date).month == DateTime.now().month;
+  }
+
   /// Realiza a leitura dos dados do aluno no banco de dados
   Future<void> loadData() async {
     try {
@@ -52,10 +64,7 @@ class HomeController extends ChangeNotifier {
       for (var index = 0; index < tickets.length; index++) {
         log(tickets.elementAt(index).toString());
         if (tickets.elementAt(index).useDayDate != '') {
-          if (DateTime.parse(tickets.elementAt(index).useDayDate).day ==
-                  DateTime.now().day &&
-              DateTime.parse(tickets.elementAt(index).useDayDate).month ==
-                  DateTime.now().month) {
+          if (_checkingTodayTicket(tickets.elementAt(index).useDayDate)) {
             todayTickets?.add(tickets.elementAt(index));
             userTickets?.add(tickets.elementAt(index));
           } else {

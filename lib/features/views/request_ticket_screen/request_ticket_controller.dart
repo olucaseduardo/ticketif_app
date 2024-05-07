@@ -89,6 +89,27 @@ class RequestTicketController extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  bool _isAfterOrEqual(TimeOfDay now, TimeOfDay start) {
+    if (now.hour > start.hour) {
+      return true;
+    } else if (now.hour == start.hour) {
+      return now.minute >= start.minute;
+    } else {
+      return false;
+    }
+  }
+
+  bool _isBeforeOrEqual(TimeOfDay now, TimeOfDay end) {
+    if (now.hour < end.hour) {
+      return true;
+    } else if (now.hour == end.hour) {
+      return now.minute <= end.minute;
+    } else {
+      return false;
+    }
+  }
+
   /// Realiza as validações para que não haja erros nas requisições
   bool validation(bool isCae) {
     if (isPermanent && permanentDays.isEmpty) {
@@ -100,19 +121,37 @@ class RequestTicketController extends ChangeNotifier {
       return false;
     }
 
-    final hour = DateTime.now().hour;
-    final minutes = DateTime.now().minute;
+    DateTime now = DateTime.now();
+    TimeOfDay startTime = const TimeOfDay(hour: 7, minute: 0);
+    TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
 
-    /// Verifica se o pedido de almoço ocorre dentro do horário estipulado
-    if (((hour >= 7) && (hour <= 10 && minutes <= 30)) && isCae == false) {
-      if (meal!.id == 2) {
-        AppMessage.i.showInfo(
-            'A solicitação está fora do período de ${meal!.description.toLowerCase()}');
-        return false;
+    TimeOfDay startTimeDinner = const TimeOfDay(hour: 13, minute: 0);
+    TimeOfDay endTimeDinner = const TimeOfDay(hour: 18, minute: 30);
+
+    TimeOfDay nowTimeOfDay = TimeOfDay.fromDateTime(now);
+
+    // Verifica se o pedido de almoço ocorre dentro do horário estipulado
+    if (meal!.id == 2) {
+      if (_isAfterOrEqual(nowTimeOfDay, startTime)
+       && _isBeforeOrEqual(nowTimeOfDay, endTime)) {
+        return true;
+      } else {
+          AppMessage.i.showInfo(
+            'A solicitação foi realizada fora do horário de avaliação da CAE para o almoço (7h00 às 10h30).');
+          return false;
+      }
+    } else if (meal!.id == 3) {
+      if (_isAfterOrEqual(nowTimeOfDay, startTimeDinner)
+       && _isBeforeOrEqual(nowTimeOfDay, endTimeDinner)) {
+        return true;
+      } else {
+          AppMessage.i.showInfo(
+            'A solicitação foi realizada fora do horário de avaliação da CAE para o jantar (13h00 às 18h30).');
+          return false;
       }
     }
 
-    return true;
+    return false;
   }
 
   /// Responsável por solicitar a refeição do tipo diária do aluno
