@@ -6,7 +6,7 @@ import 'package:ticket_ifma/core/utils/path_image.dart' as path_image;
 class Ticket {
   final int id;
   final int idStudent;
-  final int idStatus;
+  int idStatus;
   final int idMeal;
   final String useDayDate;
   final String useDay;
@@ -14,7 +14,7 @@ class Ticket {
   final String studentName;
   final String type;
   final String meal;
-  final String status;
+  String status;
   final String justification;
   final String text;
   final int isPermanent;

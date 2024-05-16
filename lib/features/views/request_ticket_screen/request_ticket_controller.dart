@@ -135,6 +135,8 @@ class RequestTicketController extends ChangeNotifier {
       if (_isAfterOrEqual(nowTimeOfDay, startTime)
        && _isBeforeOrEqual(nowTimeOfDay, endTime)) {
         return true;
+      } else if (isCae) {
+        return true;
       } else {
           AppMessage.i.showInfo(
             'A solicitação foi realizada fora do horário de avaliação da CAE para o almoço (7h00 às 10h30).');
@@ -143,6 +145,8 @@ class RequestTicketController extends ChangeNotifier {
     } else if (meal!.id == 3) {
       if (_isAfterOrEqual(nowTimeOfDay, startTimeDinner)
        && _isBeforeOrEqual(nowTimeOfDay, endTimeDinner)) {
+        return true;
+      } else if (isCae) {
         return true;
       } else {
           AppMessage.i.showInfo(

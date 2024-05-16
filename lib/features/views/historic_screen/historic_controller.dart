@@ -1,6 +1,12 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
 import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
+import 'package:ticket_ifma/features/repositories/tickets/tickets_api_repository_impl.dart';
+import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
 
 class HistoricController extends ChangeNotifier {
   DateTime? day;
@@ -9,6 +15,8 @@ class HistoricController extends ChangeNotifier {
   List<Ticket> historicTickets = [];
   String statusValue = 'Todos';
   Map<int, String> status = {0: 'Todos'};
+  bool isLoading = false;
+  bool error = false;
 
 
   void loadData(List<Ticket> data) {
@@ -21,7 +29,7 @@ class HistoricController extends ChangeNotifier {
       }
     }
 
-    print('Status ${status.toString()}');
+    log('Status ${status.toString()}');
   }
 
   // void initDate() {
@@ -60,6 +68,62 @@ class HistoricController extends ChangeNotifier {
       statusValue = 'Todos';
       historicTickets = getHistoricTickets(day);
       notifyListeners();
+    }
+  }
+
+  Future<void> cancelTicket(int idTicket) async {
+    try {
+      isLoading = true;
+      error = false;
+
+      await TicketsApiRepositoryImpl().changeStatusTicket(idTicket, 6);
+      var ticketSelected = tickets.where((t) => t.id == idTicket).first;
+      int indiceTicket = tickets.indexWhere((t) => t.id == idTicket);
+
+      ticketSelected.status = 'Cancelado';
+      ticketSelected.idStatus = 6;
+
+      tickets.replaceRange(indiceTicket, indiceTicket + 1, [ticketSelected]);
+
+      isLoading = false;
+      notifyListeners();
+    } on DioError catch (e, s) {
+      log('Erro ao cancelar ticket', error: e, stackTrace: s);
+      isLoading = false;
+      error = true;
+      throw RepositoryException(message: 'Erro ao cancelar ticket');
+    }
+  }
+
+  Future<void> confirmTicket(int idTicket) async {
+    final hour = DateTime.now().hour;
+
+    if (!(hour > 12 || (hour >= 7 && hour < 9))) {
+      AppMessage.i
+          .showInfo('A confirmação só está disponível no período das 7h às 9h');
+      return;
+    }
+
+    try {
+      isLoading = true;
+      error = false;
+
+      await TicketsApiRepositoryImpl().changeStatusTicket(idTicket, 4);
+      var ticketSelected = tickets.where((t) => t.id == idTicket).first;
+      int indiceTicket = tickets.indexWhere((t) => t.id == idTicket);
+
+      ticketSelected.status = 'Utilização autorizada';
+      ticketSelected.idStatus = 4;
+
+      tickets.replaceRange(indiceTicket, indiceTicket + 1, [ticketSelected]);
+
+      isLoading = false;
+      notifyListeners();
+    } on DioError catch (e, s) {
+      log('Erro ao cancelar ticket', error: e, stackTrace: s);
+      isLoading = false;
+      error = true;
+      throw RepositoryException(message: 'Erro ao cancelar ticket');
     }
   }
 }
