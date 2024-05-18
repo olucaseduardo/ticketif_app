@@ -130,32 +130,56 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                       ),
                       
-                      controller.todayTickets!.isNotEmpty && todayTicket != null
-                          ? Column(
-                            children: [
-                              const SizedBox(height: 8),
+                      controller.todayTicketsMap!.isNotEmpty
+                          ?
+                      // Column(
+                      //       children: [
+                      //         const SizedBox(height: 8),
+                      //
+                      //         ListView.builder(
+                      //           shrinkWrap: true,
+                      //           physics: const NeverScrollableScrollPhysics(),
+                      //           itemCount: controller.todayTickets!.length,
+                      //           // quero organizar os tickets por prioridade aqui
+                      //           itemBuilder: (_, index) => Padding(
+                      //             padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      //
+                      //             child: CommonTicketWidget(
+                      //               ticket: controller.todayTickets!.elementAt(index),
+                      //               function: () => controller.changeTicket(
+                      //                 controller.todayTickets!.elementAt(index).id,
+                      //                 controller.todayTickets!.elementAt(index).idStatus,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //
+                      //         const SizedBox(height: 14),
+                      //       ],
+                      //     )
 
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: controller.todayTickets!.length,
-                                
-                                itemBuilder: (_, index) => Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            
-                                  child: CommonTicketWidget(
-                                    ticket: controller.todayTickets!.elementAt(index),
-                                    function: () => controller.changeTicket(
-                                      controller.todayTickets!.elementAt(index).id,
-                                      controller.todayTickets!.elementAt(index).idStatus,
-                                    ),
-                                  ),
+                            Column(
+                              children: [
+                                const SizedBox(height: 8),
+
+                                Column(
+                                  children: controller.todayTicketsMap!.entries.map(
+                                      (entry) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 4.0),
+                                        child: CommonTicketWidget(
+                                          ticket: entry.value.first,
+                                          function: () => controller.changeTicket(
+                                            entry.value.first.id,
+                                            entry.value.first.idStatus,
+                                          ),
+                                        ),
+                                      )
+                                  ).toList(),
                                 ),
-                              ),
-
-                              const SizedBox(height: 14),
-                            ],
-                          )
+                                const SizedBox(height: 14),
+                              ],
+                            )
                           : Padding(
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               child: Align(

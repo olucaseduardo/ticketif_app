@@ -10,13 +10,16 @@ import 'package:ticket_ifma/features/models/ticket.dart';
 import 'package:ticket_ifma/features/models/user.dart';
 import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ticket_ifma/features/views/home_screen/helpers/today_tickets_helper.dart';
 
 class HomeController extends ChangeNotifier {
   User? user;
   List<Ticket>? userTickets = [];
   List<Ticket>? todayTickets = [];
+  Map<int, List<Ticket>>? todayTicketsMap = {};
   bool isLoading = true;
   bool error = false;
+  static const statusPriority = {4,2,1,5,6,7};
 
   Ticket? todayTicket;
 
@@ -74,8 +77,6 @@ class HomeController extends ChangeNotifier {
         }
       }
 
-      todayTickets!.sort((a, b) => a.idMeal.compareTo(b.idMeal));
-
       // verificando qual o ticket deve ser exibido na homescreen
       final hour = DateTime.now().hour;
       for (var ticket in todayTickets!) {
@@ -89,6 +90,8 @@ class HomeController extends ChangeNotifier {
           }
         }
       }
+
+      todayTicketsMap = TodayTicketsHelper.i.mapList(todayTickets!);
 
       userTickets!.sort((a, b) => b.useDayDate.compareTo(a.useDayDate));
       loading();
