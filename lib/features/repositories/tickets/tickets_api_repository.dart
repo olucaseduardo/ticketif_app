@@ -11,6 +11,7 @@ abstract class TicketsApiRepository {
   Future<void> requestPermanent(List<RequestPermanent> tickets);
   Future<void> findAllNotAuthorized();
   Future<void> changeStatusTicket(int idTicket, int statusId);
+  Future<void> changeConfirmTicket(int idTicket, int statusId, int idMeal);
   Future<void> changeStatusAuthorization(
       List<StudentAuthorization> authorizations, int status);
 }

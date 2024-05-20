@@ -54,10 +54,12 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
       return true;
     }
 
-    return WillPopScope(
-      onWillPop: () {
+    return PopScope(
+      canPop: true,
+
+      onPopInvoked: (bool didPop) async {
         Navigator.pop(context, controller.filteredTickets);
-        return Future.value(false);
+        return Future.value();
       },
       child: Scaffold(
         appBar: AppBar(

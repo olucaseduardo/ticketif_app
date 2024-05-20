@@ -109,8 +109,8 @@ class _LoginAdmScreenState extends ConsumerState<LoginAdmScreen> {
                                   : const SizedBox.shrink();
 
                               await controller.onLoginAdmTap(
-                                usernameEC.text.toUpperCase(),
-                                passwordEC.text,
+                                usernameEC.text.toUpperCase().trim(),
+                                passwordEC.text.trim(),
                               );
 
                               if (!controller.error) {

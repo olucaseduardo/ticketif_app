@@ -172,6 +172,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                           function: () => controller.changeTicket(
                                             entry.value.first.id,
                                             entry.value.first.idStatus,
+                                            entry.value.first.idMeal,
                                           ),
                                         ),
                                       )

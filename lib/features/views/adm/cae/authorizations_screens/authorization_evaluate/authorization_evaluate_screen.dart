@@ -68,11 +68,14 @@ class _AuthorizationEvaluateScreenState
       log('EraserList :: $selectedStudents');
     }
 
-    return WillPopScope(
-      onWillPop: () {
+    return PopScope(
+      canPop: true,
+
+      onPopInvoked: (bool didPop) async {
         Navigator.pop(context, selectedStudents);
-        return Future.value(false);
+        return Future.value();
       },
+
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(

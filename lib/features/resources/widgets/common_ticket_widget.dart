@@ -196,7 +196,7 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
             title: 'Confirmar Presença?',
             action: controller == null 
               ? () => action!()
-              : () => controller.confirmTicket(ticket.id),
+              : () => controller.confirmTicket(ticket.id, ticket.idMeal),
             labelConfirmButton: "Confirmar",
             message:
                 "Caso você irá utilizar este ticket, clique em confirmar para validar sua presença.",

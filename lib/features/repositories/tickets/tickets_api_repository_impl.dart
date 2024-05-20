@@ -49,6 +49,19 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
   }
 
   @override
+  Future<void> changeConfirmTicket(int idTicket, int statusId, int idMeal) async {
+    try {
+      await DioClient().patch("/confirm-ticket/$idTicket", data: {
+        "status_id": statusId,
+        "meal_id": idMeal,
+      });
+    } on DioError catch (e, s) {
+      log("Erro ao alterar status do ticket", error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao solicitar ticket');
+    }
+  }
+
+  @override
   Future<List<Ticket>> findAllDailyTickets(String date) async {
     try {
       final result = await DioClient().get("/tickets-daily?daily=$date");

@@ -95,12 +95,39 @@ class HistoricController extends ChangeNotifier {
     }
   }
 
-  Future<void> confirmTicket(int idTicket) async {
-    final hour = DateTime.now().hour;
+  bool _isAfterOrEqual(TimeOfDay now, TimeOfDay start) {
+    if (now.hour > start.hour) {
+      return true;
+    } else if (now.hour == start.hour) {
+      return now.minute >= start.minute;
+    } else {
+      return false;
+    }
+  }
 
-    if (!(hour > 12 || (hour >= 7 && hour < 9))) {
+  bool _isBeforeOrEqual(TimeOfDay now, TimeOfDay end) {
+    if (now.hour < end.hour) {
+      return true;
+    } else if (now.hour == end.hour) {
+      return now.minute <= end.minute;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> confirmTicket(int idTicket, int idMeal) async {
+    DateTime now = DateTime.now();
+    TimeOfDay startTime = const TimeOfDay(hour: 7, minute: 0);
+    TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
+
+    TimeOfDay nowTimeOfDay = TimeOfDay.fromDateTime(now);
+
+    bool timeLimit = _isAfterOrEqual(nowTimeOfDay, startTime)
+       && _isBeforeOrEqual(nowTimeOfDay, endTime);
+
+    if (!(now.hour > 12 || (timeLimit))) {
       AppMessage.i
-          .showInfo('A confirmação só está disponível no período das 7h às 9h');
+          .showInfo('A confirmação só está disponível no período das 7h às 10h30');
       return;
     }
 
@@ -108,7 +135,7 @@ class HistoricController extends ChangeNotifier {
       isLoading = true;
       error = false;
 
-      await TicketsApiRepositoryImpl().changeStatusTicket(idTicket, 4);
+      await TicketsApiRepositoryImpl().changeConfirmTicket(idTicket, 4, idMeal);
       var ticketSelected = tickets.where((t) => t.id == idTicket).first;
       int indiceTicket = tickets.indexWhere((t) => t.id == idTicket);
 
