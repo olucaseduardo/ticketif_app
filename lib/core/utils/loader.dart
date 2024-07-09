@@ -36,4 +36,14 @@ class Loader {
       ),
     );
   }
+
+  static Widget refreshLoader() {
+    return Center(
+      child: LoadingAnimationWidget.twistingDots(
+        leftDotColor: AppColors.green,
+        rightDotColor: AppColors.red,
+        size: 40,
+      ),
+    );
+  }
 }

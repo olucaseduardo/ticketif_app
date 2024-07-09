@@ -122,82 +122,91 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 18),
-                        child: Text(
-                          'Suas refeições de hoje',
-                          style: AppTextStyle.labelBig.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      
-                      controller.todayTicketsMap!.isNotEmpty
-                          ?
-                      // Column(
-                      //       children: [
-                      //         const SizedBox(height: 8),
-                      //
-                      //         ListView.builder(
-                      //           shrinkWrap: true,
-                      //           physics: const NeverScrollableScrollPhysics(),
-                      //           itemCount: controller.todayTickets!.length,
-                      //           // quero organizar os tickets por prioridade aqui
-                      //           itemBuilder: (_, index) => Padding(
-                      //             padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      //
-                      //             child: CommonTicketWidget(
-                      //               ticket: controller.todayTickets!.elementAt(index),
-                      //               function: () => controller.changeTicket(
-                      //                 controller.todayTickets!.elementAt(index).id,
-                      //                 controller.todayTickets!.elementAt(index).idStatus,
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //
-                      //         const SizedBox(height: 14),
-                      //       ],
-                      //     )
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          
+                          children: [
+                            Text(
+                              'Suas refeições de hoje',
+                              style: AppTextStyle.labelBig.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
 
-                            Column(
-                              children: [
-                                const SizedBox(height: 8),
-
-                                Column(
-                                  children: controller.todayTicketsMap!.entries.map(
-                                      (entry) => Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 4.0),
-                                        child: CommonTicketWidget(
-                                          ticket: entry.value.first,
-                                          function: () => controller.changeTicket(
-                                            entry.value.first.id,
-                                            entry.value.first.idStatus,
-                                            entry.value.first.idMeal,
-                                          ),
-                                        ),
-                                      )
-                                  ).toList(),
-                                ),
-                                const SizedBox(height: 14),
-                              ],
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                    'Nenhum ticket, faça sua solicitação e aguarde ser aprovado.',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: AppColors.gray[800],
-                                    ),
-                                    textAlign: TextAlign.center,
+                            TextButton(
+                              onPressed: () => controller.reloadData(controller.user!.id),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty
+                                  .all<Color>(Colors.white),
+                                padding: MaterialStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.symmetric(
+                                    horizontal: 0.0, 
+                                    vertical: 0.0,
                                   ),
                                 ),
                               ),
+                              child: Text(
+                                'Atualizar',
+                                style: AppTextStyle.titleSmall.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                      
+                      Visibility(
+                        visible: controller.isReloading == false,
+
+                        replacement: SizedBox(
+                          height: 100,
+                          child: Loader.refreshLoader(),
+                        ),
+
+                        child: controller.todayTicketsMap!.isNotEmpty
+                        ? Column(
+                          children: [
+                            const SizedBox(height: 8),
+                        
+                            Column(
+                              children: controller.todayTicketsMap!.entries.map(
+                                  (entry) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0),
+                                    child: CommonTicketWidget(
+                                      ticket: entry.value.first,
+                                      function: () => controller.changeTicket(
+                                        entry.value.first.id,
+                                        entry.value.first.idStatus,
+                                        entry.value.first.idMeal,
+                                      ),
+                                    ),
+                                  )
+                              ).toList(),
+                            ),
+                            const SizedBox(height: 14),
+                          ],
+                        ) 
+                        : Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: 200,
+                              child: Text(
+                                'Nenhum ticket, faça sua solicitação e aguarde ser aprovado.',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.gray[800],
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(

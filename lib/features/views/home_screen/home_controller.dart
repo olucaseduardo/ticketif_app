@@ -18,6 +18,7 @@ class HomeController extends ChangeNotifier {
   List<Ticket>? todayTickets = [];
   Map<int, List<Ticket>>? todayTicketsMap = {};
   bool isLoading = true;
+  bool isReloading = false;
   bool error = false;
   static const statusPriority = {4,2,1,5,6,7};
 
@@ -45,25 +46,8 @@ class HomeController extends ChangeNotifier {
         DateTime.parse(date).month == DateTime.now().month;
   }
 
-  /// Realiza a leitura dos dados do aluno no banco de dados
-  Future<void> loadData() async {
-    try {
-      userTickets!.clear();
-      todayTickets!.clear();
-
-      isLoading = true;
-
-      await Links.i.loadLink();
-      final userData = await UserApiRepositoryImpl().loadUser();
-      final tickets =
-          await TicketsApiRepositoryImpl().findAllTickets(userData.id);
-
-      final sp = await SharedPreferences.getInstance();
-      sp.setInt('idStudent', userData.id);
-
-      user = userData;
-
-      // verificando quais os tickets do aluno para o dia
+  void organizeTickets(List<Ticket> tickets) {
+    // verificando quais os tickets do aluno para o dia
       for (var index = 0; index < tickets.length; index++) {
         log(tickets.elementAt(index).toString());
         if (tickets.elementAt(index).useDayDate != '') {
@@ -94,6 +78,51 @@ class HomeController extends ChangeNotifier {
       todayTicketsMap = TodayTicketsHelper.i.mapList(todayTickets!);
 
       userTickets!.sort((a, b) => b.useDayDate.compareTo(a.useDayDate));
+  }
+
+  Future<void> reloadData(int userID) async {
+    try {
+      userTickets!.clear();
+      todayTickets!.clear();
+
+      isReloading = true;
+      notifyListeners();
+
+      final tickets =
+          await TicketsApiRepositoryImpl().findAllTickets(userID);
+
+      organizeTickets(tickets);
+
+      isReloading = false;
+      notifyListeners();
+    } catch (e, s) {
+      log('Erro ao buscar tickets do usuário', error: e, stackTrace: s);
+      error = true;
+      isReloading = false;
+      notifyListeners();
+    }
+  }
+
+  /// Realiza a leitura dos dados do aluno no banco de dados
+  Future<void> loadData() async {
+    try {
+      userTickets!.clear();
+      todayTickets!.clear();
+
+      isLoading = true;
+
+      await Links.i.loadLink();
+      final userData = await UserApiRepositoryImpl().loadUser();
+      final tickets =
+          await TicketsApiRepositoryImpl().findAllTickets(userData.id);
+
+      final sp = await SharedPreferences.getInstance();
+      sp.setInt('idStudent', userData.id);
+
+      user = userData;
+
+      organizeTickets(tickets);
+
       loading();
     } catch (e, s) {
       log('Erro ao buscar dados do usuário', error: e, stackTrace: s);
