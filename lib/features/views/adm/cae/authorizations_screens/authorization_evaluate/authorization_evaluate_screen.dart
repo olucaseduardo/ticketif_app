@@ -72,8 +72,9 @@ class _AuthorizationEvaluateScreenState
       canPop: true,
 
       onPopInvoked: (bool didPop) async {
+        if (didPop) return;
+
         Navigator.pop(context, selectedStudents);
-        return Future.value();
       },
 
       child: Scaffold(
@@ -182,13 +183,13 @@ class _AuthorizationEvaluateScreenState
               ),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (continueSolicitation()) {
                       controller.changedAuthorizations(1);
                       eraserStudents();
                       AppMessage.i.showInfo('Tickets aprovados com sucesso');
                       Navigator.pop(context, selectedStudents);
-                      // return Future.value(false);
+                      return Future.value();
                     }
                   },
                   child: const Text(

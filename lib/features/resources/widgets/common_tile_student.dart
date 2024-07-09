@@ -7,7 +7,8 @@ class CommonTileStudent extends StatelessWidget {
   final User? student;
   final VoidCallback? function;
   const CommonTileStudent({super.key, this.function, this.student});
-
+// 5a2IIl8A15
+// 5A2IIL8A15
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,37 +26,41 @@ class CommonTileStudent extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        student!.name,
-                        style: AppTextStyle.titleMedium.copyWith(
-                          fontWeight: FontWeight.w700,
+                Expanded(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          student!.name,
+                          style: AppTextStyle.titleMedium.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        student!.matricula,
-                        style: AppTextStyle.labelLarge.copyWith(
-                          fontWeight: FontWeight.normal,
+                        const SizedBox(
+                          height: 2,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        student!.type,
-                        style: AppTextStyle.labelLarge.copyWith(
-                          fontWeight: FontWeight.normal,
+                        Text(
+                          student!.matricula,
+                          style: AppTextStyle.labelLarge.copyWith(
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          student!.type,
+                          style: AppTextStyle.labelLarge.copyWith(
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const Icon(
