@@ -107,7 +107,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                   const SizedBox(height: 8),
                   CommonTileOptions(
                     leading: Icons.calendar_month_rounded,
-                    label: 'Relatório por Periódo',
+                    label: 'Relatório por Período',
                     function: () => Navigator.pushNamed(
                       context,
                       AppRouter.caePeriodReportRoute,

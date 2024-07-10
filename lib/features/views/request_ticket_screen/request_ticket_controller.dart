@@ -126,7 +126,7 @@ class RequestTicketController extends ChangeNotifier {
     TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
 
     TimeOfDay startTimeDinner = const TimeOfDay(hour: 13, minute: 0);
-    TimeOfDay endTimeDinner = const TimeOfDay(hour: 18, minute: 30);
+    TimeOfDay endTimeDinner = const TimeOfDay(hour: 19, minute: 30);
 
     TimeOfDay nowTimeOfDay = TimeOfDay.fromDateTime(now);
 
