@@ -89,75 +89,6 @@ class RequestTicketController extends ChangeNotifier {
     notifyListeners();
   }
 
-
-  bool _isAfterOrEqual(TimeOfDay now, TimeOfDay start) {
-    if (now.hour > start.hour) {
-      return true;
-    } else if (now.hour == start.hour) {
-      return now.minute >= start.minute;
-    } else {
-      return false;
-    }
-  }
-
-  bool _isBeforeOrEqual(TimeOfDay now, TimeOfDay end) {
-    if (now.hour < end.hour) {
-      return true;
-    } else if (now.hour == end.hour) {
-      return now.minute <= end.minute;
-    } else {
-      return false;
-    }
-  }
-
-  /// Realiza as validações para que não haja erros nas requisições
-  bool validation(bool isCae) {
-    if (isPermanent && permanentDays.isEmpty) {
-      AppMessage.i.showError('Selecione pelo menos um dia na semana');
-      return false;
-    }
-
-    if (!formKey.currentState!.validate()) {
-      return false;
-    }
-
-    DateTime now = DateTime.now();
-    TimeOfDay startTime = const TimeOfDay(hour: 7, minute: 0);
-    TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
-
-    TimeOfDay startTimeDinner = const TimeOfDay(hour: 13, minute: 0);
-    TimeOfDay endTimeDinner = const TimeOfDay(hour: 18, minute: 30);
-
-    TimeOfDay nowTimeOfDay = TimeOfDay.fromDateTime(now);
-
-    // Verifica se o pedido de almoço ocorre dentro do horário estipulado
-    if (meal!.id == 2) {
-      if (_isAfterOrEqual(nowTimeOfDay, startTime)
-       && _isBeforeOrEqual(nowTimeOfDay, endTime)) {
-        return true;
-      } else if (isCae) {
-        return true;
-      } else {
-          AppMessage.i.showInfo(
-            'A solicitação foi realizada fora do horário de avaliação da CAE para o almoço (7h00 às 10h30).');
-          return false;
-      }
-    } else if (meal!.id == 3) {
-      if (_isAfterOrEqual(nowTimeOfDay, startTimeDinner)
-       && _isBeforeOrEqual(nowTimeOfDay, endTimeDinner)) {
-        return true;
-      } else if (isCae) {
-        return true;
-      } else {
-          AppMessage.i.showInfo(
-            'A solicitação foi realizada fora do horário de avaliação da CAE para o jantar (13h00 às 18h30).');
-          return false;
-      }
-    }
-
-    return false;
-  }
-
   /// Responsável por solicitar a refeição do tipo diária do aluno
   Future<void> createTickets(
     int id,
@@ -232,40 +163,38 @@ class RequestTicketController extends ChangeNotifier {
 
   /// Verifica se a solicitação de refeição vem por parte da CAE ou do aluno
   Future<void> onTapSendRequest(bool isCae, {int? idStudent}) async {
-    if (validation(isCae)) {
-      try {
-        error = false;
-        notifyListeners();
+    try {
+      error = false;
+      notifyListeners();
 
-        final sp = await SharedPreferences.getInstance();
-        final id = sp.getInt('idStudent');
+      final sp = await SharedPreferences.getInstance();
+      final id = sp.getInt('idStudent');
 
-        if (permanentDays.isNotEmpty && isPermanent) {
-          await createPermanents(
+      if (permanentDays.isNotEmpty && isPermanent) {
+        await createPermanents(
+          id ?? idStudent ?? 0,
+          isCae,
+          permanentDays,
+        );
+      } else {
+        await createTickets(
             id ?? idStudent ?? 0,
-            isCae,
-            permanentDays,
-          );
-        } else {
-          await createTickets(
-              id ?? idStudent ?? 0,
-              DateTime.now().weekday,
-              DateUtil.todayDateRequest(DateTime.now()).capitalizeRequest(),
-              DateTime.now().toString(),
-              isCae);
-        }
-
-        if (!error) {
-          AppMessage.i.showMessage('Requisição enviada com sucesso');
-          !isCae ? SpecialNavigation.i.isNotCae() : SpecialNavigation.i.isCae();
-        } else {
-          AppMessage.i.showError('Erro ao solicitar Ticket');
-        }
-      } on DioError catch (e, s) {
-        log('Erro ao solicitar Ticket', error: e, stackTrace: s);
-        AppMessage.i.showError('Erro ao solicitar Ticket');
-        throw RepositoryException(message: 'Erro ao solicitar Ticket');
+            DateTime.now().weekday,
+            DateUtil.todayDateRequest(DateTime.now()).capitalizeRequest(),
+            DateTime.now().toString(),
+            isCae);
       }
+
+      if (!error) {
+        AppMessage.i.showMessage('Requisição enviada com sucesso');
+        !isCae ? SpecialNavigation.i.isNotCae() : SpecialNavigation.i.isCae();
+      } else {
+        AppMessage.i.showError('Erro ao solicitar Ticket');
+      }
+    } on DioError catch (e, s) {
+      log('Erro ao solicitar Ticket', error: e, stackTrace: s);
+      AppMessage.i.showError('Erro ao solicitar Ticket');
+      throw RepositoryException(message: 'Erro ao solicitar Ticket');
     }
   }
 
