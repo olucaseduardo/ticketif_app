@@ -86,7 +86,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           children: [
                             Text(
                               'Olá, ${controller.user?.username ?? ''}',
-                              overflow: TextOverflow.ellipsis,
+                              overflow: TextOverflow.visible,
+                              maxLines: null,
                               style: AppTextStyle.labelBig
                                   .copyWith(fontWeight: FontWeight.w700),
                             ),

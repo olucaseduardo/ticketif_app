@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Links extends ChangeNotifier {
   // Links de acesso
   final Map<String, String> _campusLinks = {
-    // "Caxias": 'https://42a1-45-231-15-182.ngrok-free.app',
     "Caxias": 'https://ticket-caxias.ifma.edu.br/',
     "Timon": 'https://0c3f-45-231-15-191.ngrok-free.app',
   };

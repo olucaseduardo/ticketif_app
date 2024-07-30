@@ -14,7 +14,7 @@ class User {
   });
 
   String get username {
-    List<String> words = name.split(' ');
+    List<String> words = name.trim().split(RegExp(r'\s+'));
     String firstName = words[0];
     String lastName = words[words.length - 1];
     String middleInitials = '';
@@ -22,9 +22,11 @@ class User {
     for (int i = 1; i < words.length - 1; i++) {
       String part = words[i];
 
-      part[0] == part[0].toLowerCase()
-          ? middleInitials += '$part '
-          : middleInitials += '${part[0]}. ';
+      if (part.isNotEmpty) {
+        part[0] == part[0].toLowerCase()
+            ? middleInitials += '$part '
+            : middleInitials += '${part[0]}. ';
+      }
     }
 
     if (middleInitials == '') {
