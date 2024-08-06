@@ -8,7 +8,6 @@ import 'package:ticket_ifma/features/repositories/tickets/tickets_api_repository
 import 'package:ticket_ifma/features/repositories/user/user_api_repository_impl.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 import 'package:ticket_ifma/features/models/user.dart';
-import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticket_ifma/features/views/home_screen/helpers/today_tickets_helper.dart';
 
@@ -132,48 +131,16 @@ class HomeController extends ChangeNotifier {
     }
   }
 
-  bool _isAfterOrEqual(TimeOfDay now, TimeOfDay start) {
-    if (now.hour > start.hour) {
-      return true;
-    } else if (now.hour == start.hour) {
-      return now.minute >= start.minute;
-    } else {
-      return false;
-    }
-  }
-
-  bool _isBeforeOrEqual(TimeOfDay now, TimeOfDay end) {
-    if (now.hour < end.hour) {
-      return true;
-    } else if (now.hour == end.hour) {
-      return now.minute <= end.minute;
-    } else {
-      return false;
-    }
-  }
-
   /// Realza a confimação do aluno de que irá almoçar
   Future<void> changeTicket(int idTicket, int status, int idMeal) async {
     int statusId = 1;
-    DateTime now = DateTime.now();
-    TimeOfDay startTime = const TimeOfDay(hour: 7, minute: 0);
-    TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
-
-    TimeOfDay nowTimeOfDay = TimeOfDay.fromDateTime(now);
-
-    bool timeLimit = _isAfterOrEqual(nowTimeOfDay, startTime)
-       && _isBeforeOrEqual(nowTimeOfDay, endTime);
 
     if (status == 1) {
       // Cancela o ticket
       statusId = 6;
-    } else if (status == 2 && (now.hour > 12 || (timeLimit))) {
+    } else if (status == 2) {
       // Confirma presença
       statusId = 4;
-    } else {
-      AppMessage.i
-          .showInfo('A confirmação só está disponível no período das 7h às 10h30');
-      return;
     }
 
     try {
