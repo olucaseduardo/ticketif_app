@@ -95,21 +95,21 @@ class RequestTicketController extends ChangeNotifier {
     int weekId,
     String useDay,
     String useDayDate,
-    bool isCae,
+    bool isCaeRequest,
   ) async {
     try {
       await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
         studentId: id,
         weekId: weekId,
         mealId: meal!.id,
-        statusId: isCae ? 4 : 1,
+        statusId: isCaeRequest ? 4 : 1,
         justificationId: justification!.id,
         isPermanent: 0,
         solicitationDay: DateTime.now().toString(),
         useDay: useDay,
         useDayDate: useDayDate,
         paymentDay: '',
-        isCae: isCae ? 1 : 0,
+        isCae: isCaeRequest ? 1 : 0,
         text: justificationController.text,
       ));
     } on DioError catch (e, s) {
@@ -148,7 +148,7 @@ class RequestTicketController extends ChangeNotifier {
         ));
       }
 
-      await TicketsApiRepositoryImpl().requestPermanent(permanents);
+      // await TicketsApiRepositoryImpl().requestPermanent(permanents);
     } on DioError catch (e, s) {
       log('Erro ao solicitar autorização permanente', error: e, stackTrace: s);
 
@@ -166,7 +166,6 @@ class RequestTicketController extends ChangeNotifier {
     try {
       error = false;
       notifyListeners();
-
       final sp = await SharedPreferences.getInstance();
       final id = sp.getInt('idStudent');
 
