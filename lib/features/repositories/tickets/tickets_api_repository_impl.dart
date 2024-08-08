@@ -6,6 +6,7 @@ import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
 import 'package:ticket_ifma/core/services/dio_client.dart';
 import 'package:ticket_ifma/features/dto/request_permanent.dart';
 import 'package:ticket_ifma/features/dto/request_ticket_model.dart';
+import 'package:ticket_ifma/features/models/permanent_model.dart';
 import 'package:ticket_ifma/features/models/student_authorization.dart';
 import 'package:ticket_ifma/features/models/authorization.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
@@ -22,6 +23,18 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
     } on DioError catch (e, s) {
       log('Erro ao buscar tickets do usuário', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar tickets do usuário');
+    }
+  }
+
+  @override
+  Future<List<PermanentModel>> findAllPermanents(int idStudent) async {
+    try {
+      final result = await DioClient().get("/permanent/$idStudent");
+
+      return result.data.map<PermanentModel>((t) => PermanentModel.fromMap(t)).toList();
+    } on DioError catch (e, s) {
+      log('Erro ao buscar autorizações permanentes do usuário', error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao buscar autorizações permanentes do usuário');
     }
   }
 

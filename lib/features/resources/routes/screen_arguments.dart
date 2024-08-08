@@ -1,4 +1,5 @@
 import 'package:ticket_ifma/features/models/authorization.dart';
+import 'package:ticket_ifma/features/models/permanent_model.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 
 class ScreenArguments {
@@ -6,6 +7,7 @@ class ScreenArguments {
   final String? subtitle;
   final String? description;
   final List<Ticket>? tickets;
+  final List<PermanentModel>? permanents;
   final Map<String, List<Authorization>>? authorizations;
   final bool? cae;
   final int? idStudent;
@@ -14,6 +16,7 @@ class ScreenArguments {
   ScreenArguments({
     this.title,
     this.tickets,
+    this.permanents,
     this.cae,
     this.idStudent,
     this.isPermanent,

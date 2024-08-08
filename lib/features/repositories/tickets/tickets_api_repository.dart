@@ -1,10 +1,12 @@
 import 'package:ticket_ifma/features/dto/request_permanent.dart';
 import 'package:ticket_ifma/features/dto/request_ticket_model.dart';
+import 'package:ticket_ifma/features/models/permanent_model.dart';
 import 'package:ticket_ifma/features/models/student_authorization.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 
 abstract class TicketsApiRepository {
   Future<List<Ticket>> findAllTickets(int idStudent);
+  Future<List<PermanentModel>> findAllPermanents(int idStudent);
   Future<List<Ticket>> findAllDailyTickets(String date);
   Future<List<Ticket>> findPeriodTickets(String initialDate, String finalDate);
   Future<void> requestTicket(RequestTicketModel ticket);

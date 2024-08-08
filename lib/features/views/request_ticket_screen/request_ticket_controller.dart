@@ -148,7 +148,7 @@ class RequestTicketController extends ChangeNotifier {
         ));
       }
 
-      // await TicketsApiRepositoryImpl().requestPermanent(permanents);
+      await TicketsApiRepositoryImpl().requestPermanent(permanents);
     } on DioError catch (e, s) {
       log('Erro ao solicitar autorização permanente', error: e, stackTrace: s);
 

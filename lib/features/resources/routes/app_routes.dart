@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_ifma/features/models/authorization.dart';
+import 'package:ticket_ifma/features/models/permanent_model.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 
 import 'package:ticket_ifma/features/resources/routes/screen_arguments.dart';
@@ -18,6 +19,7 @@ import 'package:ticket_ifma/features/views/historic_screen/historic_screen.dart'
 import 'package:ticket_ifma/features/views/home_screen/home_screen.dart';
 import 'package:ticket_ifma/features/views/auth_screens/auth_student/login_screen.dart';
 import 'package:ticket_ifma/features/views/adm/restaurant/qr_screen/qr_screen.dart';
+import 'package:ticket_ifma/features/views/permanents_screen/permanents_screen.dart';
 import 'package:ticket_ifma/features/views/request_ticket_screen/request_ticket_screen.dart';
 import 'package:ticket_ifma/features/views/adm/restaurant/restaurant_home/restaurant_screen.dart';
 
@@ -25,6 +27,7 @@ class AppRouter {
   static const String loginRoute = '/login';
   static const String homeRoute = '/home';
   static const String historicRoute = '/historic';
+  static const String permanentsRoute = '/permanents';
   static const String requestTicketRoute = '/requestTicket';
   static const String qrRoute = '/qrCode';
   static const String admLoginRoute = '/admLogin';
@@ -58,6 +61,13 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => HistoricScreen(
             userTickets: args?.tickets as List<Ticket>,
+          ),
+        );
+
+      case permanentsRoute:
+        return MaterialPageRoute(
+          builder: (_) => PermanentsScreen(
+            permanents: args?.permanents as List<PermanentModel>,
           ),
         );
 

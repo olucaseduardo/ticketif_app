@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
 import 'package:ticket_ifma/core/utils/links.dart';
+import 'package:ticket_ifma/features/models/permanent_model.dart';
 import 'package:ticket_ifma/features/repositories/tickets/tickets_api_repository_impl.dart';
 import 'package:ticket_ifma/features/repositories/user/user_api_repository_impl.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
@@ -15,6 +16,7 @@ class HomeController extends ChangeNotifier {
   User? user;
   List<Ticket>? userTickets = [];
   List<Ticket>? todayTickets = [];
+  List<PermanentModel>? permanents = [];
   Map<int, List<Ticket>>? todayTicketsMap = {};
   bool isLoading = true;
   bool isReloading = false;
@@ -83,12 +85,17 @@ class HomeController extends ChangeNotifier {
     try {
       userTickets!.clear();
       todayTickets!.clear();
+      permanents?.clear();
 
       isReloading = true;
       notifyListeners();
 
       final tickets =
           await TicketsApiRepositoryImpl().findAllTickets(userID);
+      final permanetsUser =
+           await TicketsApiRepositoryImpl().findAllPermanents(userID);
+
+      permanents = permanetsUser;
 
       organizeTickets(tickets);
 
@@ -114,6 +121,10 @@ class HomeController extends ChangeNotifier {
       final userData = await UserApiRepositoryImpl().loadUser();
       final tickets =
           await TicketsApiRepositoryImpl().findAllTickets(userData.id);
+      final permanetsUser =
+           await TicketsApiRepositoryImpl().findAllPermanents(userData.id);
+
+      permanents = permanetsUser;
 
       final sp = await SharedPreferences.getInstance();
       sp.setInt('idStudent', userData.id);

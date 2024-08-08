@@ -11,6 +11,7 @@ import 'package:ticket_ifma/features/views/historic_screen/historic_controller.d
 import 'package:ticket_ifma/features/views/home_screen/home_controller.dart';
 import 'package:ticket_ifma/features/views/auth_screens/login_controller.dart';
 import 'package:ticket_ifma/features/views/adm/daily_report_screen/report_controller.dart';
+import 'package:ticket_ifma/features/views/permanents_screen/permanents_screen_controller.dart';
 import 'package:ticket_ifma/features/views/request_ticket_screen/request_ticket_controller.dart';
 import 'package:ticket_ifma/features/views/adm/restaurant/restaurant_home/restaurant_controller.dart';
 
@@ -25,6 +26,9 @@ final homeProvider = ChangeNotifierProvider.autoDispose<HomeController>(
 
 final historicProvider = ChangeNotifierProvider.autoDispose<HistoricController>(
     (ref) => HistoricController());
+
+final permanentsProvider = ChangeNotifierProvider.autoDispose<PermanentsScreenController>(
+    (ref) => PermanentsScreenController());
 
 final caeProvider = ChangeNotifierProvider.autoDispose<CaeController>(
   (ref) => CaeController(),

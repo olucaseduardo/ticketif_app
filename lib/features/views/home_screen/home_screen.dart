@@ -229,6 +229,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 8),
+                      CommonTileOptions(
+                        leading: Icons.menu_rounded,
+                        label: 'Autorizações Permanentes',
+                        function: () => Navigator.pushNamed(
+                          context,
+                          AppRouter.permanentsRoute,
+                          arguments: ScreenArguments(
+                            permanents: controller.permanents,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
