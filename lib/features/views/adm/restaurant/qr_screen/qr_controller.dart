@@ -26,7 +26,7 @@ class QrController extends ChangeNotifier {
   void initPackages() {
     SharedPreferences.getInstance().then((value) {
       prefs = value;
-      // prefs.setString('lastValidationDate', '2024-08-23');
+      
       String todayDate = DateUtil.getDateUSStr(DateTime.now());
       String lastValidationDate =
           prefs.getString('lastValidationDate') ?? todayDate;
@@ -138,7 +138,7 @@ class QrController extends ChangeNotifier {
     try {
       result = "Atualizando lista de tickets validados...";
       isUploadTickets();
-      // await Future.delayed(Duration(seconds: timeBetweenReadsInSeconds));
+      
       for (var element in validatedTickets) {
         await TicketsApiRepositoryImpl()
             .changeStatusTicket(int.parse(element), 5);
@@ -149,11 +149,11 @@ class QrController extends ChangeNotifier {
       prefs.setStringList('validatedTickets', validatedTickets);
       result = 'Sem dados no momento, escaneie um QR Code';
       totalValid = validatedTickets.length + uploadedTickets.length;
-      // await delayBetweenReads();
+      
       isUploadTickets();
     } catch (e, s) {
       log('Erro ao atualizar lista de validados', error: e, stackTrace: s);
-      isUploadTickets(); // reverte o estado de upload
+      isUploadTickets(); 
       result = 'Erro ao atualizar tickets, tente novamente mais tarde.';
       notifyListeners();
       throw RepositoryException(message: 'Erro ao alterar status do ticket');
