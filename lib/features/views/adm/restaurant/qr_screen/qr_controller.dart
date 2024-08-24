@@ -21,14 +21,32 @@ class QrController extends ChangeNotifier {
   List<String> validatedTickets = [];
   List<String> uploadedTickets = [];
   late SharedPreferences prefs;
+  bool isUpload = false;
 
   void initPackages() {
     SharedPreferences.getInstance().then((value) {
       prefs = value;
-      validatedTickets = prefs.getStringList('validatedTickets') ?? [];
-      uploadedTickets = prefs.getStringList('uploadedTickets') ?? [];
+      // prefs.setString('lastValidationDate', '2024-08-23');
+      String todayDate = DateUtil.getDateUSStr(DateTime.now());
+      String lastValidationDate =
+          prefs.getString('lastValidationDate') ?? todayDate;
 
-      totalValid = validatedTickets.length + uploadedTickets.length;
+      bool checkerDate =
+          DateUtil.checkTodayDate(DateTime.parse(lastValidationDate));
+
+      if (!checkerDate) {
+        validatedTickets = [];
+        uploadedTickets = [];
+        totalValid = 0;
+        prefs.setStringList('validatedTickets', validatedTickets);
+        prefs.setStringList('uploadedTickets', uploadedTickets);
+        prefs.setString('lastValidationDate', todayDate);
+      } else {
+        validatedTickets = prefs.getStringList('validatedTickets') ?? [];
+        uploadedTickets = prefs.getStringList('uploadedTickets') ?? [];
+        totalValid = validatedTickets.length + uploadedTickets.length;
+      }
+
       notifyListeners();
     });
   }
@@ -114,5 +132,36 @@ class QrController extends ChangeNotifier {
     }
 
     totalValid = validatedTickets.length + uploadedTickets.length;
+  }
+
+  void uploadTickets() async {
+    try {
+      result = "Atualizando lista de tickets validados...";
+      isUploadTickets();
+      // await Future.delayed(Duration(seconds: timeBetweenReadsInSeconds));
+      for (var element in validatedTickets) {
+        await TicketsApiRepositoryImpl()
+            .changeStatusTicket(int.parse(element), 5);
+      }
+      uploadedTickets.addAll(validatedTickets);
+      prefs.setStringList('uploadedTickets', uploadedTickets);
+      validatedTickets.clear();
+      prefs.setStringList('validatedTickets', validatedTickets);
+      result = 'Sem dados no momento, escaneie um QR Code';
+      totalValid = validatedTickets.length + uploadedTickets.length;
+      // await delayBetweenReads();
+      isUploadTickets();
+    } catch (e, s) {
+      log('Erro ao atualizar lista de validados', error: e, stackTrace: s);
+      isUploadTickets(); // reverte o estado de upload
+      result = 'Erro ao atualizar tickets, tente novamente mais tarde.';
+      notifyListeners();
+      throw RepositoryException(message: 'Erro ao alterar status do ticket');
+    }
+  }
+
+  void isUploadTickets() {
+    isUpload = !isUpload;
+    notifyListeners();
   }
 }
