@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
+import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:ticket_ifma/features/resources/widgets/qr_code_result.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -49,6 +50,34 @@ class _QrScreenState extends ConsumerState<QrScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('QR CODE'),
+        actions: controller.validatedTickets.length >= 1
+            ? [
+                controller.isUpload
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.white,
+                          ),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text("${controller.validatedTickets.length}"),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.upload_outlined,
+                                size: 30,
+                              ),
+                              onPressed: () => controller.uploadTickets(),
+                            )
+                          ],
+                        ),
+                      )
+              ]
+            : [],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
