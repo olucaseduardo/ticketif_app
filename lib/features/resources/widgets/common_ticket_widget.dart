@@ -7,6 +7,7 @@ import 'package:ticket_ifma/core/utils/dialog.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/core/utils/path_image.dart' as path_image;
+import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:ticket_ifma/features/resources/widgets/qr_code_dialog.dart';
 import 'package:ticket_ifma/features/views/historic_screen/historic_controller.dart';
 
@@ -31,43 +32,33 @@ class CommonTicketWidget extends StatelessWidget {
         color: AppColors.gray[50],
         borderRadius: BorderRadius.circular(8.r),
       ),
-
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-
         children: [
           Expanded(
             flex: 2,
-
             child: Padding(
               padding: const EdgeInsets.all(16),
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-
                 children: [
                   Text(
                     DateUtil.ticketDay(
                       DateTime.parse(ticket.useDayDate),
                     ),
-
                     overflow: TextOverflow.ellipsis,
-
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                       letterSpacing: -1,
                     ),
                   ),
-
                   const SizedBox(
                     height: 8,
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     children: [
                       Row(
                         children: [
@@ -76,9 +67,7 @@ class CommonTicketWidget extends StatelessWidget {
                             size: 12,
                             color: AppColors.gray[500],
                           ),
-
                           const SizedBox(width: 4),
-
                           Text(
                             ticket.meal,
                             style: const TextStyle(
@@ -87,11 +76,9 @@ class CommonTicketWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       const SizedBox(
                         width: 16,
                       ),
-
                       Row(
                         children: [
                           Row(
@@ -102,9 +89,7 @@ class CommonTicketWidget extends StatelessWidget {
                                 height: 12,
                                 width: 12,
                               ),
-
                               const SizedBox(width: 4),
-
                               Text(
                                 ticket.status,
                                 style: const TextStyle(
@@ -121,12 +106,10 @@ class CommonTicketWidget extends StatelessWidget {
               ),
             ),
           ),
-
           if (isTap)
             SizedBox(
               width: 120,
               height: 100,
-              
               child: Material(
                 color: Colors.transparent,
                 child: actionWidget(
@@ -154,10 +137,13 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
           context: context,
           builder: (_) => DialogForm(
             title: 'Cancelar Ticket?',
-            action: controller == null 
-              ? () => action!() 
-              : () => controller.cancelTicket(ticket.id),
+            action: controller == null
+                ? () => action!()
+                : () => controller.cancelTicket(ticket.id),
             colorConfirmButton: AppColors.red,
+            confirmButtonTextStyle: AppTextStyle.titleMedium.copyWith(
+              color: AppColors.white,
+            ),
             message:
                 "Caso você não irá utilizar este ticket, clique em sim para cancelar sua solicitação.",
           ),
@@ -194,9 +180,9 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
           context: context,
           builder: (_) => DialogForm(
             title: 'Confirmar Presença?',
-            action: controller == null 
-              ? () => action!()
-              : () => controller.confirmTicket(ticket.id, ticket.idMeal),
+            action: controller == null
+                ? () => action!()
+                : () => controller.confirmTicket(ticket.id, ticket.idMeal),
             labelConfirmButton: "Confirmar",
             message:
                 "Caso você irá utilizar este ticket, clique em confirmar para validar sua presença.",

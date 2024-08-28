@@ -75,9 +75,7 @@ class RequestTicket extends ConsumerWidget {
                         validator: (value) =>
                             value == null ? 'Selecione uma refeição' : null,
                         items:
-                            controller.meals.map((e)
-                            => e.description
-                            ).toList(),
+                            controller.meals.map((e) => e.description).toList(),
                         onChanged: (value) => controller.onMealsChanged(value)),
                     const Padding(
                       padding: EdgeInsets.only(top: 12),

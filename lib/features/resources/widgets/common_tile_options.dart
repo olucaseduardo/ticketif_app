@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 
 class CommonTileOptions extends StatelessWidget {
@@ -43,15 +44,17 @@ class CommonTileOptions extends StatelessWidget {
                       label,
                       style: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ],
               ),
-              const Icon(
-                Icons.arrow_forward_rounded,
-              ),
+              PhosphorIcon(
+                PhosphorIcons.caretRight(),
+                size: 24,
+                color: AppColors.black,
+              )
             ],
           ),
         ),

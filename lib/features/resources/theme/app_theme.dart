@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
+import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 
 mixin TicketTheme {
   static final _errorBorder = OutlineInputBorder(
@@ -43,10 +44,31 @@ mixin TicketTheme {
         ),
       ),
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all(AppTextStyle.titleSmall.copyWith(
+          fontWeight: FontWeight.w500,
+        )),
+        foregroundColor: MaterialStateProperty.all(AppColors.green[600]),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(8),
+            ),
+          ),
+        ),
+      ),
+    ),
     dividerColor: AppColors.gray[400],
     checkboxTheme: CheckboxThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       side: BorderSide(color: AppColors.gray[400]!),
+      checkColor: MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.disabled)) {
+          return AppColors.gray[300];
+        }
+        return AppColors.black;
+      }),
       fillColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.disabled)) {
           return AppColors.gray[300];
@@ -58,7 +80,16 @@ mixin TicketTheme {
       }),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: 12,
+        horizontal: 16,
+      ),
+      labelStyle: AppTextStyle.labelLarge.copyWith(
+        fontWeight: FontWeight.w500,
+      ),
+      hintStyle: AppTextStyle.labelLarge.copyWith(
+        fontWeight: FontWeight.w500,
+      ),
       errorBorder: _errorBorder,
       focusedErrorBorder: _errorBorder,
       focusedBorder: OutlineInputBorder(
@@ -70,19 +101,19 @@ mixin TicketTheme {
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(
-          color: AppColors.gray[300]!,
+          color: AppColors.gray[200]!,
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(
-          color: AppColors.gray[300]!,
+          color: AppColors.gray[200]!,
         ),
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(
-          color: AppColors.gray[300]!,
+          color: AppColors.gray[200]!,
         ),
       ),
     ),

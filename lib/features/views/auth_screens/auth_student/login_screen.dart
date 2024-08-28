@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
 import 'package:ticket_ifma/core/utils/loader.dart';
 import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
+import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:ticket_ifma/features/resources/widgets/app_logo.dart';
 import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
@@ -73,9 +74,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'Campus',
-                              style: AppTextStyle.titleSmall,
+                              style: AppTextStyle.labelLarge.copyWith(
+                                color: AppColors.gray[800],
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             const SizedBox(height: 4),
                             CommonDropDownButton(
@@ -93,6 +97,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: CommonButton(
                           label: "Entrar na conta",
+                          size: ButtonSize.medium,
                           function: () async {
                             final valid =
                                 formKey.currentState?.validate() ?? false;

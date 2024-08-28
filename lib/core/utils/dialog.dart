@@ -8,6 +8,7 @@ class DialogForm extends StatelessWidget {
   final String message;
   final String title;
   final Color? colorConfirmButton;
+  final TextStyle? confirmButtonTextStyle;
   final String labelConfirmButton;
 
   const DialogForm({
@@ -17,6 +18,7 @@ class DialogForm extends StatelessWidget {
     required this.title,
     this.labelConfirmButton = 'Sim',
     this.colorConfirmButton,
+    this.confirmButtonTextStyle,
   }) : super(key: key);
 
   @override
@@ -49,6 +51,10 @@ class DialogForm extends StatelessWidget {
             Navigator.pop(context, true);
           },
           label: labelConfirmButton,
+          textStyle: confirmButtonTextStyle ??
+              AppTextStyle.titleMedium.copyWith(
+                color: AppColors.black,
+              ),
           style: ElevatedButton.styleFrom(
             backgroundColor: colorConfirmButton ?? AppColors.green,
           ),

@@ -36,10 +36,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: !controller.isLoading && !controller.error
           ? AppBar(
               automaticallyImplyLeading: false,
+              backgroundColor: AppColors.green[600],
               centerTitle: false,
               title: Text(
                 DateUtil.todayDate(DateUtil.dateTimeNow),
-                style: AppTextStyle.labelBig,
               ),
               toolbarHeight: 50,
               actions: [
@@ -71,6 +71,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             homeStudent: true,
           ),
           child: SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -101,8 +102,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       const SizedBox(width: 16),
                       CommonButton(
                         label: 'Solicitar ticket',
+                        size: ButtonSize.small,
                         textPadding: 8,
-                        textStyle: AppTextStyle.smallButton,
                         function: () => controller.checkingRequestBlocking()
                             ? Navigator.pushNamed(
                                 context, AppRouter.requestTicketRoute)
@@ -125,7 +126,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         padding: const EdgeInsets.only(top: 18),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          
                           children: [
                             Text(
                               'Suas refeições de hoje',
@@ -133,15 +133,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-
                             TextButton(
-                              onPressed: () => controller.reloadData(controller.user!.id),
+                              onPressed: () =>
+                                  controller.reloadData(controller.user!.id),
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty
-                                  .all<Color>(Colors.white),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
                                 padding: MaterialStateProperty.all<EdgeInsets>(
                                   const EdgeInsets.symmetric(
-                                    horizontal: 0.0, 
+                                    horizontal: 0.0,
                                     vertical: 0.0,
                                   ),
                                 ),
@@ -156,58 +157,57 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ],
                         ),
                       ),
-                      
                       Visibility(
                         visible: controller.isReloading == false,
-
                         replacement: SizedBox(
                           height: 100,
                           child: Loader.refreshLoader(),
                         ),
-
                         child: controller.todayTicketsMap!.isNotEmpty
-                        ? Column(
-                          children: [
-                            const SizedBox(height: 8),
-                        
-                            Column(
-                              children: controller.todayTicketsMap!.entries.map(
-                                  (entry) => Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0),
-                                    child: CommonTicketWidget(
-                                      ticket: entry.value.first,
-                                      function: () => controller.changeTicket(
-                                        entry.value.first.id,
-                                        entry.value.first.idStatus,
-                                        entry.value.first.idMeal,
+                            ? Column(
+                                children: [
+                                  const SizedBox(height: 8),
+                                  Column(
+                                    children: controller
+                                        .todayTicketsMap!.entries
+                                        .map((entry) => Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 4.0),
+                                              child: CommonTicketWidget(
+                                                ticket: entry.value.first,
+                                                function: () =>
+                                                    controller.changeTicket(
+                                                  entry.value.first.id,
+                                                  entry.value.first.idStatus,
+                                                  entry.value.first.idMeal,
+                                                ),
+                                              ),
+                                            ))
+                                        .toList(),
+                                  ),
+                                  const SizedBox(height: 14),
+                                ],
+                              )
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                    width: 200,
+                                    child: Text(
+                                      'Nenhum ticket, faça sua solicitação e aguarde ser aprovado.',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: AppColors.gray[800],
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                  )
-                              ).toList(),
-                            ),
-                            const SizedBox(height: 14),
-                          ],
-                        ) 
-                        : Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: SizedBox(
-                              width: 200,
-                              child: Text(
-                                'Nenhum ticket, faça sua solicitação e aguarde ser aprovado.',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.gray[800],
+                                  ),
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                            ),
-                          ),
-                        ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(

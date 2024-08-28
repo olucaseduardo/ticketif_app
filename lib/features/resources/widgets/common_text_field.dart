@@ -30,52 +30,56 @@ class CommonTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
-      
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
           Text(
             title,
-            style: AppTextStyle.titleSmall,
+            style: AppTextStyle.labelLarge.copyWith(
+              color: AppColors.gray[800],
+              fontWeight: FontWeight.w500,
+            ),
           ),
           const SizedBox(height: 4),
-
           ValueListenableBuilder<bool>(
             valueListenable: obscureTextVN,
-
             builder: (_, obscureTextValue, child) => TextFormField(
               controller: controller,
               obscureText: obscureTextValue,
               keyboardType: keyboardType,
               textInputAction: textInputAction,
               maxLines: maxLine,
-
+              style: AppTextStyle.labelLarge.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
               decoration: InputDecoration(
                 alignLabelWithHint: true,
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.green),
                 ),
-
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
                 focusColor: AppColors.green,
                 fillColor: AppColors.green,
                 hoverColor: AppColors.green,
                 labelText: labelText,
-                labelStyle: const TextStyle(color: AppColors.gray),
+                labelStyle: AppTextStyle.labelLarge.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
                 border: const OutlineInputBorder(),
-
                 suffixIcon: obscureText
-                  ? IconButton(
-                      onPressed: () => obscureTextVN.value = !obscureTextValue,
-                      icon: obscureTextValue
-                          ? const Icon(Icons.visibility_off_outlined)
-                          : const Icon(Icons.visibility_outlined),
-                    )
-                  : null,
+                    ? IconButton(
+                        onPressed: () =>
+                            obscureTextVN.value = !obscureTextValue,
+                        icon: obscureTextValue
+                            ? const Icon(Icons.visibility_off_outlined)
+                            : const Icon(Icons.visibility_outlined),
+                      )
+                    : null,
               ),
-
               validator:
                   validator! ? Validatorless.required('Obrigatório!') : null,
             ),

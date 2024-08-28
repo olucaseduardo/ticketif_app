@@ -11,19 +11,19 @@ class AppColors {
   static const MaterialColor green = MaterialColor(
     _greenPrimaryValue,
     <int, Color>{
-      50: Color(0xFFECF4EE),
-      100: Color(0xFFD8E9DC),
-      200: Color(0xFFADD6B5),
-      300: Color(0xFF83C18F),
-      400: Color(0xFF5AAD6A),
+      50: Color(0xFFEAFCE2),
+      100: Color(0xFFD6F1CA),
+      200: Color(0xFFBBDFAC),
+      300: Color(0xFF98D57F),
+      400: Color(0xFF7FBF65),
       500: Color(_greenPrimaryValue),
-      600: Color(0xFF0E8127),
-      700: Color(0xFF1A662A),
+      600: Color(0xFF3E8320),
+      700: Color(0xFF327025),
       800: Color(0xFF0F511D),
       900: Color(0xFF002E08),
     },
   );
-  static const int _greenPrimaryValue = 0xFF2F9E41;
+  static const int _greenPrimaryValue = 0xFF5EAF3C;
 
   ///Gray variants
   static const MaterialColor gray = MaterialColor(
