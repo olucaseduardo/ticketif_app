@@ -132,7 +132,6 @@ class RequestTicketController extends ChangeNotifier {
   ) async {
     try {
       List<RequestPermanent> permanents = [];
-
       for (var day in days) {
         permanents.add(RequestPermanent(
           studentId: id,
@@ -161,11 +160,23 @@ class RequestTicketController extends ChangeNotifier {
     }
   }
 
+  bool checkJustificationAndMeal() {
+    return justification != null && meal != null;
+  }
+
   /// Verifica se a solicitação de refeição vem por parte da CAE ou do aluno
   Future<void> onTapSendRequest(bool isCae, {int? idStudent}) async {
     try {
       error = false;
       notifyListeners();
+
+      if (!checkJustificationAndMeal()) {
+        AppMessage.i.showInfo(
+          'É obrigatório selecionar a Refeição e a Justificativa para solicitar o ticket!',
+        );
+        return;
+      }
+      
       final sp = await SharedPreferences.getInstance();
       final id = sp.getInt('idStudent');
 
@@ -175,6 +186,11 @@ class RequestTicketController extends ChangeNotifier {
           isCae,
           permanentDays,
         );
+      } else if (isPermanent && permanentDays.isEmpty) {
+        AppMessage.i.showInfo(
+          'A escolha de um dia é obrigatória para a solicitação de permanentes!',
+        );
+        return;
       } else {
         await createTickets(
             id ?? idStudent ?? 0,
