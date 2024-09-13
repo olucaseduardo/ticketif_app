@@ -148,4 +148,24 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
       throw RepositoryException(message: 'Erro ao atualizar autorizações');
     }
   }
+  
+  @override
+  Future<void> deleteAllPermanents() async {
+    try {
+      await DioClient().delete('/tickets-permanents-delete');
+    } on DioError catch (e, s) {
+      log('Erro ao deletar todos os permanentes', error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao deletar todos os permanentes');
+    }
+  }
+  
+  @override
+  Future<void> deleteAllTickets() async {
+    try {
+      await DioClient().delete('/tickets-delete');
+    } on DioError catch (e, s) {
+      log('Erro ao deletar todos os tickets', error: e, stackTrace: s);
+      throw RepositoryException(message: 'Erro ao deletar todos os tickets');
+    }
+  }
 }

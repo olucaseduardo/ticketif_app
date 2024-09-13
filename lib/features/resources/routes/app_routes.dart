@@ -4,6 +4,7 @@ import 'package:ticket_ifma/features/models/permanent_model.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 
 import 'package:ticket_ifma/features/resources/routes/screen_arguments.dart';
+import 'package:ticket_ifma/features/views/adm/cae/add_new_class/add_new_class_screen.dart';
 import 'package:ticket_ifma/features/views/auth_screens/auth_adm/login_adm_screen.dart';
 import 'package:ticket_ifma/features/views/auth_screens/auth_check/auth_check.dart';
 import 'package:ticket_ifma/features/views/adm/cae/authorizations_screens/authorization_classes/authorization_classes_screen.dart';
@@ -43,6 +44,7 @@ class AppRouter {
   static const String caeTicketEvaluateRoute = '/ticketEvaluate';
   static const String caeSearchStudentRoute = '/searchStudent';
   static const String listTickets = '/listTickets';
+  static const String addNewClass = '/addNewClass';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final ScreenArguments? args = settings.arguments as ScreenArguments?;
@@ -147,6 +149,9 @@ class AppRouter {
 
       case authCheck:
         return MaterialPageRoute(builder: (_) => const AuthCheck());
+
+      case addNewClass:
+        return MaterialPageRoute(builder: (_) => const AddNewClassScreen());
 
       default:
         return MaterialPageRoute(

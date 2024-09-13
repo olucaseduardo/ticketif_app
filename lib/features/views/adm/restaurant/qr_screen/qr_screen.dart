@@ -50,11 +50,11 @@ class _QrScreenState extends ConsumerState<QrScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('QR CODE'),
-        actions: controller.validatedTickets.length >= 1
+        actions: controller.validatedTickets.isNotEmpty
             ? [
                 controller.isUpload
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
+                    ? const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Center(
                           child: CircularProgressIndicator(
                             color: AppColors.white,
