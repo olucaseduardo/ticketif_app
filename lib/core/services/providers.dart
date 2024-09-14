@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ticket_ifma/features/views/adm/cae/add_new_class/add_new_class_controller.dart';
 import 'package:ticket_ifma/features/views/adm/cae/classes_screen/classes_controller.dart';
 import 'package:ticket_ifma/features/views/adm/cae/period_report_screen/period_report_controller.dart';
 import 'package:ticket_ifma/features/views/adm/restaurant/qr_screen/qr_controller.dart';
@@ -78,4 +79,8 @@ final searchStudentProvider =
 
 final qrProvider = ChangeNotifierProvider.autoDispose<QrController>(
   (ref) => QrController(),
+);
+
+final addNewClassProvider = ChangeNotifierProvider.autoDispose<AddNewClassController>(
+  (ref) => AddNewClassController(),
 );

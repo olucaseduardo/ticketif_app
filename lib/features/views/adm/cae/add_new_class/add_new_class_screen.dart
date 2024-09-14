@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ticket_ifma/core/services/providers.dart';
+import 'package:ticket_ifma/core/utils/loader.dart';
+import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_button_widget.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_text_field.dart';
 
-class AddNewClassScreen extends StatefulWidget {
+class AddNewClassScreen extends ConsumerStatefulWidget {
   const AddNewClassScreen({super.key});
 
   @override
-  State<AddNewClassScreen> createState() => _AddNewClassScreenState();
+  ConsumerState<AddNewClassScreen> createState() => _AddNewClassScreenState();
 }
 
-class _AddNewClassScreenState extends State<AddNewClassScreen> {
+class _AddNewClassScreenState extends ConsumerState<AddNewClassScreen> {
   final newClass = TextEditingController();
   final course = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -23,6 +27,14 @@ class _AddNewClassScreenState extends State<AddNewClassScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = ref.watch(addNewClassProvider);
+
+    void loadingVerify() {
+      controller.isLoading
+                            ? Loader.i.showLoader()
+                            : const SizedBox.shrink();
+    }
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adicionar Nova Turma'),
@@ -58,7 +70,31 @@ class _AddNewClassScreenState extends State<AddNewClassScreen> {
 
                 CommonButton(
                   label: 'Adicionar Turma',
-                  function: () => {},
+                  function: () async {
+                    final valid =
+                                formKey.currentState?.validate() ?? false;
+
+                    if (valid) {
+                      controller.loading();
+
+                      loadingVerify();
+
+                      await controller.addClass(
+                        newClass.text.toUpperCase().trim(),
+                        course.text.trim(),
+                      );
+
+                      if (!controller.error) {
+                        Loader.i.hideDialog();
+                        AppMessage.i
+                            .showMessage('Nova turma inserida com sucesso!');
+                      } else {
+                        Loader.i.hideDialog();
+                        AppMessage.i
+                            .showError('Erro ao inserir nova turma!');
+                      }
+                    }
+                  },
                 ),
               ],
             ),
