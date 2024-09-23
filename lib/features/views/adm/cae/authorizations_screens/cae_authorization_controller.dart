@@ -26,7 +26,7 @@ class CaeAuthorizationController extends ChangeNotifier {
 
   void loading() {
     isLoading = !isLoading;
-    log(isLoading.toString());
+    // log(isLoading.toString());
     notifyListeners();
   }
 
@@ -245,19 +245,35 @@ class CaeAuthorizationController extends ChangeNotifier {
   /// Atualiza as listas
   void authorizationsList(Map<String, List<Authorization>> authorizations) {
     for (int index = 0; index < authorizations.keys.length; index++) {
-      StudentAuthorization studentAuthorization = StudentAuthorization(
-          matricula: authorizations.keys.elementAt(index),
-          idStudent: authorizations[authorizations.keys.elementAt(index)]!
-              .first
-              .studentId,
-          text: authorizations[authorizations.keys.elementAt(index)]!
-              .first
-              .justification,
-          meal:
-              authorizations[authorizations.keys.elementAt(index)]!.first.meal,
-          days: getDays(authorizations[authorizations.keys.elementAt(index)]!));
-      filteredAuthorizations.add(studentAuthorization);
-      selectedAuthorizations.add(studentAuthorization);
+      String matricula = authorizations.keys.elementAt(index);
+      List<Authorization> student = authorizations[matricula]!;
+
+      Map<String, List<Authorization>> meals = {};
+
+      for (int authIndex = 0; authIndex < student.length; authIndex++) {
+        Authorization currentAuthorization = student[authIndex];
+
+        if (meals.containsKey(currentAuthorization.meal)) {
+          meals[currentAuthorization.meal]!.add(currentAuthorization);
+        } else {
+          meals[currentAuthorization.meal] = [currentAuthorization];
+        }
+      }
+
+      // Criação do objeto fora do laço interno
+
+      meals.forEach((meal, mealAuths) {
+        StudentAuthorization studentAuthorization = StudentAuthorization(
+            matricula: matricula,
+            idStudent: student[0].studentId,
+            text: student[0].justification,
+            meal_id: mealAuths[0].mealId,
+            meal: meal,
+            days: getDays(mealAuths));
+
+        filteredAuthorizations.add(studentAuthorization);
+        selectedAuthorizations.add(studentAuthorization);
+      });
     }
   }
 
@@ -265,19 +281,36 @@ class CaeAuthorizationController extends ChangeNotifier {
       Map<String, List<Authorization>> authorizations) {
     List<StudentAuthorization> list = [];
     for (int index = 0; index < authorizations.keys.length; index++) {
-      StudentAuthorization studentAuthorization = StudentAuthorization(
-          matricula: authorizations.keys.elementAt(index),
-          idStudent: authorizations[authorizations.keys.elementAt(index)]!
-              .first
-              .studentId,
-          text: authorizations[authorizations.keys.elementAt(index)]!
-              .first
-              .justification,
-          meal:
-              authorizations[authorizations.keys.elementAt(index)]!.first.meal,
-          days: getDays(authorizations[authorizations.keys.elementAt(index)]!));
-      list.add(studentAuthorization);
+      String matricula = authorizations.keys.elementAt(index);
+      List<Authorization> student = authorizations[matricula]!;
+
+      Map<String, List<Authorization>> meals = {};
+
+      for (int authIndex = 0; authIndex < student.length; authIndex++) {
+        Authorization currentAuthorization = student[authIndex];
+
+        if (meals.containsKey(currentAuthorization.meal)) {
+          meals[currentAuthorization.meal]!.add(currentAuthorization);
+        } else {
+          meals[currentAuthorization.meal] = [currentAuthorization];
+        }
+      }
+
+      // Criação do objeto fora do laço interno
+
+      meals.forEach((meal, mealAuths) {
+        StudentAuthorization studentAuthorization = StudentAuthorization(
+            matricula: matricula,
+            idStudent: student[0].studentId,
+            text: student[0].justification,
+            meal_id: mealAuths[0].mealId,
+            meal: meal,
+            days: getDays(mealAuths));
+
+        list.add(studentAuthorization);
+      });
     }
+
     return list;
   }
 }

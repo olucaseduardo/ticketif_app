@@ -47,10 +47,13 @@ class _AuthorizationEvaluateScreenState
     final lengthTickets = allStudents.length;
     List<String> selectedStudents = [];
 
-    log('Selected ${controller.selectedAuthorizations.length.toString()}');
-    log('SelectedAll ${controller.selectAll.toString()}');
-    log('SelectedAll ${controller.selectedAuthorizations.toString()}');
-    log('Filtered ${controller.filteredAuthorizations.toString()}');
+    log('Autho ${allStudents})}');
+    log('AuthoWID ${widget.authorizations})}');
+
+    // log('Selected ${controller.selectedAuthorizations.length.toString()}');
+    // log('SelectedAll ${controller.selectAll.toString()}');
+    // log('SelectedAll ${controller.selectedAuthorizations.toString()}');
+    // log('Filtered ${controller.filteredAuthorizations.toString()}');
 
     bool continueSolicitation() {
       if (controller.selectedAuthorizations.isEmpty) {
@@ -70,13 +73,11 @@ class _AuthorizationEvaluateScreenState
 
     return PopScope(
       canPop: true,
-
       onPopInvoked: (bool didPop) async {
         if (didPop) return;
 
         Navigator.pop(context, selectedStudents);
       },
-
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(

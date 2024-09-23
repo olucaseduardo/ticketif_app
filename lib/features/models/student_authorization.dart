@@ -5,20 +5,22 @@ class StudentAuthorization {
   final String matricula;
   final int idStudent;
   final String text;
-  final String meal;
-  final String days;
+  int meal_id;
+  String meal;
+  String days;
 
   StudentAuthorization({
     required this.matricula,
     required this.idStudent,
     required this.text,
+    required this.meal_id,
     required this.meal,
     required this.days,
   });
 
   @override
   String toString() {
-    return 'StudentAuthorization(matricula: $matricula, idStudent: $idStudent, justification: $text, meal: $meal, days: $days)';
+    return 'StudentAuthorization(matricula: $matricula, idStudent: $idStudent, justification: $text, meal_id: $meal_id, meal: $meal, days: $days)';
   }
 
   Map<String, dynamic> toMap() {
@@ -26,6 +28,7 @@ class StudentAuthorization {
       'matricula': matricula,
       'idStudent': idStudent,
       'text': text,
+      'meal_id': meal_id,
       'meal': meal,
       'days': days,
     };
@@ -36,6 +39,7 @@ class StudentAuthorization {
       matricula: map['matricula'] as String,
       idStudent: map['idStudent'] as int,
       text: map['text'] as String,
+      meal_id: map['meal_id'] as int,
       meal: map['meal'] as String,
       days: map['days'] as String,
     );
