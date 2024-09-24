@@ -104,11 +104,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         label: 'Solicitar ticket',
                         size: ButtonSize.small,
                         textPadding: 8,
-                        function: () => controller.checkingRequestBlocking()
-                            ? Navigator.pushNamed(
-                                context, AppRouter.requestTicketRoute)
-                            : AppMessage.i.showInfo(
-                                'Você já possui um ticket para ${todayTicket?.meal.toLowerCase()}'),
+                        function: () => Navigator.pushNamed(
+                                context, AppRouter.requestTicketRoute),
                       ),
                     ],
                   ),
