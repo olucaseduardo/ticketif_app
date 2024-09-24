@@ -79,6 +79,8 @@ class AppRouter {
             title: args?.title,
             caeRequest: args?.cae,
             idStudent: args?.idStudent,
+            orderLunch: args?.orderLunch,
+            orderDinner: args?.orderDinner,
           ),
         );
 

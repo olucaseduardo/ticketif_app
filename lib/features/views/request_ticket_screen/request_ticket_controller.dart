@@ -165,7 +165,7 @@ class RequestTicketController extends ChangeNotifier {
   }
 
   /// Verifica se a solicitação de refeição vem por parte da CAE ou do aluno
-  Future<void> onTapSendRequest(bool isCae, {int? idStudent}) async {
+  Future<void> onTapSendRequest(bool isCae, bool lunch, bool dinner, {int? idStudent}) async {
     try {
       error = false;
       notifyListeners();
@@ -173,6 +173,20 @@ class RequestTicketController extends ChangeNotifier {
       if (!checkJustificationAndMeal()) {
         AppMessage.i.showInfo(
           'É obrigatório selecionar a Refeição e a Justificativa para solicitar o ticket!',
+        );
+        return;
+      }
+
+      if (lunch == false && meal!.id == 2 && !isPermanent) {
+        AppMessage.i.showInfo(
+          'Já existe um ticket para almoço, impossível nova solicitação!',
+        );
+        return;
+      }
+
+      if (dinner == false && meal!.id == 3 && !isPermanent) {
+        AppMessage.i.showInfo(
+          'Já existe um ticket para jantar, impossível nova solicitação!',
         );
         return;
       }

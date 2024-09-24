@@ -12,6 +12,8 @@ class ScreenArguments {
   final bool? cae;
   final int? idStudent;
   final bool? isPermanent;
+  final bool? orderDinner;
+  final bool? orderLunch;
 
   ScreenArguments({
     this.title,
@@ -23,5 +25,7 @@ class ScreenArguments {
     this.subtitle,
     this.description,
     this.authorizations,
+    this.orderDinner,
+    this.orderLunch,
   });
 }

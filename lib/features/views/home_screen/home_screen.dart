@@ -7,7 +7,6 @@ import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
 import 'package:ticket_ifma/features/resources/routes/screen_arguments.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
-import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_button_widget.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_ticket_widget.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_tile_options.dart';
@@ -30,7 +29,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(homeProvider);
-    final todayTicket = controller.todayTicket;
 
     return Scaffold(
       appBar: !controller.isLoading && !controller.error
@@ -105,7 +103,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         size: ButtonSize.small,
                         textPadding: 8,
                         function: () => Navigator.pushNamed(
-                                context, AppRouter.requestTicketRoute),
+                          context,
+                          AppRouter.requestTicketRoute,
+                          arguments: ScreenArguments(
+                            orderDinner: controller.orderDinner,
+                            orderLunch: controller.orderLunch,
+                          ),
+                        ),
                       ),
                     ],
                   ),

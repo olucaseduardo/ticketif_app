@@ -47,7 +47,6 @@ class _AuthorizationEvaluateScreenState
     final lengthTickets = allStudents.length;
     List<String> selectedStudents = [];
 
-    log('Autho ${allStudents})}');
     log('AuthoWID ${widget.authorizations})}');
 
     // log('Selected ${controller.selectedAuthorizations.length.toString()}');

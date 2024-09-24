@@ -11,12 +11,16 @@ class RequestTicket extends ConsumerWidget {
   final bool? caeRequest;
   final int? idStudent;
   final String? title;
+  final bool? orderDinner;
+  final bool? orderLunch;
 
   const RequestTicket({
     Key? key,
     this.title,
     this.caeRequest = false,
     this.idStudent,
+    this.orderDinner = true,
+    this.orderLunch = true,
   }) : super(key: key);
 
   @override
@@ -181,8 +185,17 @@ class RequestTicket extends ConsumerWidget {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
               child: CommonButton(
                 label: 'Enviar solicitação',
-                function: () => controller.onTapSendRequest(caeRequest ?? false,
-                    idStudent: idStudent),
+                function: () {
+                  // if (orderDinner) {
+                    
+                  // }
+                  controller.onTapSendRequest(
+                    caeRequest ?? false,
+                    orderLunch ?? true,
+                    orderDinner ?? true,
+                    idStudent: idStudent,
+                  );
+                },
               ),
             ),
           ],

@@ -21,6 +21,8 @@ class HomeController extends ChangeNotifier {
   bool isLoading = true;
   bool isReloading = false;
   bool error = false;
+  bool orderLunch = false;
+  bool orderDinner = false;
   static const statusPriority = {4,2,1,5,6,7};
 
   Ticket? todayTicket;
@@ -33,6 +35,21 @@ class HomeController extends ChangeNotifier {
   void loading() {
     isLoading = !isLoading;
     notifyListeners();
+  }
+
+  bool _checkTickets(int mealID) {
+    if (todayTickets != null) {  
+      for (var ticket in todayTickets!) {
+        if (
+          (ticket.idMeal == mealID) && 
+          (ticket.idStatus == 1 || ticket.idStatus == 2 || ticket.idStatus == 4 || ticket.idStatus == 5)
+        ) {
+          return false;
+        }
+      }
+    }
+      
+    return true;
   }
 
   bool checkingRequestBlocking() {
@@ -79,6 +96,12 @@ class HomeController extends ChangeNotifier {
       todayTicketsMap = TodayTicketsHelper.i.mapList(todayTickets!);
 
       userTickets!.sort((a, b) => b.useDayDate.compareTo(a.useDayDate));
+
+    orderLunch = _checkTickets(2);
+    orderDinner = _checkTickets(3);
+
+    log('orderDinner: $orderDinner');
+    log('orderLunch: $orderLunch');
   }
 
   Future<void> reloadData(int userID) async {
@@ -88,6 +111,8 @@ class HomeController extends ChangeNotifier {
       permanents?.clear();
 
       isReloading = true;
+      orderLunch = false;
+      orderDinner = false;
       notifyListeners();
 
       final tickets =
@@ -116,6 +141,8 @@ class HomeController extends ChangeNotifier {
       todayTickets!.clear();
 
       isLoading = true;
+      orderLunch = false;
+      orderDinner = false;
 
       await Links.i.loadLink();
       final userData = await UserApiRepositoryImpl().loadUser();
