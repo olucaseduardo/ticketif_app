@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
 import 'package:ticket_ifma/core/utils/loader.dart';
+import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_button_widget.dart';
+import 'package:ticket_ifma/features/resources/widgets/common_dropdown_widget.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_text_field.dart';
 
 class AddNewClassScreen extends ConsumerStatefulWidget {
@@ -15,13 +17,11 @@ class AddNewClassScreen extends ConsumerStatefulWidget {
 
 class _AddNewClassScreenState extends ConsumerState<AddNewClassScreen> {
   final newClass = TextEditingController();
-  final course = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     newClass.dispose();
-    course.dispose();
     super.dispose();
   }
 
@@ -48,6 +48,7 @@ class _AddNewClassScreenState extends ConsumerState<AddNewClassScreen> {
             key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
             
               children: [
                 CommonTextField(
@@ -57,13 +58,24 @@ class _AddNewClassScreenState extends ConsumerState<AddNewClassScreen> {
                   controller: newClass,
                   validator: true,
                 ),
-                
-                CommonTextField(
-                  title: 'Curso',
-                  labelText: 'Digite o curso',
-                  textInputAction: TextInputAction.done,
-                  controller: course,
-                  validator: true,
+
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    'Curso',
+                    style: AppTextStyle.titleSmall,
+                  ),
+                ),
+
+                CommonDropDownButton(
+                  hint: 'Selecione um curso',
+                  validator: (value) =>
+                      value == null ? 'Selecione um curso' : null,
+                  items: controller.courses
+                      .map((e) => e.keys.first)
+                      .toList(),
+                  onChanged: (value) =>
+                      controller.selectCourse(value),
                 ),
 
                 const SizedBox(height: 20),
@@ -81,7 +93,7 @@ class _AddNewClassScreenState extends ConsumerState<AddNewClassScreen> {
 
                       await controller.addClass(
                         newClass.text.toUpperCase().trim(),
-                        course.text.trim(),
+                        controller.selectedCourse!,
                       );
 
                       if (!controller.error) {
