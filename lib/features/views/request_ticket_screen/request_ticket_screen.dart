@@ -47,160 +47,168 @@ class RequestTicket extends ConsumerWidget {
         titleTextStyle: const TextStyle(color: AppColors.black),
         backgroundColor: AppColors.white,
       ),
-      body:
-          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Form(
-                key: controller.formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Solicitar um novo ticket',
-                      style: AppTextStyle.largeText,
-                    ),
-                    Text(
-                      'Descreva as características de seu ticket para que seja analisada sua solicitação.',
-                      style: AppTextStyle.smallText,
-                    ),
-                    const SizedBox(height: 12),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4),
-                      child: Text(
-                        'Refeição',
-                        style: AppTextStyle.titleSmall,
-                      ),
-                    ),
-                    CommonDropDownButton(
-                        hint: 'Selecione uma refeição',
-                        validator: (value) =>
-                            value == null ? 'Selecione uma refeição' : null,
-                        items:
-                            controller.meals.map((e) => e.description).toList(),
-                        onChanged: (value) => controller.onMealsChanged(value)),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 12),
-                      child: Text(
-                        'Validade',
-                        style: AppTextStyle.titleSmall,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 26,
-                          height: 26,
-                          child: Checkbox(
-                            value: !controller.isPermanent,
-                            onChanged: (value) {
-                              controller.onPermanentChanged(!value!);
-                            },
+      body: SafeArea(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Form(
+                      key: controller.formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Solicitar um novo ticket',
+                            style: AppTextStyle.largeText,
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Apenas para hoje',
-                          style: AppTextStyle.normalText,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 26,
-                          height: 26,
-                          child: Checkbox(
-                            value: controller.isPermanent,
-                            onChanged: (value) {
-                              controller.onPermanentChanged(value);
-                            },
+                          Text(
+                            'Descreva as características de seu ticket para que seja analisada sua solicitação.',
+                            style: AppTextStyle.smallText,
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Permanente',
-                          style: AppTextStyle.normalText,
-                        ),
-                      ],
-                    ),
-                    controller.isPermanent
-                        ? Wrap(
-                            spacing: 8,
-                            runSpacing: -4,
-                            children: controller.days
-                                .map<FilterChip>((value) => FilterChip(
-                                    selected: controller
-                                        .selectedDays(value.abbreviation),
-                                    label: Text(value.abbreviation),
-                                    onSelected: (isSelected) =>
-                                        controller.onDaysChanged(
-                                            value.abbreviation, isSelected)))
+                          const SizedBox(height: 12),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 4),
+                            child: Text(
+                              'Refeição',
+                              style: AppTextStyle.titleSmall,
+                            ),
+                          ),
+                          CommonDropDownButton(
+                              hint: 'Selecione uma refeição',
+                              validator: (value) => value == null
+                                  ? 'Selecione uma refeição'
+                                  : null,
+                              items: controller.meals
+                                  .map((e) => e.description)
+                                  .toList(),
+                              onChanged: (value) =>
+                                  controller.onMealsChanged(value)),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 12),
+                            child: Text(
+                              'Validade',
+                              style: AppTextStyle.titleSmall,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 26,
+                                height: 26,
+                                child: Checkbox(
+                                  value: !controller.isPermanent,
+                                  onChanged: (value) {
+                                    controller.onPermanentChanged(!value!);
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Apenas para hoje',
+                                style: AppTextStyle.normalText,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 26,
+                                height: 26,
+                                child: Checkbox(
+                                  value: controller.isPermanent,
+                                  onChanged: (value) {
+                                    controller.onPermanentChanged(value);
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Permanente',
+                                style: AppTextStyle.normalText,
+                              ),
+                            ],
+                          ),
+                          controller.isPermanent
+                              ? Wrap(
+                                  spacing: 8,
+                                  runSpacing: -4,
+                                  children: controller.days
+                                      .map<FilterChip>((value) => FilterChip(
+                                          selected: controller
+                                              .selectedDays(value.abbreviation),
+                                          label: Text(value.abbreviation),
+                                          onSelected: (isSelected) =>
+                                              controller.onDaysChanged(
+                                                  value.abbreviation,
+                                                  isSelected)))
+                                      .toList(),
+                                )
+                              : Container(),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 4),
+                            child: Text(
+                              'Justificativa',
+                              style: AppTextStyle.titleSmall,
+                            ),
+                          ),
+                          CommonDropDownButton(
+                            hint: 'Selecione uma justificativa',
+                            validator: (value) => value == null
+                                ? 'Selecione uma justificativa'
+                                : null,
+                            items: controller.justifications
+                                .map((e) => e.description)
                                 .toList(),
-                          )
-                        : Container(),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4),
-                      child: Text(
-                        'Justificativa',
-                        style: AppTextStyle.titleSmall,
+                            onChanged: (value) =>
+                                controller.onJustificationChanged(value),
+                          ),
+                          CommonTextField(
+                            controller: controller.justificationController,
+                            title: 'Justificativa detalhada (opcional)',
+                            labelText: 'Digite sua justificativa detalhada',
+                            keyboardType: TextInputType.multiline,
+                            maxLine: 5,
+                          ),
+                        ],
                       ),
                     ),
-                    CommonDropDownButton(
-                      hint: 'Selecione uma justificativa',
-                      validator: (value) =>
-                          value == null ? 'Selecione uma justificativa' : null,
-                      items: controller.justifications
-                          .map((e) => e.description)
-                          .toList(),
-                      onChanged: (value) =>
-                          controller.onJustificationChanged(value),
-                    ),
-                    CommonTextField(
-                      controller: controller.justificationController,
-                      title: 'Justificativa detalhada (opcional)',
-                      labelText: 'Digite sua justificativa detalhada',
-                      keyboardType: TextInputType.multiline,
-                      maxLine: 5,
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-        Column(
-          children: [
-            const Divider(
-              height: 0,
-              thickness: 0,
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-              child: CommonButton(
-                label: 'Enviar solicitação',
-                function: () {
-                  // if (orderDinner) {
-                    
-                  // }
-                  controller.onTapSendRequest(
-                    caeRequest ?? false,
-                    orderLunch ?? true,
-                    orderDinner ?? true,
-                    idStudent: idStudent,
-                  );
-                },
+              Column(
+                children: [
+                  const Divider(
+                    height: 0,
+                    thickness: 0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12),
+                    child: CommonButton(
+                      label: 'Enviar solicitação',
+                      function: () {
+                        // if (orderDinner) {
+
+                        // }
+                        controller.onTapSendRequest(
+                          caeRequest ?? false,
+                          orderLunch ?? true,
+                          orderDinner ?? true,
+                          idStudent: idStudent,
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-      ]),
+            ]),
+      ),
     );
   }
 }
