@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -128,9 +130,30 @@ class CommonTicketWidget extends StatelessWidget {
   }
 }
 
+DateTime _today() {
+  DateTime dayNow = DateTime.now();
+  DateTime todayOnlyDate = DateTime(dayNow.year, dayNow.month, dayNow.day);
+
+  return todayOnlyDate;
+}
+
+DateTime _convertStringToDateTime(String ticketUseDayDate) {
+  DateTime dateTime = DateTime.parse(ticketUseDayDate);
+  DateTime dateTimeOnlyDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
+
+  return dateTimeOnlyDate;
+}
+
+bool _checkTodayAction(String ticketUseDayDate) {
+  DateTime dateTime = _convertStringToDateTime(ticketUseDayDate);
+  DateTime today = _today();
+  log((dateTime == today).toString());
+  return dateTime == today;
+}
+
 Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
     Ticket ticket, BuildContext context, HistoricController? controller) {
-  if (idStatus == 1) {
+  if (idStatus == 1 && _checkTodayAction(ticket.useDayDate)) {
     return InkWell(
       onTap: () {
         showDialog(
@@ -173,7 +196,7 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
         ],
       ),
     );
-  } else if (idStatus == 2) {
+  } else if (idStatus == 2 && _checkTodayAction(ticket.useDayDate)) {
     return InkWell(
       onTap: () {
         showDialog(
@@ -214,7 +237,7 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
         ],
       ),
     );
-  } else if (idStatus == 4) {
+  } else if (idStatus == 4 && _checkTodayAction(ticket.useDayDate)) {
     return InkWell(
       onTap: () {
         showQrCodeDialog(context, ticket.qrCodeInfo());

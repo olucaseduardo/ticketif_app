@@ -32,10 +32,6 @@ class HistoricController extends ChangeNotifier {
     log('Status ${status.toString()}');
   }
 
-  // void initDate() {
-  //   changeDate = day == null ? DateUtil.dateTimeNow : day as DateTime;
-  // }
-
   List<Ticket> getHistoricTickets(DateTime? date) {
     if (date != null) {
       return tickets

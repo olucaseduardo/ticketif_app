@@ -287,7 +287,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               color: AppColors.blue,
                               fontWeight: FontWeight.w700,
                             ),
-                            recognizer: new TapGestureRecognizer()
+                            recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 launchUrl(
                                     Uri.parse(
