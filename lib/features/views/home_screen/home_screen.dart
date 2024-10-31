@@ -66,11 +66,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         replacement: Loader.loader(),
         child: Visibility(
           visible: !controller.error,
-          replacement: ErrorResults(
-            msg: 'Voltar ao login',
-            msgError: 'Erro ao carregar usuário',
-            function: () => controller.onLogoutTap(),
-            homeStudent: true,
+          replacement: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+
+            child: ErrorResults(
+              msg: '',
+              msgError: 'Erro ao carregar seus dados, verifique sua conexão a internet',
+              homeStudent: true,
+            ),
           ),
           child: SafeArea(
             child: Column(

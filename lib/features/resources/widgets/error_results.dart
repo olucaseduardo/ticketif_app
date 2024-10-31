@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
-import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
-import 'package:ticket_ifma/features/resources/widgets/common_button_widget.dart';
 
 class ErrorResults extends StatelessWidget {
   final String msg;
@@ -28,27 +25,6 @@ class ErrorResults extends StatelessWidget {
           Text(
             msgError,
             style: AppTextStyle.normalText,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: 200,
-              child: CommonButton(
-                textPadding: 8,
-                function: () {
-                  function?.call();
-                  homeStudent == true
-                      ? AppMessage.i.showError('Erro ao carregar usuario')
-                      : null;
-
-                  homeStudent == true
-                      ? Navigator.pushNamedAndRemoveUntil(
-                          context, AppRouter.loginRoute, (route) => false)
-                      : Navigator.pop(context);
-                },
-                label: msg,
-              ),
-            ),
           ),
         ],
       ),
