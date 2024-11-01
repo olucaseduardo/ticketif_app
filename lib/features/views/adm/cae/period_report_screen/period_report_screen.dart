@@ -121,6 +121,8 @@ class _PeriodReportScreenState extends ConsumerState<PeriodReportScreen> {
                                 const Divider(),
                                 ListView.builder(
                                     shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    
                                     itemCount: meal.length,
                                     itemBuilder: (context, indexMeal) {
                                       var keyMeal = meal.elementAt(indexMeal);

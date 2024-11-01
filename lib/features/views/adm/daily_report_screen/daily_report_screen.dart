@@ -114,6 +114,7 @@ class _DailyReportScreenState extends ConsumerState<DailyReportScreen> {
                               ),
                               ListView.builder(
                                   shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
                                   itemCount: meal.length,
                                   itemBuilder: (context, indexMeal) {
                                     var keyMeal = meal.elementAt(indexMeal);
