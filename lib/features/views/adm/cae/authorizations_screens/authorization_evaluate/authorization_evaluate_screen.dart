@@ -47,13 +47,6 @@ class _AuthorizationEvaluateScreenState
     final lengthTickets = allStudents.length;
     List<String> selectedStudents = [];
 
-    log('AuthoWID ${widget.authorizations})}');
-
-    // log('Selected ${controller.selectedAuthorizations.length.toString()}');
-    // log('SelectedAll ${controller.selectAll.toString()}');
-    // log('SelectedAll ${controller.selectedAuthorizations.toString()}');
-    // log('Filtered ${controller.filteredAuthorizations.toString()}');
-
     bool continueSolicitation() {
       if (controller.selectedAuthorizations.isEmpty) {
         AppMessage.i.showInfo('Não existem tickets selecionados!');
@@ -67,7 +60,6 @@ class _AuthorizationEvaluateScreenState
       for (var element in controller.selectedAuthorizations) {
         selectedStudents.add(element.matricula);
       }
-      log('EraserList :: $selectedStudents');
     }
 
     return PopScope(
@@ -185,9 +177,9 @@ class _AuthorizationEvaluateScreenState
                 child: ElevatedButton(
                   onPressed: () async {
                     if (continueSolicitation()) {
-                      controller.changedAuthorizations(1);
+                      controller.changedAuthorizations(4);
                       eraserStudents();
-                      AppMessage.i.showInfo('Tickets aprovados com sucesso');
+                      AppMessage.i.showMessage('Tickets permanentes aprovados com sucesso');
                       Navigator.pop(context, selectedStudents);
                       return Future.value();
                     }

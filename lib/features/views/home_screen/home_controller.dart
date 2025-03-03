@@ -67,13 +67,11 @@ class HomeController extends ChangeNotifier {
   void organizeTickets(List<Ticket> tickets) {
     // verificando quais os tickets do aluno para o dia
       for (var index = 0; index < tickets.length; index++) {
-        log(tickets.elementAt(index).toString());
         if (tickets.elementAt(index).useDayDate != '') {
           if (_checkingTodayTicket(tickets.elementAt(index).useDayDate)) {
             todayTickets?.add(tickets.elementAt(index));
             userTickets?.add(tickets.elementAt(index));
           } else {
-            log(tickets.elementAt(index).toString());
             userTickets?.add(tickets.elementAt(index));
           }
         }
@@ -100,11 +98,9 @@ class HomeController extends ChangeNotifier {
     orderLunch = _checkTickets(2);
     orderDinner = _checkTickets(3);
 
-    log('orderDinner: $orderDinner');
-    log('orderLunch: $orderLunch');
   }
 
-  Future<void> reloadData(int userID) async {
+  Future<void> reloadData(String matricula) async {
     try {
       userTickets!.clear();
       todayTickets!.clear();
@@ -116,11 +112,11 @@ class HomeController extends ChangeNotifier {
       notifyListeners();
 
       final tickets =
-          await TicketsApiRepositoryImpl().findAllTickets(userID);
-      final permanetsUser =
-           await TicketsApiRepositoryImpl().findAllPermanents(userID);
+          await TicketsApiRepositoryImpl().findAllTickets(matricula);
+      final permanentsUser =
+           await TicketsApiRepositoryImpl().findAllPermanents(matricula);
 
-      permanents = permanetsUser;
+      permanents = permanentsUser;
 
       organizeTickets(tickets);
 
@@ -147,15 +143,15 @@ class HomeController extends ChangeNotifier {
       await Links.i.loadLink();
       final userData = await UserApiRepositoryImpl().loadUser();
       final tickets =
-          await TicketsApiRepositoryImpl().findAllTickets(userData.id);
-      final permanetsUser =
-           await TicketsApiRepositoryImpl().findAllPermanents(userData.id);
+          await TicketsApiRepositoryImpl().findAllTickets(userData.matricula);
+      final permanentsUser =
+           await TicketsApiRepositoryImpl().findAllPermanents(userData.matricula);
 
-      permanents = permanetsUser;
+      permanents = permanentsUser;
 
       final sp = await SharedPreferences.getInstance();
       sp.setInt('idStudent', userData.id);
-
+      //
       user = userData;
 
       organizeTickets(tickets);
@@ -182,7 +178,7 @@ class HomeController extends ChangeNotifier {
     }
 
     try {
-      await TicketsApiRepositoryImpl().changeConfirmTicket(idTicket, statusId, idMeal);
+      await TicketsApiRepositoryImpl().changeConfirmTicket(idTicket, statusId);
       isLoading = true;
       notifyListeners();
       await loadData();

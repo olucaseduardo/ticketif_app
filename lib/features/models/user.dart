@@ -49,7 +49,7 @@ class User {
     return User(
       id: map['id'] ?? 0,
       name: map['name'] ?? '',
-      matricula: map['matricula'] ?? '',
+      matricula: map['registration'] ?? '',
       type: map['type'] ?? '',
     );
   }

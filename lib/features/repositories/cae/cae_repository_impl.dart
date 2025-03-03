@@ -9,7 +9,7 @@ class CaeRepositoryImpl implements CaeRepository {
   @override
   Future<void> deleteAllStudents() async {
     try {
-      await DioClient().delete('/students-delete');
+      await DioClient().delete('/student/');
     } on DioError catch (e, s) {
       log('Erro ao deletar todos os alunos', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao deletar todos os alunos');
@@ -20,17 +20,16 @@ class CaeRepositoryImpl implements CaeRepository {
   Future<void> addNewClass(String newClass, String course) async {
     try {
       await DioClient().post(
-        '/new-classes',
-        data: [
-          {
-            "description": newClass,
-            "course": course
-          }
-        ],
+        '/class/',
+        data:
+        {
+          "registration": newClass,
+          "course": course
+        }
       );
     } on DioError catch (e, s) {
-      log('Erro ao inserir nova turma', error: e, stackTrace: s);
-      throw RepositoryException(message: 'Erro ao inserir nova turma');
+      log('Erro ao inserir nova turma', error: e.message, stackTrace: s);
+      throw RepositoryException(message: e.message);
     }
   }
 }

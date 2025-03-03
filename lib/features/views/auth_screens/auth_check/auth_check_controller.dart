@@ -12,30 +12,24 @@ class AuthCheckController extends ChangeNotifier {
   void loading() {
     isLoading = !isLoading;
     notifyListeners();
-    log('loading $isLoading');
   }
 
   Future<void> verify() async {
     final sp = await SharedPreferences.getInstance();
     final matricula = sp.getString('matricula');
-    final user = sp.getString('username');
-
-    log('loading $isLoading');
+    final adminTypeId = sp.getInt('admin_type_id');
 
     if (matricula != null) {
       check = true;
     }
-
-    if (user != null) {
-      if (user == 'CAE') {
-        check = true;
+    if (adminTypeId != null) {
+      if (adminTypeId == 1) {
         cae = true;
-      } else {
-        check = true;
+      } else if (adminTypeId == 2) {
         restaurant = true;
       }
+      check = true;
     }
-
     loading();
   }
 }

@@ -45,7 +45,7 @@ class PermanentModel {
       mealId: map['meal_id'] as int,
       weekId: map['week_id'] as int,
       justificationId: map['justification_id'] as int,
-      authorized: map['authorized'] as int,
+      authorized: map['status_id'] as int,
       justificationDescription: map['justification_description'] as String,
       mealDescription: map['meal_description'] as String,
       weekDescription: map['week_description'] as String,
@@ -57,11 +57,11 @@ class PermanentModel {
   factory PermanentModel.fromJson(String source) => PermanentModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   String statusImage() {
-    if (authorized == 0) {
+    if (authorized == 1) {
       return path_image.analysis;
-    } else if (authorized == 1) {
+    } else if (authorized == 4) {
       return path_image.authorizedUse;
-    } else if (authorized == 2 || authorized == 3 || authorized == 4) {
+    } else if (authorized == 2 || authorized == 3 || authorized == 7) {
       return path_image.canceled;
     }
 

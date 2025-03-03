@@ -98,20 +98,16 @@ class RequestTicketController extends ChangeNotifier {
     bool isCaeRequest,
   ) async {
     try {
-      await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
+      final ticketId = await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
         studentId: id,
-        weekId: weekId,
         mealId: meal!.id,
-        statusId: isCaeRequest ? 4 : 1,
         justificationId: justification!.id,
-        isPermanent: 0,
-        solicitationDay: DateTime.now().toString(),
-        useDay: useDay,
-        useDayDate: useDayDate,
-        paymentDay: '',
-        isCae: isCaeRequest ? 1 : 0,
-        text: justificationController.text,
+        description: justificationController.text,
       ));
+
+      if (isCaeRequest) {
+        await TicketsApiRepositoryImpl().changeConfirmTicket(ticketId, 4);
+      }
     } on DioError catch (e, s) {
       log('Erro ao solicitar Ticket', error: e, stackTrace: s);
 
@@ -131,23 +127,18 @@ class RequestTicketController extends ChangeNotifier {
     List<DaysTicketDto> days,
   ) async {
     try {
-      List<RequestPermanent> permanents = [];
-      for (var day in days) {
-        permanents.add(RequestPermanent(
-          studentId: id,
-          weekId: day.id,
-          mealId: meal?.id ?? 0,
-          justificationId: justification?.id ?? 0,
-          text: justificationController.text,
-          useDay: day.description,
-          useDayDate:
-              day.id == DateTime.now().weekday ? DateTime.now().toString() : "",
-          authorized: isCae ? 1 : 0,
-          statusId: isCae ? 2 : 1,
-        ));
-      }
+      RequestPermanent permanents = RequestPermanent(
+        studentId: id,
+        weekId: days.map((e) => e.id).toList(),
+        mealId: meal!.id,
+        justificationId: justification!.id,
+        description: justificationController.text,
+      );
+      final permanentsIds = await TicketsApiRepositoryImpl().requestPermanent(permanents);
 
-      await TicketsApiRepositoryImpl().requestPermanent(permanents);
+      if (isCae) {
+        await TicketsApiRepositoryImpl().changeStatusAuthorizationPermanents(permanentsIds, 4);
+      }
     } on DioError catch (e, s) {
       log('Erro ao solicitar autorização permanente', error: e, stackTrace: s);
 

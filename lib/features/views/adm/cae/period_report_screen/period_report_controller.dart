@@ -20,7 +20,6 @@ class PeriodReportController extends ChangeNotifier {
 
   void loading() {
     isLoading = !isLoading;
-    log(isLoading.toString());
     notifyListeners();
   }
 
@@ -99,10 +98,6 @@ class PeriodReportController extends ChangeNotifier {
           dailyTickets?.add(tickets.elementAt(index));
         }
       }
-
-      dailyTickets?.forEach(
-        (element) => log(element.toString()),
-      );
 
       String statusName = '';
       String mealName = '';

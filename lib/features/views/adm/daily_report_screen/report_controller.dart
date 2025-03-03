@@ -16,7 +16,6 @@ class ReportController extends ChangeNotifier {
 
   void loading() {
     isLoading = !isLoading;
-    log(isLoading.toString());
     notifyListeners();
   }
 
@@ -25,7 +24,6 @@ class ReportController extends ChangeNotifier {
       dailyTickets!.clear();
       dailyStatus.clear();
       isLoading = true;
-      log('cae :: ${cae.toString()}');
       final tickets =
           await TicketsApiRepositoryImpl().findAllDailyTickets(date);
       for (var index = 0; index < tickets.length; index++) {
@@ -37,9 +35,7 @@ class ReportController extends ChangeNotifier {
           dailyTickets?.add(tickets.elementAt(index));
         }
       }
-      dailyTickets?.forEach(
-        (element) => log(element.toString()),
-      );
+
       String statusName = '';
       String mealName = '';
       dailyTickets?.forEach((element) {
@@ -55,7 +51,6 @@ class ReportController extends ChangeNotifier {
           dailyStatus[statusName] = {};
           dailyStatus[statusName]?[mealName] = [element];
         }
-        log(dailyStatus.toString());
       });
 
       loading();

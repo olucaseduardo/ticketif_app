@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ticket_ifma/core/utils/path_image.dart' as path_image;
 
@@ -62,17 +63,17 @@ class Ticket {
       map['student_id'] ?? 0,
       map['status_id'] ?? 0,
       map['meal_id'] ?? 0,
-      map['use_day_date'] ?? '',
-      map['use_day'] ?? '',
-      map['student'] ?? '',
+      map['created_at'] ?? '',
+      map['week_description'] ?? '',
+      map['student_registration'] ?? '',
       map['student_name'] ?? '',
-      map['type'] ?? '',
+      map['student_type'] ?? '',
       map['meal_description'] ?? '',
       map['status_description'] ?? '',
       map['justification_description'] ?? '',
-      map['text'] ?? '',
-      map['is_permanent'] ?? 0,
-      map['solicitation_day'] ?? '',
+      map['description'] ?? '',
+      map['permanent_id'] ?? 0,
+      '',
     );
   }
 

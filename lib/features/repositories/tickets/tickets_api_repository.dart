@@ -5,17 +5,17 @@ import 'package:ticket_ifma/features/models/student_authorization.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 
 abstract class TicketsApiRepository {
-  Future<List<Ticket>> findAllTickets(int idStudent);
-  Future<List<PermanentModel>> findAllPermanents(int idStudent);
+  Future<List<Ticket>> findAllTickets(String matricula);
+  Future<List<PermanentModel>> findAllPermanents(String matricula);
   Future<List<Ticket>> findAllDailyTickets(String date);
   Future<List<Ticket>> findPeriodTickets(String initialDate, String finalDate);
-  Future<void> requestTicket(RequestTicketModel ticket);
-  Future<void> requestPermanent(List<RequestPermanent> tickets);
-  Future<void> findAllNotAuthorized();
+  Future<int> requestTicket(RequestTicketModel ticket);
+  Future<List<int>> requestPermanent(RequestPermanent tickets);
+  Future<void> findAllInAnalisePermanents();
   Future<void> changeStatusTicket(int idTicket, int statusId);
-  Future<void> changeConfirmTicket(int idTicket, int statusId, int idMeal);
-  Future<void> changeStatusAuthorization(
-      List<StudentAuthorization> authorizations, int status);
+  Future<void> changeConfirmTicket(int idTicket, int statusId);
+  Future<void> changeStatusAuthorizationPermanents(
+      List<int> permanentsId, int status);
   Future<void> deleteAllPermanents();
   Future<void> deleteAllTickets();
 }

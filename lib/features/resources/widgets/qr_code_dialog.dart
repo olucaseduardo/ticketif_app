@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_ifma/features/models/ticket.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-Future<String?> showQrCodeDialog(BuildContext context, String data) =>
+Future<String?> showQrCodeDialog(BuildContext context, Ticket ticket) =>
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => Dialog(
@@ -34,14 +35,22 @@ Future<String?> showQrCodeDialog(BuildContext context, String data) =>
                 ),
               ),
               const SizedBox(height: 12),
+              Center(child: showQrCode(ticket.qrCodeInfo())),
+              const Center(
+                child: Text(
+                  "Informações do Estudante",
+                  textAlign: TextAlign.center,
+                  style:AppTextStyle.titleMedium
+                )
+              ),
               Center(
                 child: Text(
-                  'Aponte o QR Code para a câmera do(a) vendedor(a) para validar o pagamento.',
-                  style: AppTextStyle.smallText,
+                  '${ticket.studentName}'
+                      '\n${ticket.meal}',
+                  style: AppTextStyle.normalText,
                   textAlign: TextAlign.center,
                 ),
               ),
-              Center(child: showQrCode(data)),
             ],
           ),
         ),

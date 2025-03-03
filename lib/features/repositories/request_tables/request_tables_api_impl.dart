@@ -11,10 +11,11 @@ class RequestTablesApiImpl implements RequestTablesApi {
   @override
   Future<ListTablesModel> listTables() async {
     try {
-      final result = await DioClient().get("/tables");
+      final mealsResponse = await DioClient().get("/meal/");
+      final justificationsResponse = await DioClient().get("/justification/");
 
-      final List meals = result.data['meals'];
-      final List justifications = result.data['justifications'];
+      final List meals = mealsResponse.data['data']['meals'];
+      final List justifications = justificationsResponse.data['data']['justifications'];
 
       final listTables = ListTablesModel(
         meals: meals.map((e) => TablesModel.fromMap(e)).toList(),

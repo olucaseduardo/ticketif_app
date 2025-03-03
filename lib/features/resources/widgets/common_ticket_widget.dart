@@ -147,7 +147,6 @@ DateTime _convertStringToDateTime(String ticketUseDayDate) {
 bool _checkTodayAction(String ticketUseDayDate) {
   DateTime dateTime = _convertStringToDateTime(ticketUseDayDate);
   DateTime today = _today();
-  log((dateTime == today).toString());
   return dateTime == today;
 }
 
@@ -240,7 +239,7 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
   } else if (idStatus == 4 && _checkTodayAction(ticket.useDayDate)) {
     return InkWell(
       onTap: () {
-        showQrCodeDialog(context, ticket.qrCodeInfo());
+        showQrCodeDialog(context, ticket);
       },
       child: Row(
         children: [

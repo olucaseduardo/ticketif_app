@@ -32,7 +32,6 @@ class SearchStudentController extends ChangeNotifier {
 
   void loading() {
     isLoading = !isLoading;
-    log(isLoading.toString());
     notifyListeners();
   }
 

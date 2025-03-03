@@ -85,7 +85,6 @@ class QrController extends ChangeNotifier {
     isValid = false;
     result = 'Sem dados no momento, escaneie um QR Code';
     notifyListeners();
-    log(':::::: DELAY:::::::');
   }
 
   void handleValidQRCode() async {

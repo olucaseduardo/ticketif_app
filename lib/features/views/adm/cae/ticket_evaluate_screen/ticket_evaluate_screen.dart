@@ -29,7 +29,6 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
   @override
   void initState() {
     super.initState();
-    log(widget.tickets.toString());
     ref.read(ticketEvaluateProvider).filteredTickets.addAll(widget.tickets);
     ref.read(ticketEvaluateProvider).selectedTickets.addAll(widget.tickets);
     ref.read(ticketEvaluateProvider).selectAll = true;
@@ -41,9 +40,6 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
     final controller = ref.watch(ticketEvaluateProvider);
     List<Ticket> allTickets = widget.tickets;
     final lengthTickets = allTickets.length;
-
-    log('Selected ${controller.selectedTickets.length.toString()}');
-    log('SelectedAll ${controller.selectAll.toString()}');
 
     bool continueSolicitation() {
       if (controller.selectedTickets.isEmpty) {
@@ -159,7 +155,7 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (continueSolicitation()) {
-                      controller.solicitation(2);
+                      controller.solicitation(4);
                     }
                   },
                   child: const Text(

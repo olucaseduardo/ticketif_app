@@ -51,12 +51,12 @@ class Authorization {
       mealId: map['meal_id'] as int,
       weekId: map['week_id'] as int,
       justificationId: map['justification_id'] as int,
-      authorized: map['authorized'] as int,
-      student: map['student'] as String,
+      authorized: map['status_id'] as int,
+      student: map['student_registration'] as String,
       studentName: map['student_name'] as String,
       justification: map['justification_description'] as String,
       meal: map['meal_description'] as String,
-      type: map['type'] as String,
+      type: map['student_type'] as String,
     );
   }
 

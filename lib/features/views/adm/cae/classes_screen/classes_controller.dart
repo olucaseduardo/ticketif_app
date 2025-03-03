@@ -25,7 +25,6 @@ class ClassesController extends ChangeNotifier {
 
   void loading() {
     isLoading = !isLoading;
-    log(isLoading.toString());
     notifyListeners();
   }
 
@@ -44,7 +43,6 @@ class ClassesController extends ChangeNotifier {
 
       final tickets =
           await TicketsApiRepositoryImpl().findAllDailyTickets(date);
-      log("isPermanent :: $isPermanent");
       if (!isPermanent) {
         dailyTickets = tickets
             .where(
@@ -56,10 +54,6 @@ class ClassesController extends ChangeNotifier {
                 (element) => element.isPermanent == 1 && element.idStatus == 1)
             .toList();
       }
-
-      dailyTickets?.forEach(
-        (element) => log(element.toString()),
-      );
 
       String dailyClassName = '';
 
@@ -76,7 +70,6 @@ class ClassesController extends ChangeNotifier {
       sortedDailyClasses = Map.fromEntries(dailyClasses.entries.toList()
         ..sort((element1, element2) => element1.key.compareTo(element2.key)));
       filteredClasses.addAll(sortedDailyClasses.keys.toList());
-      log("dailyClasses :: ${sortedDailyClasses.toString()}");
       loading();
     } catch (e, s) {
       log('Erro ao buscar dados', error: e, stackTrace: s);
@@ -114,18 +107,13 @@ class ClassesController extends ChangeNotifier {
   void updateClasses(List<Ticket> list, int index) {
     sortedDailyClasses.values.elementAt(index).clear();
 
-    log("sortedDailyClasses :: ${sortedDailyClasses.toString()}");
     if (list.isNotEmpty) {
       sortedDailyClasses.values.elementAt(index).addAll(list);
     } else {
       filteredClasses.remove(sortedDailyClasses.keys.elementAt(index));
       sortedDailyClasses.remove(sortedDailyClasses.keys.elementAt(index));
     }
-    for (var element in filteredClasses) {
-      log(element.toString());
-    }
 
-    log("sortedDailyClasses :: ${sortedDailyClasses.toString()}");
     notifyListeners();
   }
 }

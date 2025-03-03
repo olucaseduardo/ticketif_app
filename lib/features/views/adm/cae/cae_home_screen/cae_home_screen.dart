@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
@@ -141,6 +142,15 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                       function: () => Navigator.pushNamed(
                         context,
                         AppRouter.addNewClass,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    CommonTileOptions(
+                      leading: CupertinoIcons.gear_solid,
+                      label: "Definições do Sistema",
+                      function: () => Navigator.pushNamed(
+                        context,
+                        AppRouter.systemConfig
                       ),
                     ),
                     const SizedBox(height: 8),
