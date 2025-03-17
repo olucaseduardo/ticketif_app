@@ -156,6 +156,14 @@ class HomeController extends ChangeNotifier {
       error = false;
       notifyListeners();
 
+      final registration = (await SharedPreferences.getInstance()).getString("matricula");
+
+      if (registration == null) {
+        throw Exception("Matricula Inválida");
+      }
+      await TicketsApiRepositoryImpl()
+          .getPermanentTicketDaily(registration);
+
       final tickets =
           await TicketsApiRepositoryImpl().findAllTickets(matricula);
       final permanentsUser =
@@ -200,13 +208,6 @@ class HomeController extends ChangeNotifier {
         isImgValid = await CacheManagerUtil().isImageUrlValid(imageUrl!);
         await updatePhotoStudent();
         final userData = await UserApiRepositoryImpl().loadUser();
-        try {
-          await TicketsApiRepositoryImpl()
-              .getPermanentTicketDaily(userData.registration);
-        } catch (e, s) {
-          log("Erro ao gerar ticket diário de permanente para o aluno",
-              error: e, stackTrace: s);
-        }
 
         final tickets = await TicketsApiRepositoryImpl()
             .findAllTickets(userData.registration);

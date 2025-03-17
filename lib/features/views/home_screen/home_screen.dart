@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -175,12 +176,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      'Olá, ${controller.user?.username ?? 'Usuário'}',
-                      overflow: TextOverflow.visible,
-                      maxLines: null,
-                      style: AppTextStyle.labelBig
-                          .copyWith(fontWeight: FontWeight.w700),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * .5,
+                      child: Text(
+                        'Olá, ${controller.user?.username ?? 'Usuário'}',
+                        overflow: TextOverflow.visible,
+                        maxLines: null,
+                        style: AppTextStyle.labelBig
+                            .copyWith(fontWeight: FontWeight.w700),
+                      ),
                     ),
                     Text(
                       controller.user?.registration ?? '',

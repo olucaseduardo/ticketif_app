@@ -55,12 +55,15 @@ class CommonTileTicket extends StatelessWidget {
                       const SizedBox(
                         height: 2,
                       ),
-                      Text(
-                        subtitle,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.black,
+                      SizedBox(
+                        width: 215,
+                        child: Text(
+                          subtitle,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            color: AppColors.black,
+                          ),
                         ),
                       ),
                       const SizedBox(
