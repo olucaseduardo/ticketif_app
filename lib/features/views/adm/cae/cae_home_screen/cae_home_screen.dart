@@ -8,7 +8,6 @@ import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
 import 'package:ticket_ifma/features/resources/routes/screen_arguments.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_tile_options.dart';
-import 'package:ticket_ifma/features/views/adm/cae/cae_home_screen/widgets/exclusion_options_modal.dart';
 
 class CaeHomeScreen extends ConsumerStatefulWidget {
   const CaeHomeScreen({Key? key}) : super(key: key);
@@ -74,18 +73,18 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 26),
+                    const SizedBox(height: 30),
                     Center(
                       child: Image.asset(
                         'assets/images/CAE.png',
                         width: 207,
                       ),
                     ),
-                    const SizedBox(height: 26),
+                    const SizedBox(height: 30),
                     CommonTileOptions(
                       leading: Icons.local_restaurant_rounded,
                       label: 'Tickets Diários',
@@ -137,11 +136,12 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                     ),
                     const SizedBox(height: 8),
                     CommonTileOptions(
-                      leading: Icons.add_circle,
-                      label: 'Adicionar Nova Turma (Médio)',
+                      leading: Icons.photo_camera,
+                      label: 'Solicitações para Troca de Foto',
                       function: () => Navigator.pushNamed(
                         context,
-                        AppRouter.addNewClass,
+                        AppRouter.photoRequestAuthorizationClassesScreen,
+                        arguments: ScreenArguments(title: "Troca de Foto por Turmas")
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -150,16 +150,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                       label: "Definições do Sistema",
                       function: () => Navigator.pushNamed(
                         context,
-                        AppRouter.systemConfig
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    CommonTileOptions(
-                      leading: Icons.delete,
-                      label: 'Opções de Exclusão',
-                      function: () => showModalBottomSheet(
-                        context: context,
-                        builder: (_) => ExclusionOptionsModal(controller: controller),
+                        AppRouter.systemDefinitions
                       ),
                     ),
                   ],

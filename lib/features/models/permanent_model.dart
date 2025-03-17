@@ -7,7 +7,7 @@ class PermanentModel {
   final int mealId;
   final int weekId;
   final int justificationId;
-  final int authorized;
+  final int statusId;
   final String justificationDescription;
   final String mealDescription;
   final String weekDescription;
@@ -18,7 +18,7 @@ class PermanentModel {
     required this.mealId,
     required this.weekId,
     required this.justificationId,
-    required this.authorized,
+    required this.statusId,
     required this.justificationDescription,
     required this.mealDescription,
     required this.weekDescription,
@@ -31,7 +31,7 @@ class PermanentModel {
       'meal_id': mealId,
       'week_id': weekId,
       'justification_id': justificationId,
-      'authorized': authorized,
+      'status_id': statusId,
       'justification_description': justificationDescription,
       'meal_description': mealDescription,
       'week_description': weekDescription,
@@ -45,7 +45,7 @@ class PermanentModel {
       mealId: map['meal_id'] as int,
       weekId: map['week_id'] as int,
       justificationId: map['justification_id'] as int,
-      authorized: map['status_id'] as int,
+      statusId: map['status_id'] as int,
       justificationDescription: map['justification_description'] as String,
       mealDescription: map['meal_description'] as String,
       weekDescription: map['week_description'] as String,
@@ -57,11 +57,11 @@ class PermanentModel {
   factory PermanentModel.fromJson(String source) => PermanentModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   String statusImage() {
-    if (authorized == 1) {
+    if (statusId == 1) {
       return path_image.analysis;
-    } else if (authorized == 4) {
+    } else if (statusId == 4) {
       return path_image.authorizedUse;
-    } else if (authorized == 2 || authorized == 3 || authorized == 7) {
+    } else if (statusId == 2 || statusId == 3 || statusId == 7) {
       return path_image.canceled;
     }
 

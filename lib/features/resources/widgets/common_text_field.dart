@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:validatorless/validatorless.dart';
@@ -13,6 +15,8 @@ class CommonTextField extends StatelessWidget {
   final int? maxLine;
   final TextEditingController? controller;
   final bool? validator;
+  final String? toolTip;
+  final List<TextInputFormatter>? inputFormatters;
 
   CommonTextField({
     super.key,
@@ -24,26 +28,53 @@ class CommonTextField extends StatelessWidget {
     this.obscureText = false,
     this.maxLine = 1,
     this.validator = false,
+    this.toolTip,
+    this.inputFormatters
   }) : obscureTextVN = ValueNotifier(obscureText);
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: AppTextStyle.labelLarge.copyWith(
-              color: AppColors.gray[800],
-              fontWeight: FontWeight.w500,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: AppTextStyle.labelLarge.copyWith(
+                  color: AppColors.gray[800],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+               if (toolTip != null && toolTip!.isNotEmpty)
+                  GestureDetector(
+                  onTap: () {
+                    final tooltip = tooltipKey.currentState;
+                    tooltip?.ensureTooltipVisible();
+                    },
+                    child: Tooltip(
+                        preferBelow: false,
+                        message: toolTip!,
+                        key: tooltipKey,
+                        waitDuration: Duration.zero,
+                        showDuration: const Duration(seconds: 1),
+                        child: const Icon(
+                                Icons.info_outline,
+                                color: AppColors.green,
+                        )
+                    ),
+                  )
+            ],
           ),
           const SizedBox(height: 4),
           ValueListenableBuilder<bool>(
             valueListenable: obscureTextVN,
             builder: (_, obscureTextValue, child) => TextFormField(
+              inputFormatters: inputFormatters,
               controller: controller,
               obscureText: obscureTextValue,
               keyboardType: keyboardType,

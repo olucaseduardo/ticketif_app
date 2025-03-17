@@ -93,11 +93,13 @@ class PeriodReportController extends ChangeNotifier {
       final tickets = await TicketsApiRepositoryImpl()
           .findPeriodTickets(initialDate, finalDate);
 
-      for (var index = 0; index < tickets.length; index++) {
-        if (tickets.elementAt(index).idStatus == 5) {
-          dailyTickets?.add(tickets.elementAt(index));
-        }
-      }
+      dailyTickets?.addAll(tickets);
+
+      // for (var index = 0; index < tickets.length; index++) {
+      //   if (tickets.elementAt(index).idStatus == 5) {
+      //     dailyTickets?.add(tickets.elementAt(index));
+      //   }
+      // }
 
       String statusName = '';
       String mealName = '';

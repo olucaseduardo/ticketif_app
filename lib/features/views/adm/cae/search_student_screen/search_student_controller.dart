@@ -62,10 +62,9 @@ class SearchStudentController extends ChangeNotifier {
 
   /// Filtragem de estudantes
   void searchStudent(String searchText) {
-    debugPrint(searchText);
     filteredStudents = listStudents
         .where((student) =>
-            student.matricula.toLowerCase().contains(searchText.toLowerCase()))
+            student.registration.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
 
     notifyListeners();

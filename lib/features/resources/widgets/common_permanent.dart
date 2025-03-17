@@ -15,7 +15,7 @@ class CommonPermanent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String statusName() {
-      return permanentModel.authorized == 1 ? 'Em análise' : permanentModel.authorized == 4 ? "Autorizado" : "Não autorizado";
+      return permanentModel.statusId == 1 ? 'Em análise' : permanentModel.statusId == 4 ? "Autorizado" : "Não autorizado";
     }
 
     return Container(

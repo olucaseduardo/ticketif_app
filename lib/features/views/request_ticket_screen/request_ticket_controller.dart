@@ -19,6 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RequestTicketController extends ChangeNotifier {
   bool isPermanent = false;
   bool error = false;
+  String errorMessage = "Erro interno, contate o desenvolvedor do sistema";
   TablesModel? meal;
   TablesModel? justification;
   TextEditingController justificationController = TextEditingController();
@@ -108,12 +109,13 @@ class RequestTicketController extends ChangeNotifier {
       if (isCaeRequest) {
         await TicketsApiRepositoryImpl().changeConfirmTicket(ticketId, 4);
       }
-    } on DioError catch (e, s) {
-      log('Erro ao solicitar Ticket', error: e, stackTrace: s);
-
+    } on RepositoryException catch (e, s) {
+      log('Erro ao solicitar o ticket', error: e.message, stackTrace: s);
+      errorMessage = e.message;
       error = true;
       notifyListeners();
     } catch (e, s) {
+      errorMessage = "Erro ao solicitar o ticket";
       error = true;
       notifyListeners();
       log('Erro ao solicitar Ticket', error: e, stackTrace: s);
@@ -141,7 +143,7 @@ class RequestTicketController extends ChangeNotifier {
       }
     } on DioError catch (e, s) {
       log('Erro ao solicitar autorização permanente', error: e, stackTrace: s);
-
+      errorMessage = "Erro ao solicitar autorização permanente";
       error = true;
       notifyListeners();
     } catch (e, s) {
@@ -206,14 +208,14 @@ class RequestTicketController extends ChangeNotifier {
       }
 
       if (!error) {
-        AppMessage.i.showMessage('Requisição enviada com sucesso');
+        AppMessage.i.showMessage('Ticket solicitado com sucesso');
         !isCae ? SpecialNavigation.i.isNotCae() : SpecialNavigation.i.isCae();
       } else {
-        AppMessage.i.showError('Erro ao solicitar Ticket');
+        AppMessage.i.showError(errorMessage);
       }
     } on DioError catch (e, s) {
       log('Erro ao solicitar Ticket', error: e, stackTrace: s);
-      AppMessage.i.showError('Erro ao solicitar Ticket');
+      AppMessage.i.showError(errorMessage);
       throw RepositoryException(message: 'Erro ao solicitar Ticket');
     }
   }

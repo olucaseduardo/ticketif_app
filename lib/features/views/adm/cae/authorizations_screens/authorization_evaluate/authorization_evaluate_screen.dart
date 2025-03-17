@@ -1,11 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
 import 'package:ticket_ifma/core/utils/loader.dart';
 import 'package:ticket_ifma/features/models/authorization.dart';
 import 'package:ticket_ifma/features/models/student_authorization.dart';
+import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
+import 'package:ticket_ifma/features/resources/routes/screen_arguments.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
@@ -45,7 +45,7 @@ class _AuthorizationEvaluateScreenState
     List<StudentAuthorization> allStudents =
         controller.studentsAuthorizationsList(widget.authorizations);
     final lengthTickets = allStudents.length;
-    List<String> selectedStudents = [];
+    List<List<String>> selectedStudents = [];
 
     bool continueSolicitation() {
       if (controller.selectedAuthorizations.isEmpty) {
@@ -58,7 +58,7 @@ class _AuthorizationEvaluateScreenState
 
     eraserStudents() {
       for (var element in controller.selectedAuthorizations) {
-        selectedStudents.add(element.matricula);
+        selectedStudents.add([element.matricula, element.meal]);
       }
     }
 
@@ -90,23 +90,21 @@ class _AuthorizationEvaluateScreenState
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Visibility(
-            visible: !controller.isLoading,
-            replacement: Loader.loader(),
-            child: Column(
-              children: [
-                TextField(
+        body: Visibility(
+          visible: !controller.isLoading,
+          replacement: Loader.loader(),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20,top: 20.0,right: 20.0),
+                child: TextField(
                   onChanged: (value) =>
                       controller.filterAuthorizations(value, allStudents),
-                  decoration: InputDecoration(
-                    fillColor: AppColors.gray[800],
+                  decoration: const InputDecoration(
                     filled: true,
                     hintText: "Busca",
-                    prefixIcon:
-                        const Icon(Icons.search, color: AppColors.green),
-                    border: const OutlineInputBorder(
+                    prefixIcon: Icon(Icons.search, color: AppColors.green),
+                    border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),
@@ -114,39 +112,56 @@ class _AuthorizationEvaluateScreenState
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Visibility(
-                  visible: controller.filteredAuthorizations.isNotEmpty,
-                  replacement: const WithoutResults(
-                      msg: 'Nenhuma solicitação encontrada'),
-                  child: Expanded(
-                    child: ListView.builder(
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Visibility(
+                visible: controller.filteredAuthorizations.isNotEmpty,
+                replacement:
+                    const WithoutResults(msg: 'Nenhuma solicitação encontrada'),
+                child: Expanded(
+                  child: ListView.builder(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 20),
                       itemCount: controller.filteredAuthorizations.length,
-                      itemBuilder: (context, index) => CommonTileTicket(
-                        title:
-                            controller.filteredAuthorizations[index].matricula,
-                        subtitle:
-                            "${controller.filteredAuthorizations[index].meal} - ${controller.filteredAuthorizations[index].days}",
-                        justification:
-                            controller.filteredAuthorizations[index].text,
-                        selected: controller.selectedAuthorizations.contains(
-                          controller.filteredAuthorizations[index],
-                        )
-                            ? true
-                            : false,
-                        function: () => controller.verifySelected(
-                          controller.filteredAuthorizations[index],
-                          lengthTickets,
-                        ),
-                        check: true,
-                      ),
-                    ),
-                  ),
+                      itemBuilder: (context, index) {
+                        return CommonTileTicket(
+                            title: controller
+                                .filteredAuthorizations[index].matricula,
+                            subtitle:
+                                "${controller.filteredAuthorizations[index].meal} - ${controller.filteredAuthorizations[index].getDays()}",
+                            justification:
+                                controller.filteredAuthorizations[index].text,
+                            selected:
+                                controller.selectedAuthorizations.contains(
+                              controller.filteredAuthorizations[index],
+                            )
+                                    ? true
+                                    : false,
+                            function: () => controller.verifySelected(
+                                  controller.filteredAuthorizations[index],
+                                  lengthTickets,
+                                ),
+                            check: true,
+                            next: () async {
+                              dynamic list = await Navigator.pushNamed(
+                                context,
+                                AppRouter.authorizationEvaluateStudentRoute,
+                                arguments: ScreenArguments(
+                                    title: controller
+                                        .filteredAuthorizations[index]
+                                        .matricula,
+                                    authorizationStudent: controller
+                                        .filteredAuthorizations[index]),
+                              );
+                              controller.updateAuthorizationsStudent(
+                                  list as List<int>, index);
+                            });
+                      }),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         bottomNavigationBar: Padding(
@@ -158,7 +173,7 @@ class _AuthorizationEvaluateScreenState
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   onPressed: () {
                     if (continueSolicitation()) {
-                      controller.changedAuthorizations(2);
+                      controller.changedAuthorizations(7);
                       eraserStudents();
                       AppMessage.i.showInfo('Tickets recusados com sucesso');
                       Navigator.pop(context, selectedStudents);
@@ -179,7 +194,8 @@ class _AuthorizationEvaluateScreenState
                     if (continueSolicitation()) {
                       controller.changedAuthorizations(4);
                       eraserStudents();
-                      AppMessage.i.showMessage('Tickets permanentes aprovados com sucesso');
+                      AppMessage.i.showMessage(
+                          'Tickets permanentes aprovados com sucesso');
                       Navigator.pop(context, selectedStudents);
                       return Future.value();
                     }

@@ -16,6 +16,7 @@ abstract class TicketsApiRepository {
   Future<void> changeConfirmTicket(int idTicket, int statusId);
   Future<void> changeStatusAuthorizationPermanents(
       List<int> permanentsId, int status);
+  Future<void> getPermanentTicketDaily(String registration);
   Future<void> deleteAllPermanents();
   Future<void> deleteAllTickets();
 }

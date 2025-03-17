@@ -37,12 +37,12 @@ class Loader {
     );
   }
 
-  static Widget refreshLoader() {
+  static Widget refreshLoader({double size = 40.0}) {
     return Center(
       child: LoadingAnimationWidget.twistingDots(
         leftDotColor: AppColors.green,
         rightDotColor: AppColors.red,
-        size: 40,
+        size: size,
       ),
     );
   }

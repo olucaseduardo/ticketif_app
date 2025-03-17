@@ -1,12 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ticket_ifma/core/exceptions/qr_code_exception.dart';
 import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
 import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/features/dto/qr_result.dart';
 import 'package:ticket_ifma/features/repositories/tickets/tickets_api_repository_impl.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 
 class QrController extends ChangeNotifier {
@@ -26,7 +27,7 @@ class QrController extends ChangeNotifier {
   void initPackages() {
     SharedPreferences.getInstance().then((value) {
       prefs = value;
-      
+
       String todayDate = DateUtil.getDateUSStr(DateTime.now());
       String lastValidationDate =
           prefs.getString('lastValidationDate') ?? todayDate;
@@ -65,9 +66,29 @@ class QrController extends ChangeNotifier {
 
     if (scanData.code != null) {
       ready = false;
-
-      qrResult = QrResult.fromJson(scanData.code!);
+      try {
+        qrResult = QrResult.fromJson(scanData.code!);
+      } on QrCodeException catch (e) {
+        log("QrCodeError: ",error: e.message);
+        result = "Ticket inválido, não pertencente ao sistema";
+        await delayBetweenReads();
+        return;
+      }
       bool checkDate = DateUtil.checkTodayDate(DateTime.parse(qrResult!.date));
+
+      bool checkMeal = _checkMealLimitTime(qrResult!.meal);
+
+      if (!checkMeal) {
+        if (qrResult!.meal == "Almoço") {
+          result = "Tickets para almoço não podem ser utilizados fora do horário da refeição";
+          await delayBetweenReads();
+          return;
+        } else if (qrResult!.meal == "Jantar") {
+          result = "Tickets para jantar não podem ser utilizados fora do horário da refeição";
+          await delayBetweenReads();
+          return;
+        }
+      }
 
       if (qrResult!.status == "Utilização autorizada" && checkDate) {
         handleValidQRCode();
@@ -76,6 +97,19 @@ class QrController extends ChangeNotifier {
       }
 
       await delayBetweenReads();
+    }
+  }
+
+  bool _checkMealLimitTime(String meal) {
+    DateTime now = DateTime.now();
+    int hour = now.hour;
+
+    if (meal == 'Almoço') {
+      return hour < 15;
+    } else if (meal == 'Jantar') {
+      return hour >= 15;
+    } else {
+      return false;
     }
   }
 
@@ -137,7 +171,7 @@ class QrController extends ChangeNotifier {
     try {
       result = "Atualizando lista de tickets validados...";
       isUploadTickets();
-      
+
       for (var element in validatedTickets) {
         await TicketsApiRepositoryImpl()
             .changeStatusTicket(int.parse(element), 5);
@@ -148,11 +182,11 @@ class QrController extends ChangeNotifier {
       prefs.setStringList('validatedTickets', validatedTickets);
       result = 'Sem dados no momento, escaneie um QR Code';
       totalValid = validatedTickets.length + uploadedTickets.length;
-      
+
       isUploadTickets();
     } catch (e, s) {
       log('Erro ao atualizar lista de validados', error: e, stackTrace: s);
-      isUploadTickets(); 
+      isUploadTickets();
       result = 'Erro ao atualizar tickets, tente novamente mais tarde.';
       notifyListeners();
       throw RepositoryException(message: 'Erro ao alterar status do ticket');

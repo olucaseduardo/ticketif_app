@@ -100,7 +100,7 @@ class _ClassesScreenState extends ConsumerState<AuthorizationClassesScreen> {
                                           controller.filteredClasses[index]]),
                             );
                             controller.updateClasses(
-                                list as List<String>, index);
+                                list as List<List<String>>, index);
                           }),
                     ),
                   ),

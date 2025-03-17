@@ -88,4 +88,23 @@ class Authorization {
     }
     return '';
   }
+
+  String dayFull() {
+    if (weekId == 1) {
+      return 'Segunda-Feira';
+    } else if (weekId == 2) {
+      return 'Terça-Feira';
+    } else if (weekId == 3) {
+      return 'Quarta-Feira';
+    } else if (weekId == 4) {
+      return 'Quinta-Feira';
+    } else if (weekId == 5) {
+      return 'Sexta-Feira';
+    } else if (weekId == 6) {
+      return 'Sábado';
+    } else if (weekId == 7) {
+      return 'Domingo';
+    }
+    return '';
+  }
 }

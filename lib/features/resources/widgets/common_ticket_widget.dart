@@ -7,6 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/core/utils/dialog.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
+import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
+import 'package:ticket_ifma/features/resources/routes/screen_arguments.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/core/utils/path_image.dart' as path_image;
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
@@ -239,7 +241,9 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
   } else if (idStatus == 4 && _checkTodayAction(ticket.useDayDate)) {
     return InkWell(
       onTap: () {
-        showQrCodeDialog(context, ticket);
+        Navigator.pushNamed(context, AppRouter.useTicketQrCodeScreen, arguments: ScreenArguments(
+          ticket: ticket
+        ));
       },
       child: Row(
         children: [

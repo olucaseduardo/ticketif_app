@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
 import 'package:ticket_ifma/core/utils/loader.dart';
@@ -17,6 +18,7 @@ class AuthCheck extends ConsumerStatefulWidget {
 class _AuthCheckState extends ConsumerState<AuthCheck> {
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     ref.read(authCheckProvider).verify();
     ref.read(authCheckProvider).isLoading = true;
     super.initState();

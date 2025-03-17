@@ -45,7 +45,7 @@ class CommonTileStudent extends StatelessWidget {
                           height: 2,
                         ),
                         Text(
-                          student!.matricula,
+                          student!.registration,
                           style: AppTextStyle.labelLarge.copyWith(
                             fontWeight: FontWeight.normal,
                           ),

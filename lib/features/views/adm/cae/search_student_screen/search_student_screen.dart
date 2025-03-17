@@ -83,7 +83,7 @@ class _SearchStudentScreenState extends ConsumerState<SearchStudentScreen> {
                           arguments: ScreenArguments(
                             cae: true,
                             idStudent: allStudents.elementAt(index).id,
-                            title: allStudents.elementAt(index).matricula,
+                            title: allStudents.elementAt(index).registration,
                           ),
                         ),
                       ),

@@ -6,9 +6,9 @@ class StudentAuthorization {
   final int idStudent;
   final String text;
   final List<int> ticketsIds;
+  final List<String> listDays;
   int mealId;
   String meal;
-  String days;
 
   StudentAuthorization({
     required this.ticketsIds,
@@ -17,12 +17,12 @@ class StudentAuthorization {
     required this.text,
     required this.mealId,
     required this.meal,
-    required this.days,
+    required this.listDays
   });
 
   @override
   String toString() {
-    return 'StudentAuthorization(matricula: $matricula, idStudent: $idStudent, justification: $text, meal_id: $mealId, meal: $meal, days: $days)';
+    return 'StudentAuthorization(matricula: $matricula, idStudent: $idStudent, justification: $text, meal_id: $mealId, meal: $meal, days: ${getDays()}, tickets_id:$ticketsIds)';
   }
 
   Map<String, dynamic> toMap() {
@@ -32,20 +32,23 @@ class StudentAuthorization {
       'text': text,
       'meal_id': mealId,
       'meal': meal,
-      'days': days,
     };
   }
 
   factory StudentAuthorization.fromMap(Map<String, dynamic> map) {
     return StudentAuthorization(
+      listDays: [],
       ticketsIds: [],
       matricula: map['matricula'] as String,
       idStudent: map['idStudent'] as int,
       text: map['text'] as String,
       mealId: map['meal_id'] as int,
       meal: map['meal'] as String,
-      days: map['days'] as String,
     );
+  }
+
+  String getDays() {
+    return "(${listDays.map((e) => e.substring(0,3)).join(", ")})";
   }
 
   String toJson() => json.encode(toMap());

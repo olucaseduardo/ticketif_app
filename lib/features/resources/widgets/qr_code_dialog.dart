@@ -57,5 +57,5 @@ Future<String?> showQrCodeDialog(BuildContext context, Ticket ticket) =>
       ),
     );
 
-QrImageView showQrCode(String data) =>
-    QrImageView(data: data, version: QrVersions.auto, size: 250);
+QrImageView showQrCode(String data, {double size = 250}) =>
+    QrImageView(data: data, version: QrVersions.auto, size: size);
