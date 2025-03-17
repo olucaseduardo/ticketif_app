@@ -8,6 +8,7 @@ class CommonTileTicket extends StatelessWidget {
   final String justification;
   final bool selected;
   final bool? check;
+  final VoidCallback? next;
 
   const CommonTileTicket({
     super.key,
@@ -17,6 +18,7 @@ class CommonTileTicket extends StatelessWidget {
     required this.justification,
     this.selected = true,
     this.check = false,
+    this.next
   });
 
   @override
@@ -53,12 +55,15 @@ class CommonTileTicket extends StatelessWidget {
                       const SizedBox(
                         height: 2,
                       ),
-                      Text(
-                        subtitle,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.black,
+                      SizedBox(
+                        width: 215,
+                        child: Text(
+                          subtitle,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            color: AppColors.black,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -75,14 +80,34 @@ class CommonTileTicket extends StatelessWidget {
                     ],
                   ),
                 ),
-                Visibility(
-                  visible: check == true,
-                  replacement: const SizedBox.shrink(),
-                  child: Icon(
-                    selected ? Icons.check_box : Icons.check_box_outline_blank,
-                    color: AppColors.green,
-                    size: 32,
-                  ),
+                Row(
+                  children: [
+                    Visibility(
+                      visible: check == true,
+                      replacement: const SizedBox.shrink(),
+                      child: Icon(
+                        selected ? Icons.check_box : Icons.check_box_outline_blank,
+                        color: AppColors.green,
+                        size: 32,
+                      ),
+                    ),
+                    Visibility(
+                      visible: next != null,
+                      replacement: const SizedBox.shrink(),
+                      child: InkWell(
+                        onTap: next,
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          height:75,
+                          width: 40,
+                          child: const Icon(Icons.arrow_forward_ios_rounded,
+                            color: AppColors.black,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),

@@ -1,12 +1,22 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:ticket_ifma/core/utils/links.dart';
+import 'package:ticket_ifma/features/models/class.dart';
 import 'package:ticket_ifma/features/repositories/cae/cae_repository_impl.dart';
 
 class AddNewClassController extends ChangeNotifier {
   bool isLoading = false;
   bool error = false;
+  List<Class> classes = [];
   String? selectedCourse;
+  Map<String, String> coursesMap = {
+    'adm': 'Administração',
+    'agroind': 'Agroindústria',
+    'agropec': 'Agropecuária',
+    'com': 'Comércio',
+    'info': 'Informática'
+ };
   List<Map<String, String>> courses = [
     {'Administração': 'adm'},
     {'Agroindústria': 'agroind'},
@@ -17,8 +27,17 @@ class AddNewClassController extends ChangeNotifier {
 
   void loading() {
     isLoading = !isLoading;
-    log(isLoading.toString());
     notifyListeners();
+  }
+
+  Future<void> loadData() async {
+    try {
+      await findAllClasses();
+    } catch (e,s) {
+      log('Erro ao iniciar tela de novas turmas', error: e, stackTrace: s);
+      error = true;
+    }
+    // loading();
   }
 
   Map<String, String> _convertMap() {
@@ -43,6 +62,23 @@ class AddNewClassController extends ChangeNotifier {
       loading();
     } catch (e, s) {
       log('Erro ao inserir nova turma', error: e, stackTrace: s);
+      loading();
+      error = true;
+      notifyListeners();
+    }
+  }
+
+  Future<void> findAllClasses() async {
+    try {
+      isLoading = true;
+      error = false;
+      notifyListeners();
+      classes.clear();
+      classes = await CaeRepositoryImpl().findAllClass();
+
+      loading();
+    } catch (e, s) {
+      log('Erro ao buscar as turmas', error: e, stackTrace: s);
       loading();
       error = true;
       notifyListeners();

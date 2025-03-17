@@ -23,6 +23,7 @@ class CommonButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ElevatedButton(
+        
         onPressed: function,
         style: style ??
             ElevatedButton.styleFrom(

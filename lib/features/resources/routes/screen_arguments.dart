@@ -1,5 +1,7 @@
 import 'package:ticket_ifma/features/models/authorization.dart';
 import 'package:ticket_ifma/features/models/permanent_model.dart';
+import 'package:ticket_ifma/features/models/photo_request_model.dart';
+import 'package:ticket_ifma/features/models/student_authorization.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 
 class ScreenArguments {
@@ -14,8 +16,12 @@ class ScreenArguments {
   final bool? isPermanent;
   final bool? orderDinner;
   final bool? orderLunch;
+  final Ticket? ticket;
+  final List<PhotoRequestModel>? photoRequests;
+  final StudentAuthorization? authorizationStudent;
 
   ScreenArguments({
+    this.ticket,
     this.title,
     this.tickets,
     this.permanents,
@@ -27,5 +33,7 @@ class ScreenArguments {
     this.authorizations,
     this.orderDinner,
     this.orderLunch,
+    this.photoRequests,
+    this.authorizationStudent
   });
 }

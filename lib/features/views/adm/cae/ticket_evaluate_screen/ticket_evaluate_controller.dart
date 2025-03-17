@@ -27,7 +27,6 @@ class TicketEvaluateController extends ChangeNotifier {
 
   void loading() {
     isLoading = !isLoading;
-    log(isLoading.toString());
     notifyListeners();
   }
 
@@ -58,8 +57,6 @@ class TicketEvaluateController extends ChangeNotifier {
     if (selectAll) {
       selectedTickets.addAll(tickets);
     }
-
-    log(selectedTickets.toString());
     notifyListeners();
   }
 
@@ -109,7 +106,6 @@ class TicketEvaluateController extends ChangeNotifier {
     notifyListeners();
 
     if (status == 4) {
-      log('sel ${selectedTickets.toString()}');
       for (var element in selectedTickets) {
         changeTicketCAE(element.id, status);
       }

@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:ticket_ifma/core/exceptions/qr_code_exception.dart';
+import 'package:ticket_ifma/core/utils/encrypt_util.dart';
+
 class QrResult {
   final int id;
   final String student;
@@ -8,7 +11,7 @@ class QrResult {
   final String date;
   final String dateStr;
   final String meal;
-  
+
   QrResult({
     required this.id,
     required this.student,
@@ -45,9 +48,14 @@ class QrResult {
 
   String toJson() => json.encode(toMap());
 
-  factory QrResult.fromJson(String source) => QrResult.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  
+  factory QrResult.fromJson(String source) {
+    try {
+      final data = EncryptUtil().decrypt(source);
+      return QrResult.fromMap(json.decode(data) as Map<String, dynamic>);
+    } catch (e) {
+      throw QrCodeException(message: "Erro ao obter dados do ticket");
+    }
+  }
 
   @override
   String toString() {

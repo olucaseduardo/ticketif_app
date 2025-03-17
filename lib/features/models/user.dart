@@ -3,13 +3,13 @@ import 'dart:convert';
 class User {
   final int id;
   final String name;
-  final String matricula;
+  final String registration;
   final String type;
 
   User({
     required this.id,
     required this.name,
-    required this.matricula,
+    required this.registration,
     required this.type,
   });
 
@@ -40,7 +40,7 @@ class User {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'matricula': matricula,
+      'registration': registration,
       'type': type,
     };
   }
@@ -49,7 +49,7 @@ class User {
     return User(
       id: map['id'] ?? 0,
       name: map['name'] ?? '',
-      matricula: map['matricula'] ?? '',
+      registration: map['registration'] ?? '',
       type: map['type'] ?? '',
     );
   }

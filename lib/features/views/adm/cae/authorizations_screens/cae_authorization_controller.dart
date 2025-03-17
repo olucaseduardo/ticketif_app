@@ -2,31 +2,38 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:ticket_ifma/features/models/student_authorization.dart';
 import 'package:ticket_ifma/features/models/authorization.dart';
+import 'package:ticket_ifma/features/models/student_authorization.dart';
 import 'package:ticket_ifma/features/models/user.dart';
 import 'package:ticket_ifma/features/repositories/tickets/tickets_api_repository_impl.dart';
 
 class CaeAuthorizationController extends ChangeNotifier {
   List<Authorization>? authorizations = [];
+
   /* Listas de filtros das searchs */
   List<StudentAuthorization> filteredAuthorizations = [];
   List<String> filteredClasses = [];
   List<User> filteredStudents = [];
+
   /* Maps para armazenamento das turmas */
   Map<String, Map<String, List<Authorization>>> authorizationClasses = {};
   Map<String, Map<String, List<Authorization>>> sortedAuthorizationClasses = {};
+
   /* Variáveis responsáveis pela seleção na tela evaluate */
   bool selectAll = true;
+  bool selectAllStudent = true;
   List<StudentAuthorization> selectedAuthorizations = [];
+
   /* Lista de estudantes */
   List<User> listStudents = [];
   bool isLoading = true;
   bool error = false;
 
+  /* Lista de Tickets Selecionados Do Estudante */
+  List<int> selectedAuthorizationsStudent = [];
+
   void loading() {
     isLoading = !isLoading;
-    // log(isLoading.toString());
     notifyListeners();
   }
 
@@ -37,11 +44,10 @@ class CaeAuthorizationController extends ChangeNotifier {
 
       isLoading = true;
 
-      final tickets = await TicketsApiRepositoryImpl().findAllNotAuthorized();
+      final tickets =
+          await TicketsApiRepositoryImpl().findAllInAnalisePermanents();
 
       authorizations = tickets;
-
-      log("Load Authorizations :: ${authorizations!.length.toString()}");
 
       _processAuthorizations();
 
@@ -53,8 +59,26 @@ class CaeAuthorizationController extends ChangeNotifier {
 
   Future<void> changedAuthorizations(int status) async {
     try {
-      await TicketsApiRepositoryImpl()
-          .changeStatusAuthorization(selectedAuthorizations, status);
+      for (var element in selectedAuthorizations) {
+        await TicketsApiRepositoryImpl()
+            .changeStatusAuthorizationPermanents(element.ticketsIds, status);
+      }
+    } on DioError catch (e, s) {
+      log('Erro ao atualizar autorização permanente', error: e, stackTrace: s);
+
+      error = true;
+      notifyListeners();
+    } catch (e, s) {
+      error = true;
+      notifyListeners();
+      log('Erro ao atualizar autorização', error: e, stackTrace: s);
+    }
+  }
+
+  Future<void> changedAuthorizationStudent(int status) async {
+    try {
+      await TicketsApiRepositoryImpl().changeStatusAuthorizationPermanents(
+          selectedAuthorizationsStudent, status);
     } on DioError catch (e, s) {
       log('Erro ao atualizar autorização permanente', error: e, stackTrace: s);
 
@@ -80,10 +104,6 @@ class CaeAuthorizationController extends ChangeNotifier {
 
   ///função de processamento de dados
   _processAuthorizations() {
-    authorizations?.forEach(
-      (element) => log(element.toString()),
-    );
-
     String authorizationClassName = '';
     String studentName = '';
 
@@ -114,7 +134,6 @@ class CaeAuthorizationController extends ChangeNotifier {
         authorizationClasses.entries.toList()
           ..sort((element1, element2) => element1.key.compareTo(element2.key)));
     filteredClasses.addAll(sortedAuthorizationClasses.keys.toList());
-    log("AuthorizationsClasses :: ${sortedAuthorizationClasses.toString()}");
   }
 
   ///Função de error
@@ -158,7 +177,17 @@ class CaeAuthorizationController extends ChangeNotifier {
       selectedAuthorizations.addAll(students);
     }
 
-    log(selectedAuthorizations.toString());
+    notifyListeners();
+  }
+
+  void isSelectedAuthorizationStudent(List<int> ticketsId) {
+    selectedAuthorizationsStudent.clear();
+    selectAllStudent = !selectAllStudent;
+
+    if (selectAllStudent) {
+      selectedAuthorizationsStudent.addAll(ticketsId);
+    }
+
     notifyListeners();
   }
 
@@ -171,7 +200,6 @@ class CaeAuthorizationController extends ChangeNotifier {
       List<StudentAuthorization> tmpList = [];
       for (var item in students) {
         if (item.matricula.contains(query.toUpperCase())) {
-          log(query);
           tmpList.add(item);
         }
       }
@@ -190,7 +218,9 @@ class CaeAuthorizationController extends ChangeNotifier {
       StudentAuthorization filteredAuthorizations, int allTicketsLength) {
     if (selectedAuthorizations.contains(filteredAuthorizations)) {
       selectedAuthorizations.removeWhere(
-        (ts) => ts.matricula == filteredAuthorizations.matricula,
+        (ts) =>
+            ts.matricula == filteredAuthorizations.matricula &&
+            ts.mealId == filteredAuthorizations.mealId,
       );
     } else {
       selectedAuthorizations.add(filteredAuthorizations);
@@ -205,41 +235,92 @@ class CaeAuthorizationController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Atualização de listas de autorizações pós mudança de status
-  void updateClasses(List<String> list, int index) {
-    // sortedAuthorizationClasses.values.elementAt(index).clear();
-
-    log("sortedDailyClasses :: ${sortedAuthorizationClasses.toString()}");
-
-    if (list.isNotEmpty && !error) {
-      for (String student in list) {
-        bool hasKey = sortedAuthorizationClasses.values
-            .elementAt(index)
-            .containsKey(student);
-        if (hasKey) {
-          sortedAuthorizationClasses.values.elementAt(index).remove(student);
-          filteredAuthorizations
-              .removeWhere((element) => element.matricula == student);
-        }
-        log("RemoveClasses :: ${sortedAuthorizationClasses.toString()}");
-        // sortedAuthorizationClasses[index]![student.matricula];
-      }
+  void verifySelectedAuthorizationStudent(int id, int allTicketsLength) {
+    if (selectedAuthorizationsStudent.contains(id)) {
+      selectedAuthorizationsStudent.removeWhere(
+        (selectedId) => selectedId == id,
+      );
+    } else {
+      selectedAuthorizationsStudent.add(id);
     }
-    log("sortedAuthorizationClasses :: ${sortedAuthorizationClasses.toString()}");
+    if (allTicketsLength == selectedAuthorizationsStudent.length) {
+      selectAllStudent = true;
+    } else {
+      selectAllStudent = false;
+    }
+
     notifyListeners();
   }
 
-  /// Concatena dias
-  String getDays(List<Authorization> list) {
-    String days = '(';
-    for (int i = 0; i < list.length; i++) {
-      if (i == 0) {
-        days = '$days${list[0].day()}';
-      } else {
-        days = '$days, ${list[i].day()}';
+  /// Atualização de listas de autorizações pós mudança de status
+  void updateClasses(List<List<String>> list, int index) {
+    // sortedAuthorizationClasses.values.elementAt(index).clear();
+    final registration = list[0][0];
+    final classStudent = registration.substring(0, registration.length - 4);
+    if (list.isNotEmpty && !error) {
+      for (List<String> student in list) {
+        bool hasKey = sortedAuthorizationClasses.values
+            .elementAt(index)
+            .containsKey(student[0]);
+        if (hasKey) {
+          sortedAuthorizationClasses.values
+              .elementAt(index)[student[0]]!
+              .removeWhere((element) =>
+                  element.student == student[0] && element.meal == student[1]);
+          filteredAuthorizations.removeWhere((element) =>
+              element.matricula == student[0] && element.meal == student[1]);
+        }
+        if (sortedAuthorizationClasses.values
+            .elementAt(index)[student[0]]!
+            .isEmpty) {
+          sortedAuthorizationClasses.values.elementAt(index).remove(student[0]);
+        }
+      }
+      if (authorizationClasses[classStudent] != null &&
+          authorizationClasses[classStudent]!.isEmpty) {
+        filteredClasses.remove(classStudent);
       }
     }
-    return '$days)';
+    notifyListeners();
+  }
+
+  void updateAuthorizationsStudent(List<int> list, int index) {
+    if (list.isNotEmpty && !error) {
+      final authorizationStudent = filteredAuthorizations[index];
+      final classStudent = authorizationStudent.matricula
+          .substring(0, authorizationStudent.matricula.length - 4);
+      for (int ticketId in list) {
+        bool hasId =
+            filteredAuthorizations[index].ticketsIds.contains(ticketId);
+        if (hasId) {
+          int indexId =
+              filteredAuthorizations[index].ticketsIds.indexOf(ticketId);
+          filteredAuthorizations[index].ticketsIds.remove(ticketId);
+          filteredAuthorizations[index].listDays.removeAt(indexId);
+          authorizationClasses[classStudent]?[authorizationStudent.matricula]
+              ?.removeWhere((e) => e.id == ticketId);
+        }
+      }
+      if (filteredAuthorizations[index].ticketsIds.isEmpty) {
+        filteredAuthorizations.removeAt(index);
+      }
+      if (authorizationClasses[classStudent]?[authorizationStudent.matricula] !=
+              null &&
+          authorizationClasses[classStudent]![authorizationStudent.matricula]!
+              .isEmpty) {
+        authorizationClasses[classStudent]!
+            .remove(authorizationStudent.matricula);
+      }
+      if (authorizationClasses[classStudent] != null &&
+          authorizationClasses[classStudent]!.isEmpty) {
+        filteredClasses.remove(classStudent);
+      }
+    }
+    notifyListeners();
+  }
+
+  void clearAuthorizationsStudent() {
+    selectedAuthorizationsStudent.clear();
   }
 
   /// Atualiza as listas
@@ -264,12 +345,14 @@ class CaeAuthorizationController extends ChangeNotifier {
 
       meals.forEach((meal, mealAuths) {
         StudentAuthorization studentAuthorization = StudentAuthorization(
-            matricula: matricula,
-            idStudent: student[0].studentId,
-            text: student[0].justification,
-            meal_id: mealAuths[0].mealId,
-            meal: meal,
-            days: getDays(mealAuths));
+          listDays: mealAuths.map((e) => e.dayFull()).toList(),
+          ticketsIds: mealAuths.map((e) => e.id).toList(),
+          matricula: matricula,
+          idStudent: student[0].studentId,
+          text: student[0].justification,
+          mealId: mealAuths[0].mealId,
+          meal: meal,
+        );
 
         filteredAuthorizations.add(studentAuthorization);
         selectedAuthorizations.add(studentAuthorization);
@@ -300,12 +383,14 @@ class CaeAuthorizationController extends ChangeNotifier {
 
       meals.forEach((meal, mealAuths) {
         StudentAuthorization studentAuthorization = StudentAuthorization(
-            matricula: matricula,
-            idStudent: student[0].studentId,
-            text: student[0].justification,
-            meal_id: mealAuths[0].mealId,
-            meal: meal,
-            days: getDays(mealAuths));
+          listDays: mealAuths.map((e) => e.day()).toList(),
+          ticketsIds: student.map((e) => e.id).toList(),
+          matricula: matricula,
+          idStudent: student[0].studentId,
+          text: student[0].justification,
+          mealId: mealAuths[0].mealId,
+          meal: meal,
+        );
 
         list.add(studentAuthorization);
       });

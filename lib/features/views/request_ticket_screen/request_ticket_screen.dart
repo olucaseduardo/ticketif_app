@@ -87,7 +87,7 @@ class RequestTicket extends ConsumerWidget {
                               onChanged: (value) =>
                                   controller.onMealsChanged(value)),
                           const Padding(
-                            padding: EdgeInsets.only(top: 12),
+                            padding: EdgeInsets.only(top: 12,bottom:10),
                             child: Text(
                               'Validade',
                               style: AppTextStyle.titleSmall,
@@ -193,9 +193,6 @@ class RequestTicket extends ConsumerWidget {
                     child: CommonButton(
                       label: 'Enviar solicitação',
                       function: () {
-                        // if (orderDinner) {
-
-                        // }
                         controller.onTapSendRequest(
                           caeRequest ?? false,
                           orderLunch ?? true,

@@ -51,12 +51,12 @@ class Authorization {
       mealId: map['meal_id'] as int,
       weekId: map['week_id'] as int,
       justificationId: map['justification_id'] as int,
-      authorized: map['authorized'] as int,
-      student: map['student'] as String,
+      authorized: map['status_id'] as int,
+      student: map['student_registration'] as String,
       studentName: map['student_name'] as String,
       justification: map['justification_description'] as String,
       meal: map['meal_description'] as String,
-      type: map['type'] as String,
+      type: map['student_type'] as String,
     );
   }
 
@@ -85,6 +85,25 @@ class Authorization {
       return 'Sab';
     } else if (weekId == 7) {
       return 'Dom';
+    }
+    return '';
+  }
+
+  String dayFull() {
+    if (weekId == 1) {
+      return 'Segunda-Feira';
+    } else if (weekId == 2) {
+      return 'Terça-Feira';
+    } else if (weekId == 3) {
+      return 'Quarta-Feira';
+    } else if (weekId == 4) {
+      return 'Quinta-Feira';
+    } else if (weekId == 5) {
+      return 'Sexta-Feira';
+    } else if (weekId == 6) {
+      return 'Sábado';
+    } else if (weekId == 7) {
+      return 'Domingo';
     }
     return '';
   }

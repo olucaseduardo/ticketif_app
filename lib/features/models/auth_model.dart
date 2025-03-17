@@ -21,9 +21,9 @@ class AuthModel {
 
   factory AuthModel.fromMap(Map<String, dynamic> map) {
     return AuthModel(
-      matricula: map['matricula'] ?? '', 
-      user: map['user'] ?? '',
-      loginTypeId: map['login_type_id'] ?? 0,
+      matricula: map['registration'] ?? '',
+      user: map['username'] ?? '',
+      loginTypeId: map['admin_type_id'] ?? 0,
     );
   }
 

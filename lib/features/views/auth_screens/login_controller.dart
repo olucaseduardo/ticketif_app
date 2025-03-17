@@ -30,7 +30,6 @@ class LoginController extends ChangeNotifier {
 
   void loading() {
     isLoading = !isLoading;
-    log(isLoading.toString());
     notifyListeners();
   }
 
@@ -38,15 +37,11 @@ class LoginController extends ChangeNotifier {
     error = false;
     notifyListeners();
     try {
-      log(matricula);
-
       final authModel =
           await AuthApiRepositoryImpl().login(matricula, password);
 
       final sp = await SharedPreferences.getInstance();
       sp.setString('matricula', authModel.matricula);
-
-      log('Sucesso');
       campusSelect = "";
       loading();
     } on UnauthorizedException catch (e, s) {
@@ -69,28 +64,25 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      log(username);
-
       final authModel =
           await AuthApiRepositoryImpl().loginADM(username, password);
 
       final sp = await SharedPreferences.getInstance();
-      sp.setString('username', authModel.user);
+      sp.setInt('admin_type_id', authModel.loginTypeId);
 
-      log('Sucesso');
       campusSelect = "";
       loading();
-    } on UnauthorizedException catch (e, s) {
+    } on UnauthorizedException catch (e) {
       error = true;
       campusSelect = "";
       notifyListeners();
       loading();
-      log('Login ou senha inválidos', error: e, stackTrace: s);
-    } catch (e, s) {
+      log('Login ou senha inválidos', error: e);
+    } catch (e) {
       error = true;
       campusSelect = "";
       notifyListeners();
-      log('Erro ao realizar login', error: e, stackTrace: s);
+      log('Erro ao realizar login', error: e);
       loading();
     }
   }

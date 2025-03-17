@@ -2,25 +2,17 @@ import 'dart:convert';
 
 class RequestPermanent {
   final int studentId;
-  final int weekId;
+  final List<int> weekId;
   final int mealId;
   final int justificationId;
-  final String text;
-  final String useDay;
-  final String useDayDate;
-  final int authorized;
-  final int statusId;
+  final String description;
 
   RequestPermanent({
     required this.studentId,
     required this.weekId,
     required this.mealId,
     required this.justificationId,
-    required this.text,
-    required this.useDay,
-    required this.useDayDate,
-    required this.authorized,
-    required this.statusId,
+    required this.description,
   });
 
   Map<String, dynamic> toMap() {
@@ -29,11 +21,7 @@ class RequestPermanent {
       'week_id': weekId,
       'meal_id': mealId,
       'justification_id': justificationId,
-      'text': text,
-      'use_day': useDay,
-      'use_day_date': useDayDate,
-      'authorized': authorized,
-      'status_id': statusId,
+      'description': description,
     };
   }
 
@@ -43,11 +31,7 @@ class RequestPermanent {
       weekId: map['week_id'] ?? "",
       mealId: map['meal_id'] ?? "",
       justificationId: map['justification_id'] ?? 0,
-      text: map['text'] ?? "",
-      useDay: map['use_day'] ?? "",
-      useDayDate: map['use_day_date'] ?? "",
-      authorized: map['authorized'] ?? 0,
-      statusId: map['status_id'] ?? 0,
+      description: map['description'] ?? "",
     );
   }
 
@@ -58,6 +42,6 @@ class RequestPermanent {
 
   @override
   String toString() {
-    return 'RequestPermanent(studentId: $studentId, weekId: $weekId, mealId: $mealId, justificationId: $justificationId, text: $text, useDay: $useDay, useDayDate: $useDayDate, authorized: $authorized)';
+    return 'RequestPermanent(studentId: $studentId, weekId: $weekId, mealId: $mealId, justificationId: $justificationId, description: $description)';
   }
 }

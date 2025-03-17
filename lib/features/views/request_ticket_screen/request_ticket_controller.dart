@@ -19,6 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RequestTicketController extends ChangeNotifier {
   bool isPermanent = false;
   bool error = false;
+  String errorMessage = "Erro interno, contate o desenvolvedor do sistema";
   TablesModel? meal;
   TablesModel? justification;
   TextEditingController justificationController = TextEditingController();
@@ -98,26 +99,23 @@ class RequestTicketController extends ChangeNotifier {
     bool isCaeRequest,
   ) async {
     try {
-      await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
+      final ticketId = await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
         studentId: id,
-        weekId: weekId,
         mealId: meal!.id,
-        statusId: isCaeRequest ? 4 : 1,
         justificationId: justification!.id,
-        isPermanent: 0,
-        solicitationDay: DateTime.now().toString(),
-        useDay: useDay,
-        useDayDate: useDayDate,
-        paymentDay: '',
-        isCae: isCaeRequest ? 1 : 0,
-        text: justificationController.text,
+        description: justificationController.text,
       ));
-    } on DioError catch (e, s) {
-      log('Erro ao solicitar Ticket', error: e, stackTrace: s);
 
+      if (isCaeRequest) {
+        await TicketsApiRepositoryImpl().changeConfirmTicket(ticketId, 4);
+      }
+    } on RepositoryException catch (e, s) {
+      log('Erro ao solicitar o ticket', error: e.message, stackTrace: s);
+      errorMessage = e.message;
       error = true;
       notifyListeners();
     } catch (e, s) {
+      errorMessage = "Erro ao solicitar o ticket";
       error = true;
       notifyListeners();
       log('Erro ao solicitar Ticket', error: e, stackTrace: s);
@@ -131,26 +129,21 @@ class RequestTicketController extends ChangeNotifier {
     List<DaysTicketDto> days,
   ) async {
     try {
-      List<RequestPermanent> permanents = [];
-      for (var day in days) {
-        permanents.add(RequestPermanent(
-          studentId: id,
-          weekId: day.id,
-          mealId: meal?.id ?? 0,
-          justificationId: justification?.id ?? 0,
-          text: justificationController.text,
-          useDay: day.description,
-          useDayDate:
-              day.id == DateTime.now().weekday ? DateTime.now().toString() : "",
-          authorized: isCae ? 1 : 0,
-          statusId: isCae ? 2 : 1,
-        ));
-      }
+      RequestPermanent permanents = RequestPermanent(
+        studentId: id,
+        weekId: days.map((e) => e.id).toList(),
+        mealId: meal!.id,
+        justificationId: justification!.id,
+        description: justificationController.text,
+      );
+      final permanentsIds = await TicketsApiRepositoryImpl().requestPermanent(permanents);
 
-      await TicketsApiRepositoryImpl().requestPermanent(permanents);
+      if (isCae) {
+        await TicketsApiRepositoryImpl().changeStatusAuthorizationPermanents(permanentsIds, 4);
+      }
     } on DioError catch (e, s) {
       log('Erro ao solicitar autorização permanente', error: e, stackTrace: s);
-
+      errorMessage = "Erro ao solicitar autorização permanente";
       error = true;
       notifyListeners();
     } catch (e, s) {
@@ -215,14 +208,14 @@ class RequestTicketController extends ChangeNotifier {
       }
 
       if (!error) {
-        AppMessage.i.showMessage('Requisição enviada com sucesso');
+        AppMessage.i.showMessage('Ticket solicitado com sucesso');
         !isCae ? SpecialNavigation.i.isNotCae() : SpecialNavigation.i.isCae();
       } else {
-        AppMessage.i.showError('Erro ao solicitar Ticket');
+        AppMessage.i.showError(errorMessage);
       }
     } on DioError catch (e, s) {
       log('Erro ao solicitar Ticket', error: e, stackTrace: s);
-      AppMessage.i.showError('Erro ao solicitar Ticket');
+      AppMessage.i.showError(errorMessage);
       throw RepositoryException(message: 'Erro ao solicitar Ticket');
     }
   }

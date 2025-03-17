@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:ticket_ifma/core/utils/encrypt_util.dart';
 import 'package:ticket_ifma/core/utils/path_image.dart' as path_image;
 
 class Ticket {
@@ -41,17 +43,19 @@ class Ticket {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'id_student': idStudent,
-      'use_day': useDay,
-      'use_day_date': useDayDate,
-      'student': student,
+      'student_id': idStudent,
+      'status_id': idStatus,
+      'meal_id': idMeal,
+      'week_description': useDay,
+      'created_at': useDayDate,
+      'student_registration': student,
       'student_name': studentName,
-      'type': type,
+      'student_type': type,
       'meal_description': meal,
       'status_description': status,
       'justification_description': justification,
-      'text': text,
-      'is_permanent': isPermanent,
+      'description': text,
+      'permanent_id': isPermanent,
       'solicitation_day': solicitationDay
     };
   }
@@ -62,17 +66,17 @@ class Ticket {
       map['student_id'] ?? 0,
       map['status_id'] ?? 0,
       map['meal_id'] ?? 0,
-      map['use_day_date'] ?? '',
-      map['use_day'] ?? '',
-      map['student'] ?? '',
+      map['created_at'] ?? '',
+      map['week_description'] ?? '',
+      map['student_registration'] ?? '',
       map['student_name'] ?? '',
-      map['type'] ?? '',
+      map['student_type'] ?? '',
       map['meal_description'] ?? '',
       map['status_description'] ?? '',
       map['justification_description'] ?? '',
-      map['text'] ?? '',
-      map['is_permanent'] ?? 0,
-      map['solicitation_day'] ?? '',
+      map['description'] ?? '',
+      map['permanent_id'] ?? 0,
+      '',
     );
   }
 
@@ -111,7 +115,9 @@ class Ticket {
       'date_str': useDay,
       'meal': meal
     };
-    return jsonEncode(data);
+    var jsonData = jsonEncode(data);
+    final encrypted = EncryptUtil().encrypt(jsonData);
+    return encrypted;
   }
 
   @override

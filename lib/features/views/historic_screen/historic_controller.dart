@@ -28,8 +28,6 @@ class HistoricController extends ChangeNotifier {
         status[key] = data.elementAt(index).status;
       }
     }
-
-    log('Status ${status.toString()}');
   }
 
   List<Ticket> getHistoricTickets(DateTime? date) {
@@ -131,7 +129,7 @@ class HistoricController extends ChangeNotifier {
       isLoading = true;
       error = false;
 
-      await TicketsApiRepositoryImpl().changeConfirmTicket(idTicket, 4, idMeal);
+      await TicketsApiRepositoryImpl().changeConfirmTicket(idTicket, 4);
       var ticketSelected = tickets.where((t) => t.id == idTicket).first;
       int indiceTicket = tickets.indexWhere((t) => t.id == idTicket);
 

@@ -86,6 +86,13 @@ class _QrScreenState extends ConsumerState<QrScreen> {
             Expanded(
               flex: 5,
               child: QRView(
+                overlay: QrScannerOverlayShape(
+                  borderLength: 40,
+                  borderWidth: 10,
+                  borderRadius: 15,
+                  borderColor: AppColors.green
+                ),
+
                 key: controller.qrKey,
                 onQRViewCreated: controller.onQRViewCreated,
               ),
