@@ -46,58 +46,71 @@ class _AddNewClassScreenState extends ConsumerState<AddNewClassScreen> {
           replacement: Loader.loader(),
           child: SafeArea(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Turmas Cadastradas (Ensino Médio)", style: AppTextStyle.titleSmall),
-                  const SizedBox(height: 10,),
-                  const Divider(height: 0,),
-                  const SizedBox(height: 10,),
+                  const Text("Turmas Cadastradas (Ensino Médio)",
+                      style: AppTextStyle.titleSmall),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Divider(
+                    height: 0,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Expanded(
-                    child: !controller.classes.isNotEmpty ?
-                    const
-                    Center(child: Text("Ainda não há turmas cadastradas"))
+                    child: !controller.classes.isNotEmpty
+                        ? const Center(
+                            child: Text("Ainda não há turmas cadastradas"))
                         : ListView.builder(
-                      itemCount: controller.classes.length,
-                      itemBuilder: (_, index) {
-                        final classe = controller.classes.elementAt(index);
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.grey[300]!, width: 1), // Borda sutil
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 4,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 10), // Melhor espaçamento
-                          margin: const EdgeInsets.all(4), // Margem levemente maior
-                          height: 45,
-                          width: 120,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${classe.registration} - ${controller.coursesMap[classe.course].toString().toUpperCase()}",
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
+                            itemCount: controller.classes.length,
+                            itemBuilder: (_, index) {
+                              final classe =
+                                  controller.classes.elementAt(index);
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                      color: Colors.grey[300]!,
+                                      width: 1), // Borda sutil
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.black.withValues(alpha: .05),
+                                      blurRadius: 4,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
-                                overflow: TextOverflow.ellipsis, // Evita cortes abruptos
-                                maxLines: 1,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10), // Melhor espaçamento
+                                margin: const EdgeInsets.all(
+                                    4), // Margem levemente maior
+                                height: 45,
+                                width: 120,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${classe.registration} - ${controller.coursesMap[classe.course].toString().toUpperCase()}",
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                      overflow: TextOverflow
+                                          .ellipsis, // Evita cortes abruptos
+                                      maxLines: 1,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
                   ),
                   Form(
                     key: formKey,
@@ -126,8 +139,7 @@ class _AddNewClassScreenState extends ConsumerState<AddNewClassScreen> {
                           items: controller.courses
                               .map((e) => e.keys.first)
                               .toList(),
-                          onChanged: (value) =>
-                              controller.selectCourse(value),
+                          onChanged: (value) => controller.selectCourse(value),
                         ),
                         const SizedBox(height: 20),
                         CommonButton(
@@ -152,7 +164,8 @@ class _AddNewClassScreenState extends ConsumerState<AddNewClassScreen> {
                               } else {
                                 Loader.i.hideDialog();
                                 AppMessage.i
-                                    .showError("Erro ao inserir uma nova turma");
+                                    .showError(
+                                    "Erro ao inserir uma nova turma");
                               }
                             }
                           },

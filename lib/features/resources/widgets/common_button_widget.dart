@@ -12,14 +12,14 @@ class CommonButton extends StatelessWidget {
   final TextStyle? textStyle;
   final ButtonStyle? style;
   const CommonButton({
-    Key? key,
+    super.key,
     required this.label,
     this.size = ButtonSize.medium,
     this.textPadding,
     this.textStyle,
     this.style,
     this.function,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) => ElevatedButton(

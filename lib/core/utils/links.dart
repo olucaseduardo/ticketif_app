@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +7,7 @@ class Links extends ChangeNotifier {
   final Map<String, String> _campusLinks = {
     "Caxias": 'https://ticket-caxias.ifma.edu.br/v1',
     // "Caxias": 'http://192.168.10.68:8000/v1',
-    "Timon": 'https://0c3f-45-231-15-191.ngrok-free.app',
+    "Timon": 'https://timon.ifma.edu.br/sistemas/ticket-api',
   };
 
   late String _campusLink;

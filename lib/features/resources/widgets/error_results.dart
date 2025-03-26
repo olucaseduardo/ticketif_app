@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 
 class ErrorResults extends StatelessWidget {
@@ -31,10 +30,12 @@ class ErrorResults extends StatelessWidget {
             msgError,
             style: AppTextStyle.normalText,
           ),
-          const SizedBox(height: 20,),
-          login != null ?
-          ElevatedButton(
-              onPressed: login, child: const Text("Voltar para o Login"))
+          const SizedBox(
+            height: 20,
+          ),
+          login != null
+              ? ElevatedButton(
+                  onPressed: login, child: const Text("Voltar para o Login"))
               : const SizedBox(),
           reload != null
               ? ElevatedButton(

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dio/native_imp.dart';
+import 'package:dio/io.dart';
 import 'package:ticket_ifma/core/utils/links.dart';
 
 class DioClient extends DioForNative {
@@ -7,8 +7,8 @@ class DioClient extends DioForNative {
       : super(
           BaseOptions(
             baseUrl: Links.i.selectedLink,
-            connectTimeout: 5000,
-            receiveTimeout: 60000,
+            connectTimeout: Duration(seconds: 5),
+            receiveTimeout: Duration(seconds: 60),
           ),
         );
 }

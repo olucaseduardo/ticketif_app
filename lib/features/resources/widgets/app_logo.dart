@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppLogo extends StatelessWidget {
   final bool? adm;
-  const AppLogo({Key? key, this.adm = false}) : super(key: key);
+  const AppLogo({super.key, this.adm = false});
 
   @override
   Widget build(BuildContext context) {

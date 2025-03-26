@@ -28,8 +28,9 @@ class NotificationService {
   }
 
   _initializeNotification() async {
-    const android =
-        AndroidInitializationSettings('@drawable/ic_notification_launcher');
+    const android = AndroidInitializationSettings(
+      '@drawable/ic_notification_launcher',
+    );
     const iOS = DarwinInitializationSettings();
     await localNotificationsPlugin.initialize(
       const InitializationSettings(android: android, iOS: iOS),
@@ -38,57 +39,88 @@ class NotificationService {
     if (Platform.isAndroid) {
       await localNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin
+          >()
           ?.requestNotificationsPermission();
       await localNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin
+          >()
           ?.requestExactAlarmsPermission();
     }
   }
 
   Future<void> showInstantNotification(String title, String body) async {
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: AndroidNotificationDetails(
-            "instant_notification_channel", "Instant Notifications",
-            importance: Importance.high, priority: Priority.high),
-        iOS: DarwinNotificationDetails());
+      android: AndroidNotificationDetails(
+        "instant_notification_channel",
+        "Instant Notifications",
+        importance: Importance.high,
+        priority: Priority.high,
+      ),
+      iOS: DarwinNotificationDetails(),
+    );
 
     await localNotificationsPlugin.show(
-        0, title, body, platformChannelSpecifics,
-        payload: 'instant_notification');
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: 'instant_notification',
+    );
   }
 
   Future<void> showDateTimeNotification(
-      String title, String body, DateTime scheduledDate) async {
+    String title,
+    String body,
+    DateTime scheduledDate,
+  ) async {
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: AndroidNotificationDetails(
-            "reminder_channel", "Reminder Channel",
-            importance: Importance.high, priority: Priority.high),
-        iOS: DarwinNotificationDetails());
+      android: AndroidNotificationDetails(
+        "reminder_channel",
+        "Reminder Channel",
+        importance: Importance.high,
+        priority: Priority.high,
+      ),
+      iOS: DarwinNotificationDetails(),
+    );
 
-    await localNotificationsPlugin.zonedSchedule(0, title, body,
-        tz.TZDateTime.from(scheduledDate, tz.local), platformChannelSpecifics,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        matchDateTimeComponents: DateTimeComponents.dateAndTime);
+    await localNotificationsPlugin.zonedSchedule(
+      0,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.dateAndTime,
+    );
   }
 
   Future<void> showDayOfWeekAndTimeNotification(
-      int id, String title, String body, DateTime scheduledDate) async {
+    int id,
+    String title,
+    String body,
+    DateTime scheduledDate,
+  ) async {
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: AndroidNotificationDetails(
-            "reminder_channel", "Reminder Channel",
-            importance: Importance.high, priority: Priority.high),
-        iOS: DarwinNotificationDetails());
+      android: AndroidNotificationDetails(
+        "reminder_channel",
+        "Reminder Channel",
+        importance: Importance.high,
+        priority: Priority.high,
+      ),
+      iOS: DarwinNotificationDetails(),
+    );
 
-    await localNotificationsPlugin.zonedSchedule(id, title, body,
-        tz.TZDateTime.from(scheduledDate, tz.local), platformChannelSpecifics,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+    await localNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+    );
   }
 
   Future<void> _scheduleNotificationsForDayWeekAndTime() async {
@@ -108,12 +140,20 @@ class NotificationService {
       try {
         var scheduledLunch = DateTime(date.year, date.month, date.day, 8, 45);
         await showDayOfWeekAndTimeNotification(
-            date.weekday, titleLunch, bodyLunch, scheduledLunch);
+          date.weekday,
+          titleLunch,
+          bodyLunch,
+          scheduledLunch,
+        );
         var scheduledDinner = DateTime(date.year, date.month, date.day, 14, 45);
         await showDayOfWeekAndTimeNotification(
-            date.weekday + 6, titleDinner, bodyDinner, scheduledDinner);
-      } catch(e) {
-        log("erro ao agendar notificação: ",error:e);
+          date.weekday + 6,
+          titleDinner,
+          bodyDinner,
+          scheduledDinner,
+        );
+      } catch (e) {
+        log("erro ao agendar notificação: ", error: e);
       }
     }
   }

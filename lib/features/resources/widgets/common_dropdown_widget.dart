@@ -11,14 +11,13 @@ class CommonDropDownButton extends StatelessWidget {
   final String? Function(String?)? validator;
 
   const CommonDropDownButton(
-      {Key? key,
+      {super.key,
       this.hint,
       this.value,
       required this.items,
       this.isDense = false,
       required this.onChanged,
-      this.validator})
-      : super(key: key);
+      this.validator});
 
   @override
   Widget build(BuildContext context) {

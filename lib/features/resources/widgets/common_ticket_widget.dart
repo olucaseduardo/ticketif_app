@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import 'package:ticket_ifma/features/resources/routes/screen_arguments.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
 import 'package:ticket_ifma/core/utils/path_image.dart' as path_image;
 import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
-import 'package:ticket_ifma/features/resources/widgets/qr_code_dialog.dart';
 import 'package:ticket_ifma/features/views/historic_screen/historic_controller.dart';
 
 class CommonTicketWidget extends StatelessWidget {
@@ -22,12 +20,12 @@ class CommonTicketWidget extends StatelessWidget {
   final bool isTap;
 
   const CommonTicketWidget({
-    Key? key,
+    super.key,
     required this.ticket,
     this.function,
     this.controller,
     this.isTap = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +139,8 @@ DateTime _today() {
 
 DateTime _convertStringToDateTime(String ticketUseDayDate) {
   DateTime dateTime = DateTime.parse(ticketUseDayDate);
-  DateTime dateTimeOnlyDate = DateTime(dateTime.year, dateTime.month, dateTime.day);
+  DateTime dateTimeOnlyDate =
+      DateTime(dateTime.year, dateTime.month, dateTime.day);
 
   return dateTimeOnlyDate;
 }
@@ -241,9 +240,8 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
   } else if (idStatus == 4 && _checkTodayAction(ticket.useDayDate)) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, AppRouter.useTicketQrCodeScreen, arguments: ScreenArguments(
-          ticket: ticket
-        ));
+        Navigator.pushNamed(context, AppRouter.useTicketQrCodeScreen,
+            arguments: ScreenArguments(ticket: ticket));
       },
       child: Row(
         children: [
@@ -259,7 +257,7 @@ Widget actionWidget(int idStatus, String statusImage, VoidCallback? action,
                 path_image.qrUse,
                 height: 50,
                 width: 50,
-                color: AppColors.blue,
+                colorFilter: ColorFilter.mode(AppColors.blue, BlendMode.color),
               ),
             ),
           ),

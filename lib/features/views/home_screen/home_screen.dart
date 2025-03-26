@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +24,7 @@ import 'package:ticket_ifma/features/views/home_screen/home_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -146,7 +145,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 _buildOtherOptionsSection(controller),
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             _buildFeedbackSection(),
           ],
         ),
@@ -281,8 +282,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           "Conecte-se a internet para realizar esta operação"),
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        WidgetStateProperty.all<Color>(Colors.white),
+                    padding: WidgetStateProperty.all<EdgeInsets>(
                       const EdgeInsets.symmetric(
                           horizontal: 0.0, vertical: 0.0),
                     ),
@@ -451,7 +452,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   // border: Border.all(color: AppColors.gray[25]!),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(.15),
+                      color: Colors.black.withValues(alpha: .15),
                       blurRadius: 10,
                       offset: const Offset(0, 0),
                     ),

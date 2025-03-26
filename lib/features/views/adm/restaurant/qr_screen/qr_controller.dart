@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticket_ifma/core/exceptions/qr_code_exception.dart';
 import 'package:ticket_ifma/core/exceptions/repository_exception.dart';

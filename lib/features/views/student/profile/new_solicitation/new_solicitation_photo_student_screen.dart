@@ -243,11 +243,11 @@ class _NewSolicitationPhotoStudent
                     padding: const EdgeInsets.all(5),
                     margin: EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
-                        color: Colors.white70.withOpacity(0.5),
+                        color: Colors.white70.withValues(alpha: .5),
                         borderRadius: BorderRadius.circular(5)),
                     child: const Text(
                       "Certifique-se de que seu rosto esteja devidamente centralizado na câmera."
-                          " Esta foto será avaliada, e somente com ela em mãos será autorizada a refeição para o estudante.",
+                      " Esta foto será avaliada, e somente com ela em mãos será autorizada a refeição para o estudante.",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 13, color: Colors.white),
                     ),
@@ -267,7 +267,7 @@ class _NewSolicitationPhotoStudent
             child: Container(
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                  color: Colors.black12.withOpacity(0.5),
+                  color: Colors.black12.withValues(alpha: .5),
                   borderRadius: BorderRadius.circular(5)),
               child: const Text(
                 "Evite acessórios. Posicione o rosto no centro da câmera",

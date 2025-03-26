@@ -187,8 +187,8 @@ class _PhotoStudentState extends ConsumerState<PhotoStudentScreen> {
                   },
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        WidgetStateProperty.all<Color>(Colors.white),
+                    padding: WidgetStateProperty.all<EdgeInsets>(
                       const EdgeInsets.symmetric(horizontal: 3, vertical: 0.0),
                     ),
                   ),

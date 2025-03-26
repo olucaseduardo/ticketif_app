@@ -16,7 +16,7 @@ class UserApiRepositoryImpl implements UserApiRepository {
       final matricula = sp.getString('matricula');
       final result = await DioClient().get("/student/$matricula");
       return User.fromMap(result.data["data"]["student"]);
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao buscar usuário', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar usuário');
     }
@@ -26,8 +26,10 @@ class UserApiRepositoryImpl implements UserApiRepository {
   Future<List<User>> findAllStudents() async {
     try {
       final result = await DioClient().get("/student/");
-      return result.data["data"]["students"].map<User>((u) => User.fromMap(u)).toList();
-    } on DioError catch (e, s) {
+      return result.data["data"]["students"]
+          .map<User>((u) => User.fromMap(u))
+          .toList();
+    } on DioException catch (e, s) {
       log('Erro ao buscar estudantes', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar estudantes');
     }

@@ -14,7 +14,7 @@ class CaeRepositoryImpl implements CaeRepository {
   Future<void> deleteAllStudents() async {
     try {
       await DioClient().delete('/student/');
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao deletar todos os alunos', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao deletar todos os alunos');
     }
@@ -24,16 +24,10 @@ class CaeRepositoryImpl implements CaeRepository {
   Future<void> addNewClass(String newClass, String course) async {
     try {
       await DioClient().post(
-        '/class/',
-        data:
-        {
-          "registration": newClass,
-          "course": course
-        }
-      );
-    } on DioError catch (e, s) {
+        '/class/', data: {"registration": newClass, "course": course});
+    } on DioException catch (e, s) {
       log('Erro ao inserir nova turma', error: e.message, stackTrace: s);
-      throw RepositoryException(message: e.message);
+      throw RepositoryException(message: e.message ?? "");
     }
   }
 
@@ -41,11 +35,11 @@ class CaeRepositoryImpl implements CaeRepository {
   Future<void> deleteClass(int id) async {
     try {
       await DioClient().delete(
-          '/class/$id',
+        '/class/$id',
       );
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao deletar uma turma', error: e.message, stackTrace: s);
-      throw RepositoryException(message: e.message);
+      throw RepositoryException(message: e.message ?? "");
     }
   }
 
@@ -54,45 +48,47 @@ class CaeRepositoryImpl implements CaeRepository {
     try {
       final response = await DioClient().get('/class');
       final classes = List<Class>.from(
-          response.data["data"]["classes"].map((item) => Class.fromMap(item))
-      );
+          response.data["data"]["classes"].map((item) => Class.fromMap(item)));
       return classes;
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao buscar as turmas', error: e.message, stackTrace: s);
-      throw RepositoryException(message: e.message);
+      throw RepositoryException(message: e.message ?? "");
     }
   }
 
   @override
   Future<void> createRegistrationExceptionTicket(String value) async {
-   try {
-     await DioClient().post("/ticket/exception/", data: {
-       "value": value
-     });
-   } on DioError catch (e,s) {
-     log('Erro ao buscar as turmas', error:  e.response?.data["message"], stackTrace: s);
-     throw RepositoryException(message: e.response?.data["message"]);
-   }
+    try {
+      await DioClient().post("/ticket/exception/", data: {"value": value});
+    } on DioException catch (e, s) {
+      log('Erro ao buscar as turmas',
+          error: e.response?.data["message"], stackTrace: s);
+      throw RepositoryException(message: e.response?.data["message"]);
+    }
   }
 
   @override
   Future<void> deleteRegistrationExceptionTicket(int id) async {
     try {
       await DioClient().delete("/ticket/exception/$id");
-    } on DioError catch(e,s) {
+    } on DioException catch (e, s) {
       log('Erro ao buscar as turmas', error: e.message, stackTrace: s);
-      throw RepositoryException(message: e.message);
+      throw RepositoryException(message: e.message ?? "");
     }
   }
 
   @override
-  Future<List<RegistrationExceptionTicket>> findAllRegistrationExceptionTicket() async {
+  Future<List<RegistrationExceptionTicket>>
+      findAllRegistrationExceptionTicket() async {
     try {
       final response = await DioClient().get("/ticket/exception/");
-      return List<RegistrationExceptionTicket>.from(response.data["data"]["exceptions"].map((e) => RegistrationExceptionTicket.fromMap(e)));
-    } on DioError catch(e,s) {
-      log('Erro ao buscar as matriculas com exceção de horário', error: e.message, stackTrace: s);
-      throw RepositoryException(message: e.message);
+      return List<RegistrationExceptionTicket>.from(response.data["data"]
+              ["exceptions"]
+          .map((e) => RegistrationExceptionTicket.fromMap(e)));
+    } on DioException catch (e, s) {
+      log('Erro ao buscar as matriculas com exceção de horário',
+          error: e.message, stackTrace: s);
+      throw RepositoryException(message: e.message ?? "");
     }
   }
 
@@ -100,10 +96,12 @@ class CaeRepositoryImpl implements CaeRepository {
   Future<List<SystemConfig>> findAllSystemConfig() async {
     try {
       final response = await DioClient().get("/system/config");
-      return List<SystemConfig>.from(response.data["data"]["configurations"].map((e) => SystemConfig.fromMap(e)));
-    } on DioError catch(e,s) {
-      log('Erro ao buscar as configurações do sistema', error: e.message, stackTrace: s);
-      throw RepositoryException(message: e.message);
+      return List<SystemConfig>.from(response.data["data"]["configurations"]
+          .map((e) => SystemConfig.fromMap(e)));
+    } on DioException catch (e, s) {
+      log('Erro ao buscar as configurações do sistema',
+          error: e.message, stackTrace: s);
+      throw RepositoryException(message: e.message ?? "");
     }
   }
 
@@ -111,9 +109,10 @@ class CaeRepositoryImpl implements CaeRepository {
   Future<void> updateSystemConfig(int id, PatchSystemConfigDTO patch) async {
     try {
       await DioClient().patch("/system/config/$id", data: patch.toMap());
-    } on DioError catch(e,s) {
-      log('Erro ao atualizar as configurações do sistema', error: e.message, stackTrace: s);
-      throw RepositoryException(message: e.message);
+    } on DioException catch (e, s) {
+      log('Erro ao atualizar as configurações do sistema',
+          error: e.message, stackTrace: s);
+      throw RepositoryException(message: e.message ?? "");
     }
   }
 }

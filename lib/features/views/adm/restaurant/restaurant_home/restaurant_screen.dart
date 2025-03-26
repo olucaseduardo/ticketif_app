@@ -8,7 +8,7 @@ import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_tile_options.dart';
 
 class RestaurantScreen extends ConsumerStatefulWidget {
-  const RestaurantScreen({Key? key}) : super(key: key);
+  const RestaurantScreen({super.key});
 
   @override
   ConsumerState<RestaurantScreen> createState() => _RestaurantScreenState();

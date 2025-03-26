@@ -60,7 +60,7 @@ class _PhotoRequestAuthorizationEvaluateRouteState
 
     return PopScope(
       canPop: true,
-      onPopInvoked: (bool didPop) async {
+      onPopInvokedWithResult: (bool didPop, dynamic d) async {
         if (didPop) return;
         Navigator.pop(context, controller.filteredPhotoRequests);
       },

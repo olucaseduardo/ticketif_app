@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,7 +52,7 @@ class _TicketEvaluateScreenState extends ConsumerState<TicketEvaluateScreen> {
     return PopScope(
       canPop: true,
 
-      onPopInvoked: (bool didPop) async {
+      onPopInvokedWithResult: (bool didPop, dynamic d) async {
         if (didPop) return;
         Navigator.pop(context, controller.filteredTickets);
       },

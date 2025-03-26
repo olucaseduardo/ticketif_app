@@ -15,17 +15,18 @@ class ProfileApiRepositoryImpl extends ProfileApiRepository {
     try {
       final response =
           await DioClient().get("/student/photo/request/?situation=Em Análise");
-      return List<PhotoRequestModel>.from(response.data["data"]["requests"].map((e) => PhotoRequestModel.fromMap(e)));
-    } on DioError catch (e, s) {
+      return List<PhotoRequestModel>.from(response.data["data"]["requests"]
+          .map((e) => PhotoRequestModel.fromMap(e)));
+    } on DioException catch (e, s) {
       log("Erro no servidor ao buscar solicitações do estudante para troca de foto de perfil: ",
           error: e, stackTrace: s);
-      throw RepositoryException(message: e.message);
+      throw RepositoryException(message: e.message ?? "");
     } catch (e, s) {
       log("Erro ao buscar solicitações do estudante para troca de foto de perfil: ",
           error: e, stackTrace: s);
       throw RepositoryException(
           message:
-          "Erro no servidor ao buscar solicitação do estudante para troca de foto de perfil, tente novamente mais tarde");
+              "Erro no servidor ao buscar solicitação do estudante para troca de foto de perfil, tente novamente mais tarde");
     }
   }
 
@@ -35,11 +36,12 @@ class ProfileApiRepositoryImpl extends ProfileApiRepository {
     try {
       final response =
           await DioClient().get("/student/$registration/photo/request");
-      return List<PhotoRequestModel>.from(response.data["data"]["requests"].map((e) => PhotoRequestModel.fromMap(e)));
-    } on DioError catch (e, s) {
+      return List<PhotoRequestModel>.from(response.data["data"]["requests"]
+          .map((e) => PhotoRequestModel.fromMap(e)));
+    } on DioException catch (e, s) {
       log("Erro no servidor ao buscar solicitações do estudante para troca de foto de perfil: ",
           error: e, stackTrace: s);
-      throw RepositoryException(message: e.message);
+      throw RepositoryException(message: e.message ?? "");
     } on Exception catch (e, s) {
       log("Erro ao buscar solicitações do estudante para troca de foto de perfil: ",
           error: e, stackTrace: s);
@@ -54,11 +56,13 @@ class ProfileApiRepositoryImpl extends ProfileApiRepository {
     try {
       var file = File(picture.path);
       var formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(file.path, filename: '$registration.jpeg', contentType: MediaType('image', 'jpeg')),
+        'file': await MultipartFile.fromFile(file.path,
+            filename: '$registration.jpeg',
+            contentType: MediaType('image', 'jpeg')),
       });
       await DioClient()
           .post("/student/$registration/photo/request", data: formData);
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log("Erro no servidor ao solicitar mudança de foto de perfil: ",
           error: e, stackTrace: s);
       throw RepositoryException(message: e.response!.data["message"]!);
@@ -76,10 +80,10 @@ class ProfileApiRepositoryImpl extends ProfileApiRepository {
     try {
       await DioClient()
           .patch("/student/photo/request/$id", data: {"status": status});
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log("Erro no servidor ao atualizar status da mudança de foto de perfil: ",
           error: e, stackTrace: s);
-      throw RepositoryException(message: e.message);
+      throw RepositoryException(message: e.message ?? "");
     } on Exception catch (e, s) {
       log("Erro ao atualizar status da mudança de foto de perfil: ",
           error: e, stackTrace: s);

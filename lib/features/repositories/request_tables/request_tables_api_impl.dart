@@ -15,7 +15,8 @@ class RequestTablesApiImpl implements RequestTablesApi {
       final justificationsResponse = await DioClient().get("/justification/");
 
       final List meals = mealsResponse.data['data']['meals'];
-      final List justifications = justificationsResponse.data['data']['justifications'];
+      final List justifications =
+          justificationsResponse.data['data']['justifications'];
 
       final listTables = ListTablesModel(
         meals: meals.map((e) => TablesModel.fromMap(e)).toList(),
@@ -24,7 +25,7 @@ class RequestTablesApiImpl implements RequestTablesApi {
       );
 
       return listTables;
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao buscar lista de meals e justifications',
           error: e, stackTrace: s);
       throw RepositoryException(

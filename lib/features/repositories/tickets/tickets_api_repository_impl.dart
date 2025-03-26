@@ -1,14 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
 import 'package:ticket_ifma/core/services/dio_client.dart';
 import 'package:ticket_ifma/features/dto/request_permanent.dart';
 import 'package:ticket_ifma/features/dto/request_ticket_model.dart';
 import 'package:ticket_ifma/features/models/permanent_model.dart';
-import 'package:ticket_ifma/features/models/student_authorization.dart';
 import 'package:ticket_ifma/features/models/authorization.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 
@@ -19,8 +16,10 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
   Future<List<Ticket>> findAllTickets(String matricula) async {
     try {
       final result = await DioClient().get("/student/$matricula/ticket");
-      return result.data["data"]["tickets"].map<Ticket>((t) => Ticket.fromMap(t)).toList();
-    } on DioError catch (e, s) {
+      return result.data["data"]["tickets"]
+          .map<Ticket>((t) => Ticket.fromMap(t))
+          .toList();
+    } on DioException catch (e, s) {
       log('Erro ao buscar tickets do usuário', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar tickets do usuário');
     }
@@ -29,11 +28,16 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
   @override
   Future<List<PermanentModel>> findAllPermanents(String matricula) async {
     try {
-      final result = await DioClient().get("/student/$matricula/ticket/permanent");
-      return result.data["data"]["permanents"].map<PermanentModel>((t) => PermanentModel.fromMap(t)).toList();
-    } on DioError catch (e, s) {
-      log('Erro ao buscar autorizações permanentes do usuário', error: e, stackTrace: s);
-      throw RepositoryException(message: 'Erro ao buscar autorizações permanentes do usuário');
+      final result =
+          await DioClient().get("/student/$matricula/ticket/permanent");
+      return result.data["data"]["permanents"]
+          .map<PermanentModel>((t) => PermanentModel.fromMap(t))
+          .toList();
+    } on DioException catch (e, s) {
+      log('Erro ao buscar autorizações permanentes do usuário',
+          error: e, stackTrace: s);
+      throw RepositoryException(
+          message: 'Erro ao buscar autorizações permanentes do usuário');
     }
   }
 
@@ -42,7 +46,7 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
     try {
       final response = await DioClient().post("/ticket/", data: ticket.toMap());
       return response.data["data"]["id"];
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log("Erro ao solicitar ticket", error: e.response, stackTrace: s);
       throw RepositoryException(message: e.response?.data["message"]);
     }
@@ -54,7 +58,7 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
       await DioClient().patch("/ticket/$idTicket", data: {
         "status_id": statusId,
       });
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log("Erro ao alterar status do ticket", error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao solicitar ticket');
     }
@@ -66,7 +70,7 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
       await DioClient().patch("/ticket/$idTicket", data: {
         "status_id": statusId,
       });
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log("Erro ao alterar status do ticket", error: e, stackTrace: s);
       if (e.response?.data["message"] != null) {
         throw RepositoryException(message: e.response?.data["message"]);
@@ -80,8 +84,10 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
     try {
       final result = await DioClient().get("/ticket/?date=$date");
 
-      return result.data["data"]["tickets"].map<Ticket>((t) => Ticket.fromMap(t)).toList();
-    } on DioError catch (e, s) {
+      return result.data["data"]["tickets"]
+          .map<Ticket>((t) => Ticket.fromMap(t))
+          .toList();
+    } on DioException catch (e, s) {
       log('Erro ao buscar tickets', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar tickets do usuário');
     }
@@ -93,8 +99,10 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
     try {
       final result = await DioClient().get(
           "/ticket/?status_id=5&start_date=$initialDate&end_date=$finalDate");
-      return result.data["data"]["tickets"].map<Ticket>((t) => Ticket.fromMap(t)).toList();
-    } on DioError catch (e, s) {
+      return result.data["data"]["tickets"]
+          .map<Ticket>((t) => Ticket.fromMap(t))
+          .toList();
+    } on DioException catch (e, s) {
       log('Erro ao buscar tickets', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao buscar tickets do usuário');
     }
@@ -108,8 +116,9 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
         data: tickets.toMap(),
       );
       return List<int>.from(response.data["data"]["id"]);
-    } on DioError catch (e, s) {
-      log("Erro ao solicitar tickets permanentes", error: e.message, stackTrace: s);
+    } on DioException catch (e, s) {
+      log("Erro ao solicitar tickets permanentes",
+          error: e.message, stackTrace: s);
       throw RepositoryException(
           message: 'Erro ao solicitar tickets permanentes');
     }
@@ -123,25 +132,25 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
       return result.data["data"]["permanents"]
           .map<Authorization>((t) => Authorization.fromMap(t))
           .toList();
-    } on DioError catch (e, s) {
-      log('Erro ao buscar permanentes não autorizados', error: e, stackTrace: s);
+    } on DioException catch (e, s) {
+      log('Erro ao buscar permanentes não autorizados',
+          error: e, stackTrace: s);
       throw RepositoryException(
           message: 'Erro ao buscar permanentes não autorizados');
     }
   }
 
   @override
-  Future<void> changeStatusAuthorizationPermanents(List<int> permanentsId, int status) async {
+  Future<void> changeStatusAuthorizationPermanents(
+      List<int> permanentsId, int status) async {
     try {
       for (int id in permanentsId) {
         await DioClient().patch(
           "/ticket/permanent/$id",
-          data: {
-            "status_id": status
-          },
+          data: {"status_id": status},
         );
       }
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao atualizar autorizações', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao atualizar autorizações');
     }
@@ -151,9 +160,10 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
   Future<void> deleteAllPermanents() async {
     try {
       await DioClient().delete('/ticket/permanent/');
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao deletar todos os permanentes', error: e, stackTrace: s);
-      throw RepositoryException(message: 'Erro ao deletar todos os permanentes');
+      throw RepositoryException(
+          message: 'Erro ao deletar todos os permanentes');
     }
   }
   
@@ -161,7 +171,7 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
   Future<void> deleteAllTickets() async {
     try {
       await DioClient().delete('/ticket/');
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao deletar todos os tickets', error: e, stackTrace: s);
       throw RepositoryException(message: 'Erro ao deletar todos os tickets');
     }
@@ -171,9 +181,11 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
   Future<void> getPermanentTicketDaily(String registration) async {
     try {
       await DioClient().get('/student/$registration/ticket/permanent/daily');
-    } on DioError catch (e, s) {
-      log('Erro ao gerar tickets diários de permanentes', error: e, stackTrace: s);
-      throw RepositoryException(message: 'Erro ao deletar todos os permanentes');
+    } on DioException catch (e, s) {
+      log('Erro ao gerar tickets diários de permanentes',
+          error: e, stackTrace: s);
+      throw RepositoryException(
+          message: 'Erro ao deletar todos os permanentes');
     }
   }
 }

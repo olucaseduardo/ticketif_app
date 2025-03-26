@@ -81,7 +81,7 @@ class HistoricController extends ChangeNotifier {
 
       isLoading = false;
       notifyListeners();
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao cancelar ticket', error: e, stackTrace: s);
       isLoading = false;
       error = true;
@@ -140,7 +140,7 @@ class HistoricController extends ChangeNotifier {
 
       isLoading = false;
       notifyListeners();
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao cancelar ticket', error: e, stackTrace: s);
       isLoading = false;
       error = true;

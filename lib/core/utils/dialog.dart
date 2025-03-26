@@ -12,14 +12,14 @@ class DialogForm extends StatelessWidget {
   final String labelConfirmButton;
 
   const DialogForm({
-    Key? key,
+    super.key,
     required this.action,
     required this.message,
     required this.title,
     this.labelConfirmButton = 'Sim',
     this.colorConfirmButton,
     this.confirmButtonTextStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

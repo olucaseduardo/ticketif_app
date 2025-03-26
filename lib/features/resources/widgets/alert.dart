@@ -6,11 +6,11 @@ class Alert extends StatelessWidget {
   final Text title;
   final Widget? subtitle;
   const Alert({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     this.subtitle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) => Container(

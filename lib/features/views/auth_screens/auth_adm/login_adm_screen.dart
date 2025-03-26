@@ -12,7 +12,7 @@ import 'package:ticket_ifma/features/resources/widgets/common_text_field.dart';
 import 'package:vibration/vibration.dart';
 
 class LoginAdmScreen extends ConsumerStatefulWidget {
-  const LoginAdmScreen({Key? key}) : super(key: key);
+  const LoginAdmScreen({super.key});
 
   @override
   ConsumerState<LoginAdmScreen> createState() => _LoginAdmScreenState();

@@ -10,7 +10,7 @@ import 'package:ticket_ifma/features/resources/theme/app_text_styles.dart';
 import 'package:ticket_ifma/features/resources/widgets/common_tile_options.dart';
 
 class CaeHomeScreen extends ConsumerStatefulWidget {
-  const CaeHomeScreen({Key? key}) : super(key: key);
+  const CaeHomeScreen({super.key});
 
   @override
   ConsumerState<CaeHomeScreen> createState() => _CaeHomeScreenState();
@@ -140,8 +140,9 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                       label: 'Solicitações para Troca de Foto',
                       function: () => Navigator.pushNamed(
                         context,
-                        AppRouter.photoRequestAuthorizationClassesScreen,
-                        arguments: ScreenArguments(title: "Troca de Foto por Turmas")
+                          AppRouter.photoRequestAuthorizationClassesScreen,
+                          arguments: ScreenArguments(
+                              title: "Troca de Foto por Turmas")
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -149,8 +150,7 @@ class _CaeHomeScreenState extends ConsumerState<CaeHomeScreen> {
                       leading: CupertinoIcons.gear_solid,
                       label: "Definições do Sistema",
                       function: () => Navigator.pushNamed(
-                        context,
-                        AppRouter.systemDefinitions
+                          context, AppRouter.systemDefinitions
                       ),
                     ),
                   ],

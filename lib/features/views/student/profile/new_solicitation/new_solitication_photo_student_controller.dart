@@ -24,37 +24,35 @@ class NewSolicitationPhotoStudentController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadData() async {
+  Future<void> loadData() async {}
 
-  }
+  // Future<XFile?> _processImageInIsolate(XFile imageFile) async {
+  //   // Usa `compute` para processar a imagem em segundo plano
+  //   return await compute(_processImage, imageFile);
+  // }
 
-  Future<XFile?> _processImageInIsolate(XFile imageFile) async {
-    // Usa `compute` para processar a imagem em segundo plano
-    return await compute(_processImage, imageFile);
-  }
+  // static Future<XFile?> _processImage(XFile imageFile) async {
+  //   try {
+  //     final imageBytes = await imageFile.readAsBytes();
+  //     final img = decodeImage(imageBytes);
 
-  static Future<XFile?> _processImage(XFile imageFile) async {
-    try {
-      final imageBytes = await imageFile.readAsBytes();
-      final img = decodeImage(imageBytes);
+  //     if (img != null) {
+  //       final flippedImage = flipHorizontal(img);
+  //       final correctedImageBytes = encodePng(flippedImage);
 
-      if (img != null) {
-        final flippedImage = flipHorizontal(img);
-        final correctedImageBytes = encodePng(flippedImage);
+  //       // Salva a imagem processada em um arquivo temporário
+  //       final tempDir = Directory.systemTemp;
+  //       final tempFile = File('${tempDir.path}/processed_image.png');
+  //       await tempFile.writeAsBytes(correctedImageBytes);
 
-        // Salva a imagem processada em um arquivo temporário
-        final tempDir = Directory.systemTemp;
-        final tempFile = File('${tempDir.path}/processed_image.png');
-        await tempFile.writeAsBytes(correctedImageBytes);
+  //       return XFile(tempFile.path);
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Erro ao processar a imagem: $e");
+  //   }
 
-        return XFile(tempFile.path);
-      }
-    } catch (e) {
-      debugPrint("Erro ao processar a imagem: $e");
-    }
-
-    return null;
-  }
+  //   return null;
+  // }
 
   Future<void> updatePicture(XFile? picture) async {
     if (picture != null) {

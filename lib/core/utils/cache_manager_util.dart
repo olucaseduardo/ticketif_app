@@ -5,8 +5,6 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheManagerUtil {
-  final _stealPeriod = const Duration(minutes: 1);
-
   loadImageStudent(String url) async {
     final sp = await SharedPreferences.getInstance();
     final studentRegistration = sp.getString('matricula');
@@ -52,7 +50,7 @@ class CacheManagerUtil {
       final response = await Dio().head(
         url,
         options: Options(
-          receiveTimeout: 3000,
+          receiveTimeout: Duration(seconds: 3),
         ),
       );
       final contentType = response.headers['content-type']?.first;

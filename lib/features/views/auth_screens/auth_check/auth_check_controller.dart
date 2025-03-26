@@ -1,10 +1,6 @@
-import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ticket_ifma/core/services/dio_client.dart';
-import 'package:ticket_ifma/core/utils/links.dart';
 
 class AuthCheckController extends ChangeNotifier {
   bool check = false;

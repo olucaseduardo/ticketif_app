@@ -1,7 +1,6 @@
 import 'package:ticket_ifma/features/dto/request_permanent.dart';
 import 'package:ticket_ifma/features/dto/request_ticket_model.dart';
 import 'package:ticket_ifma/features/models/permanent_model.dart';
-import 'package:ticket_ifma/features/models/student_authorization.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 
 abstract class TicketsApiRepository {

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:ticket_ifma/core/utils/links.dart';
 import 'package:ticket_ifma/features/models/class.dart';
 import 'package:ticket_ifma/features/repositories/cae/cae_repository_impl.dart';
 
@@ -16,7 +15,7 @@ class AddNewClassController extends ChangeNotifier {
     'agropec': 'Agropecuária',
     'com': 'Comércio',
     'info': 'Informática'
- };
+  };
   List<Map<String, String>> courses = [
     {'Administração': 'adm'},
     {'Agroindústria': 'agroind'},
@@ -33,7 +32,7 @@ class AddNewClassController extends ChangeNotifier {
   Future<void> loadData() async {
     try {
       await findAllClasses();
-    } catch (e,s) {
+    } catch (e, s) {
       log('Erro ao iniciar tela de novas turmas', error: e, stackTrace: s);
       error = true;
     }
@@ -41,9 +40,7 @@ class AddNewClassController extends ChangeNotifier {
   }
 
   Map<String, String> _convertMap() {
-    return {
-      for (var course in courses) course.keys.first: course.values.first
-    };
+    return {for (var course in courses) course.keys.first: course.values.first};
   }
 
   void selectCourse(String? value) {

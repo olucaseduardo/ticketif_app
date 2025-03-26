@@ -15,13 +15,13 @@ class RequestTicket extends ConsumerWidget {
   final bool? orderLunch;
 
   const RequestTicket({
-    Key? key,
+    super.key,
     this.title,
     this.caeRequest = false,
     this.idStudent,
     this.orderDinner = true,
     this.orderLunch = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, ref) {
@@ -87,7 +87,7 @@ class RequestTicket extends ConsumerWidget {
                               onChanged: (value) =>
                                   controller.onMealsChanged(value)),
                           const Padding(
-                            padding: EdgeInsets.only(top: 12,bottom:10),
+                            padding: EdgeInsets.only(top: 12, bottom: 10),
                             child: Text(
                               'Validade',
                               style: AppTextStyle.titleSmall,

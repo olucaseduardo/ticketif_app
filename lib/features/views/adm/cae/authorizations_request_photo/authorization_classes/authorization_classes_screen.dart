@@ -1,9 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
-import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/core/utils/loader.dart';
 import 'package:ticket_ifma/features/models/photo_request_model.dart';
 import 'package:ticket_ifma/features/resources/routes/app_routes.dart';
@@ -22,10 +19,12 @@ class PhotoRequestAuthorizationClassesScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<PhotoRequestAuthorizationClassesScreen> createState() => _PhotoRequestAuthorizationClassesScreenState();
+  ConsumerState<PhotoRequestAuthorizationClassesScreen> createState() =>
+      _PhotoRequestAuthorizationClassesScreenState();
 }
 
-class _PhotoRequestAuthorizationClassesScreenState extends ConsumerState<PhotoRequestAuthorizationClassesScreen> {
+class _PhotoRequestAuthorizationClassesScreenState
+    extends ConsumerState<PhotoRequestAuthorizationClassesScreen> {
   @override
   void initState() {
     ref.read(photoRequestAuthorizationProvider).loadDataPhotoRequests();
@@ -91,7 +90,7 @@ class _PhotoRequestAuthorizationClassesScreenState extends ConsumerState<PhotoRe
                       itemBuilder: (context, index) => CommonTileClass(
                           title: 'Turma: ${controller.filteredClasses[index]}',
                           subtitle:
-                          'Total: ${controller.sortedDailyClasses[controller.filteredClasses[index]]!.length}',
+                              'Total: ${controller.sortedDailyClasses[controller.filteredClasses[index]]!.length}',
                           function: () async {
                             dynamic list = await Navigator.pushNamed(
                               context,
@@ -99,7 +98,7 @@ class _PhotoRequestAuthorizationClassesScreenState extends ConsumerState<PhotoRe
                               arguments: ScreenArguments(
                                 title: controller.filteredClasses[index],
                                 photoRequests: controller.sortedDailyClasses[
-                                controller.filteredClasses[index]],
+                                    controller.filteredClasses[index]],
                               ),
                             );
 

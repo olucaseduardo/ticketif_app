@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:ticket_ifma/core/utils/encrypt_util.dart';
 import 'package:ticket_ifma/core/utils/path_image.dart' as path_image;

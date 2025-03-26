@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 import 'package:ticket_ifma/features/repositories/tickets/tickets_api_repository_impl.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PeriodReportController extends ChangeNotifier {
   List<Ticket>? dailyTickets = [];
@@ -80,7 +80,7 @@ class PeriodReportController extends ChangeNotifier {
         "$directory/Relatorio-Ticket-${DateTime.now().toString().substring(0, 10)}.csv";
     final File file = File(path);
     await file.writeAsString(csvData);
-    Share.shareFiles([file.path], subject: 'Relatorio Tickets');
+    Share.shareXFiles([XFile(file.path)], subject: 'Relatorio Tickets');
   }
 
   Future<void> loadPeriodTickets(

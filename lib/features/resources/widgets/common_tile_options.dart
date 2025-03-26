@@ -8,11 +8,11 @@ class CommonTileOptions extends StatelessWidget {
   final VoidCallback? function;
 
   const CommonTileOptions({
-    Key? key,
+    super.key,
     required this.leading,
     required this.label,
     required this.function,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

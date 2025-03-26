@@ -64,7 +64,7 @@ class _AuthorizationEvaluateScreenState
 
     return PopScope(
       canPop: true,
-      onPopInvoked: (bool didPop) async {
+      onPopInvokedWithResult: (bool didPop, dynamic d) async {
         if (didPop) return;
 
         Navigator.pop(context, selectedStudents);
@@ -96,7 +96,8 @@ class _AuthorizationEvaluateScreenState
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20,top: 20.0,right: 20.0),
+                padding:
+                    const EdgeInsets.only(left: 20, top: 20.0, right: 20.0),
                 child: TextField(
                   onChanged: (value) =>
                       controller.filterAuthorizations(value, allStudents),

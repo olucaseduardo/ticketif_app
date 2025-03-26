@@ -63,7 +63,7 @@ class CaeAuthorizationController extends ChangeNotifier {
         await TicketsApiRepositoryImpl()
             .changeStatusAuthorizationPermanents(element.ticketsIds, status);
       }
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao atualizar autorização permanente', error: e, stackTrace: s);
 
       error = true;
@@ -79,7 +79,7 @@ class CaeAuthorizationController extends ChangeNotifier {
     try {
       await TicketsApiRepositoryImpl().changeStatusAuthorizationPermanents(
           selectedAuthorizationsStudent, status);
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao atualizar autorização permanente', error: e, stackTrace: s);
 
       error = true;

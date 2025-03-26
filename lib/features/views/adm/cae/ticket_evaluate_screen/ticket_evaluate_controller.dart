@@ -93,7 +93,7 @@ class TicketEvaluateController extends ChangeNotifier {
       dailyTickets?.removeWhere((t) => t.id == idTicket);
 
       notifyListeners();
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao alterar status do ticket', error: e, stackTrace: s);
       isLoading = false;
       throw RepositoryException(message: 'Erro ao alterar status do ticket');

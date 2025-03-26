@@ -29,7 +29,10 @@ class _AuthorizationEvaluateStudentScreenState
     super.initState();
     ref.read(caePermanentProvider).selectAllStudent = true;
     ref.read(caePermanentProvider).selectedAuthorizationsStudent.clear();
-    ref.read(caePermanentProvider).selectedAuthorizationsStudent.addAll(widget.authorizationStudent.ticketsIds);
+    ref
+        .read(caePermanentProvider)
+        .selectedAuthorizationsStudent
+        .addAll(widget.authorizationStudent.ticketsIds);
   }
 
   List<int> authorizedTicketsStudent = [];
@@ -54,7 +57,7 @@ class _AuthorizationEvaluateStudentScreenState
 
     return PopScope(
       canPop: true,
-      onPopInvoked: (bool didPop) async {
+      onPopInvokedWithResult: (bool didPop, dynamic d) async {
         if (didPop) return;
 
         Navigator.pop(context, authorizedTicketsStudent);
@@ -94,10 +97,11 @@ class _AuthorizationEvaluateStudentScreenState
                     subtitle:
                         "${widget.authorizationStudent.meal} - ${widget.authorizationStudent.listDays[index].toString()}",
                     justification: widget.authorizationStudent.text,
-                    selected: controller.selectedAuthorizationsStudent
-                            .contains(
+                    selected: controller.selectedAuthorizationsStudent.contains(
                       widget.authorizationStudent.ticketsIds[index],
-                    ) ? true : false,
+                    )
+                        ? true
+                        : false,
                     function: () =>
                         controller.verifySelectedAuthorizationStudent(
                           widget.authorizationStudent.ticketsIds[index],
@@ -115,7 +119,8 @@ class _AuthorizationEvaluateStudentScreenState
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   onPressed: () {
                     if (continueSolicitation()) {
-                      eraserAuthorizationStudent(controller.selectedAuthorizationsStudent);
+                      eraserAuthorizationStudent(
+                          controller.selectedAuthorizationsStudent);
                       controller.changedAuthorizationStudent(7);
                       AppMessage.i.showInfo('Tickets recusados com sucesso');
                       Navigator.pop(context, authorizedTicketsStudent);
@@ -134,7 +139,8 @@ class _AuthorizationEvaluateStudentScreenState
                 child: ElevatedButton(
                   onPressed: () async {
                     if (continueSolicitation()) {
-                      eraserAuthorizationStudent(controller.selectedAuthorizationsStudent);
+                      eraserAuthorizationStudent(
+                          controller.selectedAuthorizationsStudent);
                       controller.changedAuthorizationStudent(4);
                       AppMessage.i.showMessage(
                           'Tickets permanentes aprovados com sucesso');

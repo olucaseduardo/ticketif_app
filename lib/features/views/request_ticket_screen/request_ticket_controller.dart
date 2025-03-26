@@ -61,7 +61,7 @@ class RequestTicketController extends ChangeNotifier {
       meals.removeLast();
       meals.removeAt(0);
       notifyListeners();
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao carregar dados', error: e, stackTrace: s);
       AppMessage.i.showError('Erro ao carregar dados');
       throw RepositoryException(message: 'Erro ao carregar dados');
@@ -99,7 +99,8 @@ class RequestTicketController extends ChangeNotifier {
     bool isCaeRequest,
   ) async {
     try {
-      final ticketId = await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
+      final ticketId =
+          await TicketsApiRepositoryImpl().requestTicket(RequestTicketModel(
         studentId: id,
         mealId: meal!.id,
         justificationId: justification!.id,
@@ -136,12 +137,14 @@ class RequestTicketController extends ChangeNotifier {
         justificationId: justification!.id,
         description: justificationController.text,
       );
-      final permanentsIds = await TicketsApiRepositoryImpl().requestPermanent(permanents);
+      final permanentsIds =
+          await TicketsApiRepositoryImpl().requestPermanent(permanents);
 
       if (isCae) {
-        await TicketsApiRepositoryImpl().changeStatusAuthorizationPermanents(permanentsIds, 4);
+        await TicketsApiRepositoryImpl()
+            .changeStatusAuthorizationPermanents(permanentsIds, 4);
       }
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao solicitar autorização permanente', error: e, stackTrace: s);
       errorMessage = "Erro ao solicitar autorização permanente";
       error = true;
@@ -158,7 +161,8 @@ class RequestTicketController extends ChangeNotifier {
   }
 
   /// Verifica se a solicitação de refeição vem por parte da CAE ou do aluno
-  Future<void> onTapSendRequest(bool isCae, bool lunch, bool dinner, {int? idStudent}) async {
+  Future<void> onTapSendRequest(bool isCae, bool lunch, bool dinner,
+      {int? idStudent}) async {
     try {
       error = false;
       notifyListeners();
@@ -213,7 +217,7 @@ class RequestTicketController extends ChangeNotifier {
       } else {
         AppMessage.i.showError(errorMessage);
       }
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao solicitar Ticket', error: e, stackTrace: s);
       AppMessage.i.showError(errorMessage);
       throw RepositoryException(message: 'Erro ao solicitar Ticket');

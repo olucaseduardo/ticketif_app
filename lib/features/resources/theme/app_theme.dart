@@ -33,9 +33,9 @@ mixin TicketTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(AppColors.green),
-        elevation: MaterialStateProperty.all<double>(0),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
+        backgroundColor: WidgetStateProperty.all(AppColors.green),
+        elevation: WidgetStateProperty.all<double>(0),
+        shape: WidgetStateProperty.all<OutlinedBorder>(
           const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(8),
@@ -46,11 +46,11 @@ mixin TicketTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
-        textStyle: MaterialStateProperty.all(AppTextStyle.titleSmall.copyWith(
+        textStyle: WidgetStateProperty.all(AppTextStyle.titleSmall.copyWith(
           fontWeight: FontWeight.w500,
         )),
-        foregroundColor: MaterialStateProperty.all(AppColors.green[600]),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
+        foregroundColor: WidgetStateProperty.all(AppColors.green[600]),
+        shape: WidgetStateProperty.all<OutlinedBorder>(
           const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(8),
@@ -63,17 +63,17 @@ mixin TicketTheme {
     checkboxTheme: CheckboxThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       side: BorderSide(color: AppColors.gray[400]!),
-      checkColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
+      checkColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.disabled)) {
           return AppColors.gray[300];
         }
         return AppColors.black;
       }),
-      fillColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
+      fillColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.disabled)) {
           return AppColors.gray[300];
         }
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.green;
         }
         return AppColors.white;

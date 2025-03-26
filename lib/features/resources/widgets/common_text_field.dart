@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ticket_ifma/features/resources/theme/app_colors.dart';
@@ -28,8 +27,8 @@ class CommonTextField extends StatelessWidget {
     this.obscureText = false,
     this.maxLine = 1,
     this.validator = false,
-    this.toolTip,
-    this.inputFormatters
+      this.toolTip,
+      this.inputFormatters
   }) : obscureTextVN = ValueNotifier(obscureText);
 
   @override
@@ -50,24 +49,23 @@ class CommonTextField extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-               if (toolTip != null && toolTip!.isNotEmpty)
-                  GestureDetector(
+              if (toolTip != null && toolTip!.isNotEmpty)
+                GestureDetector(
                   onTap: () {
                     final tooltip = tooltipKey.currentState;
                     tooltip?.ensureTooltipVisible();
-                    },
-                    child: Tooltip(
-                        preferBelow: false,
-                        message: toolTip!,
-                        key: tooltipKey,
-                        waitDuration: Duration.zero,
-                        showDuration: const Duration(seconds: 1),
-                        child: const Icon(
-                                Icons.info_outline,
-                                color: AppColors.green,
-                        )
-                    ),
-                  )
+                  },
+                  child: Tooltip(
+                      preferBelow: false,
+                      message: toolTip!,
+                      key: tooltipKey,
+                      waitDuration: Duration.zero,
+                      showDuration: const Duration(seconds: 1),
+                      child: const Icon(
+                        Icons.info_outline,
+                        color: AppColors.green,
+                      )),
+                )
             ],
           ),
           const SizedBox(height: 4),
