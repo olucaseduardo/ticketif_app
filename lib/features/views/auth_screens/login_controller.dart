@@ -10,10 +10,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 class LoginController extends ChangeNotifier {
   bool isLoading = false;
   bool error = false;
-  List<String> campus = [
-    "Caxias",
-    "Timon",
-  ];
+  List<String> campus = ["Caxias", "Timon"];
   String campusSelect = "";
   PackageInfo? packageInfo;
 
@@ -37,8 +34,11 @@ class LoginController extends ChangeNotifier {
     error = false;
     notifyListeners();
     try {
-      final authModel =
-          await AuthApiRepositoryImpl().login(matricula, password);
+      await Links.i.loadLink();
+      final authModel = await AuthApiRepositoryImpl().login(
+        matricula,
+        password,
+      );
 
       final sp = await SharedPreferences.getInstance();
       sp.setString('matricula', authModel.matricula);
@@ -64,8 +64,11 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final authModel =
-          await AuthApiRepositoryImpl().loginADM(username, password);
+      await Links.i.loadLink();
+      final authModel = await AuthApiRepositoryImpl().loginADM(
+        username,
+        password,
+      );
 
       final sp = await SharedPreferences.getInstance();
       sp.setInt('admin_type_id', authModel.loginTypeId);

@@ -78,8 +78,7 @@ class Links extends ChangeNotifier {
     if (links != null) {
       _campusLink = await _getValidLink(links) ?? '';
       final sp = await SharedPreferences.getInstance();
-      await sp.setString('campus', campus);
-      await loadLink();
+      sp.setString('campus', campus);
       notifyListeners();
     }
   }
