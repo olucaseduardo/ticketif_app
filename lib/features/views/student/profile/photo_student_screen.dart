@@ -113,37 +113,47 @@ class _PhotoStudentState extends ConsumerState<PhotoStudentScreen> {
 
   Widget _buildImageStudent(PhotoStudentController controller) {
     if (controller.imgURL != null) {
-      return CachedNetworkImage(
-        fit: BoxFit.cover,
-        width: 300,
-        height: 300,
-        cacheKey: "student_photo_${controller.user!.registration}",
-        imageUrl: controller.imgURL!,
-        placeholder: (context, url) => Column(
-          children: [
-            Container(
+      return GestureDetector(
+        onTap:() => {
+                    Navigator.pushNamed(
+                      context,
+                      AppRouter.newSolicitationPhotoStudentRoute,
+                    ).then((value) async {
+                      await controller.loadData();
+                    })
+        },
+        child: CachedNetworkImage(
+          fit: BoxFit.cover,
+          width: 300,
+          height: 300,
+          cacheKey: "student_photo_${controller.user!.registration}",
+          imageUrl: controller.imgURL!,
+          placeholder: (context, url) => Column(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(color: AppColors.gray[200]),
+                width: 300,
+                height: 300,
+                child: Loader.refreshLoader(),
+              ),
+            ],
+          ),
+          errorWidget: (context, url, error) {
+            log("", error: error);
+            return Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(color: AppColors.gray[200]),
               width: 300,
               height: 300,
-              child: Loader.refreshLoader(),
-            ),
-          ],
+              child: const Icon(
+                Icons.person,
+                size: 125,
+                color: AppColors.gray,
+              ),
+            );
+          },
         ),
-        errorWidget: (context, url, error) {
-          log("", error: error);
-          return Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(color: AppColors.gray[200]),
-            width: 300,
-            height: 300,
-            child: const Icon(
-              Icons.person,
-              size: 125,
-              color: AppColors.gray,
-            ),
-          );
-        },
       );
     } else {
       return Container(

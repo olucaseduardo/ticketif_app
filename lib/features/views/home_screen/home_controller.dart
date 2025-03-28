@@ -145,13 +145,13 @@ class HomeController extends ChangeNotifier {
 
   Future<void> reloadData(String matricula) async {
     try {
-      await Links.i.loadLink();
 
       isReloading = true;
       orderLunch = false;
       orderDinner = false;
       error = false;
       notifyListeners();
+      await Links.i.loadLink();
 
       final tickets = await TicketsApiRepositoryImpl().findAllTickets(
         matricula,
@@ -193,14 +193,14 @@ class HomeController extends ChangeNotifier {
   /// Realiza a leitura dos dados do aluno no banco de dados
   Future<void> loadData() async {
     try {
-      await Links.i.loadLink();
-      _imageUrl = await getImageUrlStudent();
 
       isLoading = true;
       error = false;
       orderLunch = false;
       orderDinner = false;
       notifyListeners();
+      await Links.i.loadLink();
+      _imageUrl = await getImageUrlStudent();
 
       if (_isOnline) {
         isImgValid = await CacheManagerUtil().isImageUrlValid(imageUrl!);

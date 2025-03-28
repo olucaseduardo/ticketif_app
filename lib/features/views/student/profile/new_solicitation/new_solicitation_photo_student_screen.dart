@@ -59,7 +59,8 @@ class _NewSolicitationPhotoStudent
       }
     } else if (status.isPermanentlyDenied) {
       AppMessage.i.showInfo(
-          "Você será redirecionado as configurações do aplicativo, habilite o uso da câmera");
+        "Você será redirecionado as configurações do aplicativo, habilite o uso da câmera",
+      );
       await Future.delayed(const Duration(seconds: 3));
       await openAppSettings();
       await Future.delayed(const Duration(seconds: 2));
@@ -89,8 +90,12 @@ class _NewSolicitationPhotoStudent
 
     frontCamera ??= _cameras.first;
 
-    controllerCamera = CameraController(frontCamera, ResolutionPreset.medium,
-        enableAudio: false, imageFormatGroup: ImageFormatGroup.jpeg);
+    controllerCamera = CameraController(
+      frontCamera,
+      ResolutionPreset.medium,
+      enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.jpeg,
+    );
     controllerCamera?.lockCaptureOrientation();
     await controllerCamera?.setFocusMode(FocusMode.auto);
     try {
@@ -107,8 +112,9 @@ class _NewSolicitationPhotoStudent
     if (e is CameraException) {
       switch (e.code) {
         case 'CameraAccessDenied':
-          AppMessage.i
-              .showInfo("É necessário permissão a câmera para continuar");
+          AppMessage.i.showInfo(
+            "É necessário permissão a câmera para continuar",
+          );
           Navigator.pop(context);
           break;
         default:
@@ -140,9 +146,7 @@ class _NewSolicitationPhotoStudent
     if (controllerCamera == null || !controllerCamera!.value.isInitialized) {
       return Container(
         decoration: const BoxDecoration(color: Colors.black),
-        child: Center(
-          child: Loader.refreshLoader(size: 75),
-        ),
+        child: Center(child: Loader.refreshLoader(size: 75)),
       );
     }
     return Stack(
@@ -151,8 +155,9 @@ class _NewSolicitationPhotoStudent
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-                // margin: EdgeInsets.only(bottom: 100,top:statusBarHeight),
-                child: _buildCamPicture(controller)),
+              // margin: EdgeInsets.only(bottom: 100,top:statusBarHeight),
+              child: _buildCamPicture(controller),
+            ),
           ],
         ),
         Positioned(
@@ -164,37 +169,31 @@ class _NewSolicitationPhotoStudent
             children: [
               controller.picture != null
                   ? IconButton(
-                      iconSize: 25.0,
-                      onPressed: () {
-                        controller.updatePicture(null);
-                      },
-                      icon: const Icon(
-                        Icons.close,
-                        color: Colors.white,
-                      ))
+                    iconSize: 25.0,
+                    onPressed: () {
+                      controller.updatePicture(null);
+                    },
+                    icon: const Icon(Icons.close, color: Colors.white),
+                  )
                   : const SizedBox(),
               controller.picture == null
                   ? IconButton(
-                      iconSize: 50.0,
-                      autofocus: true,
-                      onPressed: () => _takePicture(controller),
-                      icon: const Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                      ))
+                    iconSize: 50.0,
+                    autofocus: true,
+                    onPressed: () => _takePicture(controller),
+                    icon: const Icon(Icons.camera_alt, color: Colors.white),
+                  )
                   : const SizedBox(),
               if (controller.picture != null)
                 IconButton(
-                    iconSize: 25.0,
-                    onPressed: () async {
-                      controller
-                          .sendSolicitation()
-                          .whenComplete(() => Navigator.pop(context));
-                    },
-                    icon: const Icon(
-                      Icons.check,
-                      color: Colors.white,
-                    ))
+                  iconSize: 25.0,
+                  onPressed: () async {
+                    controller.sendSolicitation().whenComplete(
+                      () => Navigator.pop(context),
+                    );
+                  },
+                  icon: const Icon(Icons.check, color: Colors.white),
+                )
               else
                 const SizedBox(),
             ],
@@ -207,11 +206,13 @@ class _NewSolicitationPhotoStudent
   Future<ImageInfo> _getImageInfo(File file) async {
     final image = Image.file(file);
     final completer = Completer<ImageInfo>();
-    image.image.resolve(const ImageConfiguration()).addListener(
-      ImageStreamListener((ImageInfo info, bool _) {
-        completer.complete(info);
-      }),
-    );
+    image.image
+        .resolve(const ImageConfiguration())
+        .addListener(
+          ImageStreamListener((ImageInfo info, bool _) {
+            completer.complete(info);
+          }),
+        );
     return completer.future;
   }
 
@@ -221,60 +222,67 @@ class _NewSolicitationPhotoStudent
       return Padding(
         padding: const EdgeInsets.only(top: 100),
         child: FutureBuilder<ImageInfo>(
-            future: _getImageInfo(File(controller.picture!.path)),
-            builder: (context, snapshot) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: SizedBox(
-                      width: size.width,
-                      height: size.width,
-                      child: Image.file(
-                        File(controller.picture!.path),
-                        fit: BoxFit.cover,
-                      ),
+          future: _getImageInfo(File(controller.picture!.path)),
+          builder: (context, snapshot) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                  child: SizedBox(
+                    width: size.width,
+                    height: size.width,
+                    child: Image.file(
+                      File(controller.picture!.path),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white70.withValues(alpha: .5),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    margin: EdgeInsets.only(left: 10, right: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.white70.withValues(alpha: .5),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Text(
-                      "Certifique-se de que seu rosto esteja devidamente centralizado na câmera."
-                      " Esta foto será avaliada, e somente com ela em mãos será autorizada a refeição para o estudante.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13, color: Colors.white),
-                    ),
-                  )
-                ],
-              );
-            }),
+                  child: const Text(
+                    "Certifique-se de que seu rosto esteja devidamente centralizado na câmera."
+                    " Esta foto será avaliada, e somente com ela em mãos será autorizada a refeição para o estudante.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 13, color: Colors.white),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       );
     }
     return Stack(
       alignment: Alignment.center,
       children: [
-        CameraPreview(controllerCamera!),
+        Transform(
+          alignment: Alignment.center,
+          transform:
+              Matrix4.identity()..scale(-1.0, 1.0, 1.0), // Flip horizontally
+          child: CameraPreview(controllerCamera!),
+        ),
         Positioned(
-            top: 20,
-            width: size.width - 20,
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  color: Colors.black12.withValues(alpha: .5),
-                  borderRadius: BorderRadius.circular(5)),
-              child: const Text(
-                "Evite acessórios. Posicione o rosto no centro da câmera",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 13, color: Colors.white70),
-              ),
-            ))
+          top: 20,
+          width: size.width - 20,
+          child: Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.black12.withValues(alpha: .5),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: const Text(
+              "Evite acessórios. Posicione o rosto no centro da câmera",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 13, color: Colors.white70),
+            ),
+          ),
+        ),
       ],
     );
   }
