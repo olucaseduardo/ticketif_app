@@ -275,11 +275,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       .copyWith(fontWeight: FontWeight.w700),
                 ),
                 TextButton(
-                  onPressed: () => controller.isOnline
-                      ? controller
-                          .reloadData(controller.user?.registration ?? '')
-                      : AppMessage.i.showInfo(
-                          "Conecte-se a internet para realizar esta operação"),
+                  onPressed: () {
+                    if (controller.isOnline) { controller
+                          .reloadData(controller.user?.registration ?? '');
+                          controller.createDailyTicketsPermanents(controller.user?.registration ?? '');
+                    } else {
+                      AppMessage.i.showInfo(
+                          "Conecte-se a internet para realizar esta operação");
+                          }
+                  },
                   style: ButtonStyle(
                     backgroundColor:
                         WidgetStateProperty.all<Color>(Colors.white),

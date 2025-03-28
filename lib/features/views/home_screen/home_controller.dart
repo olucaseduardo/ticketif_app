@@ -146,9 +146,6 @@ class HomeController extends ChangeNotifier {
   Future<void> reloadData(String matricula) async {
     try {
       await Links.i.loadLink();
-      userTickets!.clear();
-      todayTickets!.clear();
-      permanents?.clear();
 
       isReloading = true;
       orderLunch = false;
@@ -156,21 +153,19 @@ class HomeController extends ChangeNotifier {
       error = false;
       notifyListeners();
 
-      final registration = (await SharedPreferences.getInstance()).getString("matricula");
-
-      if (registration == null) {
-        throw Exception("Matricula Inválida");
-      }
-      await TicketsApiRepositoryImpl()
-          .getPermanentTicketDaily(registration);
-
-      final tickets =
-          await TicketsApiRepositoryImpl().findAllTickets(matricula);
-      final permanentsUser =
-          await TicketsApiRepositoryImpl().findAllPermanents(matricula);
+      final tickets = await TicketsApiRepositoryImpl().findAllTickets(
+        matricula,
+      );
+      final permanentsUser = await TicketsApiRepositoryImpl().findAllPermanents(
+        matricula,
+      );
 
       await TicketCache.saveTickets(tickets);
       await PermanentCache.savePermanents(permanentsUser);
+
+      userTickets!.clear();
+      todayTickets!.clear();
+      permanents?.clear();
 
       permanents = permanentsUser;
 
@@ -179,13 +174,20 @@ class HomeController extends ChangeNotifier {
       isReloading = false;
       notifyListeners();
     } catch (e, s) {
-      log('Erro ao buscar tickets do usuário ao recarregar',
-          error: e, stackTrace: s);
+      log(
+        'Erro ao buscar tickets do usuário ao recarregar',
+        error: e,
+        stackTrace: s,
+      );
       error = true;
       isLoading = false;
       isReloading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> createDailyTicketsPermanents(String registration) async {
+    await TicketsApiRepositoryImpl().getPermanentTicketDaily(registration);
   }
 
   /// Realiza a leitura dos dados do aluno no banco de dados
@@ -194,23 +196,21 @@ class HomeController extends ChangeNotifier {
       await Links.i.loadLink();
       _imageUrl = await getImageUrlStudent();
 
-      userTickets!.clear();
-      todayTickets!.clear();
-
       isLoading = true;
       error = false;
       orderLunch = false;
       orderDinner = false;
       notifyListeners();
 
-
       if (_isOnline) {
         isImgValid = await CacheManagerUtil().isImageUrlValid(imageUrl!);
         await updatePhotoStudent();
         final userData = await UserApiRepositoryImpl().loadUser();
 
-        final tickets = await TicketsApiRepositoryImpl()
-            .findAllTickets(userData.registration);
+        final tickets = await TicketsApiRepositoryImpl().findAllTickets(
+          userData.registration,
+        );
+        await createDailyTicketsPermanents(userData.registration);
         final permanentsData = await TicketsApiRepositoryImpl()
             .findAllPermanents(userData.registration);
         await UserCache.saveUser(userData);
@@ -239,8 +239,11 @@ class HomeController extends ChangeNotifier {
       organizeTickets(tickets);
       loading();
     } catch (e, s) {
-      log('Erro ao buscar dados do usuário ao carregar',
-          error: e, stackTrace: s);
+      log(
+        'Erro ao buscar dados do usuário ao carregar',
+        error: e,
+        stackTrace: s,
+      );
       isLoading = false;
       error = true;
       notifyListeners();
@@ -272,8 +275,9 @@ class HomeController extends ChangeNotifier {
   }
 
   Future<String> getImageUrlStudent() async {
-    final registration =
-        (await SharedPreferences.getInstance()).getString('matricula');
+    final registration = (await SharedPreferences.getInstance()).getString(
+      'matricula',
+    );
     return "${Links.i.selectedLink}/student/$registration/photo";
   }
 }

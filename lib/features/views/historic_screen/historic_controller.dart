@@ -6,7 +6,6 @@ import 'package:ticket_ifma/core/exceptions/repository_exception.dart';
 import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/features/models/ticket.dart';
 import 'package:ticket_ifma/features/repositories/tickets/tickets_api_repository_impl.dart';
-import 'package:ticket_ifma/features/resources/widgets/app_message.dart';
 
 class HistoricController extends ChangeNotifier {
   DateTime? day;
@@ -89,41 +88,41 @@ class HistoricController extends ChangeNotifier {
     }
   }
 
-  bool _isAfterOrEqual(TimeOfDay now, TimeOfDay start) {
-    if (now.hour > start.hour) {
-      return true;
-    } else if (now.hour == start.hour) {
-      return now.minute >= start.minute;
-    } else {
-      return false;
-    }
-  }
+  // bool _isAfterOrEqual(TimeOfDay now, TimeOfDay start) {
+  //   if (now.hour > start.hour) {
+  //     return true;
+  //   } else if (now.hour == start.hour) {
+  //     return now.minute >= start.minute;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
-  bool _isBeforeOrEqual(TimeOfDay now, TimeOfDay end) {
-    if (now.hour < end.hour) {
-      return true;
-    } else if (now.hour == end.hour) {
-      return now.minute <= end.minute;
-    } else {
-      return false;
-    }
-  }
+  // bool _isBeforeOrEqual(TimeOfDay now, TimeOfDay end) {
+  //   if (now.hour < end.hour) {
+  //     return true;
+  //   } else if (now.hour == end.hour) {
+  //     return now.minute <= end.minute;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   Future<void> confirmTicket(int idTicket, int idMeal) async {
-    DateTime now = DateTime.now();
-    TimeOfDay startTime = const TimeOfDay(hour: 7, minute: 0);
-    TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
+    // DateTime now = DateTime.now();
+    // TimeOfDay startTime = const TimeOfDay(hour: 7, minute: 0);
+    // TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
 
-    TimeOfDay nowTimeOfDay = TimeOfDay.fromDateTime(now);
+    // TimeOfDay nowTimeOfDay = TimeOfDay.fromDateTime(now);
 
-    bool timeLimit = _isAfterOrEqual(nowTimeOfDay, startTime)
-       && _isBeforeOrEqual(nowTimeOfDay, endTime);
+    // bool timeLimit = _isAfterOrEqual(nowTimeOfDay, startTime)
+    //    && _isBeforeOrEqual(nowTimeOfDay, endTime);
 
-    if (!(now.hour > 12 || (timeLimit))) {
-      AppMessage.i
-          .showInfo('A confirmação só está disponível no período das 7h às 10h30');
-      return;
-    }
+    // if (!(now.hour > 12 || (timeLimit))) {
+    //   AppMessage.i
+    //       .showInfo('A confirmação só está disponível no período das 7h às 10h30');
+    //   return;
+    // }
 
     try {
       isLoading = true;

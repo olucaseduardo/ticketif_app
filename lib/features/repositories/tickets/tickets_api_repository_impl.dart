@@ -119,6 +119,9 @@ class TicketsApiRepositoryImpl implements TicketsApiRepository {
     } on DioException catch (e, s) {
       log("Erro ao solicitar tickets permanentes",
           error: e.message, stackTrace: s);
+      if (e.response?.data["message"] != null) {
+        throw RepositoryException(message: e.response?.data["message"]);
+      }
       throw RepositoryException(
           message: 'Erro ao solicitar tickets permanentes');
     }

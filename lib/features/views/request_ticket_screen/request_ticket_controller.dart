@@ -144,9 +144,9 @@ class RequestTicketController extends ChangeNotifier {
         await TicketsApiRepositoryImpl()
             .changeStatusAuthorizationPermanents(permanentsIds, 4);
       }
-    } on DioException catch (e, s) {
+    } on RepositoryException catch (e, s) {
       log('Erro ao solicitar autorização permanente', error: e, stackTrace: s);
-      errorMessage = "Erro ao solicitar autorização permanente";
+      errorMessage = e.message;
       error = true;
       notifyListeners();
     } catch (e, s) {

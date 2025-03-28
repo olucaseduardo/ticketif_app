@@ -91,6 +91,15 @@ class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
                       arguments: ScreenArguments(cae: false),
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  CommonTileOptions(
+                      leading: Icons.calendar_month_rounded,
+                      label: 'Relatório por Período',
+                      function: () => Navigator.pushNamed(
+                        context,
+                        AppRouter.caePeriodReportRoute,
+                      ),
+                    ),
                 ],
               ),
             )
