@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:ticket_ifma/core/services/notification_service.dart';
 import 'package:ticket_ifma/core/services/providers.dart';
 import 'package:ticket_ifma/core/utils/date_util.dart';
 import 'package:ticket_ifma/core/utils/loader.dart';
@@ -48,7 +47,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   _initNotificationService() {
     WidgetsFlutterBinding.ensureInitialized();
-    NotificationService();
+    // NotificationService();
   }
 
   _updateStatusNetwork(InternetStatus status) async {

@@ -17,7 +17,6 @@ class LoginController extends ChangeNotifier {
   /// Função responsável por selecionar o link de acesso com base no respectivo campus
   Future<void> selectCampus(String campus) async {
     campusSelect = campus;
-    await Links.i.selectLink(campusSelect);
   }
 
   Future<void> loadPackageInfo() async {
@@ -34,6 +33,7 @@ class LoginController extends ChangeNotifier {
     error = false;
     notifyListeners();
     try {
+      await Links.i.selectLink(campusSelect);
       await Links.i.loadLink();
       final authModel = await AuthApiRepositoryImpl().login(
         matricula,
@@ -64,6 +64,7 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
 
     try {
+      await Links.i.selectLink(campusSelect);
       await Links.i.loadLink();
       final authModel = await AuthApiRepositoryImpl().loginADM(
         username,
