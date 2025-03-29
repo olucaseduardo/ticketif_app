@@ -145,10 +145,7 @@ class HomeController extends ChangeNotifier {
 
   Future<void> reloadData(String matricula) async {
     try {
-
       isReloading = true;
-      orderLunch = false;
-      orderDinner = false;
       error = false;
       notifyListeners();
       await Links.i.loadLink();
@@ -163,6 +160,8 @@ class HomeController extends ChangeNotifier {
       await TicketCache.saveTickets(tickets);
       await PermanentCache.savePermanents(permanentsUser);
 
+      orderLunch = false;
+      orderDinner = false;
       userTickets!.clear();
       todayTickets!.clear();
       permanents?.clear();
@@ -179,6 +178,9 @@ class HomeController extends ChangeNotifier {
         error: e,
         stackTrace: s,
       );
+      AppMessage.i.showError(
+        "Erro ao carregar novas informações online, atualize novamente ou verifique sua conexão",
+      );
       error = true;
       isLoading = false;
       isReloading = false;
@@ -193,11 +195,9 @@ class HomeController extends ChangeNotifier {
   /// Realiza a leitura dos dados do aluno no banco de dados
   Future<void> loadData() async {
     try {
-
       isLoading = true;
       error = false;
-      orderLunch = false;
-      orderDinner = false;
+
       notifyListeners();
       await Links.i.loadLink();
       _imageUrl = await getImageUrlStudent();
@@ -231,8 +231,10 @@ class HomeController extends ChangeNotifier {
       permanents = permanentsData;
 
       final sp = await SharedPreferences.getInstance();
-      sp.setInt('idStudent', user!.id);
+      await sp.setInt('idStudent', user!.id);
 
+      orderLunch = false;
+      orderDinner = false;
       userTickets!.clear();
       todayTickets!.clear();
 
@@ -245,6 +247,9 @@ class HomeController extends ChangeNotifier {
         stackTrace: s,
       );
       isLoading = false;
+      AppMessage.i.showError(
+        "Erro ao carregar novas informações online, atualize novamente ou verifique sua conexão",
+      );
       error = true;
       notifyListeners();
     }
